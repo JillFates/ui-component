@@ -1,12 +1,16 @@
-import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { RouterModule } from '@angular/router';
+import {NgModule} from '@angular/core';
+import {CommonModule} from '@angular/common';
+import {RouterModule} from '@angular/router';
+import {ClarityModule} from '@clr/angular';
 
 @NgModule({
-	imports: [CommonModule, RouterModule],
-	declarations: [
+	imports: [
+		CommonModule,
+		RouterModule,
+		ClarityModule
 	],
-	exports: [
-	]
+	declarations: [],
+	exports: []
 })
-export class TdsComponentLibraryModule {}
+export class TdsComponentLibraryModule {
+}
