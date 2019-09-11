@@ -1,0 +1,155 @@
+{
+  "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
+  "version": 1,
+  "newProjectRoot": "",
+  "projects": {
+    "showcase": {
+      "projectType": "application",
+      "schematics": {
+        "@nrwl/workspace:component": {
+          "style": "scss"
+        }
+      },
+      "root": "apps/showcase",
+      "sourceRoot": "apps/showcase/src",
+      "prefix": "app",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:browser",
+          "options": {
+            "outputPath": "dist/apps/showcase",
+            "index": "apps/showcase/src/index.html",
+            "main": "apps/showcase/src/main.ts",
+            "polyfills": "apps/showcase/src/polyfills.ts",
+            "tsConfig": "apps/showcase/tsconfig.app.json",
+            "assets": [
+              "apps/showcase/src/favicon.ico",
+              "apps/showcase/src/assets"
+            ],
+            "styles": [
+              "apps/showcase/src/styles.scss"
+            ],
+            "scripts": [
+            ]
+          },
+          "configurations": {
+            "production": {
+              "fileReplacements": [
+                {
+                  "replace": "apps/showcase/src/environments/environment.ts",
+                  "with": "apps/showcase/src/environments/environment.prod.ts"
+                }
+              ],
+              "optimization": true,
+              "outputHashing": "all",
+              "sourceMap": false,
+              "extractCss": true,
+              "namedChunks": false,
+              "aot": true,
+              "extractLicenses": true,
+              "vendorChunk": false,
+              "buildOptimizer": true,
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "2mb",
+                  "maximumError": "5mb"
+                }
+              ]
+            }
+          }
+        },
+        "serve": {
+          "builder": "@angular-devkit/build-angular:dev-server",
+          "options": {
+            "browserTarget": "showcase:build"
+          },
+          "configurations": {
+            "production": {
+              "browserTarget": "showcase:build:production"
+            }
+          }
+        },
+        "extract-i18n": {
+          "builder": "@angular-devkit/build-angular:extract-i18n",
+          "options": {
+            "browserTarget": "showcase:build"
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "apps/showcase/tsconfig.app.json",
+              "apps/showcase/tsconfig.spec.json"
+            ],
+            "exclude": ["**/node_modules/**", "!apps/showcase/**"]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "options": {
+            "jestConfig": "apps/showcase/jest.config.js",
+            "tsConfig": "apps/showcase/tsconfig.spec.json",
+            "setupFile": "apps/showcase/src/test-setup.ts"
+          }
+        }
+      }
+    },
+    "tds-component-library": {
+      "projectType": "library",
+      "root": "libs/tds-component-library",
+      "sourceRoot": "libs/tds-component-library/src",
+      "prefix": "cv",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-ng-packagr:build",
+          "options": {
+            "tsConfig": "libs/tds-component-library/tsconfig.lib.json",
+            "project": "libs/tds-component-library/ng-package.json"
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "libs/tds-component-library/tsconfig.lib.json",
+              "libs/tds-component-library/tsconfig.spec.json"
+            ],
+            "exclude": ["**/node_modules/**", "!libs/tds-component-library/**"]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "options": {
+            "jestConfig": "libs/tds-component-library/jest.config.js",
+            "tsConfig": "libs/tds-component-library/tsconfig.spec.json",
+            "setupFile": "libs/tds-component-library/src/test-setup.ts"
+          }
+        }
+      },
+      "schematics": {
+        "@nrwl/angular:component": {
+          "styleext": "scss"
+        }
+      }
+    }
+  },
+  "cli": {
+    "warnings": {
+      "typescriptMismatch": false,
+      "versionMismatch": false
+    },
+    "defaultCollection": "@nrwl/angular"
+  },
+  "schematics": {
+    "@nrwl/angular:application": {
+      "unitTestRunner": "jest",
+      "e2eTestRunner": "cypress"
+    },
+    "@nrwl/angular:library": {
+      "unitTestRunner": "jest"
+    }
+  },
+  "defaultProject": "showcase"
+}
