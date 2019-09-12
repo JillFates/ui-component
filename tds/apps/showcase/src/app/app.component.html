@@ -11,14 +11,22 @@
                 <section class="nav-group">
                     <label for="tabexample2">TDS Components</label>
                     <ul class="nav-list">
-                        <li><a class="nav-link active">Grid</a></li>
-                        <li><a class="nav-link">Datepicker</a></li>
+                        <li><a class="nav-link active" routerLink="component/grid/overview">Grid</a></li>
+                        <li><a class="nav-link">other component</a></li>
                     </ul>
                 </section>
             </section>
         </nav>
         <div class="content-area">
-
+            <clr-tabs>
+                <clr-tab>
+                    <button (click)="routeTo(sectionTab.OVERVIEW)" clrTabLink>OVERVIEW</button>
+                </clr-tab>
+                <clr-tab>
+                    <button (click)="routeTo(sectionTab.API)" clrTabLink>API</button>
+                </clr-tab>
+            </clr-tabs>
+            <router-outlet></router-outlet>
         </div>
     </div>
 </div>
