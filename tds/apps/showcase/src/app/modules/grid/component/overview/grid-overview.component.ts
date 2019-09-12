@@ -6,7 +6,16 @@ import {Component} from '@angular/core';
 	styleUrls: ['./grid-overview.component.scss']
 })
 export class GridOverviewComponent {
-
+	public data: any = [
+		{
+			name: 'Jorge',
+			role: 'FE Team'
+		},
+		{
+			name: 'Cristian',
+			role: 'QA Team'
+		}
+	];
 	constructor() {
 		//
 	}
