@@ -27,13 +27,13 @@
               "apps/showcase/src/assets"
             ],
             "styles": [
-              "../tds/node_modules/@clr/icons/clr-icons.min.css",
-              "../tds/node_modules/@clr/ui/clr-ui.min.css",
+              "./node_modules/@clr/icons/clr-icons.min.css",
+              "./node_modules/@clr/ui/clr-ui.min.css",
               "apps/showcase/src/styles.scss"
             ],
             "scripts": [
-              "../tds/node_modules/@webcomponents/custom-elements/custom-elements.min.js",
-              "../tds/node_modules/@clr/icons/clr-icons.min.js"
+              "./node_modules/@webcomponents/custom-elements/custom-elements.min.js",
+              "./node_modules/@clr/icons/clr-icons.min.js"
             ]
           },
           "configurations": {
