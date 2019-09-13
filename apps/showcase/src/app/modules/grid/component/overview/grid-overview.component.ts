@@ -14,6 +14,14 @@ export class GridOverviewComponent {
 		{
 			name: 'Cristian',
 			role: 'QA Team'
+		},
+		{
+			name: 'Augusto',
+			role: 'The chosen one'
+		},
+		{
+			name: 'John',
+			role: 'Papa Wheelie'
 		}
 	];
 	constructor() {
