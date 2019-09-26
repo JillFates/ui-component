@@ -12,6 +12,7 @@
     "buildlibcss": "cd libs/tds-component-library && npm run postbuild",
     "packlib": "cd dist/libs/tds-component-library && npm pack",
     "package": "npm run buildlib && npm run buildlibcss && npm run packlib",
+    "publish": "npm publish dist/libs/tds-component-library/",
     "test": "ng test",
     "lint": "nx lint && ng lint",
     "e2e": "ng e2e",
