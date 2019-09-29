@@ -1,0 +1,37 @@
+<div class="grid-task-manager-component">
+    <h4>Grid Task Manager</h4>
+
+    <p>
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque eu odio nisi. Vestibulum dignissim eget massa sit amet feugiat. Quisque auctor mattis quam eu suscipit. Morbi ipsum risus, feugiat vitae sem at, tincidunt elementum magna
+    </p>
+
+    <kendo-grid
+            [filterable]="true"
+            [sortable]="true"
+            [pageSize]="5"
+            [skip]="5"
+            [pageable]="true"
+            [pageable]="{pageSizes: [5, 25, 50, 100], info: true}"
+            [data]="tasks.rows">
+        <kendo-grid-column width="30" [filterable]="false">
+                <ng-template kendoGridCellTemplate let-dataItem let-rowIndex="rowIndex">
+                    <button kendoButton [icon]="'pencil'"></button>
+                </ng-template>
+        </kendo-grid-column>
+        <kendo-grid-column field="taskNumber" width="80" [filterable]="true"></kendo-grid-column>
+        <kendo-grid-column field="comment" width="130" [filterable]="true"></kendo-grid-column>
+        <kendo-grid-column field="comment" width="130" [filterable]="true"></kendo-grid-column>
+
+        <ng-template kendoGridToolbarTemplate [position]="'top'">
+            <button class="k-button">Create Task</button>
+            <button class="k-button">Bulk Action</button>
+        </ng-template>
+
+        <ng-template kendoGridDetailTemplate let-dataItem>
+            <section>
+                <button class="k-button">Details</button>
+                <button class="k-button">Neighborhood</button>
+            </section>
+        </ng-template>
+    </kendo-grid>
+</div>
