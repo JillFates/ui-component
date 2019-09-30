@@ -6,7 +6,7 @@
   "scripts": {
     "ng": "ng",
     "start": "ng lint && ng serve showcase --port 5200",
-    "start:deploy": "ng serve showcase --host 0.0.0.0 --disable-host-check",
+    "start:deploy": "ng serve showcase --port 5200 --host 0.0.0.0 --disable-host-check",
     "build": "ng lint && ng build",
     "buildlib": "ng lint && ng build tds-component-library",
     "buildlibcss": "cd libs/tds-component-library && npm run postbuild",
