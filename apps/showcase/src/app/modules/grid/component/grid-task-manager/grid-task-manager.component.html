@@ -12,26 +12,69 @@
             [skip]="5"
             [pageable]="true"
             [pageable]="{pageSizes: [5, 25, 50, 100], info: true}"
-            [data]="tasks.rows">
-        <kendo-grid-column width="30" [filterable]="false">
+            [data]="tasks.rows" [columnMenu]="true">
+        <ng-template kendoGridColumnMenuTemplate let-service="service" let-column="column">
+            <div class="k-column-list">
+                <label class="k-column-list-item">
+                    <input type="radio">
+                    <span class="k-checkbox-label">Label sample 1</span>
+                </label>
+                <label class="k-column-list-item">
+                    <input type="radio">
+                    <span class="k-checkbox-label">Label sample 2</span>
+                </label>
+                <label class="k-column-list-item">
+                    <input type="radio">
+                    <span class="k-checkbox-label">Label sample 3</span>
+                </label>
+                <label class="k-column-list-item">
+                    <input type="radio">
+                    <span class="k-checkbox-label">Label sample 4</span>
+                </label>
+                <label class="k-column-list-item">
+                    <input type="radio">
+                    <span class="k-checkbox-label">Label sample 5</span>
+                </label>
+                <label class="k-column-list-item">
+                    <input type="radio">
+                    <span class="k-checkbox-label">Label sample 6</span>
+                </label>
+                <label class="k-column-list-item">
+                    <input type="radio">
+                    <span class="k-checkbox-label">Label sample 7</span>
+                </label>
+                <label class="k-column-list-item">
+                    <input type="radio">
+                    <span class="k-checkbox-label">Label sample 8</span>
+                </label>
+            </div>
+        </ng-template>
+
+        <kendo-grid-column width="30" [filterable]="false" [columnMenu]="false">
                 <ng-template kendoGridCellTemplate let-dataItem let-rowIndex="rowIndex">
                     <button kendoButton [icon]="'pencil'"></button>
                 </ng-template>
         </kendo-grid-column>
-        <kendo-grid-column field="taskNumber" width="80" [filterable]="true"></kendo-grid-column>
-        <kendo-grid-column field="comment" width="130" [filterable]="true"></kendo-grid-column>
-        <kendo-grid-column field="comment" width="130" [filterable]="true"></kendo-grid-column>
+
+        <kendo-grid-column field="taskNumber" width="80" [filterable]="true" [title]="'Task'" [columnMenu]="false">
+        </kendo-grid-column>
+
+        <kendo-grid-column field="comment" width="130" [filterable]="true" [title]="'Description'" [columnMenu]="false"></kendo-grid-column>
+        <kendo-grid-column field="userSelectedCol0" width="130" [filterable]="true" [title]="'Category'"></kendo-grid-column>
+        <kendo-grid-column field="userSelectedCol1" width="130" [filterable]="true" [title]="'Last Updated'"></kendo-grid-column>
 
         <ng-template kendoGridToolbarTemplate [position]="'top'">
             <button class="k-button">Create Task</button>
             <button class="k-button">Bulk Action</button>
         </ng-template>
 
+        <!-- Row detail -->
         <ng-template kendoGridDetailTemplate let-dataItem>
             <section>
                 <button class="k-button">Details</button>
                 <button class="k-button">Neighborhood</button>
             </section>
         </ng-template>
+
     </kendo-grid>
 </div>
