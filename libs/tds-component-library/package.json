@@ -7,7 +7,7 @@
   },
   "peerDependencies": {
     "@angular/common": "^8.0.0",
-    "@angular/core": "^8.0.0",
-    "compressorjs": "^1.0.5"
+    "@angular/core": "8.0.0",
+    "compressorjs": "1.0.5"
   }
 }
