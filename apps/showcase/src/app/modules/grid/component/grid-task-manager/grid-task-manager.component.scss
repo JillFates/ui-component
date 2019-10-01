@@ -1,4 +1,25 @@
 .grid-task-manager-component {
+
+  .k-button {
+    span.k-icon {
+      margin-right: 10px;
+    }
+  }
+
+  .buttons-group {
+    button {
+      margin: 5px;
+    }
+  }
+
+  .action-button {
+    display: flex;
+    justify-content: center;
+    cursor: pointer;
+  }
+
+
+
 }
 
 

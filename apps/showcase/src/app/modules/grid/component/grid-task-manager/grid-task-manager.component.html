@@ -10,9 +10,11 @@
             [sortable]="true"
             [pageSize]="5"
             [skip]="5"
+            [resizable]="true"
             [pageable]="true"
             [pageable]="{pageSizes: [5, 25, 50, 100], info: true}"
             [data]="tasks.rows" [columnMenu]="true">
+
         <ng-template kendoGridColumnMenuTemplate let-service="service" let-column="column">
             <div class="k-column-list">
                 <label class="k-column-list-item">
@@ -50,29 +52,79 @@
             </div>
         </ng-template>
 
-        <kendo-grid-column width="30" [filterable]="false" [columnMenu]="false">
+        <kendo-grid-column width="60" [filterable]="false" [columnMenu]="false">
                 <ng-template kendoGridCellTemplate let-dataItem let-rowIndex="rowIndex">
-                    <button kendoButton [icon]="'pencil'"></button>
+                    <div class="action-button">
+                        <span class="k-icon k-i-pencil"></span>
+                    </div>
                 </ng-template>
         </kendo-grid-column>
 
-        <kendo-grid-column field="taskNumber" width="80" [filterable]="true" [title]="'Task'" [columnMenu]="false">
+        <kendo-grid-column field="taskNumber" width="60" [filterable]="true" [title]="'Task'" [columnMenu]="false">
         </kendo-grid-column>
-
-        <kendo-grid-column field="comment" width="130" [filterable]="true" [title]="'Description'" [columnMenu]="false"></kendo-grid-column>
+        <kendo-grid-column field="comment" width="160" [filterable]="true" [title]="'Description'" [columnMenu]="false"></kendo-grid-column>
         <kendo-grid-column field="userSelectedCol0" width="130" [filterable]="true" [title]="'Category'"></kendo-grid-column>
-        <kendo-grid-column field="userSelectedCol1" width="130" [filterable]="true" [title]="'Last Updated'"></kendo-grid-column>
+        <kendo-grid-column field="userSelectedCol1" width="180" [filterable]="true" [title]="'Last Updated'"></kendo-grid-column>
+        <kendo-grid-column field="updatedtime" width="130" [filterable]="true" [title]="'Updated'"></kendo-grid-column>
+        <kendo-grid-column field="dueDate" width="130" [filterable]="true" [title]="'Due Date'"></kendo-grid-column>
+        <kendo-grid-column field="status" width="130" [filterable]="true" [title]="'Status'"></kendo-grid-column>
+        <kendo-grid-column field="userSelectedCol2" width="180" [filterable]="true" [title]="'Estimated Start'"></kendo-grid-column>
 
         <ng-template kendoGridToolbarTemplate [position]="'top'">
-            <button class="k-button">Create Task</button>
-            <button class="k-button">Bulk Action</button>
+            <div class="buttons-group">
+                <button kendoButton>
+                    <span class="k-icon k-i-plus"></span>
+                    <span class="title">Create Task</span>
+                </button>
+
+                <button kendoButton>
+                    <span class="k-icon k-i-edit"></span>
+                    <span class="title">Bulk Action</span>
+                </button>
+
+                <button kendoButton>
+                    <span class="k-icon k-i-close"></span>
+                    <span class="title">Clear filters</span>
+                </button>
+            </div>
         </ng-template>
 
         <!-- Row detail -->
         <ng-template kendoGridDetailTemplate let-dataItem>
-            <section>
-                <button class="k-button">Details</button>
-                <button class="k-button">Neighborhood</button>
+            <section class="buttons-group">
+                <button kendoButton>
+                    <span class="k-icon k-i-play"></span>
+                    <span class="title">Start</span>
+                </button>
+                <button kendoButton>
+                    <span class="k-icon k-i-check"></span>
+                    <span class="title">Done</span>
+                </button>
+                <button kendoButton>
+                    <span class="k-icon k-i-zoom"></span>
+                    <span class="title">Details</span>
+                </button>
+                <button kendoButton>
+                    <span class="k-icon k-i-user"></span>
+                    <span class="title">Assign to me</span>
+                </button>
+                <button kendoButton>
+                    <span class="k-icon k-i-grid-layout"></span>
+                    <span class="title">Neighborhood</span>
+                </button>
+                <span>Delay for:</span>
+                <button kendoButton>
+                    <span class="k-icon k-i-arrow-double-60-right"></span>
+                    <span class="title">1 day</span>
+                </button>
+                <button kendoButton>
+                    <span class="k-icon k-i-arrow-double-60-right"></span>
+                    <span class="title">2 days</span>
+                </button>
+                <button kendoButton>
+                    <span class="k-icon k-i-arrow-double-60-right"></span>
+                    <span class="title">7 days</span>
+                </button>
             </section>
         </ng-template>
 

@@ -20,3 +20,13 @@ kendo-popup {
     }
   }
 }
+
+
+// hide default filter icon
+kendo-grid-string-filter-cell {
+  kendo-grid-filter-wrapper-cell {
+    kendo-grid-filter-cell-operators {
+      display: none;
+    }
+  }
+}
