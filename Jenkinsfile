@@ -31,6 +31,13 @@ podTemplate (
             }
         }
 
+        stage('Build for Test') {
+            container('node') {
+                sh "npm i"
+            }
+        }
+
+
         stage('Test') {
             container('node') {
                 sh "npm run test"
@@ -43,15 +50,15 @@ podTemplate (
             }
         }
 
-        stage('Build') {
-            container('node') {
-                image = docker.build("${registry}/${name}:${env.BUILD_ID}". ".")
-            }
-        }
-
-        version = readFile("VERSION").trim()
-
         // if (env.BRANCH_NAME == 'develop') {
+            stage('Build image') {
+                container('node') {
+                    image = docker.build("${registry}/${name}:${env.BUILD_ID}". ".")
+                }
+            }
+
+            version = readFile("VERSION").trim()
+
             stage('Publish') {
                 container('node') {
                     withCredentials([usernamePassword(credentialsId: 'd1920d69-59ad-45d6-b345-69c746c05794', passwordVariable: 'NEXUS_PASSWORD', usernameVariable: 'NEXUS_USER')]) {
