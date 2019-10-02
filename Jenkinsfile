@@ -1,5 +1,11 @@
 def tmcontainers = [
-    tmTemplate.tmBuilder(),
+  containerTemplate(
+      name            : name,
+      image           : 'tm-registry.transitionmanager.net/tds-ci/tm-node:latest',
+      command         : 'cat',
+      alwaysPullImage : true,
+      ttyEnabled      : true
+  )
 ]
 
 def tmlabel = "UI-component-Build${BUILD_NUMBER}-${UUID.randomUUID().toString()}"
