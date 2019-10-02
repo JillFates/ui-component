@@ -49,7 +49,7 @@ podTemplate (
         // if (env.BRANCH_NAME == 'develop') {
             stage('Build image') {
                 container('node') {
-                    def image = docker.build("${registry}/${name}:${env.BUILD_ID}". ".")
+                    def image = docker.build("${registry}/${name}:${env.BUILD_ID}", ".")
                 }
             }
 
