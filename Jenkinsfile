@@ -12,7 +12,7 @@ def tmlabel = "UI-component-Build${BUILD_NUMBER}-${UUID.randomUUID().toString()}
 
 podTemplate (
     label: tmlabel,
-    imagePullSecrets: options.kubernetes_secrets,
+    imagePullSecrets: ['tm-registry'],
     containers: tmcontainers,
     volumes: [
         hostPathVolume(hostPath: '/dev/shm', mountPath: '/dev/shm')
