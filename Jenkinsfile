@@ -37,18 +37,17 @@ podTemplate (
             }
         }
 
-
-        stage('Test') {
-            container('node') {
-                sh "npm run test"
-            }
-        }
-
-        stage('Lint') {
-            container('node') {
-                sh "npm run lint"
-            }
-        }
+        // stage('Test') {
+        //     container('node') {
+        //         sh "npm run test"
+        //     }
+        // }
+        //
+        // stage('Lint') {
+        //     container('node') {
+        //         sh "npm run lint"
+        //     }
+        // }
 
         // if (env.BRANCH_NAME == 'develop') {
             stage('Build image') {
