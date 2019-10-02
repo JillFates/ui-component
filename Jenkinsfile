@@ -21,9 +21,6 @@ podTemplate (
     node(tmlabel) {
         def registry = 'tm-registry.transitionmanager.net/tds-ci'
         def name = 'ui-components'
-        def image
-        def version
-
 
         stage('Checkout') {
             container('node') {
@@ -31,12 +28,12 @@ podTemplate (
             }
         }
 
-        stage('Build for Test') {
-            container('node') {
-                sh "npm i"
-            }
-        }
-
+        // stage('Build for Test') {
+        //     container('node') {
+        //         sh "npm i"
+        //     }
+        // }
+        //
         // stage('Test') {
         //     container('node') {
         //         sh "npm run test"
@@ -52,11 +49,9 @@ podTemplate (
         // if (env.BRANCH_NAME == 'develop') {
             stage('Build image') {
                 container('node') {
-                    image = docker.build("${registry}/${name}:${env.BUILD_ID}". ".")
+                    def image = docker.build("${registry}/${name}:${env.BUILD_ID}". ".")
                 }
             }
-
-            version = readFile("VERSION").trim()
 
             stage('Publish') {
                 container('node') {
@@ -65,7 +60,6 @@ podTemplate (
                     }
 
                     image.push("latest")
-                    image.push(version)
                 }
             }
         // }
