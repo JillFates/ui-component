@@ -8,7 +8,7 @@ def tmcontainers = [
   ),
   containerTemplate(
         name            : 'docker',
-        image           : 'docker:latest',
+        image           : 'tm-docker-compose:latest',
         command         : 'cat',
         alwaysPullImage : true,
         ttyEnabled      : true
