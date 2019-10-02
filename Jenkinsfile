@@ -5,7 +5,14 @@ def tmcontainers = [
       command         : 'cat',
       alwaysPullImage : true,
       ttyEnabled      : true
-  )
+  ),
+  containerTemplate(
+        name            : 'docker',
+        image           : 'docker:latest',
+        command         : 'cat',
+        alwaysPullImage : true,
+        ttyEnabled      : true
+    )
 ]
 
 def tmlabel = "UI-component-Build${BUILD_NUMBER}-${UUID.randomUUID().toString()}"
@@ -48,13 +55,13 @@ podTemplate (
 
         // if (env.BRANCH_NAME == 'develop') {
             stage('Build image') {
-                container('node') {
+                container('docker') {
                     def image = docker.build("${registry}/${name}:${env.BUILD_ID}", ".")
                 }
             }
 
             stage('Publish') {
-                container('node') {
+                container('docker') {
                     withCredentials([usernamePassword(credentialsId: 'd1920d69-59ad-45d6-b345-69c746c05794', passwordVariable: 'NEXUS_PASSWORD', usernameVariable: 'NEXUS_USER')]) {
                         sh "docker login -u $NEXUS_USER -p \"$NEXUS_PASSWORD\" ${registry}"
                     }
