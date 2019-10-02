@@ -1,6 +1,6 @@
 def tmcontainers = [
   containerTemplate(
-      name            : name,
+      name            : 'node',
       image           : 'tm-registry.transitionmanager.net/tds-ci/tm-node:latest',
       command         : 'cat',
       alwaysPullImage : true,
