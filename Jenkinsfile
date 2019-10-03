@@ -75,10 +75,10 @@ podTemplate (
                     //     sh "docker login -u $NEXUS_USER -p \"$NEXUS_PASSWORD\" ${registry}"
                     // }
 
-                    docker.withRegistry(registry, registryCredential)
-
-                    uiImage.push()
-                    uiImage.push("latest")
+                    docker.withRegistry(registry, registryCredential) {
+                        uiImage.push()
+                        uiImage.push("latest")
+                    }
                 }
             }
         // }
