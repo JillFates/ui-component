@@ -31,7 +31,7 @@ podTemplate (
     yaml: yaml
 ) {
     node(tmlabel) {
-        def registry = "tm-registry.transitionmanager.net/tds-ci"
+        def registry = "https://tm-registry.transitionmanager.net/tds-ci/"
         def registryCredential = "d1920d69-59ad-45d6-b345-69c746c05794"
         def name = "ui-components"
         def uiImage
@@ -63,18 +63,12 @@ podTemplate (
         // if (env.BRANCH_NAME == 'develop') {
             stage('Build image') {
                 container('docker') {
-                    uiImage = docker.build("${registry}/${name}:${env.BUILD_ID}", ".")
+                    uiImage = docker.build("${registry}${name}:${env.BUILD_ID}", ".")
                 }
             }
 
             stage('Publish') {
                 container('docker') {
-                    // withCredentials([usernamePassword(credentialsId: registryCredential,
-                    //                                   passwordVariable: 'NEXUS_PASSWORD',
-                    //                                   usernameVariable: 'NEXUS_USER')]) {
-                    //     sh "docker login -u $NEXUS_USER -p \"$NEXUS_PASSWORD\" ${registry}"
-                    // }
-
                     docker.withRegistry(registry, registryCredential) {
                         uiImage.push()
                         uiImage.push("latest")
