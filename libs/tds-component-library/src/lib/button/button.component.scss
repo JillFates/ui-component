@@ -1,7 +1,24 @@
 @import '../../theme';
 
-.tds-button {
+@mixin square-off-btngroup-btns($dir: left) {
+	border-top-#{$dir}-radius: 0;
+	border-bottom-#{$dir}-radius: 0;
+}
+
+:host {
+	display: inline-block;
 	button {
-		font-size: 1rem;
+		font-size: 12px;
+	}
+}
+
+.btn-group {
+	:host {
+		&:not(:first-child) .tds-button {
+			@include square-off-btngroup-btns(left);
+		}
+		&:not(:last-child) .tds-button {
+			@include square-off-btngroup-btns(right);
+		}
 	}
 }

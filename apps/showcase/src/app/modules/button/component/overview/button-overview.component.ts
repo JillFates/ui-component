@@ -6,7 +6,20 @@ import { Component } from '@angular/core';
 	styleUrls: ['./button-overview.component.scss'],
 })
 export class ButtonOverviewComponent {
+	public buttonLoading: boolean;
 	constructor() {
 		//
+		this.loadingClick();
+	}
+
+	/**
+	 * Set Loading for 1 second
+	 */
+	public loadingClick(): void {
+		console.log('Loading click');
+		this.buttonLoading = true;
+		setTimeout(() => {
+			this.buttonLoading = false;
+		}, 1000);
 	}
 }

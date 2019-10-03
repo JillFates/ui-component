@@ -1,13 +1,14 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ClarityModule } from '@clr/angular';
 import { GridModule } from '@progress/kendo-angular-grid';
 import { DropdownComponent } from './dropdown/dropdown.component';
 import { ButtonComponent } from './button/button.component';
 
 @NgModule({
-	imports: [CommonModule, RouterModule, ClarityModule, GridModule],
+	imports: [CommonModule, RouterModule, BrowserAnimationsModule, ClarityModule, GridModule],
 	declarations: [DropdownComponent, ButtonComponent],
 	exports: [DropdownComponent, ButtonComponent],
 })

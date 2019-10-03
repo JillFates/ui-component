@@ -1,4 +1,22 @@
 <div class="button-overview-component">
 	<h4>Button</h4>
-	<tds-button label="Button Text"></tds-button>
+
+	<div class="btn-group btn-primary">
+		<tds-button theme="primary">Button 1</tds-button>
+		<tds-button theme="warning">Button 2</tds-button>
+		<tds-button theme="success">Button 3</tds-button>
+	</div>
+
+	<p>
+		<tds-button>Normal Button</tds-button>
+		<tds-button>Small Button</tds-button>
+	</p>
+
+	<tds-button [disabled]="true">Disabled Button</tds-button>
+
+	<tds-button icon="user">Icon Button</tds-button>
+
+	<tds-button icon="cog"></tds-button>
+
+	<tds-button [loading]="buttonLoading" (click)="loadingClick($event)">Loading Button</tds-button>
 </div>
