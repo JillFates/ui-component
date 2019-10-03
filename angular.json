@@ -104,7 +104,7 @@
       "projectType": "library",
       "root": "libs/tds-component-library",
       "sourceRoot": "libs/tds-component-library/src",
-      "prefix": "cv",
+      "prefix": "tds",
       "architect": {
         "build": {
           "builder": "@angular-devkit/build-ng-packagr:build",
