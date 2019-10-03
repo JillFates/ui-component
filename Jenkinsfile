@@ -31,9 +31,9 @@ podTemplate (
     yaml: yaml
 ) {
     node(tmlabel) {
-        def registry = 'tm-registry.transitionmanager.net/tds-ci'
-        def registryCredential = 'd1920d69-59ad-45d6-b345-69c746c05794'
-        def name = 'ui-components'
+        def registry = "tm-registry.transitionmanager.net/tds-ci"
+        def registryCredential = "d1920d69-59ad-45d6-b345-69c746c05794"
+        def name = "ui-components"
         def uiImage
 
         stage('Checkout') {
