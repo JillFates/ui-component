@@ -33,6 +33,7 @@ podTemplate (
     node(tmlabel) {
         def registry = 'tm-registry.transitionmanager.net/tds-ci'
         def name = 'ui-components'
+        def image
 
         stage('Checkout') {
             container('node') {
@@ -61,7 +62,7 @@ podTemplate (
         // if (env.BRANCH_NAME == 'develop') {
             stage('Build image') {
                 container('docker') {
-                    def image = docker.build("${registry}/${name}:${env.BUILD_ID}", ".")
+                    image = docker.build("${registry}/${name}:${env.BUILD_ID}", ".")
                 }
             }
 
