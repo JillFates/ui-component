@@ -32,8 +32,9 @@ podTemplate (
 ) {
     node(tmlabel) {
         def registry = 'tm-registry.transitionmanager.net/tds-ci'
+        def registryCredential = 'd1920d69-59ad-45d6-b345-69c746c05794'
         def name = 'ui-components'
-        def image
+        def uiImage
 
         stage('Checkout') {
             container('node') {
@@ -62,17 +63,22 @@ podTemplate (
         // if (env.BRANCH_NAME == 'develop') {
             stage('Build image') {
                 container('docker') {
-                    image = docker.build("${registry}/${name}:${env.BUILD_ID}", ".")
+                    uiImage = docker.build("${registry}/${name}:${env.BUILD_ID}", ".")
                 }
             }
 
             stage('Publish') {
                 container('docker') {
-                    withCredentials([usernamePassword(credentialsId: 'd1920d69-59ad-45d6-b345-69c746c05794', passwordVariable: 'NEXUS_PASSWORD', usernameVariable: 'NEXUS_USER')]) {
-                        sh "docker login -u $NEXUS_USER -p \"$NEXUS_PASSWORD\" ${registry}"
-                    }
+                    // withCredentials([usernamePassword(credentialsId: registryCredential,
+                    //                                   passwordVariable: 'NEXUS_PASSWORD',
+                    //                                   usernameVariable: 'NEXUS_USER')]) {
+                    //     sh "docker login -u $NEXUS_USER -p \"$NEXUS_PASSWORD\" ${registry}"
+                    // }
 
-                    image.push("latest")
+                    docker.withRegistry(registry, registryCredential)
+
+                    uiImage.push()
+                    uiImage.push("latest")
                 }
             }
         // }
