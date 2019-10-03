@@ -7,7 +7,7 @@ metadata:
     docker-compose: true
 spec:
   containers:
-    - name: docker-compose
+    - name: docker
       image: tm-registry.transitionmanager.net/tds-ci/tm-docker-compose:latest
       command:
       - cat
