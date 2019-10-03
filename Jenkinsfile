@@ -1,29 +1,34 @@
-def tmcontainers = [
-  containerTemplate(
-      name            : 'node',
-      image           : 'tm-registry.transitionmanager.net/tds-ci/tm-node:latest',
-      command         : 'cat',
-      alwaysPullImage : true,
-      ttyEnabled      : true
-  ),
-  containerTemplate(
-        name            : 'docker',
-        image           : 'tm-registry.transitionmanager.net/tds-ci/tm-docker-compose:latest',
-        command         : 'cat',
-        alwaysPullImage : true,
-        ttyEnabled      : true
-    )
-]
-
 def tmlabel = "UI-component-Build${BUILD_NUMBER}-${UUID.randomUUID().toString()}"
+def yaml = """
+apiVersion: v1
+kind: Pod
+metadata:
+  labels:
+    docker-compose: true
+spec:
+  containers:
+    - name: docker-compose
+      image: tm-registry.transitionmanager.net/tds-ci/tm-docker-compose:latest
+      command:
+      - cat
+      tty: true
+      volumeMounts:
+      - mountPath: /var/run/docker.sock
+        name: docker-socket-volume
+      securityContext:
+        allowPrivilegeEscalation: true
+        privileged: true
+  volumes:
+    - name: docker-socket-volume
+      hostPath:
+        path: /var/run/docker.sock
+        type: File
+"""
 
 podTemplate (
     label: tmlabel,
     imagePullSecrets: ['tm-registry'],
-    containers: tmcontainers,
-    volumes: [
-        hostPathVolume(hostPath: '/dev/shm', mountPath: '/dev/shm')
-    ]
+    yaml: yaml
 ) {
     node(tmlabel) {
         def registry = 'tm-registry.transitionmanager.net/tds-ci'
