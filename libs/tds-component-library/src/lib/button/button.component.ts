@@ -7,19 +7,31 @@ import { ClrLoadingState } from '@clr/angular';
 	templateUrl: './button.component.html',
 })
 export class ButtonComponent {
-	private _loading: boolean;
+	private _state: string;
+	private _btnState: ClrLoadingState = ClrLoadingState.DEFAULT;
+	public buttonText: string;
+
 	@Input() icon: string;
 	@Input() theme: string;
+	@Input() small: boolean;
+	@Input() block: boolean;
+	@Input() inverse: boolean;
+	@Input() outline: boolean;
 	@Input() disabled: boolean;
 
 	@Output() action: EventEmitter<any> = new EventEmitter();
 
-	get loading(): boolean {
-		return this._loading;
+	get state(): string {
+		return this._state;
 	}
 	@Input()
-	set loading(loading: boolean) {
-		this._loading = loading;
+	set state(state: string) {
+		this._state = (state || 'default').toUpperCase();
+		if (ClrLoadingState.hasOwnProperty(this._state)) {
+			this._btnState = ClrLoadingState[this._state];
+		} else {
+			this._btnState = ClrLoadingState.DEFAULT;
+		}
 	}
 
 	/**
@@ -27,17 +39,41 @@ export class ButtonComponent {
 	 * @param e : Event
 	 */
 	public buttonAction(e: Event): void {
-		console.log('button was clicked');
 		this.action.next(e);
 	}
 
 	/**
-	 * Get button theme class
-	 * @return string : theme class
+	 * Get button classes
+	 * @return Array
 	 */
-	public buttonTheme(): string {
-		return (this.theme && `btn-${this.theme}`) || '';
-	}
+	public buttonClass(): Array<string> {
+		const classnames = [];
+		if (this.theme) {
+			switch (this.theme) {
+				case 'info':
+				case 'success':
+				case 'danger':
+					if (this.outline) {
+						classnames.push(`btn-${this.theme}-outline`);
+						break;
+					}
+					classnames.push(`btn-${this.theme}`);
+					break;
+				default:
+					classnames.push(`btn-${this.theme}`);
+			}
+			classnames.push(`btn-${this.theme}`);
+		}
+		if (this.small) {
+			classnames.push(`btn-sm`);
+		}
+		if (this.inverse) {
+			classnames.push(`btn-inverse`);
+		}
+		if (this.icon) {
+			classnames.push(`has-icon`);
+		}
 
-	// private loadingBtnState: ClrLoadingState = ClrLoadingState.DEFAULT;
+		return classnames;
+	}
 }

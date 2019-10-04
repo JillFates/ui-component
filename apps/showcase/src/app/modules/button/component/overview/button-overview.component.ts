@@ -6,20 +6,40 @@ import { Component } from '@angular/core';
 	styleUrls: ['./button-overview.component.scss'],
 })
 export class ButtonOverviewComponent {
-	public buttonLoading: boolean;
+	public loadingButton: string;
+	public successButton: string;
+	public loadingSuccessButton: string;
+
 	constructor() {
 		//
-		this.loadingClick();
+		this.setLoading('loading');
 	}
 
 	/**
 	 * Set Loading for 1 second
 	 */
-	public loadingClick(): void {
-		console.log('Loading click');
-		this.buttonLoading = true;
+	public setLoading(buttonName: string): void {
+		this[buttonName + 'Button'] = 'loading';
 		setTimeout(() => {
-			this.buttonLoading = false;
+			this[buttonName + 'Button'] = null;
 		}, 1000);
+	}
+
+	/**
+	 * Set Success for 1 second
+	 */
+	public setSuccess(buttonName: string): void {
+		this[buttonName + 'Button'] = 'success';
+		setTimeout(() => {
+			this[buttonName + 'Button'] = null;
+		}, 1000);
+	}
+
+	/**
+	 * Set Loading for 1 second then set Success for 1 second
+	 */
+	public setLoadSuccess(): void {
+		this.setLoading('loadingSuccess');
+		setTimeout(() => this.setSuccess('loadingSuccess'), 1000);
 	}
 }

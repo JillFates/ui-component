@@ -9,6 +9,11 @@
 	display: inline-block;
 	button {
 		font-size: 12px;
+		line-height: 36px;
+	}
+	button.btn-sm {
+		font-size: 11px;
+		line-height: 24px;
 	}
 }
 
@@ -16,9 +21,11 @@
 	:host {
 		&:not(:first-child) .tds-button {
 			@include square-off-btngroup-btns(left);
+			border-left: 0;
 		}
 		&:not(:last-child) .tds-button {
 			@include square-off-btngroup-btns(right);
+			border-right: 0;
 		}
 	}
 }

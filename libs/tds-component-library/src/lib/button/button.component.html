@@ -1,10 +1,10 @@
 <button
 	class="tds-button btn"
-	[ngClass]="buttonTheme()"
+	[ngClass]="buttonClass()"
 	[disabled]="disabled"
-	[clrLoading]="loading"
+	[clrLoading]="_btnState"
 	(click)="buttonAction($event)"
 >
 	<clr-icon *ngIf="icon" [attr.shape]="icon"></clr-icon>
-	<ng-content></ng-content>
+	<span class="button-label"><ng-content></ng-content></span>
 </button>
