@@ -1,7 +1,7 @@
 import {Component} from '@angular/core';
 
 @Component({
-	selector:  'app-grid-task-manager',
+	selector:  'cv-grid',
 	templateUrl:  './grid-task-manager.component.html',
 	styleUrls:  ['./grid-task-manager.component.scss']
 })

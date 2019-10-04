@@ -2,19 +2,20 @@ import {ModuleWithProviders, NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {FormsModule} from '@angular/forms';
 import {GridModule} from '@progress/kendo-angular-grid';
-import { ButtonsModule } from '@progress/kendo-angular-buttons';
+import {TdsComponentLibraryModule} from '../../../../../libs/tds-component-library/src';
 
 @NgModule({
 	imports: [
-		ButtonsModule
+		// ButtonsModule
 	],
 	declarations: [],
 	exports: [
+		TdsComponentLibraryModule,
 		// Third Party Modules
 		CommonModule,
 		FormsModule,
-		GridModule,
-		ButtonsModule
+		GridModule // ,
+		// ButtonsModule
 	],
 	entryComponents: []
 })

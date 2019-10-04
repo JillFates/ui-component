@@ -4,7 +4,7 @@ import {NgModule} from '@angular/core';
 // Component
 import {GridOverviewComponent} from './component/overview/grid-overview.component';
 import {GridApiComponent} from './component/api/grid-api.component';
-import {GridTaskManagerComponent} from './component/grid-task-manager/grid-task-manager.component';
+import {GridTaskManagerComponent} from '../../../../../../libs/tds-component-library/src/lib/grid-task-manager/grid-task-manager.component';
 
 export class GridRoutingStates {
 	public static readonly GRID_OVERVIEW_COMPONENT_STATE: any = {
