@@ -1,65 +1,91 @@
 <div class="button-overview-component">
-	<h4>Button</h4>
-
-	<p>Button Size</p>
-	<p>
-		<tds-button>Normal</tds-button>
-		<tds-button [small]="true">Small</tds-button>
-	</p>
-
-	<p>Button Size Disabled</p>
-	<p>
-		<tds-button [disabled]="true">Disabled</tds-button>
-		<tds-button [small]="true" [disabled]="true">Small Disabled</tds-button>
-	</p>
-
-	<p>Icon Buttons</p>
-	<p>
-		<tds-button icon="user">With Text</tds-button>
-		<tds-button icon="cog"></tds-button>
-	</p>
-
-	<p>Primary Button Bar</p>
-	<div class="btn-group">
-		<tds-button theme="primary">Button 1</tds-button>
-		<tds-button theme="warning">Button 2</tds-button>
-		<tds-button theme="success">Button 3</tds-button>
+	<h2>Button Component</h2>
+	<div class="clr-row">
+		<div class="clr-col-12">
+			<h3>Code Examples</h3>
+		</div>
+		<div class="clr-col-12">
+			<tds-card title="Button Size">
+				<tds-button>Normal</tds-button>
+				<tds-button [small]="true">Small</tds-button>
+			</tds-card>
+		</div>
+		<div class="clr-col-12">
+			<tds-card title="Button Size Disabled">
+				<tds-button [disabled]="true">Disabled</tds-button>
+				<tds-button [small]="true" [disabled]="true">Small Disabled</tds-button>
+			</tds-card>
+		</div>
+		<div class="clr-col-12">
+			<tds-card title="Icon Button">
+				<tds-button icon="user">With Text</tds-button>
+				<tds-button icon="cog"></tds-button>
+			</tds-card>
+		</div>
+		<div class="clr-col-12">
+			<tds-card title="Primary Button Bar">
+				<div class="btn-group btn-primary">
+					<tds-button theme="primary">Button 1</tds-button>
+					<tds-button theme="warning">Button 2</tds-button>
+					<tds-button theme="success">Button 3</tds-button>
+				</div>
+			</tds-card>
+		</div>
+		<div class="clr-col-12">
+			<tds-card title="Inverse Button Bar">
+				<div class="btn-group" style="background: #333; padding: .5rem">
+					<tds-button [inverse]="true">Button 1</tds-button>
+					<tds-button [inverse]="true">Button 2</tds-button>
+					<tds-button [inverse]="true">Button 3</tds-button>
+				</div>
+			</tds-card>
+		</div>
+		<div class="clr-col-12">
+			<tds-card title="Primary Icon Bar">
+				<div class="btn-group btn-primary">
+					<tds-button icon="home"></tds-button>
+					<tds-button icon="user" theme="danger"></tds-button>
+					<tds-button icon="bars" theme="success"></tds-button>
+					<tds-button icon="ellipsis-horizontal"></tds-button>
+					<tds-button icon="ellipsis-vertical"></tds-button>
+				</div>
+			</tds-card>
+		</div>
+		<div class="clr-col-12">
+			<tds-card title="Flat Icon Bar">
+				<div class="btn-group btn-link">
+					<tds-button icon="home"></tds-button>
+					<tds-button icon="user"></tds-button>
+					<tds-button icon="bars"></tds-button>
+					<tds-button icon="ellipsis-horizontal"></tds-button>
+					<tds-button icon="ellipsis-vertical"></tds-button>
+				</div>
+			</tds-card>
+		</div>
+		<div class="clr-col-12">
+			<tds-card title="State Change">
+				<tds-button [state]="loadingButton" (click)="setLoading('loading')">Loading</tds-button>
+				<tds-button [state]="successButton" (click)="setSuccess('success')">Success</tds-button>
+				<tds-button [state]="loadingSuccessButton" (click)="setLoadSuccess()">Load then Success</tds-button>
+			</tds-card>
+		</div>
+		<div class="clr-col-12">
+			<tds-card title="State Change">
+				<div class="btn-group btn-link">
+					<tds-button [state]="loadingButton" (click)="setLoading('loading')" icon="download"></tds-button>
+					<tds-button [state]="successButton" (click)="setSuccess('success')" icon="download"></tds-button>
+					<tds-button [state]="loadingSuccessButton" (click)="setLoadSuccess()" icon="download"></tds-button>
+				</div>
+			</tds-card>
+		</div>
 	</div>
 
-	<p>Inverse Button Bar</p>
-	<div class="btn-group" style="background: #333; padding: .5rem">
-		<tds-button [inverse]="true">Button 1</tds-button>
-		<tds-button [inverse]="true">Button 2</tds-button>
-		<tds-button [inverse]="true">Button 3</tds-button>
+	<div class="clr-row">
+		<div class="clr-col-12">
+			<h3>Code Examples</h3>
+		</div>
+		<div *ngFor="let example of examples" class="clr-col-12">
+			<tds-card [title]="example.title" [description]="example.description" [code]="example.code"></tds-card>
+		</div>
 	</div>
-
-	<p>Primary Icon Bar</p>
-	<p class="btn-group btn-primary">
-		<tds-button icon="home"></tds-button>
-		<tds-button icon="user" theme="danger"></tds-button>
-		<tds-button icon="bars" theme="success"></tds-button>
-		<tds-button icon="ellipsis-horizontal"></tds-button>
-		<tds-button icon="ellipsis-vertical"></tds-button>
-	</p>
-
-	<p>Flat Icon Bar</p>
-	<p class="btn-group btn-link">
-		<tds-button icon="home"></tds-button>
-		<tds-button icon="user"></tds-button>
-		<tds-button icon="bars"></tds-button>
-		<tds-button icon="ellipsis-horizontal"></tds-button>
-		<tds-button icon="ellipsis-vertical"></tds-button>
-	</p>
-
-	<p>State Change</p>
-	<p>
-		<tds-button [state]="loadingButton" (click)="setLoading('loading')">Loading</tds-button>
-		<tds-button [state]="successButton" (click)="setSuccess('success')">Success</tds-button>
-		<tds-button [state]="loadingSuccessButton" (click)="setLoadSuccess()">Load then Success</tds-button>
-	</p>
-	<p class="btn-group btn-link">
-		<tds-button [state]="loadingButton" (click)="setLoading('loading')" icon="download"></tds-button>
-		<tds-button [state]="successButton" (click)="setSuccess('success')" icon="download"></tds-button>
-		<tds-button [state]="loadingSuccessButton" (click)="setLoadSuccess()" icon="download"></tds-button>
-	</p>
 </div>

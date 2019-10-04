@@ -5,8 +5,4 @@ import { Component } from '@angular/core';
 	templateUrl: './button-api.component.html',
 	styleUrls: ['./button-api.component.scss'],
 })
-export class ButtonApiComponent {
-	constructor() {
-		//
-	}
-}
+export class ButtonApiComponent {}
