@@ -2,10 +2,10 @@ import {Component} from '@angular/core';
 
 @Component({
 	selector:  'cv-grid',
-	templateUrl:  './grid-task-manager.component.html',
-	styleUrls:  ['./grid-task-manager.component.scss']
+	templateUrl:  './grid.component.html',
+	styleUrls:  ['./grid.component.scss']
 })
-export class GridTaskManagerComponent {
+export class GridComponent {
 	public tasks = {
 		rows: [
 			{

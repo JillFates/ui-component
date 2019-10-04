@@ -4,7 +4,7 @@ import {NgModule} from '@angular/core';
 // Component
 import {GridOverviewComponent} from './component/overview/grid-overview.component';
 import {GridApiComponent} from './component/api/grid-api.component';
-import {GridTaskManagerComponent} from '../../../../../../libs/tds-component-library/src/lib/grid-task-manager/grid-task-manager.component';
+import {GridComponent} from '../../../../../../libs/tds-component-library/src/lib/grid/grid.component';
 
 export class GridRoutingStates {
 	public static readonly GRID_OVERVIEW_COMPONENT_STATE: any = {
@@ -40,7 +40,7 @@ export const ComponentsRoutes: Routes = [
 		data: {
 			title: 'Grid Task Manager Component'
 		},
-		component: GridTaskManagerComponent,
+		component: GridComponent,
 		resolve: {}
 	}
 ];

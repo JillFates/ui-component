@@ -5,7 +5,7 @@ import {RouterModule} from '@angular/router';
 import {ClarityModule} from '@clr/angular';
 import {GridModule} from '@progress/kendo-angular-grid';
 import { ButtonsModule } from '@progress/kendo-angular-buttons';
-import {GridTaskManagerComponent} from './grid-task-manager/grid-task-manager.component';
+import {GridComponent} from './grid/grid.component';
 
 @NgModule({
 	imports: [
@@ -17,10 +17,10 @@ import {GridTaskManagerComponent} from './grid-task-manager/grid-task-manager.co
 		ButtonsModule
 	],
 	declarations: [
-		GridTaskManagerComponent
+		GridComponent
 	],
 	exports: [
-		GridTaskManagerComponent
+		GridComponent
 	]
 })
 export class TdsComponentLibraryModule {
