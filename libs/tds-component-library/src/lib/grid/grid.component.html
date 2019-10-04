@@ -1,4 +1,4 @@
-<div class="grid-task-manager-component">
+<div class="grid-component">
     <kendo-grid
             [filterable]="true"
             [sortable]="true"
@@ -6,7 +6,7 @@
             [skip]="5"
             [resizable]="true"
             [pageable]="{pageSizes: [5, 25, 50, 100], info: true}"
-            [data]="tasks.rows" [columnMenu]="true">
+            [data]="data.rows" [columnMenu]="true">
 
         <ng-template kendoGridColumnMenuTemplate let-service="service" let-column="column">
             <div class="k-column-list">
