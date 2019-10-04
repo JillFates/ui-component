@@ -1,0 +1,44 @@
+.grid-task-manager-component {
+
+  .k-button {
+    span.k-icon {
+      margin-right: 10px;
+    }
+  }
+
+  .buttons-group {
+    button {
+      margin: 5px;
+    }
+  }
+
+  .action-button {
+    display: flex;
+    justify-content: center;
+    cursor: pointer;
+  }
+
+  input.text-filter {
+    width: 95%;
+  }
+
+  .clear-filter {
+    position: absolute;
+    margin-left: -18px;
+    margin-top: 4px;
+    cursor: pointer;
+  }
+
+  .reload-button {
+    position: absolute;
+    right: 0;
+  }
+
+  .actionable-column {
+    font-weight: bold;
+    cursor: pointer;
+  }
+
+}
+
+

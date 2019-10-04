@@ -13,7 +13,7 @@ export class GridOverviewComponent {
 		},
 		{
 			name: 'Cristian',
-			role: 'QA Team'
+			role: 'QA Teams'
 		},
 		{
 			name: 'Augusto',
