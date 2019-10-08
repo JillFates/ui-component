@@ -14,9 +14,9 @@ export class ButtonComponent {
 	@Input() icon: string;
 	@Input() theme: string;
 	@Input() small: boolean;
-	@Input() block: boolean;
 	@Input() inverse: boolean;
 	@Input() outline: boolean;
+	@Input() flat: boolean;
 	@Input() disabled: boolean;
 
 	@Output() action: EventEmitter<any> = new EventEmitter();
@@ -49,20 +49,13 @@ export class ButtonComponent {
 	public buttonClass(): Array<string> {
 		const classnames = [];
 		if (this.theme) {
-			switch (this.theme) {
-				case 'info':
-				case 'success':
-				case 'danger':
-					if (this.outline) {
-						classnames.push(`btn-${this.theme}-outline`);
-						break;
-					}
-					classnames.push(`btn-${this.theme}`);
-					break;
-				default:
-					classnames.push(`btn-${this.theme}`);
-			}
 			classnames.push(`btn-${this.theme}`);
+		}
+		if (this.outline) {
+			classnames.push(`btn-outline`);
+		}
+		if (this.flat) {
+			classnames.push(`btn-link`);
 		}
 		if (this.small) {
 			classnames.push(`btn-sm`);

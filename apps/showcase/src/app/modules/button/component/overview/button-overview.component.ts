@@ -22,11 +22,18 @@ export class ButtonOverviewComponent {
 		},
 		{
 			title: 'Button Themes',
-			description: 'Available theme names: primary, warning, success',
+			description:
+				'Available theme names: primary, warning, danger, success. Set the outline to true to use a theme in outline mode.',
 			code: `
-<tds-button theme="primary">Submit</tds-button>
-<tds-button theme="warning">Delete</tds-button>
-<tds-button theme="success">OK</tds-button>
+<tds-button theme="primary">Primary</tds-button>
+<tds-button theme="warning">Warning</tds-button>
+<tds-button theme="danger">Danger</tds-button>
+<tds-button theme="success">Success</tds-button>
+
+<tds-button>Default</tds-button>
+<tds-button theme="warning" [outline]="true">Warning</tds-button>
+<tds-button theme="danger" [outline]="true">Danger</tds-button>
+<tds-button theme="success" [outline]="true">Success</tds-button>
 `,
 		},
 		{
@@ -43,6 +50,29 @@ export class ButtonOverviewComponent {
 			code: `
 <tds-button icon="cog">With Text</tds-button>
 <tds-button icon="cog"></tds-button>
+`,
+		},
+		{
+			title: 'Button Bar',
+			description:
+				'Add a wrapping element with a "btn-group" class to create a button bar. https://v2.clarity.design/button-group',
+			code: `
+<div class="btn-group btn-primary">
+	<tds-button theme="primary">Button 1</tds-button>
+	<tds-button theme="warning">Button 2</tds-button>
+	<tds-button theme="danger">Button 2</tds-button>
+	<tds-button theme="success">Button 3</tds-button>
+</div>
+`,
+		},
+		{
+			title: 'State Changing',
+			description:
+				'Changing the buttons state attribute from "default" to "loading" or "success" ' +
+				'will add a spinner or check icon animation to the button.',
+			code: `
+<tds-button state="loading">Loading</tds-button>
+<tds-button state="success">Success</tds-button>
 `,
 		},
 	];

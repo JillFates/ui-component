@@ -4,16 +4,33 @@
 	border-top-#{$dir}-radius: 0;
 	border-bottom-#{$dir}-radius: 0;
 }
+@mixin outlineHover($color) {
+	border-color: $color;
+	background-color: transparent;
+	color: $color;
+	&:hover {
+		background-color: rgba($color, 0.1);
+	}
+}
+@mixin backgroundHover($background, $text: $color-text-inverse) {
+	border-color: $background;
+	background-color: $background;
+	color: $text;
+	&:hover {
+		background-color: darken($background, 10%);
+	}
+}
 
 :host {
 	display: inline-block;
-	button {
+	.btn {
 		font-size: 12px;
 		line-height: 36px;
-	}
-	button.btn-sm {
-		font-size: 11px;
-		line-height: 24px;
+		min-width: 2rem;
+		&.btn-sm {
+			font-size: 11px;
+			line-height: 24px;
+		}
 	}
 }
 
@@ -27,5 +44,60 @@
 			@include square-off-btngroup-btns(right);
 			border-right: 0;
 		}
+	}
+}
+
+.btn-sm :host {
+	.btn {
+		font-size: 11px;
+		line-height: 24px;
+	}
+}
+
+.btn-primary :host .btn,
+:host .btn.btn-primary {
+	@include backgroundHover($color-active);
+	&.btn-outline {
+		@include outlineHover($color-active);
+	}
+}
+
+.btn-danger .btn,
+.btn-error .btn,
+.btn.btn-danger,
+.btn.btn-error {
+	@include backgroundHover($color-danger);
+	&.btn-outline {
+		@include outlineHover($color-danger);
+	}
+}
+
+.btn-warning .btn,
+.btn.btn-warning {
+	@include backgroundHover($color-warning);
+	&.btn-outline {
+		@include outlineHover($color-warning);
+	}
+}
+
+.btn-success .btn,
+.btn.btn-success {
+	@include backgroundHover($color-success);
+	&.btn-outline {
+		@include outlineHover($color-success);
+	}
+}
+
+.btn-outline :host .btn {
+	@include outlineHover($color-active);
+	&.btn-success {
+		@include outlineHover($color-success);
+	}
+	&.btn-error,
+	&.btn-danger {
+		@include outlineHover($color-danger);
+	}
+	&.btn-warning {
+		@include outlineHover($color-warning);
 	}
 }
