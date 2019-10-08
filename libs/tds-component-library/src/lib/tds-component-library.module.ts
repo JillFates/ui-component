@@ -6,6 +6,7 @@ import {ClarityModule} from '@clr/angular';
 import {GridModule} from '@progress/kendo-angular-grid';
 import { ButtonsModule } from '@progress/kendo-angular-buttons';
 import {GridComponent} from './grid/grid.component';
+import {GridAllAssetsComponent} from './grid-all-assets/grid-all-assets.component';
 
 @NgModule({
 	imports: [
@@ -17,10 +18,12 @@ import {GridComponent} from './grid/grid.component';
 		ButtonsModule
 	],
 	declarations: [
-		GridComponent
+		GridComponent,
+		GridAllAssetsComponent
 	],
 	exports: [
-		GridComponent
+		GridComponent,
+		GridAllAssetsComponent
 	]
 })
 export class TdsComponentLibraryModule {
