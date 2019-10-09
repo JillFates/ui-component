@@ -412,6 +412,7 @@ export class GridOverviewComponent {
 				comment: '',
 				userSelectedCol0: 'general',
 				userSelectedCol1: '30/09/2019 04:31 PM',
+				checked: false
 			},
 			{
 				id: 236975,
@@ -419,6 +420,7 @@ export class GridOverviewComponent {
 				comment: '',
 				userSelectedCol0: 'general',
 				userSelectedCol1: '30/09/2019 04:29 PM',
+				checked: false
 			},
 			{
 				id: 236979,
@@ -426,6 +428,7 @@ export class GridOverviewComponent {
 				comment: '',
 				userSelectedCol0: 'general',
 				userSelectedCol1: '29/09/2019 04:29 PM',
+				checked: false
 			},
 			{
 				id: 236955,
@@ -433,6 +436,7 @@ export class GridOverviewComponent {
 				comment: '',
 				userSelectedCol0: 'general',
 				userSelectedCol1: '30/09/2019 04:31 PM',
+				checked: false
 			},
 			{
 				id: 236975,
@@ -440,6 +444,7 @@ export class GridOverviewComponent {
 				comment: '',
 				userSelectedCol0: 'general',
 				userSelectedCol1: '30/09/2019 04:29 PM',
+				checked: false
 			},
 			{
 				id: 236979,
@@ -447,6 +452,7 @@ export class GridOverviewComponent {
 				comment: '',
 				userSelectedCol0: 'general',
 				userSelectedCol1: '29/09/2019 04:29 PM',
+				checked: false
 			},
 			{
 				id: 236955,
@@ -454,6 +460,7 @@ export class GridOverviewComponent {
 				comment: '',
 				userSelectedCol0: 'general',
 				userSelectedCol1: '30/09/2019 04:31 PM',
+				checked: false
 			},
 			{
 				id: 236975,
@@ -461,6 +468,7 @@ export class GridOverviewComponent {
 				comment: '',
 				userSelectedCol0: 'general',
 				userSelectedCol1: '30/09/2019 04:29 PM',
+				checked: false
 			}
 		],
 		totalCount: 8,

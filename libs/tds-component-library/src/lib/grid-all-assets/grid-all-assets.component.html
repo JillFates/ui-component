@@ -19,7 +19,9 @@
 
         <kendo-grid-column width="30" [columnMenu]="false">
             <ng-template kendoGridCellTemplate let-dataItem let-rowIndex="rowIndex">
-                <input type="checkbox" id="checkbox_{{dataItem.id}}" />
+                <input type="checkbox" id="checkbox_{{dataItem.id}}"
+                       [(ngModel)]="dataItem.checked"
+                       (change)="selectRow(dataItem, $event.target.checked)" />
             </ng-template>
         </kendo-grid-column>
 
@@ -65,17 +67,17 @@
                     <span class="title">Create Task</span>
                 </button>
 
-                <button kendoButton>
+                <button kendoButton [disabled]="!selectedRows()">
                     <span class="k-icon k-i-edit"></span>
                     <span class="title">Bulk Action</span>
                 </button>
 
-                <span>
-                    <span>5</span> Assets selected
+                <span *ngIf="selectedRows(); let rowsSelected">
+                    <span class="badge">{{rowsSelected}}</span> Assets selected
                 </span>
 
                 <div class="right-toolbar-action">
-                    <button kendoButton [disabled]="true">
+                    <button kendoButton [disabled]="!hasFilterApplied()" (click)="onClearFilters()">
                         <span class="k-icon k-i-close"></span>
                         <span class="title">Clear filters</span>
                     </button>
