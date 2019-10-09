@@ -119,6 +119,9 @@
 		</div>
 		<div class="clr-col-12">
 			<tds-card title="State Change">
+				<p><tds-button state="loading">Loading</tds-button> Loading state shows until it has changed.</p>
+				<p><tds-button state="success">Success</tds-button> Success state only shows for a moment.</p>
+				<hr />
 				<tds-button [state]="loadingButton" (click)="setLoading('loading')">Loading</tds-button>
 				<tds-button [state]="successButton" (click)="setSuccess('success')">Success</tds-button>
 				<tds-button [state]="loadingSuccessButton" (click)="setLoadSuccess()">Load then Success</tds-button>
