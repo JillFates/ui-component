@@ -28,8 +28,11 @@
         <kendo-grid-column width="100" [filterable]="false" [columnMenu]="false">
                 <ng-template kendoGridCellTemplate let-dataItem let-rowIndex="rowIndex">
                     <div class="action-button">
-                        <button kendoButton look="flat" icon="pencil"></button>
-                        <button kendoButton look="flat" icon="table-align-top-center"></button>
+                        <button kendoButton look="flat">
+                            <clr-icon shape="pencil"></clr-icon>
+                        </button>
+                        <button kendoButton look="flat" icon="table-align-top-center">
+                        </button>
                         <button kendoButton look="flat" icon="comment"></button>
                         <button kendoButton look="flat" icon="copy"></button>
                     </div>
