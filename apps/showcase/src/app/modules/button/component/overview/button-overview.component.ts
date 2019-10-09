@@ -22,6 +22,17 @@ export class ButtonOverviewComponent {
 			code: `<tds-button>Submit</tds-button>`,
 		},
 		{
+			title: 'Button Types',
+			description: 'adding a type="submit" will allow the button to submit a form.',
+			code: `
+<form (ngSubmit)="formSubmitCounter()">
+	<p>Form Submit Count: {{ submitCount }}</p>
+	<p>Submit type: <tds-button type="submit">Submit</tds-button></p>
+	<p>Button type: <tds-button>Button</tds-button></p>
+</form>
+`,
+		},
+		{
 			title: 'Button Themes',
 			description:
 				'Available theme names: primary, warning, danger, success. Set the outline to true to use a theme in outline mode.',

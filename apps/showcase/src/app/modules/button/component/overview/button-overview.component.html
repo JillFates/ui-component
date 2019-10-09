@@ -6,15 +6,6 @@
 			<h3>Examples</h3>
 		</div>
 		<div class="clr-col-12">
-			<tds-card title="Button Types">
-				<form (ngSubmit)="formSubmitCounter()">
-					<p>Form Submit Count: {{ submitCount }}</p>
-					<p>Submit type: <tds-button type="submit">Submit</tds-button></p>
-					<p>Button type: <tds-button>Button</tds-button></p>
-				</form>
-			</tds-card>
-		</div>
-		<div class="clr-col-12">
 			<tds-card title="Button Size">
 				<tds-button>Normal</tds-button>
 				<tds-button [small]="true">Small</tds-button>
@@ -27,15 +18,12 @@
 			</tds-card>
 		</div>
 		<div class="clr-col-12">
-			<tds-card title="Icon Button">
-				<tds-button icon="user">With Text</tds-button>
-				<tds-button icon="cog"></tds-button>
-			</tds-card>
-		</div>
-		<div class="clr-col-12">
-			<tds-card title="Flat Button">
-				<tds-button [flat]="true">Flat Button</tds-button>
-				<tds-button icon="cog" [flat]="true"></tds-button>
+			<tds-card title="Button Types">
+				<form (ngSubmit)="formSubmitCounter()">
+					<p>Form Submit Count: {{ submitCount }}</p>
+					<p>Submit type: <tds-button type="submit">Submit</tds-button></p>
+					<p>Button type: <tds-button>Button</tds-button></p>
+				</form>
 			</tds-card>
 		</div>
 		<div class="clr-col-12">
@@ -52,6 +40,18 @@
 				<tds-button theme="warning" [outline]="true">Warning</tds-button>
 				<tds-button theme="danger" [outline]="true">Danger</tds-button>
 				<tds-button theme="success" [outline]="true">Success</tds-button>
+			</tds-card>
+		</div>
+		<div class="clr-col-12">
+			<tds-card title="Icon Button">
+				<tds-button icon="user">With Text</tds-button>
+				<tds-button icon="cog"></tds-button>
+			</tds-card>
+		</div>
+		<div class="clr-col-12">
+			<tds-card title="Flat Button">
+				<tds-button [flat]="true">Flat Button</tds-button>
+				<tds-button icon="cog" [flat]="true"></tds-button>
 			</tds-card>
 		</div>
 		<div class="clr-col-12">
