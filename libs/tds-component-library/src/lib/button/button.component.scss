@@ -32,6 +32,10 @@
 			line-height: 24px;
 		}
 	}
+	&[type='reset'],
+	&[type='submit'] {
+		-webkit-appearance: none;
+	}
 }
 
 .btn-group {

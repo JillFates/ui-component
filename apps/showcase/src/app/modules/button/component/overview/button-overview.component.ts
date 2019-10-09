@@ -11,6 +11,7 @@ interface CodeExample {
 	styleUrls: ['./button-overview.component.scss'],
 })
 export class ButtonOverviewComponent {
+	public submitCount = 0;
 	public loadingButton: string;
 	public successButton: string;
 	public loadingSuccessButton: string;
@@ -80,6 +81,14 @@ export class ButtonOverviewComponent {
 	constructor() {
 		//
 		this.setLoading('loading');
+	}
+
+	/**
+	 * Counts the number of submits
+	 */
+	public formSubmitCounter(): void {
+		this.submitCount++;
+		console.log(this.submitCount);
 	}
 
 	/**

@@ -6,6 +6,15 @@
 			<h3>Examples</h3>
 		</div>
 		<div class="clr-col-12">
+			<tds-card title="Button Types">
+				<form (ngSubmit)="formSubmitCounter()">
+					<p>Form Submit Count: {{ submitCount }}</p>
+					<p>Submit type: <tds-button type="submit">Submit</tds-button></p>
+					<p>Button type: <tds-button>Button</tds-button></p>
+				</form>
+			</tds-card>
+		</div>
+		<div class="clr-col-12">
 			<tds-card title="Button Size">
 				<tds-button>Normal</tds-button>
 				<tds-button [small]="true">Small</tds-button>

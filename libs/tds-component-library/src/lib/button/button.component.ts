@@ -8,9 +8,10 @@ import { ClrLoadingState } from '@clr/angular';
 })
 export class ButtonComponent {
 	private _state: string;
-	private _btnState: ClrLoadingState = ClrLoadingState.DEFAULT;
+	public btnState: ClrLoadingState = ClrLoadingState.DEFAULT;
 	public buttonText: string;
 
+	@Input() type: string;
 	@Input() icon: string;
 	@Input() theme: string;
 	@Input() small: boolean;
@@ -28,9 +29,9 @@ export class ButtonComponent {
 	set state(state: string) {
 		this._state = (state || 'default').toUpperCase();
 		if (ClrLoadingState.hasOwnProperty(this._state)) {
-			this._btnState = ClrLoadingState[this._state];
+			this.btnState = ClrLoadingState[this._state];
 		} else {
-			this._btnState = ClrLoadingState.DEFAULT;
+			this.btnState = ClrLoadingState.DEFAULT;
 		}
 	}
 

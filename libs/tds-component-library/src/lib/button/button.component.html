@@ -1,8 +1,9 @@
 <button
+	[type]="type || 'button'"
 	class="tds-button btn"
 	[ngClass]="buttonClass()"
 	[disabled]="disabled"
-	[clrLoading]="_btnState"
+	[clrLoading]="btnState"
 	(click)="buttonAction($event)"
 >
 	<clr-icon *ngIf="icon" [attr.shape]="icon"></clr-icon>
