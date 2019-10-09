@@ -7,6 +7,7 @@
             [resizable]="true"
             [pageable]="{pageSizes: [5, 25, 50, 100], info: true}"
             [data]="data.rows" [columnMenu]="true">
+
         <ng-template kendoGridColumnMenuTemplate let-service="service" let-column="column">
             <div class="k-column-list">
                 <label class="k-column-list-item" *ngFor="let menu of columnMenu">
@@ -16,10 +17,19 @@
             </div>
         </ng-template>
 
-        <kendo-grid-column width="40" [filterable]="false" [columnMenu]="false">
+        <kendo-grid-column width="30" [columnMenu]="false">
+            <ng-template kendoGridCellTemplate let-dataItem let-rowIndex="rowIndex">
+                <input type="checkbox" id="checkbox_{{dataItem.id}}" />
+            </ng-template>
+        </kendo-grid-column>
+
+        <kendo-grid-column width="100" [filterable]="false" [columnMenu]="false">
                 <ng-template kendoGridCellTemplate let-dataItem let-rowIndex="rowIndex">
                     <div class="action-button">
-                        <span class="k-icon k-i-pencil"></span>
+                        <button kendoButton look="flat" icon="pencil"></button>
+                        <button kendoButton look="flat" icon="table-align-top-center"></button>
+                        <button kendoButton look="flat" icon="comment"></button>
+                        <button kendoButton look="flat" icon="copy"></button>
                     </div>
                 </ng-template>
         </kendo-grid-column>
@@ -60,18 +70,25 @@
                     <span class="title">Bulk Action</span>
                 </button>
 
-                <button kendoButton [disabled]="true">
-                    <span class="k-icon k-i-close"></span>
-                    <span class="title">Clear filters</span>
-                </button>
+                <span>
+                    <span>5</span> Assets selected
+                </span>
 
-                <button kendoButton [look]="'flat'" class="reload-button">
-                    <span class="k-icon k-i-reload"></span>
-                </button>
+                <div class="right-toolbar-action">
+                    <button kendoButton [disabled]="true">
+                        <span class="k-icon k-i-close"></span>
+                        <span class="title">Clear filters</span>
+                    </button>
+
+                    <button kendoButton [look]="'flat'">
+                        <span class="k-icon k-i-reload"></span>
+                    </button>
+                </div>
             </div>
         </ng-template>
 
         <!-- Row detail -->
+        <!--
         <ng-template kendoGridDetailTemplate let-dataItem>
             <section class="buttons-group">
                 <button kendoButton>
@@ -109,5 +126,6 @@
                 </button>
             </section>
         </ng-template>
+        -->
     </kendo-grid>
 </div>

@@ -1,16 +1,15 @@
 .grid-all-assets-component {
-  .k-button {
-    span.k-icon {
-      margin-right: 10px;
-    }
-  }
 
   .buttons-group {
     button {
       margin: 5px;
+      span.k-icon {
+        margin-right: 10px;
+      }
     }
   }
 
+  input[type=checkbox],
   .action-button {
     display: flex;
     justify-content: center;
@@ -28,7 +27,8 @@
     cursor: pointer;
   }
 
-  .reload-button {
+  .right-toolbar-action {
+    display: inline;
     position: absolute;
     right: 0;
   }

@@ -6,7 +6,7 @@ import {Component} from '@angular/core';
 	styleUrls: ['./grid-overview.component.scss']
 })
 export class GridOverviewComponent {
-	public data = {
+	public dataTaskGrid = {
 		rows: [
 			{
 				id: 236955,
@@ -307,7 +307,7 @@ export class GridOverviewComponent {
 		],
 		totalCount: 2,
 	};
-	public columnModel = [
+	public columnModelTaskGrid = [
 		{
 			columnMenu: false,
 			field: 'taskNumber',
@@ -403,6 +403,109 @@ export class GridOverviewComponent {
 		'Label 9',
 		'Label 10'
 	];
+
+	public dataAssetsGrid = {
+		rows: [
+			{
+				id: 236955,
+				assetName: 'A1 PDU A',
+				comment: '',
+				userSelectedCol0: 'general',
+				userSelectedCol1: '30/09/2019 04:31 PM',
+			},
+			{
+				id: 236975,
+				assetName: 'A1 PDU B',
+				comment: '',
+				userSelectedCol0: 'general',
+				userSelectedCol1: '30/09/2019 04:29 PM',
+			},
+			{
+				id: 236979,
+				assetName: 'A1 PDU C',
+				comment: '',
+				userSelectedCol0: 'general',
+				userSelectedCol1: '29/09/2019 04:29 PM',
+			},
+			{
+				id: 236955,
+				assetName: 'A1 PDU D',
+				comment: '',
+				userSelectedCol0: 'general',
+				userSelectedCol1: '30/09/2019 04:31 PM',
+			},
+			{
+				id: 236975,
+				assetName: 'A1 PDU E',
+				comment: '',
+				userSelectedCol0: 'general',
+				userSelectedCol1: '30/09/2019 04:29 PM',
+			},
+			{
+				id: 236979,
+				assetName: 'A1 PDU F',
+				comment: '',
+				userSelectedCol0: 'general',
+				userSelectedCol1: '29/09/2019 04:29 PM',
+			},
+			{
+				id: 236955,
+				assetName: 'A1 PDU F',
+				comment: '',
+				userSelectedCol0: 'general',
+				userSelectedCol1: '30/09/2019 04:31 PM',
+			},
+			{
+				id: 236975,
+				assetName: 'A1 PDU G',
+				comment: '',
+				userSelectedCol0: 'general',
+				userSelectedCol1: '30/09/2019 04:29 PM',
+			}
+		],
+		totalCount: 8,
+	};
+
+	public columnModelAssetsGrid = [
+		{
+			columnMenu: false,
+			field: 'assetName',
+			filterable: true,
+			title: 'Name',
+			locked: false,
+			width: 160,
+			filter: null,
+			isActionable: true
+		},
+		{
+			columnMenu: false,
+			field: 'comment',
+			filterable: true,
+			title: 'Description',
+			locked: false,
+			width: 160,
+			filter: null
+		},
+		{
+			columnMenu: true,
+			field: 'userSelectedCol0',
+			filterable: true,
+			title: 'Category',
+			locked: false,
+			width: 160,
+			filter: null
+		},
+		{
+			columnMenu: false,
+			field: 'userSelectedCol1',
+			filterable: true,
+			title: 'Last Updated',
+			locked: false,
+			width: 170,
+			filter: null
+		}
+	];
+
 	constructor() {
 		//
 	}
