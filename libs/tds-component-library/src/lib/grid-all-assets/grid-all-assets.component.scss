@@ -1,0 +1,43 @@
+.grid-all-assets-component {
+
+  .buttons-group {
+    button {
+      margin: 5px;
+      span.k-icon {
+        margin-right: 10px;
+      }
+    }
+  }
+
+  input[type=checkbox],
+  .action-button {
+    display: flex;
+    justify-content: center;
+    cursor: pointer;
+  }
+
+  input.text-filter {
+    width: 95%;
+  }
+
+  .clear-filter {
+    position: absolute;
+    margin-left: -18px;
+    margin-top: 4px;
+    cursor: pointer;
+  }
+
+  .right-toolbar-action {
+    display: inline;
+    position: absolute;
+    right: 0;
+  }
+
+  .actionable-column {
+    font-weight: bold;
+    cursor: pointer;
+  }
+
+}
+
+

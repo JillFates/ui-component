@@ -9,6 +9,7 @@ import {CardComponent} from './card/card.component';
 import {DropdownComponent} from './dropdown/dropdown.component';
 import {ButtonComponent} from './button/button.component';
 import {GridComponent} from './grid/grid.component';
+import {GridAllAssetsComponent} from './grid-all-assets/grid-all-assets.component';
 import {ButtonsModule} from '@progress/kendo-angular-buttons';
 
 @NgModule({
@@ -22,6 +23,8 @@ import {ButtonsModule} from '@progress/kendo-angular-buttons';
 		GridModule
 	],
 	declarations: [
+		GridComponent,
+		GridAllAssetsComponent,
 		CardComponent,
 		DropdownComponent,
 		ButtonComponent,
@@ -31,7 +34,8 @@ import {ButtonsModule} from '@progress/kendo-angular-buttons';
 		CardComponent,
 		DropdownComponent,
 		ButtonComponent,
-		GridComponent
+		GridComponent,
+		GridAllAssetsComponent
 	]
 })
 export class TdsComponentLibraryModule {

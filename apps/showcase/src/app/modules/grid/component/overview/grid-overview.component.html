@@ -1,9 +1,16 @@
 <div class="grid-overview-component">
-    <h4>Grid</h4>
+    <h4>Task Details Grid</h4>
     <p>
         Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque eu odio nisi. Vestibulum dignissim eget massa sit amet feugiat. Quisque auctor mattis quam eu suscipit. Morbi ipsum risus, feugiat vitae sem at, tincidunt elementum magna
     </p>
 
-    <tds-grid [data]="data" [columnModel]="columnModel" [columnMenu]="columnMenu"></tds-grid>
+    <tds-grid [data]="dataTaskGrid" [columnModel]="columnModelTaskGrid" [columnMenu]="columnMenu"></tds-grid>
+
+    <h4>All Assets Grid</h4>
+    <p>
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque eu odio nisi. Vestibulum dignissim eget massa sit amet feugiat. Quisque auctor mattis quam eu suscipit. Morbi ipsum risus, feugiat vitae sem at, tincidunt elementum magna
+    </p>
+
+    <tds-grid-all-assets [data]="dataAssetsGrid" [columnModel]="columnModelAssetsGrid" [columnMenu]="columnMenu"></tds-grid-all-assets>
 </div>
 
