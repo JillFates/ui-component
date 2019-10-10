@@ -7,7 +7,6 @@ import {ClarityModule} from '@clr/angular';
 import {CardComponent} from './card/card.component';
 import {DropdownComponent} from './dropdown/dropdown.component';
 import {ButtonComponent} from './button/button.component';
-import {GridAllAssetsComponent} from './grid-all-assets/grid-all-assets.component';
 
 @NgModule({
 	imports: [
@@ -18,7 +17,6 @@ import {GridAllAssetsComponent} from './grid-all-assets/grid-all-assets.componen
 		ClarityModule
 	],
 	declarations: [
-		GridAllAssetsComponent,
 		CardComponent,
 		DropdownComponent,
 		ButtonComponent
@@ -26,8 +24,7 @@ import {GridAllAssetsComponent} from './grid-all-assets/grid-all-assets.componen
 	exports: [
 		CardComponent,
 		DropdownComponent,
-		ButtonComponent,
-		GridAllAssetsComponent
+		ButtonComponent
 	]
 })
 export class TdsComponentLibraryModule {
