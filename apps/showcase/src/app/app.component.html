@@ -1,40 +1,63 @@
 <div class="main-container">
-    <div class="alert alert-app-level">
-
-    </div>
-    <header class="header header-6">
-        <div class="branding">
-            TDS LOGO
-        </div>
-        <div class="header-nav">
-            <a href="javascript://" class="active nav-link nav-text">Components</a>
-            <a href="javascript://" class="nav-link nav-text">Services</a>
-            <a href="javascript://" class="nav-link nav-text">Pipes</a>
-            <a href="javascript://" class="nav-link nav-text">Modules</a>
-        </div>
-    </header>
-    <div class="content-container">
-        <nav class="sidenav">
-            <section class="sidenav-content">
-                <section class="nav-group">
-                    <label for="tabexample2">TDS Components</label>
-                    <ul class="nav-list">
-                        <li><a class="nav-link active" routerLink="component/grid/overview">Grid</a></li>
-                        <li><a class="nav-link">other component</a></li>
-                    </ul>
-                </section>
-            </section>
-        </nav>
-        <div class="content-area">
-            <clr-tabs>
-                <clr-tab>
-                    <button (click)="routeTo(sectionTab.OVERVIEW)" clrTabLink>OVERVIEW</button>
-                </clr-tab>
-                <clr-tab>
-                    <button (click)="routeTo(sectionTab.API)" clrTabLink>API</button>
-                </clr-tab>
-            </clr-tabs>
-            <router-outlet></router-outlet>
-        </div>
-    </div>
+	<div class="alert alert-app-level"></div>
+	<header class="header header-6">
+		<div class="branding">
+			TDS LOGO
+		</div>
+		<div class="header-nav">
+			<a href="javascript://" class="active nav-link nav-text"
+				>Components</a
+			>
+			<a href="javascript://" class="nav-link nav-text">Services</a>
+			<a href="javascript://" class="nav-link nav-text">Pipes</a>
+			<a href="javascript://" class="nav-link nav-text">Modules</a>
+		</div>
+	</header>
+	<div class="content-container">
+		<nav class="sidenav">
+			<section class="sidenav-content">
+				<section class="nav-group">
+					<label for="tabexample2">TDS Components</label>
+					<ul class="nav-list">
+						<li>
+							<a
+								class="nav-link"
+								routerLink="component/grid/overview"
+								>Grid</a
+							>
+						</li>
+						<li>
+							<a
+								class="nav-link"
+								routerLink="component/dropdown/overview"
+								>Dropdown</a
+							>
+						</li>
+						<li>
+							<a
+								class="nav-link"
+								routerLink="component/button/overview"
+								>Button</a
+							>
+						</li>
+					</ul>
+				</section>
+			</section>
+		</nav>
+		<div class="content-area">
+			<clr-tabs>
+				<clr-tab>
+					<button (click)="routeTo(sectionTab.OVERVIEW)" clrTabLink>
+						OVERVIEW
+					</button>
+				</clr-tab>
+				<clr-tab>
+					<button (click)="routeTo(sectionTab.API)" clrTabLink>
+						API
+					</button>
+				</clr-tab>
+			</clr-tabs>
+			<router-outlet></router-outlet>
+		</div>
+	</div>
 </div>

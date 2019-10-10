@@ -1,7 +1,7 @@
 import {Component, Input} from '@angular/core';
 
 @Component({
-	selector:  'cv-grid',
+	selector:  'tds-grid',
 	templateUrl:  './grid.component.html',
 	styleUrls:  ['./grid.component.scss']
 })
