@@ -20,6 +20,15 @@
 		background-color: darken($background, 10%);
 	}
 }
+@mixin buttonEffect($color) {
+	@include backgroundHover($color);
+	&:active {
+		box-shadow: 0 2px 0 0 darken($color, 20%) inset;
+	}
+	&.btn-outline {
+		@include outlineHover($color);
+	}
+}
 
 :host {
 	display: inline-block;
@@ -60,36 +69,24 @@
 
 .btn-primary :host .btn,
 :host .btn.btn-primary {
-	@include backgroundHover($color-active);
-	&.btn-outline {
-		@include outlineHover($color-active);
-	}
+	@include buttonEffect($color-active);
 }
 
 .btn-danger .btn,
 .btn-error .btn,
 .btn.btn-danger,
 .btn.btn-error {
-	@include backgroundHover($color-danger);
-	&.btn-outline {
-		@include outlineHover($color-danger);
-	}
+	@include buttonEffect($color-danger);
 }
 
 .btn-warning .btn,
 .btn.btn-warning {
-	@include backgroundHover($color-warning);
-	&.btn-outline {
-		@include outlineHover($color-warning);
-	}
+	@include buttonEffect($color-warning);
 }
 
 .btn-success .btn,
 .btn.btn-success {
-	@include backgroundHover($color-success);
-	&.btn-outline {
-		@include outlineHover($color-success);
-	}
+	@include buttonEffect($color-success);
 }
 
 .btn-outline :host .btn {
