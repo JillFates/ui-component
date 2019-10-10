@@ -1,4 +1,11 @@
-<div class="grid-component">
+<div class="grid-overview-component">
+    <h4>Task Details Grid</h4>
+    <p>
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque eu odio nisi. Vestibulum dignissim eget massa sit amet feugiat. Quisque auctor mattis quam eu suscipit. Morbi ipsum risus, feugiat vitae sem at, tincidunt elementum magna
+    </p>
+
+<!--    <tds-grid [data]="dataTaskGrid" [columnModel]="columnModelTaskGrid" [columnMenu]="columnMenu"></tds-grid>-->
+
     <kendo-grid
             [filterable]="true"
             [sortable]="true"
@@ -6,7 +13,7 @@
             [skip]="5"
             [resizable]="true"
             [pageable]="{pageSizes: [5, 25, 50, 100], info: true}"
-            [data]="data.rows" [columnMenu]="true">
+            [data]="dataTaskGrid.rows" [columnMenu]="true">
 
         <ng-template kendoGridColumnMenuTemplate let-service="service" let-column="column">
             <div class="k-column-list">
@@ -18,14 +25,14 @@
         </ng-template>
 
         <kendo-grid-column width="40" [filterable]="false" [columnMenu]="false">
-                <ng-template kendoGridCellTemplate let-dataItem let-rowIndex="rowIndex">
-                    <div class="action-button">
-                        <span class="k-icon k-i-pencil"></span>
-                    </div>
-                </ng-template>
+            <ng-template kendoGridCellTemplate let-dataItem let-rowIndex="rowIndex">
+                <div class="action-button">
+                    <span class="k-icon k-i-pencil"></span>
+                </div>
+            </ng-template>
         </kendo-grid-column>
 
-        <kendo-grid-column *ngFor="let column of columnModel"
+        <kendo-grid-column *ngFor="let column of columnModelTaskGrid"
                            [field]="column.field"
                            [locked]="column.locked"
                            [title]="column.title"
@@ -111,4 +118,12 @@
             </section>
         </ng-template>
     </kendo-grid>
+
+    <h4>All Assets Grid</h4>
+    <p>
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque eu odio nisi. Vestibulum dignissim eget massa sit amet feugiat. Quisque auctor mattis quam eu suscipit. Morbi ipsum risus, feugiat vitae sem at, tincidunt elementum magna
+    </p>
+
+<!--    <tds-grid-all-assets [data]="dataAssetsGrid" [columnModel]="columnModelAssetsGrid" [columnMenu]="columnMenu"></tds-grid-all-assets>-->
 </div>
+

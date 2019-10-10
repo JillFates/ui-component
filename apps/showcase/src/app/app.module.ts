@@ -5,7 +5,7 @@ import {RouterModule} from '@angular/router';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 // Module
 import {ClarityModule} from '@clr/angular';
-import {GridModule} from './modules/grid/grid.module';
+import {KendoGridModule} from './modules/kendo-grid/kendo-grid.module';
 import {DropdownModule} from './modules/dropdown/dropdown.module';
 import {ButtonModule} from './modules/button/button.module';
 import {SharedModule} from './shared/shared.module';
@@ -20,7 +20,7 @@ import {AppComponent} from './app.component';
 		BrowserAnimationsModule,
 		ClarityModule,
 		// Showcase Component
-		GridModule,
+		KendoGridModule,
 		DropdownModule,
 		ButtonModule,
 		RouterModule.forRoot([], { initialNavigation: 'enabled' }),

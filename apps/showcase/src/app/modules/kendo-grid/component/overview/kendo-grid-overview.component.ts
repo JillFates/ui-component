@@ -1,11 +1,11 @@
 import {Component} from '@angular/core';
 
 @Component({
-	selector: 'app-grid-overview',
-	templateUrl: './grid-overview.component.html',
-	styleUrls: ['./grid-overview.component.scss']
+	selector: 'app-kendo-grid-overview',
+	templateUrl: './kendo-grid-overview.component.html',
+	styleUrls: ['./kendo-grid-overview.component.scss']
 })
-export class GridOverviewComponent {
+export class KendoGridOverviewComponent {
 	public dataTaskGrid = {
 		rows: [
 			{
@@ -514,7 +514,11 @@ export class GridOverviewComponent {
 		}
 	];
 
-	constructor() {
-		//
+	/**
+	 * Clear filters
+	 */
+	public onClearFilter(column: any): void {
+		column.filter = null;
+		console.log('On click filter');
 	}
 }
