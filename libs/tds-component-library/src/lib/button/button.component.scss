@@ -1,0 +1,104 @@
+@import '../../theme';
+
+@mixin square-off-btngroup-btns($dir: left) {
+	border-top-#{$dir}-radius: 0;
+	border-bottom-#{$dir}-radius: 0;
+}
+@mixin outlineHover($color) {
+	border-color: $color;
+	background-color: transparent;
+	color: $color;
+	&:hover {
+		background-color: rgba($color, 0.1);
+	}
+}
+@mixin backgroundHover($background, $text: $color-text-inverse) {
+	border-color: $background;
+	background-color: $background;
+	color: $text;
+	&:hover {
+		background-color: darken($background, 10%);
+	}
+}
+@mixin buttonEffect($color) {
+	@include backgroundHover($color);
+	&:active {
+		box-shadow: 0 2px 0 0 darken($color, 20%) inset;
+	}
+	&.btn-outline {
+		@include outlineHover($color);
+	}
+}
+
+:host {
+	display: inline-block;
+	.btn {
+		font-size: 12px;
+		line-height: 36px;
+		min-width: 2rem;
+		&.btn-sm {
+			font-size: 11px;
+			line-height: 24px;
+		}
+	}
+	&[type='reset'],
+	&[type='submit'] {
+		-webkit-appearance: none;
+	}
+}
+
+.btn-group {
+	:host {
+		&:not(:first-child) .tds-button {
+			@include square-off-btngroup-btns(left);
+			border-left: 0;
+		}
+		&:not(:last-child) .tds-button {
+			@include square-off-btngroup-btns(right);
+			border-right: 0;
+		}
+	}
+}
+
+.btn-sm :host {
+	.btn {
+		font-size: 11px;
+		line-height: 24px;
+	}
+}
+
+.btn-primary :host .btn,
+:host .btn.btn-primary {
+	@include buttonEffect($color-active);
+}
+
+.btn-danger .btn,
+.btn-error .btn,
+.btn.btn-danger,
+.btn.btn-error {
+	@include buttonEffect($color-danger);
+}
+
+.btn-warning .btn,
+.btn.btn-warning {
+	@include buttonEffect($color-warning);
+}
+
+.btn-success .btn,
+.btn.btn-success {
+	@include buttonEffect($color-success);
+}
+
+.btn-outline :host .btn {
+	@include outlineHover($color-active);
+	&.btn-success {
+		@include outlineHover($color-success);
+	}
+	&.btn-error,
+	&.btn-danger {
+		@include outlineHover($color-danger);
+	}
+	&.btn-warning {
+		@include outlineHover($color-warning);
+	}
+}
