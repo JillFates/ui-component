@@ -2,7 +2,6 @@ import {NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {FormsModule} from '@angular/forms';
 import {RouterModule} from '@angular/router';
-import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {ClarityModule} from '@clr/angular';
 import {GridModule} from '@progress/kendo-angular-grid';
 import {CardComponent} from './card/card.component';
@@ -18,7 +17,6 @@ import {ButtonsModule} from '@progress/kendo-angular-buttons';
 		FormsModule,
 		RouterModule,
 		ButtonsModule,
-		BrowserAnimationsModule,
 		ClarityModule,
 		GridModule
 	],

@@ -19,6 +19,9 @@ export class ButtonComponent {
 	@Input() outline: boolean;
 	@Input() flat: boolean;
 	@Input() disabled: boolean;
+	@Input() title: string;
+	@Input() id: string;
+	@Input() tabindex: string;
 
 	@Output() action: EventEmitter<any> = new EventEmitter();
 

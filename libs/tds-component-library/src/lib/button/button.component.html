@@ -3,6 +3,9 @@
 	class="tds-button btn"
 	[ngClass]="buttonClass()"
 	[disabled]="disabled"
+	[title]="title"
+	[id]="id"
+	[tabIndex]="tabindex"
 	[clrLoading]="btnState"
 	(click)="buttonAction($event)"
 >
