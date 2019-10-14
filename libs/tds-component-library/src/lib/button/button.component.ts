@@ -13,6 +13,7 @@ export class ButtonComponent {
 
 	@Input() type: string;
 	@Input() icon: string;
+	@Input() iconClass: string;
 	@Input() theme: string;
 	@Input() small: boolean;
 	@Input() inverse: boolean;

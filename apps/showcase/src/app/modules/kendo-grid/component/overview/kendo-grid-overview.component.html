@@ -1,261 +1,246 @@
 <div class="grid-overview-component">
-    <h4>Task Details Grid</h4>
-    <p>
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque eu odio nisi. Vestibulum dignissim eget massa sit amet feugiat. Quisque auctor mattis quam eu suscipit. Morbi ipsum risus, feugiat vitae sem at, tincidunt elementum magna
-    </p>
+	<h4>Task Details Grid</h4>
+	<p>
+		Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque eu odio nisi. Vestibulum dignissim eget massa
+		sit amet feugiat. Quisque auctor mattis quam eu suscipit. Morbi ipsum risus, feugiat vitae sem at, tincidunt
+		elementum magna
+	</p>
 
-    <kendo-grid
-            [filterable]="true"
-            [sortable]="true"
-            [pageSize]="5"
-            [skip]="5"
-            [resizable]="true"
-            [pageable]="{pageSizes: [5, 25, 50, 100], info: true}"
-            [data]="dataTaskGrid.rows" [columnMenu]="true">
+	<kendo-grid
+		[filterable]="true"
+		[sortable]="true"
+		[pageSize]="5"
+		[skip]="5"
+		[resizable]="true"
+		[pageable]="{ pageSizes: [5, 25, 50, 100], info: true }"
+		[data]="dataTaskGrid.rows"
+		[columnMenu]="true"
+		[ngClass]="{ 'hide-filter': !showDetailsFilter }"
+	>
+		<ng-template kendoGridToolbarTemplate [position]="'top'">
+			<div class="clr-row">
+				<div class="grid-label clr-col-4">
+					<strong>Grid Title</strong>
+					<span>- grid description</span>
+				</div>
+				<div class="grid-actions clr-col-8">
+					<div class="btn-group btn-sm btn-link">
+						<tds-button icon="plus">Create Task</tds-button>
+						<tds-button
+							[disabled]="!hasFilterApplied('columnModelTaskGrid')"
+							(click)="onClearFilters('columnModelTaskGrid')"
+							icon="close"
+							>Clear filters</tds-button
+						>
+						<tds-button icon="repeat"></tds-button>
+					</div>
+				</div>
+			</div>
+		</ng-template>
 
-        <ng-template kendoGridColumnMenuTemplate let-service="service" let-column="column">
-            <div class="k-column-list">
-                <label class="k-column-list-item" *ngFor="let menu of columnMenu">
-                    <input type="radio">
-                    <span class="k-checkbox-label">{{menu}}</span>
-                </label>
-            </div>
-        </ng-template>
+		<ng-template kendoGridColumnMenuTemplate let-service="service" let-column="column">
+			<div class="dropdown-menu">
+				<clr-radio-container>
+					<clr-radio-wrapper class="k-column-list-item" *ngFor="let menu of columnMenu">
+						<input type="radio" clrRadio name="radioMenu" />
+						<label>{{ menu }}</label>
+					</clr-radio-wrapper>
+				</clr-radio-container>
+			</div>
+		</ng-template>
 
-        <kendo-grid-column width="40" [filterable]="false" [columnMenu]="false">
-            <ng-template kendoGridCellTemplate let-dataItem let-rowIndex="rowIndex">
-                <div class="action-button">
-                    <span class="k-icon k-i-pencil"></span>
-                </div>
-            </ng-template>
-        </kendo-grid-column>
+		<kendo-grid-column width="70" [filterable]="false" [columnMenu]="false" field="ActionsColumn">
+			<ng-template kendoGridHeaderTemplate let-column let-columnIndex="columnIndex">
+				<tds-button [flat]="true" (click)="toggleDetailsFilter()">
+					<clr-icon shape="filter" class="is-solid">
+						<span *ngIf="filterCount('columnModelTaskGrid'); let filters" class="badge badge-warning">{{
+							filters
+						}}</span>
+					</clr-icon>
+				</tds-button>
+			</ng-template>
 
-        <kendo-grid-column *ngFor="let column of columnModelTaskGrid"
-                           [field]="column.field"
-                           [locked]="column.locked"
-                           [title]="column.title"
-                           [width]="column.width"
-                           [columnMenu]="column.columnMenu"
-                           [filterable]="column.filterable" >
+			<ng-template kendoGridCellTemplate let-dataItem let-rowIndex="rowIndex">
+				<div class="action-button btn-group btn-link">
+					<clr-dropdown>
+						<tds-button icon="ellipsis-vertical" clrDropdownTrigger></tds-button>
+						<clr-dropdown-menu *clrIfOpen>
+							<a clrDropdownItem>Edit Asset</a>
+							<a clrDropdownItem>Create Task</a>
+							<a clrDropdownItem>Comment</a>
+							<a clrDropdownItem>Clone</a>
+						</clr-dropdown-menu>
+					</clr-dropdown>
+				</div>
+			</ng-template>
+		</kendo-grid-column>
 
-            <ng-template kendoGridFilterCellTemplate let-filter>
-                <input type="text" class="text-filter" [name]="column.field" [(ngModel)]="column.filter" placeholder="Filter">
-                <span *ngIf="column.filter"
-                      (click)="onClearFilter(column)"
-                      [title]="'The filter'"
-                      class="clear-filter k-icon k-i-close">
-			    </span>
-            </ng-template>
+		<kendo-grid-column
+			*ngFor="let column of columnModelTaskGrid"
+			[field]="column.field"
+			[locked]="column.locked"
+			[title]="column.title"
+			[width]="column.width"
+			[columnMenu]="column.columnMenu"
+			[filterable]="column.filterable"
+		>
+			<ng-template kendoGridFilterCellTemplate let-filter>
+				<input
+					clrInput
+					type="text"
+					class="text-filter"
+					[name]="column.field"
+					[(ngModel)]="column.filter"
+					placeholder="Filter"
+				/>
+				<tds-button
+					*ngIf="column.filter"
+					(click)="onClearFilter(column)"
+					[title]="'Clear Filter'"
+					icon="times-circle"
+					[small]="true"
+					[flat]="true"
+				>
+				</tds-button>
+			</ng-template>
 
-            <!-- task Number -->
-            <ng-template kendoGridCellTemplate *ngIf="column.isActionable" let-dataItem>
-                <span class="actionable-column">{{dataItem[column.field]}}</span>
-            </ng-template>
+			<!-- task Number -->
+			<ng-template kendoGridCellTemplate *ngIf="column.isActionable" let-dataItem>
+				<span class="actionable-column">{{ dataItem[column.field] }}</span>
+			</ng-template>
+		</kendo-grid-column>
 
-        </kendo-grid-column>
+		<!-- Row detail -->
+		<ng-template kendoGridDetailTemplate let-dataItem>
+			<section class="btn-group btn-sm btn-link">
+				<tds-button theme="success">Start</tds-button>
+				<tds-button>Done</tds-button>
+				<tds-button>Details</tds-button>
+				<tds-button>Assign to me</tds-button>
+				<tds-button>Neighborhood</tds-button>
+			</section>
+			<section class="btn-group btn-sm btn-link">
+				<span>Delay:</span>
+				<tds-button>1 day</tds-button>
+				<tds-button>2 days</tds-button>
+				<tds-button>7 days</tds-button>
+			</section>
+		</ng-template>
+	</kendo-grid>
 
-        <ng-template kendoGridToolbarTemplate [position]="'top'">
-            <div class="buttons-group">
-                <button kendoButton>
-                    <span class="k-icon k-i-plus"></span>
-                    <span class="title">Create Task</span>
-                </button>
+	<h4>All Assets Grid</h4>
+	<p>
+		Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque eu odio nisi. Vestibulum dignissim eget massa
+		sit amet feugiat. Quisque auctor mattis quam eu suscipit. Morbi ipsum risus, feugiat vitae sem at, tincidunt
+		elementum magna
+	</p>
 
-                <button kendoButton>
-                    <span class="k-icon k-i-edit"></span>
-                    <span class="title">Bulk Action</span>
-                </button>
+	<kendo-grid
+		[filterable]="true"
+		[sortable]="true"
+		[pageSize]="5"
+		[skip]="5"
+		[resizable]="true"
+		[pageable]="{ pageSizes: [5, 25, 50, 100], info: true }"
+		[data]="dataAssetsGrid.rows"
+		[columnMenu]="true"
+	>
+		<ng-template kendoGridColumnMenuTemplate let-service="service" let-column="column">
+			<div class="dropdown-menu">
+				<clr-radio-container>
+					<clr-radio-wrapper class="k-column-list-item" *ngFor="let menu of columnMenu">
+						<input type="radio" clrRadio name="radioMenu" />
+						<label>{{ menu }}</label>
+					</clr-radio-wrapper>
+				</clr-radio-container>
+			</div>
+		</ng-template>
 
-                <button kendoButton [disabled]="true">
-                    <span class="k-icon k-i-close"></span>
-                    <span class="title">Clear filters</span>
-                </button>
+		<kendo-grid-column width="30" [columnMenu]="false">
+			<ng-template kendoGridCellTemplate let-dataItem let-rowIndex="rowIndex">
+				<input
+					clrCheckbox
+					type="checkbox"
+					id="checkbox_{{ dataItem.id }}-{{ rowIndex }}"
+					name="checkbox_{{ dataItem.id }}-{{ rowIndex }}"
+					[(ngModel)]="dataItem.checked"
+					(change)="selectRow(dataItem, $event.target.checked)"
+				/>
+			</ng-template>
+		</kendo-grid-column>
 
-                <button kendoButton [look]="'flat'" class="reload-button">
-                    <span class="k-icon k-i-reload"></span>
-                </button>
-            </div>
-        </ng-template>
+		<kendo-grid-column width="40" [filterable]="false" [columnMenu]="false">
+			<ng-template kendoGridCellTemplate let-dataItem let-rowIndex="rowIndex">
+				<div class="action-button btn-group btn-link">
+					<clr-dropdown>
+						<tds-button icon="ellipsis-vertical" clrDropdownTrigger></tds-button>
+						<clr-dropdown-menu *clrIfOpen>
+							<a clrDropdownItem>Edit Asset</a>
+							<a clrDropdownItem>Create Task</a>
+							<a clrDropdownItem>Comment</a>
+							<a clrDropdownItem>Clone</a>
+						</clr-dropdown-menu>
+					</clr-dropdown>
+				</div>
+			</ng-template>
+		</kendo-grid-column>
 
-        <!-- Row detail -->
-        <ng-template kendoGridDetailTemplate let-dataItem>
-            <section class="buttons-group">
-                <button kendoButton>
-                    <span class="k-icon k-i-play"></span>
-                    <span class="title">Start</span>
-                </button>
-                <button kendoButton>
-                    <span class="k-icon k-i-check"></span>
-                    <span class="title">Done</span>
-                </button>
-                <button kendoButton>
-                    <span class="k-icon k-i-zoom"></span>
-                    <span class="title">Details</span>
-                </button>
-                <button kendoButton>
-                    <span class="k-icon k-i-user"></span>
-                    <span class="title">Assign to me</span>
-                </button>
-                <button kendoButton>
-                    <span class="k-icon k-i-grid-layout"></span>
-                    <span class="title">Neighborhood</span>
-                </button>
-                <span>Delay for:</span>
-                <button kendoButton>
-                    <span class="k-icon k-i-arrow-double-60-right"></span>
-                    <span class="title">1 day</span>
-                </button>
-                <button kendoButton>
-                    <span class="k-icon k-i-arrow-double-60-right"></span>
-                    <span class="title">2 days</span>
-                </button>
-                <button kendoButton>
-                    <span class="k-icon k-i-arrow-double-60-right"></span>
-                    <span class="title">7 days</span>
-                </button>
-            </section>
-        </ng-template>
-    </kendo-grid>
+		<kendo-grid-column
+			*ngFor="let column of columnModelAssetsGrid"
+			[field]="column.field"
+			[locked]="column.locked"
+			[title]="column.title"
+			[width]="column.width"
+			[columnMenu]="column.columnMenu"
+			[filterable]="column.filterable"
+		>
+			<ng-template kendoGridFilterCellTemplate let-filter>
+				<input
+					clrInput
+					type="text"
+					class="text-filter"
+					[name]="column.field"
+					[(ngModel)]="column.filter"
+					placeholder="Filter"
+				/>
+				<span
+					*ngIf="column.filter"
+					(click)="onClearFilter(column)"
+					[title]="'The filter'"
+					class="clear-filter k-icon k-i-close"
+				>
+				</span>
+			</ng-template>
 
-    <h4>All Assets Grid</h4>
-    <p>
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque eu odio nisi. Vestibulum dignissim eget massa sit amet feugiat. Quisque auctor mattis quam eu suscipit. Morbi ipsum risus, feugiat vitae sem at, tincidunt elementum magna
-    </p>
+			<!-- task Number -->
+			<ng-template kendoGridCellTemplate *ngIf="column.isActionable" let-dataItem>
+				<span class="actionable-column">{{ dataItem[column.field] }}</span>
+			</ng-template>
+		</kendo-grid-column>
 
-    <kendo-grid
-            [filterable]="true"
-            [sortable]="true"
-            [pageSize]="5"
-            [skip]="5"
-            [resizable]="true"
-            [pageable]="{pageSizes: [5, 25, 50, 100], info: true}"
-            [data]="dataAssetsGrid.rows" [columnMenu]="true">
-
-        <ng-template kendoGridColumnMenuTemplate let-service="service" let-column="column">
-            <div class="k-column-list">
-                <label class="k-column-list-item" *ngFor="let menu of columnMenu">
-                    <input type="radio">
-                    <span class="k-checkbox-label">{{menu}}</span>
-                </label>
-            </div>
-        </ng-template>
-
-        <kendo-grid-column width="30" [columnMenu]="false">
-            <ng-template kendoGridCellTemplate let-dataItem let-rowIndex="rowIndex">
-                <input type="checkbox" id="checkbox_{{dataItem.id}}"
-                       [(ngModel)]="dataItem.checked"
-                       (change)="selectRow(dataItem, $event.target.checked)" />
-            </ng-template>
-        </kendo-grid-column>
-
-        <kendo-grid-column width="100" [filterable]="false" [columnMenu]="false">
-            <ng-template kendoGridCellTemplate let-dataItem let-rowIndex="rowIndex">
-                <div class="action-button">
-                    <button kendoButton look="flat">
-<!--                        <clr-icon shape="pencil"></clr-icon>-->
-                    </button>
-                    <button kendoButton look="flat" icon="table-align-top-center">
-                    </button>
-                    <button kendoButton look="flat" icon="comment"></button>
-                    <button kendoButton look="flat" icon="copy"></button>
-                </div>
-            </ng-template>
-        </kendo-grid-column>
-
-        <kendo-grid-column *ngFor="let column of columnModelAssetsGrid"
-                           [field]="column.field"
-                           [locked]="column.locked"
-                           [title]="column.title"
-                           [width]="column.width"
-                           [columnMenu]="column.columnMenu"
-                           [filterable]="column.filterable" >
-
-            <ng-template kendoGridFilterCellTemplate let-filter>
-                <input type="text" class="text-filter" [name]="column.field" [(ngModel)]="column.filter" placeholder="Filter">
-                <span *ngIf="column.filter"
-                      (click)="onClearFilter(column)"
-                      [title]="'The filter'"
-                      class="clear-filter k-icon k-i-close">
-			    </span>
-            </ng-template>
-
-            <!-- task Number -->
-            <ng-template kendoGridCellTemplate *ngIf="column.isActionable" let-dataItem>
-                <span class="actionable-column">{{dataItem[column.field]}}</span>
-            </ng-template>
-
-        </kendo-grid-column>
-
-        <ng-template kendoGridToolbarTemplate [position]="'top'">
-            <div class="buttons-group">
-                <button kendoButton>
-                    <span class="k-icon k-i-plus"></span>
-                    <span class="title">Create Task</span>
-                </button>
-
-                <button kendoButton [disabled]="!selectedRows()">
-                    <span class="k-icon k-i-edit"></span>
-                    <span class="title">Bulk Action</span>
-                </button>
-
-                <span *ngIf="selectedRows(); let rowsSelected">
-                    <span class="badge">{{rowsSelected}}</span> Assets selected
-                </span>
-
-                <div class="right-toolbar-action">
-                    <button kendoButton [disabled]="!hasFilterApplied()" (click)="onClearFilters()">
-                        <span class="k-icon k-i-close"></span>
-                        <span class="title">Clear filters</span>
-                    </button>
-
-                    <button kendoButton [look]="'flat'">
-                        <span class="k-icon k-i-reload"></span>
-                    </button>
-                </div>
-            </div>
-        </ng-template>
-
-        <!-- Row detail -->
-        <!--
-        <ng-template kendoGridDetailTemplate let-dataItem>
-            <section class="buttons-group">
-                <button kendoButton>
-                    <span class="k-icon k-i-play"></span>
-                    <span class="title">Start</span>
-                </button>
-                <button kendoButton>
-                    <span class="k-icon k-i-check"></span>
-                    <span class="title">Done</span>
-                </button>
-                <button kendoButton>
-                    <span class="k-icon k-i-zoom"></span>
-                    <span class="title">Details</span>
-                </button>
-                <button kendoButton>
-                    <span class="k-icon k-i-user"></span>
-                    <span class="title">Assign to me</span>
-                </button>
-                <button kendoButton>
-                    <span class="k-icon k-i-grid-layout"></span>
-                    <span class="title">Neighborhood</span>
-                </button>
-                <span>Delay for:</span>
-                <button kendoButton>
-                    <span class="k-icon k-i-arrow-double-60-right"></span>
-                    <span class="title">1 day</span>
-                </button>
-                <button kendoButton>
-                    <span class="k-icon k-i-arrow-double-60-right"></span>
-                    <span class="title">2 days</span>
-                </button>
-                <button kendoButton>
-                    <span class="k-icon k-i-arrow-double-60-right"></span>
-                    <span class="title">7 days</span>
-                </button>
-            </section>
-        </ng-template>
-        -->
-    </kendo-grid>
-
+		<ng-template kendoGridToolbarTemplate [position]="'top'">
+			<div class="clr-row">
+				<div class="grid-label clr-col-4">
+					<strong>Grid Title</strong>
+					<span>- grid description</span>
+				</div>
+				<div class="grid-actions clr-col-8">
+					<div class="btn-group btn-sm btn-link">
+						<tds-button icon="plus">Create Task</tds-button>
+						<tds-button [disabled]="selectedRows === 0" icon="edit"
+							>Bulk Action
+							<span *ngIf="selectedRows > 0" class="badge">{{ selectedRows }}</span></tds-button
+						>
+						<tds-button
+							[disabled]="!hasFilterApplied('columnModelAssetsGrid')"
+							(click)="onClearFilters('columnModelAssetsGrid')"
+							icon="close"
+							>Clear filters</tds-button
+						>
+						<tds-button icon="repeat"></tds-button>
+					</div>
+				</div>
+			</div>
+		</ng-template>
+	</kendo-grid>
 </div>
-

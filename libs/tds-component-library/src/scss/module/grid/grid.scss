@@ -1,38 +1,56 @@
-.k-button {
-  span.k-icon {
-    margin-right: 10px;
-  }
-}
+kendo-grid {
+	&.k-grid {
+		background-color: transparent;
+		th,
+		td {
+			border: 0;
+		}
+	}
+	&.k-widget,
+	.k-widget {
+		border-width: 0;
+	}
 
-.buttons-group {
-  button {
-    margin: 5px;
-  }
-}
-
-.action-button {
-  display: flex;
-  justify-content: center;
-  cursor: pointer;
-}
-
-input.text-filter {
-  width: 95%;
-}
-
-.clear-filter {
-  position: absolute;
-  margin-left: -18px;
-  margin-top: 4px;
-  cursor: pointer;
-}
-
-.reload-button {
-  position: absolute;
-  right: 0;
-}
-
-.actionable-column {
-  font-weight: bold;
-  cursor: pointer;
+	.k-grid-toolbar {
+		background: transparent;
+		border-width: 0;
+	}
+	.grid-actions {
+		> .btn-group {
+			float: right;
+		}
+	}
+	.k-grid-header {
+		.k-header {
+			background: $color-head;
+			.btn {
+				line-height: 18px;
+				height: unset;
+				margin: 0;
+			}
+			&:not(.k-hierarchy-cell):not(:last-child)::after {
+				content: '';
+				position: absolute;
+				top: 12px;
+				bottom: 12px;
+				right: 0;
+				background: $color-icon;
+				width: 1px;
+			}
+		}
+	}
+	.clr-form-control {
+		margin-top: 0;
+	}
+	&.hide-filter {
+		.k-filter-row {
+			display: none;
+		}
+	}
+	.k-filter-row {
+		.clr-input {
+			width: 90%;
+			width: calc(100% - 3em);
+		}
+	}
 }
