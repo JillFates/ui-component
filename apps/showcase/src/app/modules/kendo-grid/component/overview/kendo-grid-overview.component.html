@@ -15,7 +15,7 @@
 		[pageable]="{ pageSizes: [5, 25, 50, 100], info: true }"
 		[data]="dataTaskGrid.rows"
 		[columnMenu]="true"
-		[ngClass]="{ 'hide-filter': !showDetailsFilter }"
+		[ngClass]="{ 'hide-filter': !showTasksFilter }"
 	>
 		<ng-template kendoGridToolbarTemplate [position]="'top'">
 			<div class="clr-row">
@@ -51,7 +51,7 @@
 
 		<kendo-grid-column width="70" [filterable]="false" [columnMenu]="false" field="ActionsColumn">
 			<ng-template kendoGridHeaderTemplate let-column let-columnIndex="columnIndex">
-				<tds-button [flat]="true" (click)="toggleDetailsFilter()">
+				<tds-button [flat]="true" (click)="toggleTasksFilter()">
 					<clr-icon shape="filter" class="is-solid">
 						<span *ngIf="filterCount('columnModelTaskGrid'); let filters" class="badge badge-warning">{{
 							filters
@@ -66,9 +66,6 @@
 						<tds-button icon="ellipsis-vertical" clrDropdownTrigger></tds-button>
 						<clr-dropdown-menu *clrIfOpen>
 							<a clrDropdownItem>Edit Asset</a>
-							<a clrDropdownItem>Create Task</a>
-							<a clrDropdownItem>Comment</a>
-							<a clrDropdownItem>Clone</a>
 						</clr-dropdown-menu>
 					</clr-dropdown>
 				</div>
@@ -83,25 +80,28 @@
 			[width]="column.width"
 			[columnMenu]="column.columnMenu"
 			[filterable]="column.filterable"
+			[ngClass]="{ 'hide-filter': !showDetailsFilter }"
 		>
 			<ng-template kendoGridFilterCellTemplate let-filter>
-				<input
-					clrInput
-					type="text"
-					class="text-filter"
-					[name]="column.field"
-					[(ngModel)]="column.filter"
-					placeholder="Filter"
-				/>
-				<tds-button
-					*ngIf="column.filter"
-					(click)="onClearFilter(column)"
-					[title]="'Clear Filter'"
-					icon="times-circle"
-					[small]="true"
-					[flat]="true"
-				>
-				</tds-button>
+				<div class="filter-input">
+					<input
+						clrInput
+						type="text"
+						class="text-filter"
+						[name]="column.field"
+						[(ngModel)]="column.filter"
+						placeholder="Filter"
+					/>
+					<tds-button
+						*ngIf="column.filter"
+						(click)="onClearFilter(column)"
+						[title]="'Clear Filter'"
+						icon="times-circle"
+						[small]="true"
+						[flat]="true"
+					>
+					</tds-button>
+				</div>
 			</ng-template>
 
 			<!-- task Number -->
@@ -144,6 +144,7 @@
 		[pageable]="{ pageSizes: [5, 25, 50, 100], info: true }"
 		[data]="dataAssetsGrid.rows"
 		[columnMenu]="true"
+		[ngClass]="{ 'hide-filter': !showAssetsFilter }"
 	>
 		<ng-template kendoGridColumnMenuTemplate let-service="service" let-column="column">
 			<div class="dropdown-menu">
@@ -157,6 +158,14 @@
 		</ng-template>
 
 		<kendo-grid-column width="30" [columnMenu]="false">
+			<ng-template kendoGridHeaderTemplate let-column let-columnIndex="columnIndex">
+				<input
+					clrCheckbox
+					type="checkbox"
+					name="checkbox_checkall"
+					(change)="toggleAssetsChecks($event.target.checked)"
+				/>
+			</ng-template>
 			<ng-template kendoGridCellTemplate let-dataItem let-rowIndex="rowIndex">
 				<input
 					clrCheckbox
@@ -169,7 +178,16 @@
 			</ng-template>
 		</kendo-grid-column>
 
-		<kendo-grid-column width="40" [filterable]="false" [columnMenu]="false">
+		<kendo-grid-column width="40" [filterable]="false" [columnMenu]="false" field="ActionsColumn">
+			<ng-template kendoGridHeaderTemplate let-column let-columnIndex="columnIndex">
+				<tds-button [flat]="true" (click)="toggleAssetsFilter()">
+					<clr-icon shape="filter" class="is-solid">
+						<span *ngIf="filterCount('columnModelAssetsGrid'); let filters" class="badge badge-warning">{{
+							filters
+						}}</span>
+					</clr-icon>
+				</tds-button>
+			</ng-template>
 			<ng-template kendoGridCellTemplate let-dataItem let-rowIndex="rowIndex">
 				<div class="action-button btn-group btn-link">
 					<clr-dropdown>
@@ -195,21 +213,25 @@
 			[filterable]="column.filterable"
 		>
 			<ng-template kendoGridFilterCellTemplate let-filter>
-				<input
-					clrInput
-					type="text"
-					class="text-filter"
-					[name]="column.field"
-					[(ngModel)]="column.filter"
-					placeholder="Filter"
-				/>
-				<span
-					*ngIf="column.filter"
-					(click)="onClearFilter(column)"
-					[title]="'The filter'"
-					class="clear-filter k-icon k-i-close"
-				>
-				</span>
+				<div class="filter-input">
+					<input
+						clrInput
+						type="text"
+						class="text-filter"
+						[name]="column.field"
+						[(ngModel)]="column.filter"
+						placeholder="Filter"
+					/>
+					<tds-button
+						*ngIf="column.filter"
+						(click)="onClearFilter(column)"
+						[title]="'Clear Filter'"
+						icon="times-circle"
+						[small]="true"
+						[flat]="true"
+					>
+					</tds-button>
+				</div>
 			</ng-template>
 
 			<!-- task Number -->
@@ -227,10 +249,12 @@
 				<div class="grid-actions clr-col-8">
 					<div class="btn-group btn-sm btn-link">
 						<tds-button icon="plus">Create Task</tds-button>
-						<tds-button [disabled]="selectedRows === 0" icon="edit"
-							>Bulk Action
-							<span *ngIf="selectedRows > 0" class="badge">{{ selectedRows }}</span></tds-button
-						>
+						<tds-button [disabled]="selectedRows === 0">
+							<clr-icon shape="edit">
+								<span *ngIf="selectedRows > 0" class="badge badge-info">{{ selectedRows }}</span>
+							</clr-icon>
+							Bulk Action
+						</tds-button>
 						<tds-button
 							[disabled]="!hasFilterApplied('columnModelAssetsGrid')"
 							(click)="onClearFilters('columnModelAssetsGrid')"

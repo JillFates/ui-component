@@ -8,13 +8,14 @@ import * as gridData from '../grid-data';
 })
 export class KendoGridOverviewComponent {
 	public columnMenu = gridData.columnMenu;
-	public columnModelAssetsGrid = gridData.columnModelAssetsGrid;
 	public columnModelTaskGrid = gridData.columnModelTaskGrid;
-	public dataAssetsGrid = gridData.dataAssetsGrid;
+	public columnModelAssetsGrid = gridData.columnModelAssetsGrid;
 	public dataTaskGrid = gridData.dataTaskGrid;
+	public dataAssetsGrid = gridData.dataAssetsGrid;
 
 	public selectedRows = 0;
-	public showDetailsFilter = false;
+	public showTasksFilter = false;
+	public showAssetsFilter = false;
 	/**
 	 * Clear filters
 	 */
@@ -59,7 +60,27 @@ export class KendoGridOverviewComponent {
 	/**
 	 * Filter Toggle
 	 */
-	public toggleDetailsFilter(): void {
-		this.showDetailsFilter = !this.showDetailsFilter;
+	public toggleTasksFilter(): void {
+		this.showTasksFilter = !this.showTasksFilter;
+	}
+
+	/**
+	 * Filter Toggle
+	 */
+	public toggleAssetsFilter(): void {
+		this.showAssetsFilter = !this.showAssetsFilter;
+	}
+
+	/**
+	 * Toggle all selections & set selected rows count
+	 */
+	public toggleAssetsChecks(checked: boolean): void {
+		this.selectedRows = this.dataAssetsGrid.rows.reduce((count: number, item: any) => {
+			item.checked = checked;
+			if (checked) {
+				count++;
+			}
+			return count;
+		}, 0);
 	}
 }
