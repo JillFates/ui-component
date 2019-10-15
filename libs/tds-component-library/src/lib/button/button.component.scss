@@ -34,8 +34,9 @@
 	display: inline-block;
 	.btn {
 		font-size: 12px;
-		line-height: 36px;
+		line-height: 24px;
 		min-width: 1rem;
+		height: unset;
 		overflow: visible;
 		&.btn-sm {
 			font-size: 11px;

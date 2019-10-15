@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import * as gridData from '../grid-data';
+import { GridDataResult, PageChangeEvent } from '@progress/kendo-angular-grid';
 
 @Component({
 	selector: 'app-kendo-grid-overview',
@@ -16,6 +17,46 @@ export class KendoGridOverviewComponent {
 	public selectedRows = 0;
 	public showTasksFilter = false;
 	public showAssetsFilter = false;
+
+	public tasksPage: PageChangeEvent = {
+		skip: 0,
+		take: 5,
+	};
+	public tasksGrid: any = {
+		pageable: {
+			pageSizes: [5, 10, 25, 50, 100],
+			info: true,
+			type: 'input',
+		},
+		filterable: true,
+		sortable: true,
+		resizable: true,
+		columnMenu: true,
+	};
+
+	public tasksData: GridDataResult;
+
+	constructor() {
+		this.loadTaskGrid();
+	}
+
+	/**
+	 * pageChangeTaskGrid
+	 */
+	public pageChangeTaskGrid(event: PageChangeEvent): void {
+		this.tasksPage = event;
+		this.loadTaskGrid();
+	}
+	/**
+	 * load Task Grid with data
+	 */
+	public loadTaskGrid(): void {
+		this.tasksData = {
+			data: this.dataTaskGrid.rows.slice(this.tasksPage.skip, this.tasksPage.skip + this.tasksPage.take),
+			total: this.dataTaskGrid.rows.length,
+		};
+	}
+
 	/**
 	 * Clear filters
 	 */
@@ -82,5 +123,27 @@ export class KendoGridOverviewComponent {
 			}
 			return count;
 		}, 0);
+	}
+
+	/**
+	 * changeTaskPage
+	 *
+	 * */
+	public changeTaskPage(page: any): void {
+		page = parseInt(page, 10);
+		this.pageChangeTaskGrid({
+			skip: (page - 1) * this.tasksPage.take,
+			take: this.tasksPage.take,
+		});
+	}
+
+	/**
+	 * changeTaskTake
+take:string	 */
+	public changeTaskTake(take: number): void {
+		this.pageChangeTaskGrid({
+			skip: this.tasksPage.skip,
+			take,
+		});
 	}
 }
