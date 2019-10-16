@@ -123,6 +123,7 @@ kendo-grid {
 	}
 
 	.k-grid-pager {
+		font-size: 80%;
 		.btn {
 			padding: 0 0.5px;
 		}
@@ -133,6 +134,9 @@ kendo-grid {
 				display: inline;
 				input {
 					text-align: center;
+					background: #ffffff;
+					border: 1px solid $color-border;
+					border-radius: 3px;
 				}
 			}
 		}

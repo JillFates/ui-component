@@ -326,7 +326,7 @@
 			</div>
 		</ng-template>
 
-		<ng-template kendoPagerTemplate let-totalAssets="total" let-totalAssetsPages="totalPages" let-currentAssetsPage="currentPage">
+		<ng-template kendoPagerTemplate let-total="total" let-totalPages="totalPages" let-currentPage="currentPage">
 				<div class="clr-col-4"></div>
 				<div class="grid-paging clr-col-8">
 					<div class="pager-items">
@@ -335,21 +335,21 @@
 							<option *ngFor="let size of assetsGrid.pageable.pageSizes" [value]="size">{{ size }}</option>
 						</select>
 					</div>
-					<div class="pager-items">{{ totalAssets }} records</div>
+					<div class="pager-items">{{ total }} records</div>
 					<div class="pager-items">
 						<div class="btn-group btn-link">
 							<tds-button
 								class="pagination-first"
 								icon="step-forward-2 down"
-								[disabled]="currentAssetsPage <= 1"
+								[disabled]="currentPage <= 1"
 								(click)="changeAssetPage(1)"
 							>
 							</tds-button>
 							<tds-button
 								class="pagination-previous"
 								icon="angle left"
-								[disabled]="currentAssetsPage <= 1"
-								(click)="changeAssetPage(currentAssetsPage - 1)"
+								[disabled]="currentPage <= 1"
+								(click)="changeAssetPage(currentPage - 1)"
 							>
 							</tds-button>
 							<span class="page-selection">
@@ -357,25 +357,25 @@
 									clrInput
 									type="number"
 									min="1"
-									[max]="totalAssetsPages"
-									[value]="currentAssetsPage"
-									name="currentAssetsPage"
+									[max]="totalPages"
+									[value]="currentPage"
+									name="currentPage"
 									(change)="changeAssetPage($event.target.value)"
 								/>
-								/ {{ totalAssetsPages }}
+								/ {{ totalPages }}
 							</span>
 							<tds-button
 								class="pagination-next"
 								icon="angle right"
-								[disabled]="currentAssetsPage >= totalAssetsPages"
-								(click)="changeAssetPage(currentAssetsPage + 1)"
+								[disabled]="currentPage >= totalPages"
+								(click)="changeAssetPage(currentPage + 1)"
 							>
 							</tds-button>
 							<tds-button
 								class="pagination-last"
 								icon="step-forward-2 up"
-								[disabled]="currentAssetsPage >= totalAssetsPages"
-								(click)="changeAssetPage(totalAssetsPages)"
+								[disabled]="currentPage >= totalPages"
+								(click)="changeAssetPage(totalPages)"
 							>
 							</tds-button>
 						</div>
