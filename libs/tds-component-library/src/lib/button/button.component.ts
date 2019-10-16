@@ -21,8 +21,6 @@ export class ButtonComponent {
 	@Input() flat: boolean;
 	@Input() disabled: boolean;
 
-	@Output() action: EventEmitter<any> = new EventEmitter();
-
 	get state(): string {
 		return this._state;
 	}
@@ -34,14 +32,6 @@ export class ButtonComponent {
 		} else {
 			this.btnState = ClrLoadingState.DEFAULT;
 		}
-	}
-
-	/**
-	 * Button Click Action
-	 * @param e : Event
-	 */
-	public buttonAction(e: Event): void {
-		this.action.next(e);
 	}
 
 	/**

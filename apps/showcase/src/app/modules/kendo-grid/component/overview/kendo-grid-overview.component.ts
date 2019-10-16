@@ -63,6 +63,7 @@ export class KendoGridOverviewComponent {
 	 */
 	public pageChangeTaskGrid(event: PageChangeEvent): void {
 		this.tasksPage = event;
+		console.log(event);
 		this.loadTasksGrid();
 	}
 	/**
@@ -74,6 +75,8 @@ export class KendoGridOverviewComponent {
 			data: this.dataTaskGrid.rows.slice(skip, skip + take),
 			total: this.dataTaskGrid.rows.length,
 		};
+
+		console.log(this.tasksData.data);
 	}
 
 	/**
@@ -177,9 +180,10 @@ export class KendoGridOverviewComponent {
 	/**
 	 * changeTaskTake
 	 */
-	public changeTaskTake(take: number): void {
+	public changeTaskTake(take: any): void {
+		take = parseInt(take, 10);
 		this.pageChangeTaskGrid({
-			skip: this.tasksPage.skip,
+			skip: 0,
 			take,
 		});
 	}
@@ -199,10 +203,11 @@ export class KendoGridOverviewComponent {
 	/**
 	 * changeAssetTake
 	 */
-	public changeAssetTake(take: number): void {
+	public changeAssetTake(take: any): void {
+		take = parseInt(take, 10);
 		this.pageChangeAssetGrid({
-			skip: this.assetsPage.skip,
-			take,
+			skip: 0,
+			take: take,
 		});
 	}
 }
