@@ -111,6 +111,17 @@ kendo-grid {
 		}
 	}
 
+	kendo-grid-list {
+		.k-grid-table {
+			tr td:first {
+				.clr-checkbox-wrapper {
+					padding-left: 3px;
+					display: inline-block;
+				}
+			}
+		}
+	}
+
 	.k-grid-pager {
 		.btn {
 			padding: 0 0.5px;

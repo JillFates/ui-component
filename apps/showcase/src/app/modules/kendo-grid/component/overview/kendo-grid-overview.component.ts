@@ -34,10 +34,28 @@ export class KendoGridOverviewComponent {
 		columnMenu: true,
 	};
 
+	public assetsPage: PageChangeEvent = {
+		skip: 0,
+		take: 5,
+	};
+	public assetsGrid: any = {
+		pageable: {
+			pageSizes: [5, 10, 25, 50, 100],
+			info: true,
+			type: 'input',
+		},
+		filterable: true,
+		sortable: true,
+		resizable: true,
+		columnMenu: true,
+	};
+
 	public tasksData: GridDataResult;
+	public assetsData: GridDataResult;
 
 	constructor() {
-		this.loadTaskGrid();
+		this.loadTasksGrid();
+		this.loadAssetsGrid();
 	}
 
 	/**
@@ -45,15 +63,34 @@ export class KendoGridOverviewComponent {
 	 */
 	public pageChangeTaskGrid(event: PageChangeEvent): void {
 		this.tasksPage = event;
-		this.loadTaskGrid();
+		this.loadTasksGrid();
 	}
 	/**
 	 * load Task Grid with data
 	 */
-	public loadTaskGrid(): void {
+	public loadTasksGrid(): void {
+		const { skip, take } = this.tasksPage;
 		this.tasksData = {
-			data: this.dataTaskGrid.rows.slice(this.tasksPage.skip, this.tasksPage.skip + this.tasksPage.take),
+			data: this.dataTaskGrid.rows.slice(skip, skip + take),
 			total: this.dataTaskGrid.rows.length,
+		};
+	}
+
+	/**
+	 * pageChangeAssetsGrid
+	 */
+	public pageChangeAssetGrid(event: PageChangeEvent): void {
+		this.assetsPage = event;
+		this.loadAssetsGrid();
+	}
+	/**
+	 * load Assets Grid with data
+	 */
+	public loadAssetsGrid(): void {
+		const { skip, take } = this.assetsPage;
+		this.assetsData = {
+			data: this.dataAssetsGrid.rows.slice(skip, skip + take),
+			total: this.dataAssetsGrid.rows.length,
 		};
 	}
 
@@ -99,14 +136,14 @@ export class KendoGridOverviewComponent {
 	}
 
 	/**
-	 * Filter Toggle
+	 * Filter Tasks Toggle
 	 */
 	public toggleTasksFilter(): void {
 		this.showTasksFilter = !this.showTasksFilter;
 	}
 
 	/**
-	 * Filter Toggle
+	 * Filter Assets Toggle
 	 */
 	public toggleAssetsFilter(): void {
 		this.showAssetsFilter = !this.showAssetsFilter;
@@ -139,10 +176,32 @@ export class KendoGridOverviewComponent {
 
 	/**
 	 * changeTaskTake
-take:string	 */
+	 */
 	public changeTaskTake(take: number): void {
 		this.pageChangeTaskGrid({
 			skip: this.tasksPage.skip,
+			take,
+		});
+	}
+
+	/**
+	 * changeAssetPage
+	 *
+	 * */
+	public changeAssetPage(page: any): void {
+		page = parseInt(page, 10);
+		this.pageChangeAssetGrid({
+			skip: (page - 1) * this.assetsPage.take,
+			take: this.assetsPage.take,
+		});
+	}
+
+	/**
+	 * changeAssetTake
+	 */
+	public changeAssetTake(take: number): void {
+		this.pageChangeAssetGrid({
+			skip: this.assetsPage.skip,
 			take,
 		});
 	}

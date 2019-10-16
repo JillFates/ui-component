@@ -593,7 +593,7 @@ export const dataTaskGrid = {
 			updatedClass: 'task_late',
 		},
 	],
-	totalCount: 2,
+	totalCount: 24,
 };
 export const columnModelTaskGrid = [
 	{
@@ -758,8 +758,72 @@ export const dataAssetsGrid = {
 			userSelectedCol1: '30/09/2019 04:29 PM',
 			checked: false,
 		},
+		{
+			id: 236955,
+			assetName: 'A1 PDU A',
+			comment: '',
+			userSelectedCol0: 'general',
+			userSelectedCol1: '30/09/2019 04:31 PM',
+			checked: false,
+		},
+		{
+			id: 236975,
+			assetName: 'A1 PDU B',
+			comment: '',
+			userSelectedCol0: 'general',
+			userSelectedCol1: '30/09/2019 04:29 PM',
+			checked: false,
+		},
+		{
+			id: 236979,
+			assetName: 'A1 PDU C',
+			comment: '',
+			userSelectedCol0: 'general',
+			userSelectedCol1: '29/09/2019 04:29 PM',
+			checked: false,
+		},
+		{
+			id: 236955,
+			assetName: 'A1 PDU D',
+			comment: '',
+			userSelectedCol0: 'general',
+			userSelectedCol1: '30/09/2019 04:31 PM',
+			checked: false,
+		},
+		{
+			id: 236975,
+			assetName: 'A1 PDU E',
+			comment: '',
+			userSelectedCol0: 'general',
+			userSelectedCol1: '30/09/2019 04:29 PM',
+			checked: false,
+		},
+		{
+			id: 236979,
+			assetName: 'A1 PDU F',
+			comment: '',
+			userSelectedCol0: 'general',
+			userSelectedCol1: '29/09/2019 04:29 PM',
+			checked: false,
+		},
+		{
+			id: 236955,
+			assetName: 'A1 PDU F',
+			comment: '',
+			userSelectedCol0: 'general',
+			userSelectedCol1: '30/09/2019 04:31 PM',
+			checked: false,
+		},
+		{
+			id: 236975,
+			assetName: 'A1 PDU G',
+			comment: '',
+			userSelectedCol0: 'general',
+			userSelectedCol1: '30/09/2019 04:29 PM',
+			checked: false,
+		},
 	],
-	totalCount: 8,
+	totalCount: 16,
 };
 
 export const columnModelAssetsGrid = [
