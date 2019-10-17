@@ -109,6 +109,20 @@
 			<ng-template kendoGridCellTemplate *ngIf="column.isActionable" let-dataItem>
 				<span class="actionable-column">{{ dataItem[column.field] }}</span>
 			</ng-template>
+			<ng-template kendoGridCellTemplate *ngIf="!column.isActionable" let-dataItem>
+				<div [ngSwitch]="column.field">
+					<span *ngSwitchCase="'status'">
+						<span [ngClass]="'status status-'+dataItem[column.field]" [ngSwitch]="dataItem[column.field]">
+							<clr-icon *ngSwitchCase="'Ready'" shape="thumbs-up" class="is-solid"></clr-icon>
+							<clr-spinner  *ngSwitchCase="'Started'" clrInline class="static"></clr-spinner >
+							<clr-icon *ngSwitchCase="'Hold'" shape="pause" class="is-solid"></clr-icon>
+							<clr-icon *ngSwitchCase="'Completed'" shape="check" class="is-solid"></clr-icon>
+							<clr-icon *ngSwitchDefault shape="minus" class="is-solid"></clr-icon>
+						</span> {{ dataItem[column.field] }}
+					</span>
+					<span  *ngSwitchDefault>{{ dataItem[column.field] }}</span>
+				</div>
+			</ng-template>
 		</kendo-grid-column>
 
 		<!-- Row detail -->

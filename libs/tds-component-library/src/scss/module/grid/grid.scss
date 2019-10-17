@@ -119,6 +119,43 @@ kendo-grid {
 					display: inline-block;
 				}
 			}
+			td .status {
+				display: inline-block;
+				width: 16px;
+				height: 16px;
+				text-align: center;
+				line-height: 16px;
+				border: 1px solid $color-icon;
+				border-radius: 3px;
+				background: $color-border;
+
+				clr-icon {
+					color: $color-text-inverse;
+					width: 13px;
+					height: 13px;
+					margin-bottom: 1px;
+				}
+				&.status-Ready {
+					background: $color-success;
+				}
+				&.status-Started {
+					background:transparent;
+					border:0;
+					clr-spinner{
+						width:16px;
+						height:16px;
+					}
+				}
+				&.status-Hold {
+					background: $color-hold;
+				}
+				&.status-Completed {
+					background: $color-info;
+				}
+				&.status-Pending clr-icon {
+					color: $color-icon;
+				}
+			}
 		}
 	}
 
