@@ -6,8 +6,8 @@ import { Component, Input } from '@angular/core';
 	templateUrl: './radial-progress.component.html',
 })
 export class RadialProgressComponent {
-	private dasharray: number;
-	private dashoffset: number;
+	public dasharray: number;
+	public dashoffset: number;
 	private radius = 33;
 
 	@Input() size: string;
