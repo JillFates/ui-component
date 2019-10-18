@@ -7,8 +7,7 @@
 	[id]="id"
 	[tabIndex]="tabindex"
 	[clrLoading]="btnState"
-	(click)="buttonAction($event)"
 >
-	<clr-icon *ngIf="icon" [attr.shape]="icon"></clr-icon>
+	<clr-icon *ngIf="icon" [ngClass]="iconClass" [attr.shape]="icon"></clr-icon>
 	<span class="button-label"><ng-content></ng-content></span>
 </button>

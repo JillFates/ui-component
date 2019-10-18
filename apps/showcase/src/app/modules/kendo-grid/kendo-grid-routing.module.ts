@@ -2,9 +2,8 @@
 import {RouterModule, Routes} from '@angular/router';
 import {NgModule} from '@angular/core';
 // Component
-import {GridOverviewComponent} from './component/overview/grid-overview.component';
-import {GridApiComponent} from './component/api/grid-api.component';
-import {GridComponent} from '../../../../../../libs/tds-component-library/src/lib/grid/grid.component';
+import {KendoGridOverviewComponent} from './component/overview/kendo-grid-overview.component';
+import {KendoGridApiComponent} from './component/api/kendo-grid-api.component';
 
 export class GridRoutingStates {
 	public static readonly GRID_OVERVIEW_COMPONENT_STATE: any = {
@@ -12,9 +11,6 @@ export class GridRoutingStates {
 	};
 	public static readonly GRID_API_COMPONENT_STATE: any = {
 		url: 'component/grid/api'
-	};
-	public static readonly GRID_TASK_MANAGER_COMPONENT_STATE: any = {
-		url: 'component/grid/task-manager'
 	};
 }
 
@@ -24,7 +20,7 @@ export const ComponentsRoutes: Routes = [
 		data: {
 			title: 'Grid Overview Component'
 		},
-		component: GridOverviewComponent,
+		component: KendoGridOverviewComponent,
 		resolve: {}
 	},
 	{
@@ -32,15 +28,7 @@ export const ComponentsRoutes: Routes = [
 		data: {
 			title: 'Grid API Component'
 		},
-		component: GridApiComponent,
-		resolve: {}
-	},
-	{
-		path: GridRoutingStates.GRID_TASK_MANAGER_COMPONENT_STATE.url,
-		data: {
-			title: 'Grid Task Manager Component'
-		},
-		component: GridComponent,
+		component: KendoGridApiComponent,
 		resolve: {}
 	}
 ];
@@ -49,5 +37,5 @@ export const ComponentsRoutes: Routes = [
 	exports: [RouterModule],
 	imports: [RouterModule.forChild(ComponentsRoutes)]
 })
-export class GridRoutingModule {
+export class KendoGridRoutingModule {
 }

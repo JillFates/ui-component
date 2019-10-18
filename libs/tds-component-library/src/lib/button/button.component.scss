@@ -31,14 +31,32 @@
 }
 
 :host {
+	pointer-events: none;
 	display: inline-block;
 	.btn {
+		pointer-events: auto;
 		font-size: 12px;
-		line-height: 36px;
-		min-width: 2rem;
+		line-height: 24px;
+		min-width: 1rem;
+		height: unset;
+		overflow: visible;
 		&.btn-sm {
 			font-size: 11px;
 			line-height: 24px;
+		}
+		&[disabled] {
+			pointer-events: none;
+			position: relative;
+		}
+		&[disabled]::after {
+			content: '';
+			pointer-events: auto;
+			position: absolute;
+			top: 0;
+			left: 0;
+			right: 0;
+			bottom: 0;
+			cursor: not-allowed;
 		}
 	}
 	&[type='reset'],

@@ -1,0 +1,201 @@
+kendo-grid {
+	&.k-grid {
+		background-color: transparent;
+		th,
+		td {
+			border: 0;
+		}
+		td {
+			line-height: 20px;
+			padding: 4px 8px;
+			background: $color-text-inverse;
+			border: 1px solid $color-head;
+			border-width: 0 0 1px 0;
+		}
+	}
+
+	&.k-widget,
+	.k-widget {
+		border-width: 0;
+	}
+
+	.k-grid-toolbar {
+		background: transparent;
+		border-width: 0;
+		.grid-label {
+			strong {
+				margin-right: 5px;
+			}
+		}
+	}
+
+	.grid-actions {
+		> div {
+			float: right;
+			.btn {
+				padding: 0 5px;
+				clr-icon {
+					margin: 0 5px;
+				}
+			}
+		}
+	}
+
+	.k-grid-header-wrap {
+		border: 0;
+		background: $color-head;
+		th,
+		td {
+			background: transparent;
+		}
+	}
+
+	.k-grid-header {
+		.k-header {
+			background: transparent;
+			.btn {
+				line-height: 18px;
+				height: unset;
+				margin: 0;
+			}
+			&:not(.k-hierarchy-cell):not(:last-child)::after {
+				content: '';
+				position: absolute;
+				top: 12px;
+				bottom: 12px;
+				right: 0;
+				background: $color-icon;
+				width: 1px;
+			}
+		}
+	}
+
+	.clr-form-control {
+		margin-top: 0;
+	}
+
+	&.hide-filter {
+		.k-filter-row {
+			display: none;
+		}
+	}
+
+	.k-filter-row {
+		.filter-input {
+			position: relative;
+			.clr-control-container {
+				width: 100%;
+			}
+			.clr-input {
+				background: #ffffff;
+				border: 1px solid $color-border;
+				border-radius: 3px;
+				width: 90%;
+				width: calc(100% - 3em);
+				&:focus {
+					border-color: $color-active;
+				}
+			}
+			tds-button {
+				position: absolute;
+				top: 0;
+				right: 0;
+				.btn {
+					padding: 0;
+					margin: 0;
+					.clr-icon {
+						color: $color-icon;
+					}
+				}
+			}
+		}
+	}
+
+	kendo-grid-list {
+		.k-grid-table {
+			tr > td:first-child {
+				.clr-checkbox-wrapper {
+					padding-left: 3px;
+					display: inline-block;
+				}
+			}
+			td .status {
+				display: inline-block;
+				width: 16px;
+				height: 16px;
+				text-align: center;
+				line-height: 16px;
+				border: 1px solid $color-icon;
+				border-radius: 3px;
+				background: $color-border;
+
+				clr-icon {
+					color: $color-text-inverse;
+					width: 13px;
+					height: 13px;
+					margin-bottom: 1px;
+				}
+				&.status-Ready {
+					background: $color-success;
+				}
+				&.status-Started {
+					background:transparent;
+					border:0;
+					clr-spinner{
+						width:16px;
+						height:16px;
+					}
+				}
+				&.status-Hold {
+					background: $color-hold;
+				}
+				&.status-Completed {
+					background: $color-info;
+				}
+				&.status-Pending clr-icon {
+					color: $color-icon;
+				}
+			}
+		}
+	}
+
+	.k-grid-pager {
+		font-size: 80%;
+		.btn {
+			padding: 0 0.5px;
+		}
+		.page-selection {
+			display: inline-block;
+			white-space: nowrap;
+			.clr-form-control {
+				display: inline;
+				input {
+					text-align: center;
+					background: #ffffff;
+					border: 1px solid $color-border;
+					border-radius: 3px;
+				}
+			}
+		}
+		.grid-paging {
+			text-align: right;
+			.pager-items {
+				position: relative;
+				display: inline-flex;
+				flex-direction: row;
+				justify-content: flex-end;
+				padding: 0 8px;
+				line-height: 24px;
+				&:not(:last-child)::after {
+					content: '';
+					position: absolute;
+					top: 4px;
+					bottom: 4px;
+					right: 0;
+					background: $color-icon;
+					width: 1px;
+				}
+			}
+		}
+	}
+}

@@ -13,6 +13,7 @@ export class ButtonComponent {
 
 	@Input() type: string;
 	@Input() icon: string;
+	@Input() iconClass: string;
 	@Input() theme: string;
 	@Input() small: boolean;
 	@Input() inverse: boolean;
@@ -22,8 +23,6 @@ export class ButtonComponent {
 	@Input() title: string;
 	@Input() id: string;
 	@Input() tabindex: string;
-
-	@Output() action: EventEmitter<any> = new EventEmitter();
 
 	get state(): string {
 		return this._state;
@@ -36,14 +35,6 @@ export class ButtonComponent {
 		} else {
 			this.btnState = ClrLoadingState.DEFAULT;
 		}
-	}
-
-	/**
-	 * Button Click Action
-	 * @param e : Event
-	 */
-	public buttonAction(e: Event): void {
-		this.action.next(e);
 	}
 
 	/**

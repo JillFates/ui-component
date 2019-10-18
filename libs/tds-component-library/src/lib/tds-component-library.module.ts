@@ -2,14 +2,14 @@ import {NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {FormsModule} from '@angular/forms';
 import {RouterModule} from '@angular/router';
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {ClarityModule} from '@clr/angular';
-import {GridModule} from '@progress/kendo-angular-grid';
 import {CardComponent} from './card/card.component';
 import {DropdownComponent} from './dropdown/dropdown.component';
 import {ButtonComponent} from './button/button.component';
-import {GridComponent} from './grid/grid.component';
-import {GridAllAssetsComponent} from './grid-all-assets/grid-all-assets.component';
 import {ButtonsModule} from '@progress/kendo-angular-buttons';
+import {RadialProgressComponent} from './radial-progress/radial-progress.component';
+import {GridPagerComponent} from './grid-pager/grid-pager.component';
 
 @NgModule({
 	imports: [
@@ -17,23 +17,22 @@ import {ButtonsModule} from '@progress/kendo-angular-buttons';
 		FormsModule,
 		RouterModule,
 		ButtonsModule,
-		ClarityModule,
-		GridModule
+		BrowserAnimationsModule,
+		ClarityModule
 	],
 	declarations: [
-		GridComponent,
-		GridAllAssetsComponent,
 		CardComponent,
 		DropdownComponent,
 		ButtonComponent,
-		GridComponent
+		RadialProgressComponent,
+		GridPagerComponent
 	],
 	exports: [
 		CardComponent,
 		DropdownComponent,
 		ButtonComponent,
-		GridComponent,
-		GridAllAssetsComponent
+		RadialProgressComponent,
+		GridPagerComponent
 	]
 })
 export class TdsComponentLibraryModule {
