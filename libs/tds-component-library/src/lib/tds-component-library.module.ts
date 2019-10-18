@@ -17,7 +17,6 @@ import {GridPagerComponent} from './grid-pager/grid-pager.component';
 		FormsModule,
 		RouterModule,
 		ButtonsModule,
-		BrowserAnimationsModule,
 		ClarityModule
 	],
 	declarations: [
