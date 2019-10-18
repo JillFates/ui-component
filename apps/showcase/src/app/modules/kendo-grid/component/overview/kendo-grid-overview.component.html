@@ -11,7 +11,7 @@
 		[pageSize]="tasksPage.take"
 		[skip]="tasksPage.skip"
 		[resizable]="tasksGrid.resizable"
-		[pageable]="tasksGrid.pageable"s
+		[pageable]="tasksGrid.pageable"
 		[data]="tasksData"
 		[columnMenu]="tasksGrid.columnMenu"
 		[ngClass]="{ 'hide-filter': !showTasksFilter }"
@@ -111,15 +111,16 @@
 			<ng-template kendoGridCellTemplate *ngIf="!column.isActionable" let-dataItem>
 				<div [ngSwitch]="column.field">
 					<span *ngSwitchCase="'status'">
-						<span [ngClass]="'status status-'+dataItem[column.field]" [ngSwitch]="dataItem[column.field]">
+						<span [ngClass]="'status status-' + dataItem[column.field]" [ngSwitch]="dataItem[column.field]">
 							<clr-icon *ngSwitchCase="'Ready'" shape="thumbs-up" class="is-solid"></clr-icon>
-							<clr-spinner  *ngSwitchCase="'Started'" clrInline class="static"></clr-spinner >
+							<clr-spinner *ngSwitchCase="'Started'" clrInline class="static"></clr-spinner>
 							<clr-icon *ngSwitchCase="'Hold'" shape="pause" class="is-solid"></clr-icon>
 							<clr-icon *ngSwitchCase="'Completed'" shape="check" class="is-solid"></clr-icon>
 							<clr-icon *ngSwitchDefault shape="minus" class="is-solid"></clr-icon>
-						</span> {{ dataItem[column.field] }}
+						</span>
+						{{ dataItem[column.field] }}
 					</span>
-					<span  *ngSwitchDefault>{{ dataItem[column.field] }}</span>
+					<span *ngSwitchDefault>{{ dataItem[column.field] }}</span>
 				</div>
 			</ng-template>
 		</kendo-grid-column>
@@ -143,58 +144,14 @@
 
 		<ng-template kendoPagerTemplate let-total="total" let-totalPages="totalPages" let-currentPage="currentPage">
 			<div class="clr-col-4"></div>
-			<div class="grid-paging clr-col-8">
-				<div class="pager-items">
-					Records per page
-					<select clrSelect (change)="changeTaskTake($event.target.value)">
-						<option *ngFor="let size of tasksGrid.pageable.pageSizes" [value]="size">{{ size }}</option>
-					</select>
-				</div>
-				<div class="pager-items">{{ total }} records</div>
-				<div class="pager-items">
-					<div class="btn-group btn-link">
-						<tds-button
-							class="pagination-first"
-							icon="step-forward-2 down"
-							[disabled]="currentPage <= 1"
-							(click)="changeTaskPage(1)"
-						>
-						</tds-button>
-						<tds-button
-							class="pagination-previous"
-							icon="angle left"
-							[disabled]="currentPage <= 1"
-							(click)="changeTaskPage(currentPage - 1)"
-						>
-						</tds-button>
-						<span class="page-selection">
-							<input
-								clrInput
-								type="number"
-								min="1"
-								[max]="totalPages"
-								[value]="currentPage"
-								name="currentPage"
-								(change)="changeTaskPage($event.target.value)"
-							/>
-							/ {{ totalPages }}
-						</span>
-						<tds-button
-							class="pagination-next"
-							icon="angle right"
-							[disabled]="currentPage >= totalPages"
-							(click)="changeTaskPage(currentPage + 1)"
-						>
-						</tds-button>
-						<tds-button
-							class="pagination-last"
-							icon="step-forward-2 up"
-							[disabled]="currentPage >= totalPages"
-							(click)="changeTaskPage(totalPages)"
-						>
-						</tds-button>
-					</div>
-				</div>
+			<div class="clr-col-8">
+				<tds-grid-pager
+					[total]="total"
+					[totalPages]="totalPages"
+					[currentPage]="currentPage"
+					[pageSizes]="tasksGrid.pageable.pageSizes"
+					(pageChange)="pageChangeTaskGrid($event)"
+				></tds-grid-pager>
 			</div>
 		</ng-template>
 	</kendo-grid>
@@ -340,60 +297,45 @@
 		</ng-template>
 
 		<ng-template kendoPagerTemplate let-total="total" let-totalPages="totalPages" let-currentPage="currentPage">
-				<div class="clr-col-4"></div>
-				<div class="grid-paging clr-col-8">
-					<div class="pager-items">
-						Records per page
-						<select clrSelect (change)="changeAssetTake($event.target.value)">
-							<option *ngFor="let size of assetsGrid.pageable.pageSizes" [value]="size">{{ size }}</option>
-						</select>
-					</div>
-					<div class="pager-items">{{ total }} records</div>
-					<div class="pager-items">
-						<div class="btn-group btn-link">
-							<tds-button
-								class="pagination-first"
-								icon="step-forward-2 down"
-								[disabled]="currentPage <= 1"
-								(click)="changeAssetPage(1)"
-							>
-							</tds-button>
-							<tds-button
-								class="pagination-previous"
-								icon="angle left"
-								[disabled]="currentPage <= 1"
-								(click)="changeAssetPage(currentPage - 1)"
-							>
-							</tds-button>
-							<span class="page-selection">
-								<input
-									clrInput
-									type="number"
-									min="1"
-									[max]="totalPages"
-									[value]="currentPage"
-									name="currentPage"
-									(change)="changeAssetPage($event.target.value)"
-								/>
-								/ {{ totalPages }}
-							</span>
-							<tds-button
-								class="pagination-next"
-								icon="angle right"
-								[disabled]="currentPage >= totalPages"
-								(click)="changeAssetPage(currentPage + 1)"
-							>
-							</tds-button>
-							<tds-button
-								class="pagination-last"
-								icon="step-forward-2 up"
-								[disabled]="currentPage >= totalPages"
-								(click)="changeAssetPage(totalPages)"
-							>
-							</tds-button>
-						</div>
-					</div>
-				</div>
-			</ng-template>
-		</kendo-grid>
+			<div class="clr-col-4"></div>
+			<div class="clr-col-8">
+				<tds-grid-pager
+					[total]="total"
+					[totalPages]="totalPages"
+					[currentPage]="currentPage"
+					[pageSizes]="assetsGrid.pageable.pageSizes"
+					(pageChange)="pageChangeAssetGrid($event)"
+				></tds-grid-pager>
+			</div>
+		</ng-template>
+	</kendo-grid>
+
+	<div class="clr-row">
+		<div class="clr-col-12">
+			<h3>Usage Example</h3>
+		</div>
+		<div class="clr-col-12">
+			<tds-card
+				title="Grid Pager Component Usage with Kendo Grid"
+				code='
+<kendo-grid>
+	...
+	//other grid components
+	...
+	<ng-template kendoPagerTemplate let-total="total" let-totalPages="totalPages" let-currentPage="currentPage">
+		<div class="clr-col-4"></div>
+		<div class="clr-col-8">
+			<tds-grid-pager
+				[total]="total"
+				[totalPages]="totalPages"
+				[currentPage]="currentPage"
+				[pageSizes]="[5, 10, 25, 50, 100]"
+				(pageChange)="pageChangeEvent($event)"
+			></tds-grid-pager>
+		</div>
+	</ng-template>
+</kendo-grid>'>
+			</tds-card>
+		</div>
+	</div>
 </div>

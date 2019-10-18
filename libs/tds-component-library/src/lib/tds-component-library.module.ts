@@ -8,10 +8,11 @@ import { CardComponent } from './card/card.component';
 import { RadialProgressComponent } from './radial-progress/radial-progress.component';
 import { DropdownComponent } from './dropdown/dropdown.component';
 import { ButtonComponent } from './button/button.component';
+import { GridPagerComponent } from './grid-pager/grid-pager.component';
 
 @NgModule({
 	imports: [CommonModule, FormsModule, RouterModule, BrowserAnimationsModule, ClarityModule],
-	declarations: [CardComponent, DropdownComponent, ButtonComponent, RadialProgressComponent],
-	exports: [CardComponent, DropdownComponent, ButtonComponent, RadialProgressComponent],
+	declarations: [CardComponent, DropdownComponent, ButtonComponent, RadialProgressComponent, GridPagerComponent],
+	exports: [CardComponent, DropdownComponent, ButtonComponent, RadialProgressComponent, GridPagerComponent],
 })
 export class TdsComponentLibraryModule {}

@@ -1,0 +1,41 @@
+@import '../../theme';
+
+:host {
+	font-size: 80%;
+	.btn {
+		padding: 0 0.5px;
+	}
+	.page-selection {
+		display: inline-block;
+		white-space: nowrap;
+		.clr-form-control {
+			display: inline;
+			input {
+				text-align: center;
+				background: #ffffff;
+				border: 1px solid $color-border;
+				border-radius: 3px;
+			}
+		}
+	}
+	.grid-paging {
+		text-align: right;
+		.pager-items {
+			position: relative;
+			display: inline-flex;
+			flex-direction: row;
+			justify-content: flex-end;
+			padding: 0 8px;
+			line-height: 24px;
+			&:not(:last-child)::after {
+				content: '';
+				position: absolute;
+				top: 4px;
+				bottom: 4px;
+				right: 0;
+				background: $color-icon;
+				width: 1px;
+			}
+		}
+	}
+}
