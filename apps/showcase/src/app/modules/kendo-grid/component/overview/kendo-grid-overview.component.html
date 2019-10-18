@@ -5,14 +5,13 @@
 		sit amet feugiat. Quisque auctor mattis quam eu suscipit. Morbi ipsum risus, feugiat vitae sem at, tincidunt
 		elementum magna
 	</p>
-
 	<kendo-grid
 		[filterable]="tasksGrid.filterable"
 		[sortable]="tasksGrid.sortable"
 		[pageSize]="tasksPage.take"
 		[skip]="tasksPage.skip"
 		[resizable]="tasksGrid.resizable"
-		[pageable]="tasksGrid.pageable"
+		[pageable]="tasksGrid.pageable"s
 		[data]="tasksData"
 		[columnMenu]="tasksGrid.columnMenu"
 		[ngClass]="{ 'hide-filter': !showTasksFilter }"

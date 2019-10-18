@@ -1,0 +1,39 @@
+<div class="button-overview-component">
+	<h2>Radial Progress Component</h2>
+	<div class="clr-row">
+		<div class="clr-col-12">
+			<h3>Example</h3>
+		</div>
+		<div class="clr-col-12">
+			<tds-card>
+				<tds-radial-progress [percent]="value" size="small"></tds-radial-progress>small
+				<tds-radial-progress [percent]="value" size="medium"></tds-radial-progress>medium
+				<tds-radial-progress [percent]="value" size="large"></tds-radial-progress>large
+			</tds-card>
+		</div>
+
+		<div class="clr-row">
+			<div class="clr-col-12">
+				<h3>Usage Example</h3>
+			</div>
+			<div class="clr-col-12">
+				<tds-card
+					title="Basic Radial Progress Example"
+					code='<tds-radial-progress [percent]="10" size="medium"></tds-radial-progress>'
+				>
+					<tds-radial-progress [percent]="10" size="medium"></tds-radial-progress>
+				</tds-card>
+			</div>
+			<div class="clr-col-12">
+				<tds-card
+					title="Large Inline Radial Progress Indicator"
+					code='<tds-radial-progress [percent]="10" size="large" class="inline-progress"></tds-radial-progress>'
+				>
+					Before Element
+					<tds-radial-progress [percent]="10" size="large" class="inline-progress"></tds-radial-progress>
+					After Element
+				</tds-card>
+			</div>
+		</div>
+	</div>
+</div>

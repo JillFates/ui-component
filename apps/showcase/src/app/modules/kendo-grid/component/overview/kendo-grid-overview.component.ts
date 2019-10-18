@@ -53,6 +53,8 @@ export class KendoGridOverviewComponent {
 	public tasksData: GridDataResult;
 	public assetsData: GridDataResult;
 
+	public counter = 1;
+	public progress = 0;
 	constructor() {
 		this.loadTasksGrid();
 		this.loadAssetsGrid();
@@ -63,7 +65,6 @@ export class KendoGridOverviewComponent {
 	 */
 	public pageChangeTaskGrid(event: PageChangeEvent): void {
 		this.tasksPage = event;
-		console.log(event);
 		this.loadTasksGrid();
 	}
 	/**

@@ -1,0 +1,30 @@
+:host {
+	&.inline-progress {
+		display: inline-block;
+	}
+
+	position: relative;
+	min-height: 3rem;
+	min-width: 3rem;
+	height: 3rem;
+	width: 3rem;
+	margin: 0;
+	padding: 0;
+	overflow: hidden;
+	white-space: nowrap;
+
+	.tds-radial-progress {
+		&.small {
+			max-width: 18px;
+			max-height: 18px;
+		}
+		&.medium {
+			max-width: 36px;
+			max-height: 36px;
+		}
+		&.large {
+			max-width: 72px;
+			max-height: 72px;
+		}
+	}
+}
