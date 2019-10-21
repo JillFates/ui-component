@@ -60,7 +60,7 @@ podTemplate (
         //     }
         // }
 
-        // if (env.BRANCH_NAME == 'develop') {
+        if (env.BRANCH_NAME == 'develop') {
             stage('Build image') {
                 container('docker') {
                     uiImage = docker.build("${registry}${name}:${env.BUILD_ID}", ".")
@@ -75,6 +75,6 @@ podTemplate (
                     }
                 }
             }
-        // }
+        }
     }
 }
