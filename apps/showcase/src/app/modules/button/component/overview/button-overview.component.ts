@@ -57,6 +57,29 @@ export class ButtonOverviewComponent {
 `,
 		},
 		{
+			title: 'Button Flat',
+			description: 'Flat Attribute true or false',
+			code: `
+<tds-button [flat]="true">Flat Button</tds-button>
+<tds-button icon="cog" [flat]="true"></tds-button>
+`,
+		},
+		{
+			title: 'Dropdown Button',
+			description: '',
+			code: `
+<clr-dropdown>
+	<tds-button theme="primary" clrDropdownTrigger>
+		Dropdown <clr-icon shape="angle down"></clr-icon>
+	</tds-button>
+	<clr-dropdown-menu clrPosition="bottom-left" *clrIfOpen>
+		<div clrDropdownItem>Link 1</div>
+		<div clrDropdownItem>Link 2</div>
+	</clr-dropdown-menu>
+</clr-dropdown>
+`,
+		},
+		{
 			title: 'Button Icons',
 			description: 'Buttons impliment Clarity Icons with the Icon Attribute. https://clarity.design/icons',
 			code: `
@@ -67,15 +90,31 @@ export class ButtonOverviewComponent {
 		{
 			title: 'Button Bar',
 			description:
-				'Add a wrapping element with a "btn-group" class to create a button bar. https://v2.clarity.design/button-group',
+			'Add a wrapping element with a "btn-group" class to create a button bar. https://v2.clarity.design/button-group',
 			code: `
 <div class="btn-group btn-primary">
 	<tds-button theme="primary">Button 1</tds-button>
 	<tds-button theme="warning">Button 2</tds-button>
 	<tds-button theme="danger">Button 2</tds-button>
 	<tds-button theme="success">Button 3</tds-button>
+</div>s
+			`,
+		},
+		{
+			title: 'Button bar dropdown',
+			description: 'Clarity Dropdown in button bar',
+			code: `
+<div class="btn-group btn-primary">
+	<tds-button icon="home">Normal Button</tds-button>
+	<clr-dropdown>
+		<tds-button icon="ellipsis-vertical" clrDropdownTrigger></tds-button>
+		<clr-dropdown-menu clrPosition="bottom-right" *clrIfOpen>
+			<div clrDropdownItem>Link 1</div>
+			<div clrDropdownItem>Link 2</div>
+		</clr-dropdown-menu>
+	</clr-dropdown>
 </div>
-`,
+	`,
 		},
 		{
 			title: 'State Changing',

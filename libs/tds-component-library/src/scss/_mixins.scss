@@ -1,0 +1,29 @@
+@mixin square-off-btngroup-btns($dir: left) {
+	border-top-#{$dir}-radius: 0;
+	border-bottom-#{$dir}-radius: 0;
+}
+@mixin outlineHover($color) {
+	border-color: $color;
+	background-color: transparent;
+	color: $color;
+	&:hover {
+		background-color: rgba($color, 0.1);
+	}
+}
+@mixin backgroundHover($background, $text: $color-text-inverse) {
+	border-color: $background;
+	background-color: $background;
+	color: $text;
+	&:hover {
+		background-color: darken($background, 10%);
+	}
+}
+@mixin buttonEffect($color) {
+	@include backgroundHover($color);
+	&:active {
+		box-shadow: 0 2px 0 0 darken($color, 20%) inset;
+	}
+	&.btn-outline {
+		@include outlineHover($color);
+	}
+}
