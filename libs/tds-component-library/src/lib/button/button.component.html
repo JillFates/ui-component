@@ -3,6 +3,9 @@
 	class="tds-button btn"
 	[ngClass]="buttonClass()"
 	[disabled]="disabled"
+	[title]="title"
+	[id]="id"
+	[tabIndex]="tabindex"
 	[clrLoading]="btnState"
 >
 	<clr-icon *ngIf="icon" [ngClass]="iconClass" [attr.shape]="icon"></clr-icon>

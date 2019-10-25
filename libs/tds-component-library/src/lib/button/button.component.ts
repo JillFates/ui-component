@@ -20,7 +20,9 @@ export class ButtonComponent {
 	@Input() outline: boolean;
 	@Input() flat: boolean;
 	@Input() disabled: boolean;
-	@Input() dropdown: HTMLElement;
+	@Input() title: string;
+	@Input() id: string;
+	@Input() tabindex: string;
 
 	get state(): string {
 		return this._state;
