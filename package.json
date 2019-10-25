@@ -65,7 +65,8 @@
     "rxjs": "~6.4.0",
     "scss-bundle": "^2.5.1",
     "tslib": "^1.9.0",
-    "zone.js": "^0.9.1"
+    "zone.js": "^0.9.1",
+    "gojs": "2.0.17"
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "^0.800.0",

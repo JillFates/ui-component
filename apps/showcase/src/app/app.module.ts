@@ -12,6 +12,7 @@ import { SharedModule } from './shared/shared.module';
 import { RadialProgressModule } from './modules/radial-progress/radial-progress.module';
 // Component
 import { AppComponent } from './app.component';
+import {DiagramLayoutModule} from './modules/diagram-layout/diagram-layout.module';
 
 @NgModule({
 	declarations: [AppComponent],
@@ -25,6 +26,7 @@ import { AppComponent } from './app.component';
 		DropdownModule,
 		RadialProgressModule,
 		ButtonModule,
+		DiagramLayoutModule,
 		RouterModule.forRoot([], { initialNavigation: 'enabled' }),
 	],
 	providers: [],

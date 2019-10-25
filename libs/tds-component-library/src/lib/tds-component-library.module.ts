@@ -10,6 +10,7 @@ import {ButtonComponent} from './button/button.component';
 import {ButtonsModule} from '@progress/kendo-angular-buttons';
 import {RadialProgressComponent} from './radial-progress/radial-progress.component';
 import {GridPagerComponent} from './grid-pager/grid-pager.component';
+import {DiagramLayoutComponent} from './diagram-layout/diagram-layout.component';
 
 @NgModule({
 	imports: [
@@ -24,14 +25,16 @@ import {GridPagerComponent} from './grid-pager/grid-pager.component';
 		DropdownComponent,
 		ButtonComponent,
 		RadialProgressComponent,
-		GridPagerComponent
+		GridPagerComponent,
+		DiagramLayoutComponent
 	],
 	exports: [
 		CardComponent,
 		DropdownComponent,
 		ButtonComponent,
 		RadialProgressComponent,
-		GridPagerComponent
+		GridPagerComponent,
+		DiagramLayoutComponent
 	]
 })
 export class TdsComponentLibraryModule {
