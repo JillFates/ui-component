@@ -55,6 +55,19 @@
 			</tds-card>
 		</div>
 		<div class="clr-col-12">
+			<tds-card title="Dropdown Button">
+				<clr-dropdown>
+					<tds-button theme="primary" clrDropdownTrigger>
+						Dropdown <clr-icon shape="angle down"></clr-icon>
+					</tds-button>
+					<clr-dropdown-menu clrPosition="bottom-left" *clrIfOpen>
+						<div clrDropdownItem>Link 1</div>
+						<div clrDropdownItem>Link 2</div>
+					</clr-dropdown-menu>
+				</clr-dropdown>
+			</tds-card>
+		</div>
+		<div class="clr-col-12">
 			<tds-card title="Outline Button Bar">
 				<div class="btn-group btn-outline">
 					<tds-button>Button 1</tds-button>
@@ -114,6 +127,20 @@
 					<tds-button icon="bars"></tds-button>
 					<tds-button icon="ellipsis-horizontal"></tds-button>
 					<tds-button icon="ellipsis-vertical"></tds-button>
+				</div>
+			</tds-card>
+		</div>
+		<div class="clr-col-12">
+			<tds-card title="Button Bar Dropdown">
+				<div class="btn-group btn-primary">
+					<tds-button icon="home">Normal Button</tds-button>
+					<clr-dropdown>
+						<tds-button icon="ellipsis-vertical" clrDropdownTrigger></tds-button>
+						<clr-dropdown-menu clrPosition="bottom-right" *clrIfOpen>
+							<div clrDropdownItem>Link 1</div>
+							<div clrDropdownItem>Link 2</div>
+						</clr-dropdown-menu>
+					</clr-dropdown>
 				</div>
 			</tds-card>
 		</div>

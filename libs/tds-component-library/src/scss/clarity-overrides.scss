@@ -1,6 +1,36 @@
+.dropdown{
+	tds-button.dropdown-toggle:not(.btn){
+		padding:0;
+		background-color: transparent;
+		&:hover{
+			background-color: transparent;
+			color:unset;
+		}
+	}
+}
+.btn-group {
+	> .dropdown{
+		background: transparent;
+		&:not(:first-child){
+			tds-button.dropdown-toggle .tds-button {
+				@include square-off-btngroup-btns(left);
+				border-left: 0;
+			}			
+		} 
+		&:not(:last-child){
+			tds-button.dropdown-toggle .tds-button {
+				@include square-off-btngroup-btns(right);
+				border-right: 0;
+			}			
+		}
+	}
+}
+
+
 .dropdown-menu .dropdown-item {
 	width: auto;
 }
+
 clr-icon {
 	.badge {
 		position: absolute;
