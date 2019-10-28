@@ -10,6 +10,7 @@ import { DropdownModule } from './modules/dropdown/dropdown.module';
 import { ButtonModule } from './modules/button/button.module';
 import { SharedModule } from './shared/shared.module';
 import { RadialProgressModule } from './modules/radial-progress/radial-progress.module';
+import { TabsModule } from './modules/tabs/tabs.module';
 // Component
 import { AppComponent } from './app.component';
 
@@ -25,6 +26,7 @@ import { AppComponent } from './app.component';
 		DropdownModule,
 		RadialProgressModule,
 		ButtonModule,
+		TabsModule,
 		RouterModule.forRoot([], { initialNavigation: 'enabled' }),
 	],
 	providers: [],
