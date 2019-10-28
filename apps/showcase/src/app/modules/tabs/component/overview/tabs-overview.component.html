@@ -1,0 +1,55 @@
+<h2>Tabs Component Overview</h2>
+<p>Based on the <a target="_blank" href="https://v2.clarity.design/tabs">Clarity Tabs</a> and the <a target="_blank"
+		href="https://www.telerik.com/kendo-angular-ui/components/layout/tabstrip/">Kendo Tabs</a>.</p>
+
+<p>Note: Use the Kendo tabs component when you want to have tabs that will not unmount child components on changing
+	tabs (see the example below), otherwise use the Clarity Tabs Component. The Kendo Tabs have been styled to look
+	identical to the Clarity Tabs.</p>
+
+<div class="clr-row">
+	<div class="clr-col-12">
+		<h3>Usage Examples</h3>
+	</div>
+	<div class="clr-col-12">
+		<tds-card title="Kendo Tabs Example - Keep Content on Tab Change" description="Clarity tabs will unmount a tab's data on tab change. 
+			When you need to keep that data (i.e. in a form) use the kendo tabs 
+			with the property [keepTabContent]='true'." code='
+<form>
+	<kendo-tabstrip [keepTabContent]="true">
+		<kendo-tabstrip-tab [title]="&apos;Tab 1&apos;" [selected]="true">
+			<ng-template kendoTabContent>
+				<p>First Tab Form Content</p>
+			</ng-template>
+		</kendo-tabstrip-tab>
+		<kendo-tabstrip-tab [title]="&apos;Tab 2&apos;">
+			<ng-template kendoTabContent>
+				<p>Second Tab Form Content</p>
+			</ng-template>
+		</kendo-tabstrip-tab>
+		<kendo-tabstrip-tab [title]="&apos;Tab 3&apos;">
+			<ng-template kendoTabContent>
+				<p>Third Tab Form Content</p>
+			</ng-template>
+		</kendo-tabstrip-tab>
+	</kendo-tabstrip>
+</form>'>
+			<kendo-tabstrip [keepTabContent]="true">
+				<kendo-tabstrip-tab [title]="'Tab 1'" [selected]="true">
+					<ng-template kendoTabContent>
+						<p>First Tab Form Content</p>
+					</ng-template>
+				</kendo-tabstrip-tab>
+				<kendo-tabstrip-tab [title]="'Tab 2'">
+					<ng-template kendoTabContent>
+						<p>Second Tab Form Content</p>
+					</ng-template>
+				</kendo-tabstrip-tab>
+				<kendo-tabstrip-tab [title]="'Tab 3'">
+					<ng-template kendoTabContent>
+						<p>Third Tab Form Content</p>
+					</ng-template>
+				</kendo-tabstrip-tab>
+			</kendo-tabstrip>
+		</tds-card>
+	</div>
+</div>
