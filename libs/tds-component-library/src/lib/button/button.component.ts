@@ -1,4 +1,4 @@
-import { Component, Input, Output, EventEmitter } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { ClrLoadingState } from '@clr/angular';
 
 @Component({
@@ -36,7 +36,7 @@ export class ButtonComponent {
 			this.btnState = ClrLoadingState.DEFAULT;
 		}
 	}
-
+	
 	/**
 	 * Get button classes
 	 * @return Array
@@ -61,7 +61,11 @@ export class ButtonComponent {
 		if (this.icon) {
 			classnames.push(`has-icon`);
 		}
+		if (this._state) {
+			classnames.push(`state-${this._state.toLowerCase()}`);
+		}
 
 		return classnames;
 	}
+	
 }

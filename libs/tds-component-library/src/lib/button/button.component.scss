@@ -1,35 +1,5 @@
 @import '../../theme';
 
-@mixin square-off-btngroup-btns($dir: left) {
-	border-top-#{$dir}-radius: 0;
-	border-bottom-#{$dir}-radius: 0;
-}
-@mixin outlineHover($color) {
-	border-color: $color;
-	background-color: transparent;
-	color: $color;
-	&:hover {
-		background-color: rgba($color, 0.1);
-	}
-}
-@mixin backgroundHover($background, $text: $color-text-inverse) {
-	border-color: $background;
-	background-color: $background;
-	color: $text;
-	&:hover {
-		background-color: darken($background, 10%);
-	}
-}
-@mixin buttonEffect($color) {
-	@include backgroundHover($color);
-	&:active {
-		box-shadow: 0 2px 0 0 darken($color, 20%) inset;
-	}
-	&.btn-outline {
-		@include outlineHover($color);
-	}
-}
-
 :host {
 	pointer-events: none;
 	display: inline-block;
@@ -58,6 +28,10 @@
 			bottom: 0;
 			cursor: not-allowed;
 		}
+		&.state-loading{
+			padding:0;
+			min-width: 1.7rem;
+		}
 	}
 	&[type='reset'],
 	&[type='submit'] {
@@ -65,8 +39,9 @@
 	}
 }
 
+
 .btn-group {
-	:host {
+	> :host {
 		&:not(:first-child) .tds-button {
 			@include square-off-btngroup-btns(left);
 			border-left: 0;
@@ -77,7 +52,6 @@
 		}
 	}
 }
-
 .btn-sm :host {
 	.btn {
 		font-size: 11px;
