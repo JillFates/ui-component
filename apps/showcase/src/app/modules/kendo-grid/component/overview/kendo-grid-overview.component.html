@@ -294,19 +294,6 @@
 						</div>
 					</ng-template>
 
-					<!-- <kendo-grid-column width="70" [filterable]="false" [columnMenu]="false" field="ActionsColumn">
-						<ng-template kendoGridCellTemplate let-dataItem let-rowIndex="rowIndex">
-							<div class="action-button btn-group btn-link">
-								<clr-dropdown>
-									<tds-button icon="ellipsis-vertical" clrDropdownTrigger></tds-button>
-									<clr-dropdown-menu *clrIfOpen>
-										<a clrDropdownItem>Edit Asset</a>
-									</clr-dropdown-menu>
-								</clr-dropdown>
-							</div>
-						</ng-template>
-					</kendo-grid-column> -->
-
 					<kendo-grid-column *ngFor="let column of columnModelTaskGrid" [field]="column.field"
 						[locked]="column.locked" [title]="column.title" [width]="column.width"
 						[columnMenu]="column.columnMenu" [filterable]="column.filterable"
