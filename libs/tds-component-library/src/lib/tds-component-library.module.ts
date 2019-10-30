@@ -11,6 +11,8 @@ import {ButtonsModule} from '@progress/kendo-angular-buttons';
 import {RadialProgressComponent} from './radial-progress/radial-progress.component';
 import {GridPagerComponent} from './grid-pager/grid-pager.component';
 import {DiagramLayoutComponent} from './diagram-layout/diagram-layout.component';
+import {TdsFontawesomeModule} from './tds-fontawesome.module';
+import {TdsContextMenuComponent} from './context-menu/tds-context-menu.component';
 
 @NgModule({
 	imports: [
@@ -18,7 +20,8 @@ import {DiagramLayoutComponent} from './diagram-layout/diagram-layout.component'
 		FormsModule,
 		RouterModule,
 		ButtonsModule,
-		ClarityModule
+		ClarityModule,
+		TdsFontawesomeModule
 	],
 	declarations: [
 		CardComponent,
@@ -26,7 +29,8 @@ import {DiagramLayoutComponent} from './diagram-layout/diagram-layout.component'
 		ButtonComponent,
 		RadialProgressComponent,
 		GridPagerComponent,
-		DiagramLayoutComponent
+		DiagramLayoutComponent,
+		TdsContextMenuComponent
 	],
 	exports: [
 		CardComponent,
@@ -34,7 +38,8 @@ import {DiagramLayoutComponent} from './diagram-layout/diagram-layout.component'
 		ButtonComponent,
 		RadialProgressComponent,
 		GridPagerComponent,
-		DiagramLayoutComponent
+		DiagramLayoutComponent,
+		TdsContextMenuComponent
 	]
 })
 export class TdsComponentLibraryModule {

@@ -1,4 +1,8 @@
 import { Component } from '@angular/core';
+import {
+	ITdsContextMenuIcon,
+	ITdsContextMenuOption
+} from '../../../../../../../../libs/tds-component-library/src/lib/context-menu/model/tds-context-menu.model';
 
 @Component({
 	selector: 'app-diagram-layout-overview',
@@ -11,7 +15,9 @@ import { Component } from '@angular/core';
 			</div>
 			<div class="clr-col-12">
 				<tds-card>
-					<tds-diagram-layout [data]="data"></tds-diagram-layout>
+					<tds-diagram-layout 
+						[data]="data"
+						[contextMenuOptions]="ctxOpts"></tds-diagram-layout>
 				</tds-card>
 			</div>
 		</div>
@@ -40,6 +46,7 @@ import { Component } from '@angular/core';
 })
 export class DiagramLayoutOverviewComponent {
 	data: any;
+	ctxOpts:  ITdsContextMenuOption;
 
 	constructor() {
 		this.setData();
@@ -53,31 +60,38 @@ export class DiagramLayoutOverviewComponent {
 			nodeDataArray: [
 				{
 					name: 'test',
-					key: 'a'
+					key: 'a',
+					status: 'hold'
 				},
 				{
 					name: 'test 2',
-					key: 'b'
+					key: 'b',
+					status: 'started'
 				},
 				{
 					name: 'test 3',
-					key: 'c'
+					key: 'c',
+					status: 'pending'
 				},
 				{
 					name: 'test 4',
-					key: 'd'
+					key: 'd',
+					status: 'pending'
 				},
 				{
 					name: 'test 5',
-					key: 'e'
+					key: 'e',
+					status: 'pending'
 				},
 				{
 					name: 'test 6',
-					key: 'f'
+					key: 'f',
+					status: 'pending'
 				},
 				{
 					name: 'test 7',
-					key: 'g'
+					key: 'g',
+					status: 'pending'
 				}
 			],
 			linkDataArray: [
@@ -108,6 +122,30 @@ export class DiagramLayoutOverviewComponent {
 				{
 					from: 'g',
 					to: 'a'
+				}
+			]
+		};
+		this.ctxOpts = {
+			fields: [
+				{
+					label: 'test1',
+					event: 'test1',
+					icon: {
+						icon: 'faUser'
+					},
+					status: 'stat',
+					isAvailable: (n: any) => !(n.status === 'hold'),
+					hasPermission: () => ['view', 'edit'].includes('view')
+				},
+				{
+					label: 'test2',
+					event: 'test2',
+					icon: {
+						icon: 'faUser'
+					},
+					status: 'stat',
+					isAvailable: (n: any) => !(n.status === 'started'),
+					hasPermission: () => ['view', 'edit'].includes('view')
 				}
 			]
 		};
