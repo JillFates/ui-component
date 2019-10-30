@@ -5,18 +5,10 @@
 		sit amet feugiat. Quisque auctor mattis quam eu suscipit. Morbi ipsum risus, feugiat vitae sem at, tincidunt
 		elementum magna
 	</p>
-	<kendo-grid
-		[filterable]="tasksGrid.filterable"
-		[sortable]="tasksGrid.sortable"
-		[pageSize]="tasksPage.take"
-		[skip]="tasksPage.skip"
-		[resizable]="tasksGrid.resizable"
-		[pageable]="tasksGrid.pageable"
-		[data]="tasksData"
-		[columnMenu]="tasksGrid.columnMenu"
-		[ngClass]="{ 'hide-filter': !showTasksFilter }"
-		(pageChange)="pageChangeTaskGrid($event)"
-	>
+	<kendo-grid [filterable]="tasksGrid.filterable" [sortable]="tasksGrid.sortable" [pageSize]="tasksPage.take"
+		[skip]="tasksPage.skip" [resizable]="tasksGrid.resizable" [pageable]="tasksGrid.pageable" [data]="tasksData"
+		[columnMenu]="tasksGrid.columnMenu" [ngClass]="{ 'hide-filter': !showTasksFilter }"
+		(pageChange)="pageChangeTaskGrid($event)">
 		<ng-template kendoGridToolbarTemplate [position]="'top'">
 			<div class="clr-row">
 				<div class="grid-label clr-col-4">
@@ -34,12 +26,8 @@
 					</clr-checkbox-wrapper>
 					<div class="btn-sm">
 						<tds-button icon="plus">Create Task</tds-button>
-						<tds-button
-							[disabled]="!hasFilterApplied('columnModelTaskGrid')"
-							(click)="onClearFilters('columnModelTaskGrid')"
-							icon="close"
-							>Clear filters</tds-button
-						>
+						<tds-button [disabled]="!hasFilterApplied('columnModelTaskGrid')"
+							(click)="onClearFilters('columnModelTaskGrid')" icon="close">Clear filters</tds-button>
 						<tds-button icon="repeat"></tds-button>
 					</div>
 				</div>
@@ -80,34 +68,15 @@
 			</ng-template>
 		</kendo-grid-column>
 
-		<kendo-grid-column
-			*ngFor="let column of columnModelTaskGrid"
-			[field]="column.field"
-			[locked]="column.locked"
-			[title]="column.title"
-			[width]="column.width"
-			[columnMenu]="column.columnMenu"
-			[filterable]="column.filterable"
-			[ngClass]="{ 'hide-filter': !showDetailsFilter }"
-		>
+		<kendo-grid-column *ngFor="let column of columnModelTaskGrid" [field]="column.field" [locked]="column.locked"
+			[title]="column.title" [width]="column.width" [columnMenu]="column.columnMenu"
+			[filterable]="column.filterable" [ngClass]="{ 'hide-filter': !showDetailsFilter }">
 			<ng-template kendoGridFilterCellTemplate let-filter>
 				<div class="filter-input">
-					<input
-						clrInput
-						type="text"
-						class="text-filter"
-						[name]="column.field"
-						[(ngModel)]="column.filter"
-						placeholder="Filter"
-					/>
-					<tds-button
-						*ngIf="column.filter"
-						(click)="onClearFilter(column)"
-						[title]="'Clear Filter'"
-						icon="times-circle"
-						[small]="true"
-						[flat]="true"
-					>
+					<input clrInput type="text" class="text-filter" [name]="column.field" [(ngModel)]="column.filter"
+						placeholder="Filter" />
+					<tds-button *ngIf="column.filter" (click)="onClearFilter(column)" [title]="'Clear Filter'"
+						icon="times-circle" [small]="true" [flat]="true">
 					</tds-button>
 				</div>
 			</ng-template>
@@ -153,13 +122,9 @@
 		<ng-template kendoPagerTemplate let-total="total" let-totalPages="totalPages" let-currentPage="currentPage">
 			<div class="clr-col-4"></div>
 			<div class="clr-col-8">
-				<tds-grid-pager
-					[total]="total"
-					[totalPages]="totalPages"
-					[currentPage]="currentPage"
-					[pageSizes]="tasksGrid.pageable.pageSizes"
-					(pageChange)="pageChangeTaskGrid($event)"
-				></tds-grid-pager>
+				<tds-grid-pager [total]="total" [totalPages]="totalPages" [currentPage]="currentPage"
+					[pageSizes]="tasksGrid.pageable.pageSizes" (pageChange)="pageChangeTaskGrid($event)">
+				</tds-grid-pager>
 			</div>
 		</ng-template>
 	</kendo-grid>
@@ -171,18 +136,10 @@
 		elementum magna
 	</p>
 
-	<kendo-grid
-		[filterable]="assetsGrid.filterable"
-		[sortable]="assetsGrid.sortable"
-		[pageSize]="assetsPage.take"
-		[skip]="assetsPage.skip"
-		[resizable]="assetsGrid.resizable"
-		[pageable]="assetsGrid.pageable"
-		[data]="assetsData"
-		[columnMenu]="assetsGrid.columnMenu"
-		[ngClass]="{ 'hide-filter': !showAssetsFilter }"
-		(pageChange)="pageChangeAssetsGrid($event)"
-	>
+	<kendo-grid [filterable]="assetsGrid.filterable" [sortable]="assetsGrid.sortable" [pageSize]="assetsPage.take"
+		[skip]="assetsPage.skip" [resizable]="assetsGrid.resizable" [pageable]="assetsGrid.pageable" [data]="assetsData"
+		[columnMenu]="assetsGrid.columnMenu" [ngClass]="{ 'hide-filter': !showAssetsFilter }"
+		(pageChange)="pageChangeAssetsGrid($event)">
 		<ng-template kendoGridColumnMenuTemplate let-service="service" let-column="column">
 			<div class="dropdown-menu">
 				<clr-radio-container>
@@ -196,22 +153,13 @@
 
 		<kendo-grid-column width="30" [columnMenu]="false">
 			<ng-template kendoGridHeaderTemplate let-column let-columnIndex="columnIndex">
-				<input
-					clrCheckbox
-					type="checkbox"
-					name="checkbox_checkall"
-					(change)="toggleAssetsChecks($event.target.checked)"
-				/>
+				<input clrCheckbox type="checkbox" name="checkbox_checkall"
+					(change)="toggleAssetsChecks($event.target.checked)" />
 			</ng-template>
 			<ng-template kendoGridCellTemplate let-dataItem let-rowIndex="rowIndex">
-				<input
-					clrCheckbox
-					type="checkbox"
-					id="checkbox_{{ dataItem.id }}-{{ rowIndex }}"
-					name="checkbox_{{ dataItem.id }}-{{ rowIndex }}"
-					[(ngModel)]="dataItem.checked"
-					(change)="selectRow(dataItem, $event.target.checked)"
-				/>
+				<input clrCheckbox type="checkbox" id="checkbox_{{ dataItem.id }}-{{ rowIndex }}"
+					name="checkbox_{{ dataItem.id }}-{{ rowIndex }}" [(ngModel)]="dataItem.checked"
+					(change)="selectRow(dataItem, $event.target.checked)" />
 			</ng-template>
 		</kendo-grid-column>
 
@@ -240,33 +188,15 @@
 			</ng-template>
 		</kendo-grid-column>
 
-		<kendo-grid-column
-			*ngFor="let column of columnModelAssetsGrid"
-			[field]="column.field"
-			[locked]="column.locked"
-			[title]="column.title"
-			[width]="column.width"
-			[columnMenu]="column.columnMenu"
-			[filterable]="column.filterable"
-		>
+		<kendo-grid-column *ngFor="let column of columnModelAssetsGrid" [field]="column.field" [locked]="column.locked"
+			[title]="column.title" [width]="column.width" [columnMenu]="column.columnMenu"
+			[filterable]="column.filterable">
 			<ng-template kendoGridFilterCellTemplate let-filter>
 				<div class="filter-input">
-					<input
-						clrInput
-						type="text"
-						class="text-filter"
-						[name]="column.field"
-						[(ngModel)]="column.filter"
-						placeholder="Filter"
-					/>
-					<tds-button
-						*ngIf="column.filter"
-						(click)="onClearFilter(column)"
-						[title]="'Clear Filter'"
-						icon="times-circle"
-						[small]="true"
-						[flat]="true"
-					>
+					<input clrInput type="text" class="text-filter" [name]="column.field" [(ngModel)]="column.filter"
+						placeholder="Filter" />
+					<tds-button *ngIf="column.filter" (click)="onClearFilter(column)" [title]="'Clear Filter'"
+						icon="times-circle" [small]="true" [flat]="true">
 					</tds-button>
 				</div>
 			</ng-template>
@@ -292,12 +222,8 @@
 							</clr-icon>
 							Bulk Action
 						</tds-button>
-						<tds-button
-							[disabled]="!hasFilterApplied('columnModelAssetsGrid')"
-							(click)="onClearFilters('columnModelAssetsGrid')"
-							icon="close"
-							>Clear filters</tds-button
-						>
+						<tds-button [disabled]="!hasFilterApplied('columnModelAssetsGrid')"
+							(click)="onClearFilters('columnModelAssetsGrid')" icon="close">Clear filters</tds-button>
 						<tds-button icon="repeat"></tds-button>
 					</div>
 				</div>
@@ -307,13 +233,9 @@
 		<ng-template kendoPagerTemplate let-total="total" let-totalPages="totalPages" let-currentPage="currentPage">
 			<div class="clr-col-4"></div>
 			<div class="clr-col-8">
-				<tds-grid-pager
-					[total]="total"
-					[totalPages]="totalPages"
-					[currentPage]="currentPage"
-					[pageSizes]="assetsGrid.pageable.pageSizes"
-					(pageChange)="pageChangeAssetGrid($event)"
-				></tds-grid-pager>
+				<tds-grid-pager [total]="total" [totalPages]="totalPages" [currentPage]="currentPage"
+					[pageSizes]="assetsGrid.pageable.pageSizes" (pageChange)="pageChangeAssetGrid($event)">
+				</tds-grid-pager>
 			</div>
 		</ng-template>
 	</kendo-grid>
@@ -323,9 +245,7 @@
 			<h3>Usage Example</h3>
 		</div>
 		<div class="clr-col-12">
-			<tds-card
-				title="Grid Pager Component Usage with Kendo Grid"
-				code='
+			<tds-card title="Grid Pager Component Usage with Kendo Grid" code='
 <kendo-grid>
 	...
 	//other grid components
@@ -343,6 +263,166 @@
 		</div>
 	</ng-template>
 </kendo-grid>'>
+			</tds-card>
+		</div>
+		<div class="clr-col-12">
+			<tds-card title="Kendo Grid Styled as TDS Table" code='
+<kendo-grid class="tds-table">
+	...
+	//other grid components
+	...
+	<ng-template kendoPagerTemplate let-total="total" let-totalPages="totalPages" let-currentPage="currentPage">
+		<div class="clr-col-4"></div>
+		<div class="clr-col-8">
+			<tds-grid-pager
+				[total]="total"
+				[totalPages]="totalPages"
+				[currentPage]="currentPage"
+				[pageSizes]="[5, 10, 25, 50, 100]"
+				(pageChange)="pageChangeEvent($event)"
+			></tds-grid-pager>
+		</div>
+	</ng-template>
+</kendo-grid>'>
+				<kendo-grid [sortable]="tasksGrid.sortable" [data]="tasksData" [columnMenu]="tasksGrid.columnMenu"
+					class="tds-table">
+					<ng-template kendoGridToolbarTemplate [position]="'top'">
+						<div class="clr-row">
+							<div class="grid-label clr-col-4">
+								<strong>Grid Title</strong>
+							</div>
+						</div>
+					</ng-template>
+
+					<!-- <kendo-grid-column width="70" [filterable]="false" [columnMenu]="false" field="ActionsColumn">
+						<ng-template kendoGridCellTemplate let-dataItem let-rowIndex="rowIndex">
+							<div class="action-button btn-group btn-link">
+								<clr-dropdown>
+									<tds-button icon="ellipsis-vertical" clrDropdownTrigger></tds-button>
+									<clr-dropdown-menu *clrIfOpen>
+										<a clrDropdownItem>Edit Asset</a>
+									</clr-dropdown-menu>
+								</clr-dropdown>
+							</div>
+						</ng-template>
+					</kendo-grid-column> -->
+
+					<kendo-grid-column *ngFor="let column of columnModelTaskGrid" [field]="column.field"
+						[locked]="column.locked" [title]="column.title" [width]="column.width"
+						[columnMenu]="column.columnMenu" [filterable]="column.filterable"
+						[ngClass]="{ 'hide-filter': !showDetailsFilter }">
+						<ng-template kendoGridFilterCellTemplate let-filter>
+							<div class="filter-input">
+								<input clrInput type="text" class="text-filter" [name]="column.field"
+									[(ngModel)]="column.filter" placeholder="Filter" />
+								<tds-button *ngIf="column.filter" (click)="onClearFilter(column)"
+									[title]="'Clear Filter'" icon="times-circle" [small]="true" [flat]="true">
+								</tds-button>
+							</div>
+						</ng-template>
+
+						<!-- task Number -->
+						<ng-template kendoGridCellTemplate *ngIf="column.isActionable" let-dataItem>
+							<span class="actionable-column">{{ dataItem[column.field] }}</span>
+						</ng-template>
+						<ng-template kendoGridCellTemplate *ngIf="!column.isActionable" let-dataItem>
+							<div [ngSwitch]="column.field">
+								<span *ngSwitchCase="'status'">
+									<span [ngClass]="'status status-' + dataItem[column.field]"
+										[ngSwitch]="dataItem[column.field]">
+										<clr-icon *ngSwitchCase="'Ready'" shape="thumbs-up" class="is-solid"></clr-icon>
+										<clr-spinner *ngSwitchCase="'Started'" clrInline class="static"></clr-spinner>
+										<clr-icon *ngSwitchCase="'Hold'" shape="pause" class="is-solid"></clr-icon>
+										<clr-icon *ngSwitchCase="'Completed'" shape="check" class="is-solid"></clr-icon>
+										<clr-icon *ngSwitchDefault shape="minus" class="is-solid"></clr-icon>
+									</span>
+									{{ dataItem[column.field] }}
+								</span>
+								<span *ngSwitchDefault>{{ dataItem[column.field] }}</span>
+							</div>
+						</ng-template>
+					</kendo-grid-column>
+
+					<!-- Row detail -->
+					<ng-template kendoGridDetailTemplate let-dataItem>
+						<section class="btn-group btn-sm btn-link">
+							<tds-button theme="success">Start</tds-button>
+							<tds-button>Done</tds-button>
+							<tds-button>Details</tds-button>
+							<tds-button>Assign to me</tds-button>
+							<tds-button>Neighborhood</tds-button>
+						</section>
+						<section class="btn-group btn-sm btn-link">
+							<span>Delay:</span>
+							<tds-button>1 day</tds-button>
+							<tds-button>2 days</tds-button>
+							<tds-button>7 days</tds-button>
+						</section>
+					</ng-template>
+				</kendo-grid>
+			</tds-card>
+		</div>
+		<div class="clr-col-12">
+			<tds-card title="Basic Table with Header, styled as a TDS Table" code='
+<div class="tds-table">
+	<div class="clr-row">
+		<div class="grid-label clr-col-4">
+			<strong>Supports</strong>
+		</div>
+	</div>
+	<table>
+		//table content
+		...
+	</table>
+</div>'>
+				<div class="tds-table">
+					<div class="clr-row">
+						<div class="grid-label clr-col-4">
+							<strong>Supports</strong>
+						</div>
+					</div>
+					<table>
+						<thead>
+							<tr>
+								<th>Class</th>
+								<th>Name</th>
+								<th>Bundle</th>
+								<th>Type</th>
+								<th>Status</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr>
+								<td>Application</td>
+								<td>AGPM</td>
+								<td>M1-Phy</td>
+								<td>Runs-On</td>
+								<td>Validated</td>
+							</tr>
+							<tr>
+								<td>Application</td>
+								<td>AGPM</td>
+								<td>M1-Phy</td>
+								<td>Runs-On</td>
+								<td>Validated</td>
+							</tr>
+							<tr>
+								<td>Application</td>
+								<td>AGPM</td>
+								<td>M1-Phy</td>
+								<td>Runs-On</td>
+								<td>Validated</td>
+							</tr>
+							<tr>
+								<td>Application</td>
+								<td>AGPM</td>
+								<td>TBD</td>
+								<td>Backup</td>
+								<td>Validated</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
 			</tds-card>
 		</div>
 	</div>
