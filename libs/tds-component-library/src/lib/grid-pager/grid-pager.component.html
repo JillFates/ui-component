@@ -3,7 +3,7 @@
 	<div class="pager-items">
 		Records per page
 		<select clrSelect (change)="changeTake($event.target.value)">
-			<option *ngFor="let size of pageSizes" [value]="size">{{ size }}</option>
+			<option *ngFor="let size of pageSizes" [value]="size" [selected]="size == pageSize">{{ size }}</option>
 		</select>
 	</div>
 	<div class="pager-items">{{ total }} records</div>
