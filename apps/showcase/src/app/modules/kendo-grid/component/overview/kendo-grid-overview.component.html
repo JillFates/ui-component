@@ -157,6 +157,7 @@
 					[total]="total"
 					[totalPages]="totalPages"
 					[currentPage]="currentPage"
+					[pageSize]="tasksPage.take"
 					[pageSizes]="tasksGrid.pageable.pageSizes"
 					(pageChange)="pageChangeTaskGrid($event)"
 				></tds-grid-pager>
