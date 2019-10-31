@@ -1,0 +1,330 @@
+<h2>Tab Scroller Component Overview</h2>
+<p>
+	Based on the <a target="_blank" href="https://v2.clarity.design/tabs">Clarity Tabs</a>, but designed to scroll to a
+	section on the page or in an element.
+</p>
+
+<h4>Usage Notes</h4>
+<p>
+	Use the &lt;tds-tab-scroller&gt; as the container for the &lt;tds-scroller-item&gt;s. Use the tdsScrollerLink
+	directive on an &lt;tds-scroller-item&gt; to give it the scrolling functionality on a click event as well as
+	styling. Use the tdsScrollContainer directive on the parent element of the elements that use the tdsScrollSection
+	directive. The tdsScrollSection directive gives a target element to scroll to when an item with the tdsScrollerLink
+	is clicked.
+</p>
+
+<p>
+	Use an equal number of &lt;tds-scroller-item&gt;/tdsdScrollerLinks and tdsScrollSections. This way, each
+	&lt;tds-scroller-item&gt;/tdsdScrollerLinks will correspond to a tdsScrollSection. Each link corresponds to a
+	section based on the order they show up in the markup (i.e. the first link corresponds to the first section).
+</p>
+
+<p>
+	You may use multiple tab scrollers on the same page. The first &lt;tds-tab-scroller&gt; will correspond to the first
+	element with a tdsScrollContainer. The second &lt;tds-tab-scroller&gt; will correspond to the second element with a
+	tdsScrollContainer and so on.
+</p>
+
+<div class="clr-row">
+	<div class="clr-col-12">
+		<h3>Usage Examples</h3>
+	</div>
+	<div class="clr-col-12">
+		<tds-card
+			title="Basic Tab Scroller"
+			description=""
+			code="
+<tds-tab-scroller>
+	<tds-scroller-item>
+		<button tdsScrollerLink>Section 1</button>
+	</tds-scroller-item>
+	<tds-scroller-item>
+		<button tdsScrollerLink>Section 2</button>
+	</tds-scroller-item>
+	...
+</tds-tab-scroller>
+<div tdsScrollContainer style='height: 250px; overflow:scroll;'>
+	<div tdsScrollSection>
+		<h3>Section 1</h3>
+		<p>
+			...
+		</p>
+	</div>
+	<div tdsScrollSection>
+		<h3>Section 2</h3>
+		<p>
+			...
+		</p>
+	</div>
+	...
+</div>
+"
+		>
+			<tds-tab-scroller>
+				<tds-scroller-item>
+					<button tdsScrollerLink>Section 1</button>
+				</tds-scroller-item>
+				<tds-scroller-item>
+					<button tdsScrollerLink>Section 2</button>
+				</tds-scroller-item>
+				<tds-scroller-item>
+					<button tdsScrollerLink>Section 3</button>
+				</tds-scroller-item>
+				<tds-scroller-item>
+					<button tdsScrollerLink>Section 4</button>
+				</tds-scroller-item>
+				<tds-scroller-item>
+					<button tdsScrollerLink>Section 5</button>
+				</tds-scroller-item>
+			</tds-tab-scroller>
+
+			<div tdsScrollContainer>
+				<div tdsScrollSection>
+					<h3>Section 1</h3>
+					<p>
+						Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+					</p>
+				</div>
+				<div tdsScrollSection>
+					<h3>Section 2</h3>
+					<p>
+						Phasellus scelerisque orci felis, non placerat lorem tincidunt in.
+					</p>
+				</div>
+				<div tdsScrollSection>
+					<h3>Section 3</h3>
+					<p>
+						Proin bibendum orci eget massa sagittis, eu convallis augue porta.
+					</p>
+				</div>
+				<div tdsScrollSection>
+					<h3>Section 4</h3>
+					<p>
+						Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+					</p>
+				</div>
+				<div tdsScrollSection>
+					<h3>Section 5</h3>
+					<p>
+						Proin bibendum orci eget massa sagittis, eu convallis augue porta.
+					</p>
+				</div>
+			</div>
+		</tds-card>
+	</div>
+	<div class="clr-col-12">
+		<tds-card
+			title="Tab Scroller with Scrolling Inside a Fixed Height Element"
+			description=""
+			code="
+<tds-tab-scroller>
+	...
+</tds-tab-scroller>
+<div tdsScrollContainer style='height: 250px; overflow:scroll;'>
+	<div tdsScrollSection>
+		<h3>Section 1</h3>
+		<p>
+			...
+		</p>
+	</div>
+	...
+</div>
+"
+		>
+			<tds-tab-scroller>
+				<tds-scroller-item>
+					<button tdsScrollerLink>Section 1</button>
+				</tds-scroller-item>
+				<tds-scroller-item>
+					<button tdsScrollerLink>Section 2</button>
+				</tds-scroller-item>
+				<tds-scroller-item>
+					<button tdsScrollerLink>Section 3</button>
+				</tds-scroller-item>
+				<tds-scroller-item>
+					<button tdsScrollerLink>Section 4</button>
+				</tds-scroller-item>
+				<tds-scroller-item>
+					<button tdsScrollerLink>Section 5</button>
+				</tds-scroller-item>
+			</tds-tab-scroller>
+
+			<div tdsScrollContainer style="height: 250px; overflow:scroll;">
+				<div tdsScrollSection>
+					<h3>Section 1</h3>
+					<p>
+						Lorem ipsum dolor sit amet.
+					</p>
+				</div>
+				<div tdsScrollSection>
+					<h3>Section 2</h3>
+					<p>
+						Phasellus scelerisque orci felis, non placerat lorem tincidunt in.
+					</p>
+				</div>
+				<div tdsScrollSection>
+					<h3>Section 3</h3>
+					<p>
+						Proin bibendum orci eget massa sagittis, eu convallis augue porta.
+					</p>
+				</div>
+				<div tdsScrollSection>
+					<h3>Section 4</h3>
+					<p>
+						Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+					</p>
+				</div>
+				<div tdsScrollSection>
+					<h3>Section 5</h3>
+					<p>
+						Proin bibendum orci eget massa sagittis, eu convallis augue porta.
+					</p>
+				</div>
+			</div>
+		</tds-card>
+	</div>
+	<div class="clr-col-12">
+		<tds-card
+			title="Tab Scroller with Scrolling Inside Fixed Height Element with a Relative Position"
+			description=""
+			code="
+	<tds-tab-scroller>
+		...
+	</tds-tab-scroller>
+	<div tdsScrollContainer style='height: 250px; overflow:scroll; position: relative'>
+		<div tdsScrollSection>
+			<h3>Section 1</h3>
+			<p>
+				...
+			</p>
+		</div>
+		...
+	</div>
+	"
+		>
+			<tds-tab-scroller>
+				<tds-scroller-item>
+					<button tdsScrollerLink>Section 1</button>
+				</tds-scroller-item>
+				<tds-scroller-item>
+					<button tdsScrollerLink>Section 2</button>
+				</tds-scroller-item>
+				<tds-scroller-item>
+					<button tdsScrollerLink>Section 3</button>
+				</tds-scroller-item>
+				<tds-scroller-item>
+					<button tdsScrollerLink>Section 4</button>
+				</tds-scroller-item>
+				<tds-scroller-item>
+					<button tdsScrollerLink>Section 5</button>
+				</tds-scroller-item>
+			</tds-tab-scroller>
+
+			<div tdsScrollContainer style="height: 250px; overflow:scroll; position: relative">
+				<div tdsScrollSection>
+					<h3>Section 1</h3>
+					<p>
+						Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+					</p>
+				</div>
+				<div tdsScrollSection>
+					<h3>Section 2</h3>
+					<p>
+						Phasellus scelerisque orci felis, non placerat lorem tincidunt in.
+					</p>
+				</div>
+				<div tdsScrollSection>
+					<h3>Section 3</h3>
+					<p>
+						Proin bibendum orci eget massa sagittis, eu convallis augue porta.
+					</p>
+				</div>
+				<div tdsScrollSection>
+					<h3>Section 4</h3>
+					<p>
+						Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+					</p>
+				</div>
+				<div tdsScrollSection>
+					<h3>Section 5</h3>
+					<p>
+						Proin bibendum orci eget massa sagittis, eu convallis augue porta.
+					</p>
+				</div>
+			</div>
+		</tds-card>
+	</div>
+	<div class="clr-col-12">
+		<tds-card
+			title="Tab Scroller with Vertical Layout"
+			description=""
+			code="
+		<tds-tab-scroller tabsLayout='vertical'>
+			...
+		</tds-tab-scroller>
+		<div tdsScrollContainer>
+			<div tdsScrollSection>
+				<h3>Section 1</h3>
+				<p>
+					...
+				</p>
+			</div>
+			...
+		</div>
+		"
+		>
+			<tds-tab-scroller tabsLayout="vertical">
+				<tds-scroller-item>
+					<button tdsScrollerLink>Section 1</button>
+				</tds-scroller-item>
+				<tds-scroller-item>
+					<button tdsScrollerLink>Section 2</button>
+				</tds-scroller-item>
+				<tds-scroller-item>
+					<button tdsScrollerLink>Section 3</button>
+				</tds-scroller-item>
+				<tds-scroller-item>
+					<button tdsScrollerLink>Section 4</button>
+				</tds-scroller-item>
+				<tds-scroller-item>
+					<button tdsScrollerLink>Section 5</button>
+				</tds-scroller-item>
+			</tds-tab-scroller>
+
+			<div tdsScrollContainer>
+				<div tdsScrollSection>
+					<h3>Section 1</h3>
+					<p>
+						Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+					</p>
+				</div>
+				<div tdsScrollSection>
+					<h3>Section 2</h3>
+					<p>
+						Phasellus scelerisque orci felis, non placerat lorem tincidunt in.
+					</p>
+				</div>
+				<div tdsScrollSection>
+					<h3>Section 3</h3>
+					<p>
+						Proin bibendum orci eget massa sagittis, eu convallis augue porta.
+					</p>
+				</div>
+				<div tdsScrollSection>
+					<h3>Section 4</h3>
+					<p>
+						Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+					</p>
+				</div>
+				<div tdsScrollSection>
+					<h3>Section 5</h3>
+					<p>
+						Proin bibendum orci eget massa sagittis, eu convallis augue porta.
+					</p>
+				</div>
+			</div>
+		</tds-card>
+	</div>
+</div>
+<!-- NOTE: This is here to allow for the example of the final element to work. -->
+<div style="display:block; height:500px;"></div>

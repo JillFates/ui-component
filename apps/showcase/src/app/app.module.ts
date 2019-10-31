@@ -11,6 +11,7 @@ import { ButtonModule } from './modules/button/button.module';
 import { SharedModule } from './shared/shared.module';
 import { RadialProgressModule } from './modules/radial-progress/radial-progress.module';
 import { TabsModule } from './modules/tabs/tabs.module';
+import { TabScrollerModule } from './modules/tabs-scroller/tab-scroller.module';
 // Component
 import { AppComponent } from './app.component';
 
@@ -27,6 +28,7 @@ import { AppComponent } from './app.component';
 		RadialProgressModule,
 		ButtonModule,
 		TabsModule,
+		TabScrollerModule,
 		RouterModule.forRoot([], { initialNavigation: 'enabled' }),
 	],
 	providers: [],
