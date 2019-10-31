@@ -7,10 +7,13 @@ import {
 	selector: 'app-diagram-layout-overview',
 	template: `
 	<div class="diagram-layout-overview-component">
-		<h2>Diagram Layout Component</h2>
+		<h2>Diagram Layout Component Overview</h2>
 		<div class="clr-row">
 			<div class="clr-col-12">
 				<h3>Example</h3>
+			</div>
+			<div class="clr-col-12">
+				<p>Diagram created with the GoJS Api</p>
 			</div>
 			<div class="clr-col-12">
 				<tds-card>
