@@ -122,9 +122,14 @@
 		<ng-template kendoPagerTemplate let-total="total" let-totalPages="totalPages" let-currentPage="currentPage">
 			<div class="clr-col-4"></div>
 			<div class="clr-col-8">
-				<tds-grid-pager [total]="total" [totalPages]="totalPages" [currentPage]="currentPage"
-					[pageSizes]="tasksGrid.pageable.pageSizes" (pageChange)="pageChangeTaskGrid($event)">
-				</tds-grid-pager>
+				<tds-grid-pager
+					[total]="total"
+					[totalPages]="totalPages"
+					[currentPage]="currentPage"
+					[pageSize]="tasksPage.take"
+					[pageSizes]="tasksGrid.pageable.pageSizes"
+					(pageChange)="pageChangeTaskGrid($event)"
+				></tds-grid-pager>
 			</div>
 		</ng-template>
 	</kendo-grid>

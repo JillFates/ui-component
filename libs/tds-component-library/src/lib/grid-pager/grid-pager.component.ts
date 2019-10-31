@@ -1,4 +1,4 @@
-import { Component, Input, Output, EventEmitter } from '@angular/core';
+import { Component, Input, Output, EventEmitter, OnInit } from '@angular/core';
 import { PageChangeEvent } from '@progress/kendo-angular-grid';
 
 @Component({
@@ -6,10 +6,11 @@ import { PageChangeEvent } from '@progress/kendo-angular-grid';
 	templateUrl: './grid-pager.component.html',
 	styleUrls: ['./grid-pager.component.scss'],
 })
-export class GridPagerComponent {
+export class GridPagerComponent implements OnInit {
 	@Input() total: number;
 	@Input() totalPages: number;
 	@Input() currentPage: number;
+	@Input() pageSize: number;
 	@Input() pageSizes: number[];
 	@Output() pageChange = new EventEmitter<PageChangeEvent>();
 
@@ -17,6 +18,10 @@ export class GridPagerComponent {
 		skip: 0,
 		take: 5,
 	};
+
+	ngOnInit(): void {
+		this.page.take = this.pageSize || this.page.take;
+	}
 
 	/**
 	 * changePage
