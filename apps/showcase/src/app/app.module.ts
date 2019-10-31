@@ -13,6 +13,7 @@ import { RadialProgressModule } from './modules/radial-progress/radial-progress.
 import { TabsModule } from './modules/tabs/tabs.module';
 // Component
 import { AppComponent } from './app.component';
+import {DiagramLayoutModule} from './modules/diagram-layout/diagram-layout.module';
 
 @NgModule({
 	declarations: [AppComponent],
@@ -27,6 +28,7 @@ import { AppComponent } from './app.component';
 		RadialProgressModule,
 		ButtonModule,
 		TabsModule,
+		DiagramLayoutModule,
 		RouterModule.forRoot([], { initialNavigation: 'enabled' }),
 	],
 	providers: [],
