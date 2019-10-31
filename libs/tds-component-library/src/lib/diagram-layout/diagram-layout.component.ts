@@ -20,11 +20,18 @@ import {
 	Layout,
 	Link,
 	Margin,
-	Model,
 	Panel,
 	Shape,
 	TextBlock,
-	InputEvent, Adornment, Placeholder, Overview, Spot, Tool, GraphObject, HTMLInfo, Size
+	InputEvent,
+	Adornment,
+	Placeholder,
+	Overview,
+	Spot,
+	Tool,
+	GraphObject,
+	HTMLInfo,
+	Size
 } from 'gojs';
 import {FA_ICONS} from '../icons-constant/fontawesome-icons';
 import {of, ReplaySubject} from 'rxjs';
@@ -50,6 +57,7 @@ export class DiagramLayoutComponent implements OnChanges, AfterViewInit, OnDestr
 	@Input() linkTemplate: Link;
 	@Input() lowScaleTemplate: Node;
 	@Input() mediumScaleTemplate: Node;
+	@Input() selectionTemplate: Adornment;
 	@Input() icons: IconModel;
 	@Input() currentUser: any;
 	@Input() contextMenuOptions: ITdsContextMenuOption;
@@ -298,6 +306,7 @@ export class DiagramLayoutComponent implements OnChanges, AfterViewInit, OnDestr
 	 * @param {Node} node > optional node to add the adornment to
 	 **/
 	selectionAdornmentTemplate(node?: Node): Adornment {
+		if (this.selectionTemplate) { return this.selectionTemplate; }
 		const selAdornmentTemplate = new Adornment(Panel.Auto);
 		selAdornmentTemplate.selectionAdorned = true;
 		if (node) { selAdornmentTemplate.adornedObject = node; }
@@ -459,7 +468,7 @@ export class DiagramLayoutComponent implements OnChanges, AfterViewInit, OnDestr
 		// node.add(this.iconShape());
 
 		// node.add(this.assetIconShape());
-		node.toolTip = this.createTooltip();
+		// node.toolTip = this.createTooltip();
 		node.contextMenu = this.contextMenu();
 
 		// if onNodeClick function is assigned directly to click handler
@@ -483,7 +492,7 @@ export class DiagramLayoutComponent implements OnChanges, AfterViewInit, OnDestr
 		shape.desiredSize = new Size(25, 35);
 		shape.bind(new Binding('fill', 'status',
 			(status: string) => this.getStatusColor(status)));
-		node.toolTip = this.createTooltip();
+		// node.toolTip = this.createTooltip();
 		node.add(shape);
 		node.contextMenu = this.contextMenu();
 

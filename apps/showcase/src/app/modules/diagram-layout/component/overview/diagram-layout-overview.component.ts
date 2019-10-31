@@ -1,13 +1,12 @@
 import { Component } from '@angular/core';
 import {
-	ITdsContextMenuIcon,
 	ITdsContextMenuOption
 } from '../../../../../../../../libs/tds-component-library/src/lib/context-menu/model/tds-context-menu.model';
 
 @Component({
 	selector: 'app-diagram-layout-overview',
 	template: `
-	<div class="button-overview-component">
+	<div class="diagram-layout-overview-component">
 		<h2>Diagram Layout Component</h2>
 		<div class="clr-row">
 			<div class="clr-col-12">
@@ -34,7 +33,14 @@ import {
 					[layout]="layoutObj"
 					[nodeTemplate]="nodeTemplateObj"
 					[linkTemplate]="linkTemplateObj"
-					(nodeClicked)="nodeClickedHandler($event)"
+					[lowScaleTemplate]="nodeTemplateObj"
+					[mediumScaleTemplate]="nodeTemplateObj"
+					[selectionTemplate]="adornmentTemplateObj"
+					(nodeClicked)="handler($event)"
+					(nodeUpdated)="handler($event)"
+					(backToFullGraph)="handler($event)"
+					(diagramAnimationFinished)="handler($event)"
+					(ctxMenuActionDispatched)="handler($event)"
 					></tds-diagram-layout>'
 				>
 				</tds-card>

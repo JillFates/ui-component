@@ -1,9 +1,18 @@
+
+.diagram-layout {
+  display: -ms-flex;
+  display: -webkit-flex;
+  display: flex;
+
+  .diagram-layout-content {
+    flex: 1;
+    min-height: 350px;
+  }
+
   .diagram-container {
-    position: relative;
+    height: 100%;
     padding-left: 15px;
     padding-right: 15px;
-    width: 450px;
-    height: 450px;
   }
 
   .overview-container {
@@ -92,3 +101,4 @@
     border: none;
     border-radius: 5px;
   }
+}

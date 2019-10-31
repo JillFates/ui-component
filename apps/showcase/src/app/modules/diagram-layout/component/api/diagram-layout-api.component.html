@@ -9,7 +9,7 @@
 		<div class="stack-block">
 			<dt class="stack-block-label">data <small class="typedef">IDiagramData</small></dt>
 			<dd class="stack-block-content">
-				data for the nodes and the links that point between them
+				data for the nodes, and the links that point between them
 			</dd>
 		</div>
 		<div class="stack-block">
@@ -25,6 +25,24 @@
 			</dd>
 		</div>
 		<div class="stack-block">
+			<dt class="stack-block-label">lowScaleNodeTemplate <small class="typedef">go.Node</small></dt>
+			<dd class="stack-block-content">
+				Node template to be used by the diagram when scale is at low level
+			</dd>
+		</div>
+		<div class="stack-block">
+			<dt class="stack-block-label">mediumScaleNodeTemplate <small class="typedef">go.Node</small></dt>
+			<dd class="stack-block-content">
+				Node template to be used by the diagram when scale is at medium level
+			</dd>
+		</div>
+		<div class="stack-block">
+			<dt class="stack-block-label">selectionTemplate <small class="typedef">go.Adornment</small></dt>
+			<dd class="stack-block-content">
+				Node template to be used by the diagram when a node is selected
+			</dd>
+		</div>
+		<div class="stack-block">
 			<dt class="stack-block-label">linkTemplate <small class="typedef">go.Link</small></dt>
 			<dd class="stack-block-content">
 				Link template to be used by the diagram to link nodes together
@@ -32,15 +50,47 @@
 		</div>
 	</dl>
 	<h4 class="stack-header">
-		<span class="stack-title">Diagram Events</span>
+		<span class="stack-title">Diagram Layout Events</span>
 	</h4>
 	<dl class="stack-view">
 		<div class="stack-block">
 			<dt class="stack-block-label">
-				nodeClicked <small class="typedef">ObjectSingleClicked</small>
+				nodeClicked <small class="typedef">EventEmitter</small>
 			</dt>
 			<dd class="stack-block-content">
 				Event emitted when a node is clicked.
+			</dd>
+		</div>
+		<div class="stack-block">
+			<dt class="stack-block-label">
+				nodeUpdated <small class="typedef">EventEmitter</small>
+			</dt>
+			<dd class="stack-block-content">
+				Event emitted when a node is upated.
+			</dd>
+		</div>
+		<div class="stack-block">
+			<dt class="stack-block-label">
+				backToFullGraph <small class="typedef">EventEmitter</small>
+			</dt>
+			<dd class="stack-block-content">
+				Event emitted by clicking the "back to full graph" button.
+			</dd>
+		</div>
+		<div class="stack-block">
+			<dt class="stack-block-label">
+				diagramAnimationFinished <small class="typedef">EventEmitter</small>
+			</dt>
+			<dd class="stack-block-content">
+				Event emitted when the "AnimationFinished" event is triggered on the diagram.
+			</dd>
+		</div>
+		<div class="stack-block">
+			<dt class="stack-block-label">
+				ctxMenuActionDispatched <small class="typedef">EventEmitter</small>
+			</dt>
+			<dd class="stack-block-content">
+				Event emitted when an option is clicked on the context menu.
 			</dd>
 		</div>
 	</dl>
