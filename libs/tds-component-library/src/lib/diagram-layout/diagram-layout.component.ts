@@ -63,7 +63,7 @@ export class DiagramLayoutComponent implements OnChanges, AfterViewInit, OnDestr
 	@Input() contextMenuOptions: ITdsContextMenuOption;
 	@Output() nodeUpdated: EventEmitter<any> = new EventEmitter<any>();
 	@Output() nodeClicked: EventEmitter<any> = new EventEmitter<any>();
-	@Output() backTofullGraph: EventEmitter<void> = new EventEmitter<void>();
+	@Output() backToFullGraph: EventEmitter<void> = new EventEmitter<void>();
 	@Output() diagramAnimationFinished: EventEmitter<void> = new EventEmitter<void>();
 	@Output() ctxMenuActionDispatched: EventEmitter<string> = new EventEmitter<string>();
 	@ViewChild('diagramContainer', {static: false}) diagramContainer: ElementRef;
@@ -633,7 +633,7 @@ export class DiagramLayoutComponent implements OnChanges, AfterViewInit, OnDestr
 	 * Returns to view with the full graph displayed
 	 */
 	showFullGraph(): void {
-		this.backTofullGraph.emit();
+		this.backToFullGraph.emit();
 	}
 
 	/**
@@ -647,7 +647,7 @@ export class DiagramLayoutComponent implements OnChanges, AfterViewInit, OnDestr
 	 * On Destroy lifecycle hook with listener for window:beforeunload
 	 * to ensure hook is called when leaving the component
 	 */
-	@HostListener('window:beforeunload', ['$event'])
+	@HostListener('window:beforeunload')
 	ngOnDestroy(): void {
 		this.unsubscribe$.next();
 		this.unsubscribe$.complete();
