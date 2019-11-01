@@ -14,6 +14,7 @@ import { TabsModule } from './modules/tabs/tabs.module';
 import { TabScrollerModule } from './modules/tabs-scroller/tab-scroller.module';
 // Component
 import { AppComponent } from './app.component';
+import {DiagramLayoutModule} from './modules/diagram-layout/diagram-layout.module';
 
 @NgModule({
 	declarations: [AppComponent],
@@ -29,6 +30,7 @@ import { AppComponent } from './app.component';
 		ButtonModule,
 		TabsModule,
 		TabScrollerModule,
+		DiagramLayoutModule,
 		RouterModule.forRoot([], { initialNavigation: 'enabled' }),
 	],
 	providers: [],

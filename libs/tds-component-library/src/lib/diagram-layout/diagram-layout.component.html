@@ -1,0 +1,61 @@
+<div class="clr-row diagram-layout">
+	<div class="clr-col-12 diagram-layout-content" #diagramLayoutContent>
+		<div id="diagram-container"
+				 class="diagram-container"
+         #diagramContainer>
+		</div>
+
+		<tds-context-menu
+			[data]="ctxMenuData$ | async"
+			(actionDispatched)="onCtxMenuActionDispatched($event)"
+      #tdsCtxMenu></tds-context-menu>
+
+		<div id="graph-control-btn-group">
+			<button class="btn">
+				<fa-icon [icon]="faIcons.faCog" size="lg"></fa-icon>
+			</button>
+			<button class="btn" (click)="zoomIn()">
+				<fa-icon [icon]="faIcons.faSearchPlus" size="lg"></fa-icon>
+			</button>
+			<button class="btn" (click)="zoomOut()">
+				<fa-icon [icon]="faIcons.faSearchMinus" size="lg"></fa-icon>
+			</button>
+		</div>
+
+		<div
+			id="overview-container"
+			class="overview-container"
+			[class.reset-overview-index]="resetOvIndex"
+      #overviewContainer></div>
+
+		<div id="node-tooltip" class="diagram-card"
+				 [style.background]="getStatusColor(tooltipData?.status)"
+         #nodeTooltip>
+			<div class="diagram-card-header"
+					 [style.background]="getStatusColor(tooltipData?.status)"
+					 [style.color]="getStatusTextColor(tooltipData?.status)">
+				<h4 class="k-align-self-center"> {{tooltipData?.name}} </h4>
+			</div>
+
+			<div class="diagram-card-content">
+				<div class="row">
+					<div class="col-md-6 k-align-self-center">Status: </div> <div class="col-md-6 k-align-self-center" style="float: right;">{{tooltipData?.status}}</div>
+				</div>
+				<div class="row">
+					<div class="col-md-6 k-align-self-center">Name: </div> <div class="col-md-6 k-align-self-center" style="float: right;">{{tooltipData?.name}}</div>
+				</div>
+				<div class="row">
+					<div class="col-md-6 k-align-self-center">Assigned to: </div> <div class="col-md-6 k-align-self-center" style="float: right;">{{tooltipData?.assignedTo || 'N/A'}}</div>
+				</div>
+				<div class="row">
+					<div class="col-md-6 k-align-self-center">Team: </div> <div class="col-md-6 k-align-self-center" style="float: right;">{{tooltipData?.team || 'N/A'}}</div>
+				</div>
+				<div class="row">
+					<div class="col-md-6 k-align-self-center">Task Number: </div> <div class="col-md-6 k-align-self-center" style="float: right;">{{tooltipData?.number}}</div>
+				</div>
+			</div>
+
+		</div>
+		<button id="show-full-graph" *ngIf="showFullGraphBtn" (click)="showFullGraph()">Back to Full Graph</button>
+	</div>
+</div>
