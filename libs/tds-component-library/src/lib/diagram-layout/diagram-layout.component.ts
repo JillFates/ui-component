@@ -38,6 +38,7 @@ import {of, ReplaySubject} from 'rxjs';
 import {DiagramEvent} from './model/diagram-event.constant';
 import {TdsContextMenuComponent} from '../context-menu/tds-context-menu.component';
 import {ITdsContextMenuModel, ITdsContextMenuOption} from '../context-menu/model/tds-context-menu.model';
+import {ITooltipData} from './model/tooltip-data.model';
 
 const enum NodeTemplateEnum {
 	HIGH_SCALE,
@@ -46,7 +47,7 @@ const enum NodeTemplateEnum {
 }
 
 @Component({
-	selector: 'tds-diagram-layout',
+	selector: 'tds-lib-diagram-layout',
 	templateUrl: './diagram-layout.component.html',
 	styleUrls: ['./diagram-layout.component.scss'],
 })
@@ -74,7 +75,7 @@ export class DiagramLayoutComponent implements OnChanges, AfterViewInit, OnDestr
 	diagram: Diagram = new Diagram();
 	faIcons = FA_ICONS;
 	resetOvIndex: boolean;
-	tooltipData: any;
+	tooltipData: ITooltipData;
 	largeArrayRemaining: boolean;
 	DATA_CHUNKS_SIZE = 200;
 	remainingData: any;
@@ -97,7 +98,7 @@ export class DiagramLayoutComponent implements OnChanges, AfterViewInit, OnDestr
 	 **/
 	ngOnChanges(changes: SimpleChanges): void {
 		if (changes) {
-			if (changes.model) {
+			if (changes.data && !changes.data.firstChange) {
 				this.loadAll();
 			} else if (changes.layout || changes.nodeTemplate || changes.linkTemplate) {
 				this.generateDiagram();
@@ -331,7 +332,11 @@ export class DiagramLayoutComponent implements OnChanges, AfterViewInit, OnDestr
 	 * Sets the template for each node in the Diagram
 	 **/
 	setNodeTemplate(): Node {
-		if (this.nodeTemplate) { return this.nodeTemplate; }
+		if (this.nodeTemplate) {
+			this.nodeTemplate.toolTip = this.createTooltip();
+			this.nodeTemplate.contextMenu = this.contextMenu();
+			return this.nodeTemplate;
+		}
 
 		const node = new Node(Panel.Horizontal);
 		node.margin = new Margin(1, 1, 1, 1);
@@ -454,35 +459,47 @@ export class DiagramLayoutComponent implements OnChanges, AfterViewInit, OnDestr
 	 * High scale node template, this is where nodes are most visible and provide more visual feedback
 	 **/
 	highScaleNodeTemplate(): void {
-		this.diagram.commit(() => this.diagram.nodeTemplate = this.setNodeTemplate());
+		this.diagram.commit(d => d.nodeTemplate = this.setNodeTemplate());
 	}
 
 	/**
 	 * Medium scale node template, this is where nodes are visible but don't provide a lot of visual feedback
 	 **/
 	mediumScaleNodeTemplate(): void {
-		if (this.mediumScaleTemplate) { return this.diagram.commit(() => this.diagram.nodeTemplate = this.mediumScaleTemplate); }
+		if (this.mediumScaleTemplate) {
+			return this.diagram.commit(d => {
+				this.mediumScaleTemplate.toolTip = this.createTooltip();
+				this.mediumScaleTemplate.contextMenu = this.contextMenu();
+				d.nodeTemplate = this.mediumScaleTemplate;
+			});
+		}
 
 		const node = new Node(Panel.Horizontal);
 
 		// node.add(this.iconShape());
 
 		// node.add(this.assetIconShape());
-		// node.toolTip = this.createTooltip();
+		node.toolTip = this.createTooltip();
 		node.contextMenu = this.contextMenu();
 
 		// if onNodeClick function is assigned directly to click handler
 		// 'this' loses the binding to the component with onNodeClicked function
 		node.click = (i, o) => this.onNodeClick(i, o);
 
-		this.diagram.commit(() => this.diagram.nodeTemplate = node);
+		this.diagram.commit(d => d.nodeTemplate = node);
 	}
 
 	/**
 	 * Low scale node template, this is where nodes are least visible and provide only color visual feedback
 	 **/
 	lowScaleNodeTemplate(): void {
-		if (this.lowScaleTemplate) { return this.diagram.commit(() => this.diagram.nodeTemplate = this.lowScaleTemplate); }
+		if (this.lowScaleTemplate) {
+			return this.diagram.commit(d => {
+				this.lowScaleTemplate.toolTip = this.createTooltip();
+				this.lowScaleTemplate.contextMenu = this.contextMenu();
+				d.nodeTemplate = this.lowScaleTemplate;
+			});
+		}
 
 		const node = new Node(Panel.Horizontal);
 
@@ -492,7 +509,7 @@ export class DiagramLayoutComponent implements OnChanges, AfterViewInit, OnDestr
 		shape.desiredSize = new Size(25, 35);
 		shape.bind(new Binding('fill', 'status',
 			(status: string) => this.getStatusColor(status)));
-		// node.toolTip = this.createTooltip();
+		node.toolTip = this.createTooltip();
 		node.add(shape);
 		node.contextMenu = this.contextMenu();
 
@@ -500,7 +517,7 @@ export class DiagramLayoutComponent implements OnChanges, AfterViewInit, OnDestr
 		// 'this' loses the binding to the component with onNodeClicked function
 		node.click = (i, o) => this.onNodeClick(i, o);
 
-		this.diagram.commit(() => this.diagram.nodeTemplate = node);
+		this.diagram.commit(d => d.nodeTemplate = node);
 	}
 
 	/**
@@ -593,12 +610,13 @@ export class DiagramLayoutComponent implements OnChanges, AfterViewInit, OnDestr
 	 * @param {Tool} tool
 	 **/
 	showTooltip(obj: GraphObject, diagram: Diagram, tool: Tool): void {
-		if (this.nodeTooltip.nativeElement) {
+		const data = obj.part.data;
+		if (this.nodeTooltip.nativeElement && (data && data.tooltipData)) {
 			const mousePt = diagram.lastInput.viewPoint;
 			this.renderer.setStyle(this.nodeTooltip.nativeElement, 'display', 'block');
 			this.renderer.setStyle(this.nodeTooltip.nativeElement, 'left', `${mousePt.x + 10}px`);
 			this.renderer.setStyle(this.nodeTooltip.nativeElement, 'top', `${mousePt.y}px`);
-			this.tooltipData = obj.part.data;
+			this.tooltipData = data && data.tooltipData;
 		}
 	}
 

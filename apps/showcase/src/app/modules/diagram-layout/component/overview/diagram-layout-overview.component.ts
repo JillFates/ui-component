@@ -17,9 +17,9 @@ import {
 			</div>
 			<div class="clr-col-12">
 				<tds-card>
-					<tds-diagram-layout 
+					<tds-lib-diagram-layout
 						[data]="data"
-						[contextMenuOptions]="ctxOpts"></tds-diagram-layout>
+						[contextMenuOptions]="ctxOpts"></tds-lib-diagram-layout>
 				</tds-card>
 			</div>
 		</div>
@@ -32,7 +32,7 @@ import {
 				<tds-card
 					title="Diagram Layout Example"
 					code='<tds-diagram-layout
-					[data]="data" 
+					[data]="data"
 					[layout]="layoutObj"
 					[nodeTemplate]="nodeTemplateObj"
 					[linkTemplate]="linkTemplateObj"
@@ -70,12 +70,58 @@ export class DiagramLayoutOverviewComponent {
 				{
 					name: 'test',
 					key: 'a',
-					status: 'hold'
+					status: 'hold',
+					tooltipData: {
+						headerText: 'Test',
+						headerBackgroundColor: '#0b63a8',
+						headerTextColor: '#ffffff',
+						data: [
+							{
+								label: 'Status',
+								value: 'Hold'
+							},
+							{
+								label: 'key',
+								value: 'a'
+							},
+							{
+								label: 'label1',
+								value: 'a'
+							},
+							{
+								label: 'label2',
+								value: 'a'
+							},
+							{
+								label: 'label3',
+								value: 'a'
+							},
+							{
+								label: 'label4',
+								value: 'a'
+							}
+						]
+					}
 				},
 				{
 					name: 'test 2',
 					key: 'b',
-					status: 'started'
+					status: 'started',
+					tooltipData: {
+						headerText: 'test 2',
+						headerBackgroundColor: '#0b63a8',
+						headerTextColor: '#ffffff',
+						data: [
+							{
+								label: 'Status',
+								value: 'Started'
+							},
+							{
+								label: 'key',
+								value: 'b'
+							}
+						]
+					}
 				},
 				{
 					name: 'test 3',

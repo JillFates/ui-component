@@ -28,34 +28,20 @@
 			[class.reset-overview-index]="resetOvIndex"
       #overviewContainer></div>
 
-		<div id="node-tooltip" class="diagram-card"
-				 [style.background]="getStatusColor(tooltipData?.status)"
-         #nodeTooltip>
-			<div class="diagram-card-header"
-					 [style.background]="getStatusColor(tooltipData?.status)"
-					 [style.color]="getStatusTextColor(tooltipData?.status)">
-				<h4 class="k-align-self-center"> {{tooltipData?.name}} </h4>
+		<div id="node-tooltip" class="card diagram-card" #nodeTooltip>
+			<div class="card-header clr-align-self-center" [style.background]="tooltipData?.headerBackgroundColor">
+				<p [style.color]="tooltipData?.headerTextColor"> {{tooltipData?.headerText}} </p>
 			</div>
 
-			<div class="diagram-card-content">
-				<div class="row">
-					<div class="col-md-6 k-align-self-center">Status: </div> <div class="col-md-6 k-align-self-center" style="float: right;">{{tooltipData?.status}}</div>
-				</div>
-				<div class="row">
-					<div class="col-md-6 k-align-self-center">Name: </div> <div class="col-md-6 k-align-self-center" style="float: right;">{{tooltipData?.name}}</div>
-				</div>
-				<div class="row">
-					<div class="col-md-6 k-align-self-center">Assigned to: </div> <div class="col-md-6 k-align-self-center" style="float: right;">{{tooltipData?.assignedTo || 'N/A'}}</div>
-				</div>
-				<div class="row">
-					<div class="col-md-6 k-align-self-center">Team: </div> <div class="col-md-6 k-align-self-center" style="float: right;">{{tooltipData?.team || 'N/A'}}</div>
-				</div>
-				<div class="row">
-					<div class="col-md-6 k-align-self-center">Task Number: </div> <div class="col-md-6 k-align-self-center" style="float: right;">{{tooltipData?.number}}</div>
+			<div class="card-block" *ngIf="tooltipData && tooltipData.data">
+				<div class="card-text" style="text-align: center;">
+					<div class="clr-row" *ngFor="let data of tooltipData.data">
+						<div class="clr-col-6 clr-align-self-center tooltip-data-label">{{data?.label}}: </div> <div class="clr-col-6 clr-align-self-center" style="float: right;">{{data?.value}}</div>
+					</div>
 				</div>
 			</div>
-
 		</div>
+
 		<button id="show-full-graph" *ngIf="showFullGraphBtn" (click)="showFullGraph()">Back to Full Graph</button>
 	</div>
 </div>

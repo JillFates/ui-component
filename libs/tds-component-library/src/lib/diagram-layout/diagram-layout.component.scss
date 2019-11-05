@@ -1,15 +1,19 @@
 
 .diagram-layout {
+  position: relative;
   display: -ms-flex;
   display: -webkit-flex;
   display: flex;
+  height: 100%;
 
   .diagram-layout-content {
+    position: relative;
     flex: 1;
     min-height: 350px;
   }
 
   .diagram-container {
+    position: relative;
     height: 100%;
     padding-left: 15px;
     padding-right: 15px;
@@ -19,7 +23,7 @@
     position: absolute;
     width: 200px;
     height: 100px;
-    top: 20px;
+    top: 10px;
     left: 20px;
     background-color: aliceblue;
     z-index: 300; /* make sure its in front */
@@ -32,7 +36,7 @@
 
   #graph-control-btn-group {
     position: absolute;
-    bottom: 40px;
+    bottom: 10px;
     left: 40px;
     z-index: 999;
     width: 1.5rem;
@@ -55,7 +59,14 @@
     min-width: 300px;
     border-radius: 5px;
 
+    .card-header > p {
+      word-break: break-all;
+      text-align: center;
+      font-size: 1.2rem;
+    }
+
     .diagram-card-header {
+      margin-top: 0;
       width: auto;
       height: auto;
       min-height: 45px;
@@ -84,6 +95,15 @@
       color: #fff;
       border-radius: 3px;
       box-shadow: 0 0 10px rgba( 0, 0, 0, .4 );
+    }
+
+    .card-block > .card-text > .clr-row:nth-child(even){
+      background-color: #ddd;
+      color: #333;
+    }
+
+    .tooltip-data-label {
+      font-weight: bold;
     }
   }
 
