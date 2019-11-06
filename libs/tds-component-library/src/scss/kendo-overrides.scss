@@ -1,75 +1,75 @@
 kendo-popup {
-  .k-column-list {
-    background-color: #f6f6f6;
-    padding: 0;
-    margin: 0;
-    list-style: none;
-    max-height: 200px;
-    overflow-x: hidden;
-    overflow-y: auto;
+	.k-column-list {
+		background-color: #f6f6f6;
+		padding: 0;
+		margin: 0;
+		list-style: none;
+		max-height: 200px;
+		overflow-x: hidden;
+		overflow-y: auto;
 
-    .k-column-list-item {
-      .k-column-list-item {
-        display: block;
-        margin: 0;
-        cursor: pointer;
-      }
-    }
-  }
-  .dropdown-menu {
-    position: unset;
-    top: unset;
-    left: unset;
-    padding: 0;
-    visibility: visible;
-  }
-  .clr-control-container {
-    display: block;
-    min-width: 100%;
-  }
-  .clr-form-control {
-    margin: 0;
-  }
+		.k-column-list-item {
+			.k-column-list-item {
+				display: block;
+				margin: 0;
+				cursor: pointer;
+			}
+		}
+	}
+	.dropdown-menu {
+		position: unset;
+		top: unset;
+		left: unset;
+		padding: 0;
+		visibility: visible;
+	}
+	.clr-control-container {
+		display: block;
+		min-width: 100%;
+	}
+	.clr-form-control {
+		margin: 0;
+	}
 }
 
 kendo-tabstrip {
-  &.k-tabstrip-top {
-    & > .k-tabstrip-items {
-      .k-item {
-        & + .k-item {
-          margin-left: 1rem;
-        }
-      }
-    }
-  }
+	&.k-tabstrip-top {
+		& > .k-tabstrip-items {
+			.k-item {
+				& + .k-item {
+					margin-left: 1rem;
+				}
+			}
+		}
+	}
 
-  &.k-tabstrip {
-    border: unset;
+	&.k-tabstrip {
+		border: unset;
 
-    & > .k-content {
-      border: unset;
-      color: black;
-      background-color: unset;
-      padding: unset;
-    }
-  }
+		& > .k-content {
+			border: unset;
+			color: black;
+			background-color: unset;
+			padding: unset;
+		}
+	}
 
-  .k-tabstrip-items {
-    .k-item {
-      color: #737373;
-      border: unset;
+	.k-tabstrip-items {
+		.k-item {
+			color: #737373;
+			border: unset;
 
-      &.k-state-active {
-        border: unset;
-        background-color: unset;
-        color: black;
-        box-shadow: 0 -3px 0 #0077b8 inset;
-      }
+			&.k-state-active {
+				border: unset;
+				background-color: unset;
+				color: black;
+				box-shadow: 0 -3px 0 #0077b8 inset;
+			}
 
-      &:hover {
-        color: unset;
-        box-shadow: 0 -3px 0 #0077b8 inset;
-      }
-    }
-  }
+			&:hover {
+				color: unset;
+				box-shadow: 0 -3px 0 #0077b8 inset;
+			}
+		}
+	}
 }

@@ -12,9 +12,12 @@ import { SharedModule } from './shared/shared.module';
 import { RadialProgressModule } from './modules/radial-progress/radial-progress.module';
 import { TabsModule } from './modules/tabs/tabs.module';
 import { TabScrollerModule } from './modules/tabs-scroller/tab-scroller.module';
+import { ComboboxModule } from './modules/combobox/combobox.module';
+import { MultiselectModule } from './modules/multiselect/multiselect.module';
+
 // Component
 import { AppComponent } from './app.component';
-import {DiagramLayoutModule} from './modules/diagram-layout/diagram-layout.module';
+import { DiagramLayoutModule } from './modules/diagram-layout/diagram-layout.module';
 
 @NgModule({
 	declarations: [AppComponent],
@@ -26,12 +29,22 @@ import {DiagramLayoutModule} from './modules/diagram-layout/diagram-layout.modul
 		// Showcase Component
 		KendoGridModule,
 		DropdownModule,
+		ComboboxModule,
+		MultiselectModule,
 		RadialProgressModule,
 		ButtonModule,
 		TabsModule,
 		TabScrollerModule,
 		DiagramLayoutModule,
-		RouterModule.forRoot([], { initialNavigation: 'enabled' }),
+		RouterModule.forRoot(
+			[
+				{
+					path: 'combobox',
+					loadChildren: () => import('./modules/combobox/combobox.module').then(m => m.ComboboxModule),
+				},
+			],
+			{ initialNavigation: 'enabled' }
+		),
 	],
 	providers: [],
 	bootstrap: [AppComponent],

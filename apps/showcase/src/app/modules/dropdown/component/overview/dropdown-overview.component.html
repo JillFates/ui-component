@@ -1,5 +1,163 @@
-<div class="grid-overview-component">
-	<h4>Dropdown</h4>
-	<p></p>
-	<tds-dropdown></tds-dropdown>
+<h2>Dropdown Overview</h2>
+<p>
+	All dropdowns should be styled to look like the Clarity select dropdowns. There are three ways of achieving this.
+	See the example for each.
+</p>
+
+<ol style="list-style-position: outside;">
+	<li>
+		Apply the Clarity class and/or classes as shown in the examples.<br />
+		<strong>When to Use:</strong> When you have legacy code that cannot use Clarity's Angular components and
+		directives.
+	</li>
+	<li>
+		Use Clarity's Angular components and/or directives, as shown in the example.<br />
+		<strong>When to Use:</strong> When you're in an Angular app and just need a simple, styled dropdown.
+	</li>
+	<li>
+		Use Kendos's Angular component, as shown in the example.<br />
+		<strong>When to Use:</strong> When you're in an Angular app that uses a kendo-component (typically legacy code).
+	</li>
+</ol>
+
+<h4>Useful Links</h4>
+<ul>
+	<li><a href="https://v2.clarity.design/select" target="_blank">Clarity Select</a></li>
+	<li><a href="https://v2.clarity.design/forms" target="_blank">Clarity Forms</a></li>
+	<li>
+		<a href="https://www.telerik.com/kendo-angular-ui/components/dropdowns/dropdownlist/" target="_blank"
+			>Kendo DropDownList</a
+		>
+	</li>
+</ul>
+
+<div class="clr-row">
+	<div class="clr-col-12">
+		<h3>Usage Examples</h3>
+	</div>
+
+	<div class="clr-col-12">
+		<tds-card
+			title="Basic Select Dropdown"
+			description="Select dropdown, styled with Clarity"
+			code='
+<div class="clr-select-wrapper">
+	<select id="select-basic" class="clr-select">
+		<option value="1">One</option>
+		<option value="2">Two</option>
+		<option value="3">Three</option>
+	</select>
+</div>'
+		>
+			<div class="clr-select-wrapper">
+				<select id="select-basic" class="clr-select">
+					<option value="1">One</option>
+					<option value="2">Two</option>
+					<option value="3">Three</option>
+				</select>
+			</div>
+		</tds-card>
+	</div>
+
+	<div class="clr-col-12">
+		<tds-card
+			title="Full Select Display"
+			description="Select dropdown, styled with larity"
+			code='
+<div class="clr-form-control">
+	<label for="select-full" class="clr-control-label">Basic Select</label>
+	<div class="clr-control-container">
+		<div class="clr-select-wrapper">
+		<select id="select-full" class="clr-select">
+			<option value="1">One</option>
+			<option value="2">Two</option>
+			<option value="3">Three</option>
+		</select>
+		<clr-icon class="clr-validate-icon" shape="exclamation-circle"></clr-icon>
+		</div>
+		<span class="clr-subtext">Helper Text</span>
+	</div>
+</div>'
+		>
+			<div class="clr-form-control">
+				<label for="select-full" class="clr-control-label">Basic Select</label>
+				<div class="clr-control-container">
+					<div class="clr-select-wrapper">
+						<select id="select-full" class="clr-select">
+							<option value="1">One</option>
+							<option value="2">Two</option>
+							<option value="3">Three</option>
+						</select>
+						<clr-icon class="clr-validate-icon" shape="exclamation-circle"></clr-icon>
+					</div>
+					<span class="clr-subtext">Helper Text</span>
+				</div>
+			</div>
+		</tds-card>
+	</div>
+
+	<div class="clr-col-12">
+		<tds-card
+			title="Clarity Select Dropdown"
+			description="Clarity select Angular component"
+			code='
+<select clrSelect name="options" [(ngModel)]="options">
+	<option value="one">One</option>
+	<option value="two">Two</option>
+	<option value="three">Three</option>
+</select>'
+		>
+			<select clrSelect name="options">
+				<option value="one">One</option>
+				<option value="two">Two</option>
+				<option value="three">Three</option>
+			</select>
+		</tds-card>
+	</div>
+
+	<div class="clr-col-12">
+		<tds-card
+			title="Clarity Select Dropdown with Label"
+			description="Clarity select Angular component with label"
+			code='
+<clr-select-container>
+	<label>Options Label</label>
+	<select clrSelect name="options" [(ngModel)]="options">
+		<option value="one">One</option>
+		<option value="two">Two</option>
+		<option value="three">Three</option>
+	</select>
+</clr-select-container>'
+		>
+			<clr-select-container>
+				<label>Options Label</label>
+				<select clrSelect name="options">
+					<option value="one">One</option>
+					<option value="two">Two</option>
+					<option value="three">Three</option>
+				</select>
+			</clr-select-container>
+		</tds-card>
+	</div>
+
+	<div class="clr-col-12">
+		<tds-card
+			title="Kendo Select Dropdown"
+			description="Kendo dropdown, styled to look like Clarity"
+			code='
+<kendo-dropdownlist 
+	[data]="[
+		"X-Small", 
+		"Small", 
+		"Medium", 
+		"Large", 
+		"X-Large", 
+		"2X-Large"]">
+</kendo-dropdownlist>'
+		>
+			<kendo-dropdownlist [data]="['X-Small', 'Small', 'Medium', 'Large', 'X-Large', '2X-Large']">
+			</kendo-dropdownlist>
+			<div style="display: block; height: 250px;"></div>
+		</tds-card>
+	</div>
 </div>
