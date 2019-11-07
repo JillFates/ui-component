@@ -3,15 +3,15 @@ import {FaIconLibrary, FontAwesomeModule} from '@fortawesome/angular-fontawesome
 import {
 	faAdjust, faBars, faBoxOpen, faBuilding,
 	faCheck, faCircle,
-	faCog, faCogs,
-	faCubes, faDatabase, faEdit, faEye,
+	faCog, faCogs, faCompress,
+	faCubes, faDatabase, faEdit, faExpand, faEye,
 	faForward, faHome, faLayerGroup, faList,
 	faListUl,
 	faMinus, faPause, faPlay,
 	faSearchMinus, faSearchPlus, faServer,
 	faSignal,
 	faSitemap, faSortAmountDown, faSpinner,
-	faStream, faSyncAlt, faUndo, faUser
+	faStream, faSyncAlt, faUndo, faUser, faWindowMaximize, faWindowMinimize
 } from '@fortawesome/free-solid-svg-icons';
 
 @NgModule({
@@ -52,7 +52,11 @@ export class TdsFontawesomeModule {
 			faEdit,
 			faHome,
 			faBuilding,
-			faPlay
+			faPlay,
+			faExpand,
+			faCompress,
+			faWindowMaximize,
+			faWindowMinimize
 		);
 	}
 }

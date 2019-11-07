@@ -29,5 +29,9 @@ export const FA_ICONS = {
 	faUser: ['fas', 'user'],
 	faUndo: ['fas', 'undo'],
 	faHome: ['fas', 'home'],
-	faBuilding: ['fas', 'building']
+	faBuilding: ['fas', 'building'],
+	faExpand: ['fas', 'expand'],
+	faCompress: ['fas', 'compress'],
+	faWindowMinimize: ['fas', 'window-minimize'],
+	faWindowMaximize: ['fas', 'window-maximize']
 };

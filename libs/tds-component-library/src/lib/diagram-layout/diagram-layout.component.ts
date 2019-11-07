@@ -34,7 +34,7 @@ import {
 	Size
 } from 'gojs';
 import {FA_ICONS} from '../icons-constant/fontawesome-icons';
-import {of, ReplaySubject} from 'rxjs';
+import {Observable, of, ReplaySubject} from 'rxjs';
 import {DiagramEvent} from './model/diagram-event.constant';
 import {TdsContextMenuComponent} from '../context-menu/tds-context-menu.component';
 import {ITdsContextMenuModel, ITdsContextMenuOption} from '../context-menu/model/tds-context-menu.model';
@@ -62,6 +62,9 @@ export class DiagramLayoutComponent implements OnChanges, AfterViewInit, OnDestr
 	@Input() icons: IconModel;
 	@Input() currentUser: any;
 	@Input() contextMenuOptions: ITdsContextMenuOption;
+	@Input() isOverviewVisible = true;
+	@Input() canExpand = true;
+	@Input() isExpanded = false;
 	@Output() nodeUpdated: EventEmitter<any> = new EventEmitter<any>();
 	@Output() nodeClicked: EventEmitter<any> = new EventEmitter<any>();
 	@Output() backToFullGraph: EventEmitter<void> = new EventEmitter<void>();
@@ -71,6 +74,7 @@ export class DiagramLayoutComponent implements OnChanges, AfterViewInit, OnDestr
 	@ViewChild('tdsCtxMenu', {static: false}) tdsCtxMenu: TdsContextMenuComponent;
 	@ViewChild('overviewContainer', {static: false}) overviewContainer: ElementRef;
 	@ViewChild('nodeTooltip', {static: false}) nodeTooltip: ElementRef;
+	@ViewChild('diagramLayoutContent', {static: false}) diagramLayoutContent: ElementRef;
 	model: GraphLinksModel;
 	diagram: Diagram = new Diagram();
 	faIcons = FA_ICONS;
@@ -82,17 +86,17 @@ export class DiagramLayoutComponent implements OnChanges, AfterViewInit, OnDestr
 	remainingLinks: any;
 	diagramOverview: Overview;
 	diagramAvailable = false;
-	direction = 0;
-	screenHeight: any;
 	actualNodeTemplate: number;
 	nodeMove: boolean;
 	unsubscribe$: ReplaySubject<void> = new ReplaySubject();
 	showFullGraphBtn: boolean;
 	ctxMenuData$: ReplaySubject<ITdsContextMenuModel> = new ReplaySubject();
+	isFullView: boolean;
 
 	constructor(private renderer: Renderer2) {
 		// Constructor
 	}
+
 	/**
 	 * Detect changes to update nodeData and linksPath accordingly
 	 **/
@@ -201,6 +205,8 @@ export class DiagramLayoutComponent implements OnChanges, AfterViewInit, OnDestr
 	 * Generate Diagram canvas
 	 **/
 	generateDiagram(): void {
+		if (!this.model) { return; }
+		this.useFullHeight();
 		this.diagram.model.nodeDataArray = [];
 		this.diagram.commit(d => {
 			d.initialDocumentSpot = Spot.Center;
@@ -295,7 +301,7 @@ export class DiagramLayoutComponent implements OnChanges, AfterViewInit, OnDestr
 	 * Diagram overview (Minimap)
 	 **/
 	overviewTemplate(): void {
-		if (!this.diagramOverview) {
+		if (!this.diagramOverview && this.isOverviewVisible) {
 			this.diagramOverview = new Overview(this.overviewContainer.nativeElement);
 			this.diagramOverview.observed = this.diagram;
 			this.diagramOverview.contentAlignment = Spot.Center;
@@ -563,6 +569,7 @@ export class DiagramLayoutComponent implements OnChanges, AfterViewInit, OnDestr
 	 * Node Context menu containing a variety of operations like 'edit task', 'show task detail', 'start', 'hold', etc
 	 **/
 	contextMenu(): any {
+		if (!this.tdsCtxMenu || !this.tdsCtxMenu.ctxMenu.nativeElement) { return; }
 		const $ = GraphObject.make;
 		return $(HTMLInfo,  // HTML element to contain the context menu
 			{
@@ -659,6 +666,22 @@ export class DiagramLayoutComponent implements OnChanges, AfterViewInit, OnDestr
 	 */
 	onCtxMenuActionDispatched(action: string): void {
 		this.ctxMenuActionDispatched.emit(action);
+	}
+
+	/**
+	 * Wrapper to convert objs to observables
+	 */
+	asObservable(obj: any): Observable<any> {
+		return of(obj);
+	}
+
+	/**
+	 * Use max height available for diagram layout content element
+	 */
+	useFullHeight(): void {
+		if (this.isExpanded) {
+			this.renderer.setStyle(this.diagramLayoutContent.nativeElement, 'height', '70vh');
+		}
 	}
 
 	/**
