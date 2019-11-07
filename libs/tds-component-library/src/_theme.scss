@@ -1,11 +1,17 @@
+// Reference to the Kendo SCSS
+@import '../../../node_modules/@progress/kendo-theme-default/scss/grid';
+@import '../../../node_modules/@progress/kendo-theme-default/scss/tabstrip';
+@import '../../../node_modules/@progress/kendo-theme-default/scss/dropdownlist';
+@import '../../../node_modules/@progress/kendo-theme-default/scss/multiselect';
+@import '../../../node_modules/@progress/kendo-theme-default/scss/combobox';
+@import "../../../node_modules/@progress/kendo-theme-default/scss/popup";
+
+// Library imports
 @import './scss/variables';
 @import './scss/mixins';
 @import './scss/core';
 @import './scss/kendo-overrides';
 @import './scss/clarity-overrides';
-@import './scss/module/table/table.scss';
+@import './scss/module/table/table';
 @import './scss/module/grid/grid';
-
-// Reference to the Kendo SCSS
-@import '../../../node_modules/@progress/kendo-theme-default/scss/grid';
-@import '../../../node_modules/@progress/kendo-theme-default/scss/tabstrip.scss';
+@import './scss/module/dropdowns/dropdowns';

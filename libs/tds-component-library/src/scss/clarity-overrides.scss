@@ -1,31 +1,30 @@
-.dropdown{
-	tds-button.dropdown-toggle:not(.btn){
-		padding:0;
+.dropdown {
+	tds-button.dropdown-toggle:not(.btn) {
+		padding: 0;
 		background-color: transparent;
-		&:hover{
+		&:hover {
 			background-color: transparent;
-			color:unset;
+			color: unset;
 		}
 	}
 }
 .btn-group {
-	> .dropdown{
+	> .dropdown {
 		background: transparent;
-		&:not(:first-child){
+		&:not(:first-child) {
 			tds-button.dropdown-toggle .tds-button {
 				@include square-off-btngroup-btns(left);
 				border-left: 0;
-			}			
-		} 
-		&:not(:last-child){
+			}
+		}
+		&:not(:last-child) {
 			tds-button.dropdown-toggle .tds-button {
 				@include square-off-btngroup-btns(right);
 				border-right: 0;
-			}			
+			}
 		}
 	}
 }
-
 
 .dropdown-menu .dropdown-item {
 	width: auto;
@@ -49,6 +48,7 @@ clr-icon {
 		text-align: center;
 	}
 }
-clr-spinner.static{
+
+clr-spinner.static {
 	animation: unset;
 }

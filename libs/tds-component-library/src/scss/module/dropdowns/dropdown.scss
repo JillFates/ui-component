@@ -1,0 +1,20 @@
+// Overrides to make the kendo-dropdownlist look like Clarity.
+
+kendo-dropdownlist {
+	&.k-dropdown {
+		display: block;
+
+		.k-dropdown-wrap {
+			&.k-state-focused {
+				border-color: rgba(222, 222, 222, 0.5);
+				background: rgba(222, 222, 222, 0.5);
+			}
+
+			&:hover {
+				border-bottom: 1px solid transparent;
+				color: black;
+			}
+		}
+	}
+}
+

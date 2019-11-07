@@ -1,0 +1,98 @@
+// Include any common overrides for drop downs in here, either as mixins or global styles.
+
+// General combobox and dropdownlist overrides.
+kendo-combobox,
+kendo-dropdownlist {
+	&.k-header {
+		border: unset;
+	}
+
+	&.k-dropdown,
+	&.k-combobox {
+		.k-dropdown-wrap {
+			border: unset;
+			background: unset;
+			color: black;
+			border-bottom: 1px solid #999;
+			height: 1rem;
+			max-height: 1rem;
+			font-size: 0.541667rem;
+
+			&.k-state-focused {
+				-webkit-box-shadow: unset;
+				box-shadow: unset;
+				border: unset;
+				background: linear-gradient(to bottom, transparent 95%, $color-clarity-blue 95%) no-repeat;
+				transition: background-size 0.2s ease;
+				color: black;
+			}
+
+			.k-input {
+				color: black;
+				padding: 0 0.25rem;
+				height: 1rem;
+				max-height: 1rem;
+				font-size: 0.541667rem;
+			}
+
+			.k-select {
+				border: unset;
+				background: unset;
+				.k-i-arrow-s::before {
+					content: '\e015';
+					color: #999;
+				}
+			}
+		}
+	}
+}
+
+// kendo-popup overrides. Used on all kendo dropdowns.
+kendo-popup {
+	&.k-animation-container-shown {
+		box-shadow: unset;
+	}
+
+	&.k-animation-container {
+		border-radius: unset;
+	}
+
+	.k-popup {
+		font-size: 14px;
+		border-color: $color-clarity-blue;
+		background: white;
+		color: black;
+	}
+
+	kendo-list {
+		.k-list-scroller {
+			.k-list {
+				.k-item {
+					line-height: unset;
+					font-weight: normal;
+					white-space: pre;
+					padding: 0px 2px 1px 4px;
+					min-height: 1.2em;
+					overflow-x: hidden;
+					font-size: 0.541667rem;
+					cursor: context-menu;
+
+					&:hover {
+						color: white;
+						background: $color-clarity-blue;
+					}
+
+					&.k-state-selected {
+						color: white;
+						background-color: $color-clarity-blue;
+					}
+
+					&.k-state-focused {
+						box-shadow: unset;
+						-webkit-box-shadow: unset;
+					}
+				}
+			}
+		}
+	}
+}
