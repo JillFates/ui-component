@@ -51,37 +51,35 @@
 			<fa-icon *ngIf="!isExpanded" [icon]="!!isExpanded ?  faIcons.faCompress : faIcons.faExpand" size="lg" (click)="isFullView = !isExpanded"></fa-icon>
 		</div>
 	</div>
-</div>
 
-<div *ngIf="isFullView">
-	<div class="modal">
-		<div class="modal-dialog modal-xl" role="dialog" aria-hidden="true">
-			<div class="modal-content">
-				<div class="modal-header">
-					<button aria-label="Close" class="close" type="button" (click)="isFullView = false;">
-						<clr-icon aria-hidden="true" shape="close"></clr-icon>
-					</button>
-				</div>
-				<div class="modal-body">
-					<tds-lib-diagram-layout
-						[data]="asObservable(data) | async"
-						[layout]="asObservable(layout) | async"
-						[currentUser]="asObservable(currentUser) | async"
-						[contextMenuOptions]="asObservable(contextMenuOptions) | async"
-						[icons]="asObservable(icons) | async"
-						[nodeTemplate]="asObservable(nodeTemplate) | async"
-						[linkTemplate]="asObservable(linkTemplate) | async"
-						[lowScaleTemplate]="asObservable(lowScaleTemplate) | async"
-						[mediumScaleTemplate]="asObservable(mediumScaleTemplate) | async"
-						[isExpanded]="true"
-					></tds-lib-diagram-layout>
-				</div>
-				<div class="modal-footer">
-					<button class="btn btn-outline" type="button">Cancel</button>
-					<button class="btn btn-primary" type="button">Ok</button>
+	<div *ngIf="isFullView">
+		<div class="modal">
+			<div class="modal-dialog modal-xl" role="dialog" aria-hidden="true">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button aria-label="Close" class="close" type="button" (click)="isFullView = false;">
+							<clr-icon aria-hidden="true" shape="close"></clr-icon>
+						</button>
+					</div>
+					<div class="modal-body">
+						<tds-lib-diagram-layout
+							[data]="asObservable(data) | async"
+							[layout]="asObservable(layout) | async"
+							[currentUser]="asObservable(currentUser) | async"
+							[contextMenuOptions]="asObservable(contextMenuOptions) | async"
+							[icons]="asObservable(icons) | async"
+							[nodeTemplate]="asObservable(nodeTemplate) | async"
+							[linkTemplate]="asObservable(linkTemplate) | async"
+							[lowScaleTemplate]="asObservable(lowScaleTemplate) | async"
+							[mediumScaleTemplate]="asObservable(mediumScaleTemplate) | async"
+							[isExpanded]="true"
+						></tds-lib-diagram-layout>
+					</div>
+					<div class="modal-footer">
+					</div>
 				</div>
 			</div>
 		</div>
+		<div class="modal-backdrop" aria-hidden="true"></div>
 	</div>
-	<div class="modal-backdrop" aria-hidden="true"></div>
 </div>
