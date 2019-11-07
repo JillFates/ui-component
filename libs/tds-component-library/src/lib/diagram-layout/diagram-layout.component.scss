@@ -9,7 +9,7 @@
   .diagram-layout-content {
     position: relative;
     flex: 1;
-    min-height: 350px;
+    min-height: 250px;
   }
 
   .diagram-container {
@@ -21,13 +21,22 @@
 
   .overview-container {
     position: absolute;
-    width: 200px;
-    height: 100px;
+    width: 20%;
+    max-width: 250px;
+    height: 30%;
+    max-height: 150px;
     top: 10px;
     left: 20px;
     background-color: aliceblue;
     z-index: 300; /* make sure its in front */
     border: solid 1px blue;
+  }
+
+  .full-view {
+    position: absolute;
+    top: 10px;
+    right: 20px;
+    z-index: 300; /* make sure its in front */
   }
 
   .reset-overview-index {
@@ -47,6 +56,17 @@
     border-color: #c4d0dc;
     color: #333333;
     width: 100%;
+    padding: 0 .2rem 0 .2rem;
+    min-width: 1.5rem;
+    border-radius: 2rem;
+  }
+
+  #graph-control-btn-group > .btn:active {
+    box-shadow: 0 2rem 0 0 #c4d0dc inset;
+  }
+
+  #graph-control-btn-group > .btn:focus {
+    outline: none;
   }
 
   .diagram-card {
