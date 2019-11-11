@@ -34,7 +34,7 @@ import {
 	Size
 } from 'gojs';
 import {FA_ICONS} from '../icons-constant/fontawesome-icons';
-import {Observable, of, ReplaySubject} from 'rxjs';
+import {of, ReplaySubject} from 'rxjs';
 import {DiagramEvent} from './model/diagram-event.constant';
 import {TdsContextMenuComponent} from '../context-menu/tds-context-menu.component';
 import {ITdsContextMenuModel, ITdsContextMenuOption} from '../context-menu/model/tds-context-menu.model';
@@ -62,14 +62,15 @@ export class DiagramLayoutComponent implements OnChanges, AfterViewInit, OnDestr
 	@Input() icons: IconModel;
 	@Input() currentUser: any;
 	@Input() contextMenuOptions: ITdsContextMenuOption;
-	@Input() isOverviewVisible = true;
-	@Input() canExpand = true;
-	@Input() isExpanded = false;
+	@Input() hideOverview = false;
+	@Input() hideExpand = true;
+	@Input() hideControlButtons = false;
 	@Output() nodeUpdated: EventEmitter<any> = new EventEmitter<any>();
 	@Output() nodeClicked: EventEmitter<any> = new EventEmitter<any>();
 	@Output() backToFullGraph: EventEmitter<void> = new EventEmitter<void>();
 	@Output() diagramAnimationFinished: EventEmitter<void> = new EventEmitter<void>();
 	@Output() ctxMenuActionDispatched: EventEmitter<string> = new EventEmitter<string>();
+	@Output() expandActionDispatched: EventEmitter<void> = new EventEmitter<void>();
 	@ViewChild('diagramContainer', {static: false}) diagramContainer: ElementRef;
 	@ViewChild('tdsCtxMenu', {static: false}) tdsCtxMenu: TdsContextMenuComponent;
 	@ViewChild('overviewContainer', {static: false}) overviewContainer: ElementRef;
@@ -91,7 +92,6 @@ export class DiagramLayoutComponent implements OnChanges, AfterViewInit, OnDestr
 	unsubscribe$: ReplaySubject<void> = new ReplaySubject();
 	showFullGraphBtn: boolean;
 	ctxMenuData$: ReplaySubject<ITdsContextMenuModel> = new ReplaySubject();
-	isFullView: boolean;
 
 	constructor(private renderer: Renderer2) {
 		// Constructor
@@ -298,10 +298,17 @@ export class DiagramLayoutComponent implements OnChanges, AfterViewInit, OnDestr
 	}
 
 	/**
+	 * click handler to dispatch expand action
+	 **/
+	expandClicked(): void {
+		this.expandActionDispatched.emit();
+	}
+
+	/**
 	 * Diagram overview (Minimap)
 	 **/
 	overviewTemplate(): void {
-		if (!this.diagramOverview && this.isOverviewVisible) {
+		if (!this.diagramOverview && !this.hideOverview) {
 			this.diagramOverview = new Overview(this.overviewContainer.nativeElement);
 			this.diagramOverview.observed = this.diagram;
 			this.diagramOverview.contentAlignment = Spot.Center;
@@ -669,17 +676,10 @@ export class DiagramLayoutComponent implements OnChanges, AfterViewInit, OnDestr
 	}
 
 	/**
-	 * Wrapper to convert objs to observables
-	 */
-	asObservable(obj: any): Observable<any> {
-		return of(obj);
-	}
-
-	/**
 	 * Use max height available for diagram layout content element
 	 */
 	useFullHeight(): void {
-		if (this.isExpanded) {
+		if (this.hideExpand) {
 			this.renderer.setStyle(this.diagramLayoutContent.nativeElement, 'height', '70vh');
 		}
 	}

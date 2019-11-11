@@ -9,7 +9,6 @@
   .diagram-layout-content {
     position: relative;
     flex: 1;
-    min-height: 250px;
   }
 
   .diagram-container {
@@ -44,29 +43,29 @@
   }
 
   #graph-control-btn-group {
-    position: absolute;
-    bottom: 10px;
-    left: 40px;
-    z-index: 999;
-    width: 1.5rem;
+    position: absolute !important;
+    bottom: 10px !important;
+    left: 40px !important;
+    z-index: 999 !important;
+    width: 1.5rem !important;
   }
 
   #graph-control-btn-group > .btn {
-    background-color: #dddddd;
-    border-color: #c4d0dc;
-    color: #333333;
-    width: 100%;
-    padding: 0 .2rem 0 .2rem;
-    min-width: 1.5rem;
-    border-radius: 2rem;
+    background-color: #dddddd !important;
+    border-color: #c4d0dc !important;
+    color: #333333 !important;
+    width: 100% !important;
+    padding: 0 .2rem 0 .2rem !important;
+    min-width: 1.5rem !important;
+    border-radius: 2rem !important;
   }
 
   #graph-control-btn-group > .btn:active {
-    box-shadow: 0 2rem 0 0 #c4d0dc inset;
+    box-shadow: 0 2rem 0 0 #c4d0dc inset !important;
   }
 
   #graph-control-btn-group > .btn:focus {
-    outline: none;
+    outline: none !important;
   }
 
   .diagram-card {
