@@ -17,9 +17,13 @@ import {
 			</div>
 			<div class="clr-col-12">
 				<tds-card>
-					<tds-lib-diagram-layout
-						[data]="data"
-						[contextMenuOptions]="ctxOpts"></tds-lib-diagram-layout>
+					<div class="diagram-card-container">
+						<tds-lib-diagram-layout
+							[data]="data"
+							[contextMenuOptions]="ctxOpts"
+							[hideExpand]="false"
+							(expandActionDispatched)="expandActionDispatched()"></tds-lib-diagram-layout>
+					</div>
 				</tds-card>
 			</div>
 		</div>
@@ -44,6 +48,9 @@ import {
 					(backToFullGraph)="handler($event)"
 					(diagramAnimationFinished)="handler($event)"
 					(ctxMenuActionDispatched)="handler($event)"
+					[hideExpand]="false"
+					[hideOverview="true"
+					[hideControlButtons]"true"
 					></tds-diagram-layout>'
 				>
 				</tds-card>
@@ -204,5 +211,12 @@ export class DiagramLayoutOverviewComponent {
 				}
 			]
 		};
+	}
+
+	/**
+	 * log some text on the console when the expandActionDispatched is triggered
+	 */
+	expandActionDispatched(): void {
+		console.log('expandActionDispatched');
 	}
 }
