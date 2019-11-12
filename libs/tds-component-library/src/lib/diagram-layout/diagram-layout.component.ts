@@ -75,7 +75,6 @@ export class DiagramLayoutComponent implements OnChanges, AfterViewInit, OnDestr
 	@ViewChild('tdsCtxMenu', {static: false}) tdsCtxMenu: TdsContextMenuComponent;
 	@ViewChild('overviewContainer', {static: false}) overviewContainer: ElementRef;
 	@ViewChild('nodeTooltip', {static: false}) nodeTooltip: ElementRef;
-	@ViewChild('diagramLayoutContent', {static: false}) diagramLayoutContent: ElementRef;
 	model: GraphLinksModel;
 	diagram: Diagram = new Diagram();
 	faIcons = FA_ICONS;
