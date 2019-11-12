@@ -206,7 +206,6 @@ export class DiagramLayoutComponent implements OnChanges, AfterViewInit, OnDestr
 	 **/
 	generateDiagram(): void {
 		if (!this.model) { return; }
-		this.useFullHeight();
 		this.diagram.model.nodeDataArray = [];
 		this.diagram.commit(d => {
 			d.initialDocumentSpot = Spot.Center;
@@ -673,15 +672,6 @@ export class DiagramLayoutComponent implements OnChanges, AfterViewInit, OnDestr
 	 */
 	onCtxMenuActionDispatched(action: string): void {
 		this.ctxMenuActionDispatched.emit(action);
-	}
-
-	/**
-	 * Use max height available for diagram layout content element
-	 */
-	useFullHeight(): void {
-		if (this.hideExpand) {
-			this.renderer.setStyle(this.diagramLayoutContent.nativeElement, 'height', '70vh');
-		}
 	}
 
 	/**
