@@ -14,15 +14,18 @@
   .diagram-container {
     position: relative;
     height: 100%;
-    padding-left: 15px;
-    padding-right: 15px;
+    overflow: hidden;
+
+    div {
+      overflow: hidden !important;
+    }
   }
 
   .overview-container {
     position: absolute;
     width: 20%;
     max-width: 250px;
-    height: 30%;
+    height: 20%;
     max-height: 150px;
     top: 10px;
     left: 20px;
@@ -34,7 +37,7 @@
   .full-view {
     position: absolute;
     top: 10px;
-    right: 20px;
+    right: 35px;;
     z-index: 300; /* make sure its in front */
   }
 
@@ -45,7 +48,7 @@
   #graph-control-btn-group {
     position: absolute !important;
     bottom: 10px !important;
-    left: 40px !important;
+    right: 35px !important;
     z-index: 999 !important;
     width: 1.5rem !important;
   }
@@ -57,7 +60,12 @@
     width: 100% !important;
     padding: 0 .2rem 0 .2rem !important;
     min-width: 1.5rem !important;
-    border-radius: 2rem !important;
+    border-radius: 0.3rem !important;
+    margin: 0 0 0.05rem 0 !important;
+  }
+
+  #graph-control-btn-group > .btn:hover {
+    box-shadow: 0 2rem 0 0 #c4d0dc inset !important;
   }
 
   #graph-control-btn-group > .btn:active {
