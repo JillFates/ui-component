@@ -75,7 +75,6 @@ export class DiagramLayoutComponent implements OnChanges, AfterViewInit, OnDestr
 	@ViewChild('tdsCtxMenu', {static: false}) tdsCtxMenu: TdsContextMenuComponent;
 	@ViewChild('overviewContainer', {static: false}) overviewContainer: ElementRef;
 	@ViewChild('nodeTooltip', {static: false}) nodeTooltip: ElementRef;
-	@ViewChild('diagramLayoutContent', {static: false}) diagramLayoutContent: ElementRef;
 	model: GraphLinksModel;
 	diagram: Diagram = new Diagram();
 	faIcons = FA_ICONS;
@@ -150,7 +149,7 @@ export class DiagramLayoutComponent implements OnChanges, AfterViewInit, OnDestr
 	handleLargeDataArray(): void {
 		this.diagram.removeDiagramListener(DiagramEvent.ANIMATION_FINISHED, null);
 		const dataCopy = this.data.nodeDataArray.slice();
-		const linksCopy = this.data.nodeDataArray.linksPath.slice();
+		const linksCopy = this.data.linkDataArray.slice();
 		const dataChunks = [];
 		const linkChunks = [];
 
@@ -206,12 +205,15 @@ export class DiagramLayoutComponent implements OnChanges, AfterViewInit, OnDestr
 	 **/
 	generateDiagram(): void {
 		if (!this.model) { return; }
-		this.useFullHeight();
 		this.diagram.model.nodeDataArray = [];
 		this.diagram.commit(d => {
 			d.initialDocumentSpot = Spot.Center;
 			d.initialViewportSpot = Spot.Center;
+			d.hasHorizontalScrollbar = false;
+			d.hasVerticalScrollbar = false;
 			d.allowZoom = true;
+			if (this.data && this.data.autoScaleMode) { d.autoScale = this.data.autoScaleMode; }
+			d.zoomToFit();
 			d.layout = this.setLayout();
 			d.nodeTemplate = this.setNodeTemplate();
 			d.linkTemplate = this.setLinkTemplate();
@@ -255,6 +257,7 @@ export class DiagramLayoutComponent implements OnChanges, AfterViewInit, OnDestr
 				}, 1000);
 			}
 
+			this.diagram.commit(d => d.centerRect(d.findNodeForKey(this.data.rootAsset).actualBounds));
 		});
 		if (!this.largeArrayRemaining) {
 			if (this.diagram.linkTemplate.routing !== Link.AvoidsNodes) { this.setLinkTemplate(); }
@@ -345,12 +348,21 @@ export class DiagramLayoutComponent implements OnChanges, AfterViewInit, OnDestr
 	 * Sets the template for each node in the Diagram
 	 **/
 	setNodeTemplate(): Node {
+		if (this.data.nodeTemplate) {
+			this.data.nodeTemplate.toolTip = this.createTooltip();
+			this.data.nodeTemplate.contextMenu = this.contextMenu();
+			return this.data.nodeTemplate;
+		}
 		if (this.nodeTemplate) {
 			this.nodeTemplate.toolTip = this.createTooltip();
 			this.nodeTemplate.contextMenu = this.contextMenu();
 			return this.nodeTemplate;
 		}
 
+		if (this.diagram.scale < 0.6446089162177968) {
+			this.setNodeTemplateByScale();
+			return null;
+		}
 		const node = new Node(Panel.Horizontal);
 		node.margin = new Margin(1, 1, 1, 1);
 
@@ -386,6 +398,7 @@ export class DiagramLayoutComponent implements OnChanges, AfterViewInit, OnDestr
 	 * Sets the template for each node link in the Diagram
 	 **/
 	setLinkTemplate(): Link {
+		if (this.data.linkTemplate) { return this.data.linkTemplate; }
 		if (this.linkTemplate) { return this.linkTemplate; }
 		const link = new Link();
 		link.routing = Link.AvoidsNodes;
@@ -402,6 +415,7 @@ export class DiagramLayoutComponent implements OnChanges, AfterViewInit, OnDestr
 	 * Sets the Layout to be used by the Diagram
 	 **/
 	setLayout(): Layout {
+		if (this.data.layout) { return this.data.layout; }
 		if (this.layout) { return this.layout; }
 		const layout = new CircularLayout();
 		layout.radius = 100;
@@ -599,7 +613,7 @@ export class DiagramLayoutComponent implements OnChanges, AfterViewInit, OnDestr
 				selectedNode: obj.part.data,
 				currentUser: this.currentUser,
 				mousePt: {x: `${mousePt.x}px`, y: `${mousePt.y}px`},
-				options: this.contextMenuOptions
+				options: this.data && (this.data.ctxMenuOptions && this.data.ctxMenuOptions) || this.contextMenuOptions
 			});
 		}
 	}
@@ -673,15 +687,6 @@ export class DiagramLayoutComponent implements OnChanges, AfterViewInit, OnDestr
 	 */
 	onCtxMenuActionDispatched(action: string): void {
 		this.ctxMenuActionDispatched.emit(action);
-	}
-
-	/**
-	 * Use max height available for diagram layout content element
-	 */
-	useFullHeight(): void {
-		if (this.hideExpand) {
-			this.renderer.setStyle(this.diagramLayoutContent.nativeElement, 'height', '70vh');
-		}
 	}
 
 	/**

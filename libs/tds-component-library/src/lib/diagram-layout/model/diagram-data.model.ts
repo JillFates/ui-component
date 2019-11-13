@@ -1,12 +1,17 @@
-import { Node, Link } from 'gojs';
+import {Node, Link, Layout, EnumValue} from 'gojs';
 
 export interface IDiagramData {
-	nodeDataArray: any;
-	linkDataArray: ILinkData[];
-	currentUserId: string | number;
-	ctxMenuOptions: any;
-	nodeTemplate: Node;
-	linkTemplate: Link;
+	nodeDataArray?: any;
+	linkDataArray?: ILinkData[];
+	currentUserId?: string | number;
+	ctxMenuOptions?: any;
+	nodeTemplate?: Node;
+	linkTemplate?: Link;
+	layout?: Layout;
+	lowScaleTemplate?: Node;
+	mediumScaleTemplate?: Node;
+	rootAsset?: number | string;
+	autoScaleMode?: EnumValue;
 }
 
 export interface ILinkData {
