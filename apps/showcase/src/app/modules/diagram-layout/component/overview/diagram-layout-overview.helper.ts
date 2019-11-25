@@ -7,7 +7,7 @@ export class DiagramLayoutOverviewHelper {
 	/**
 	 * Diagram data object
 	 */
-	static diagramData(currentUserId?: any, data?: any): IDiagramData {
+	static diagramData(currentUserId?: any, data?: any, extras?: any, iconOnly?: boolean): IDiagramData {
 		const d = this.data(data);
 		return {
 			nodeDataArray: d.nodeDataArray,
@@ -17,8 +17,8 @@ export class DiagramLayoutOverviewHelper {
 			nodeTemplate: this.nodeTemplate(),
 			linkTemplate: this.linkTemplate(),
 			layout: this.layout(),
-			autoScaleMode: Diagram.Uniform,
-			rootAsset: 'a'
+			rootAsset: 'a',
+			extras: !!extras && extras || this.extras()
 		};
 	}
 
@@ -493,6 +493,16 @@ export class DiagramLayoutOverviewHelper {
 	 **/
 	static icons(): IconModel {
 		return null;
+	}
+
+	/**
+	 * Extra parameters for the diagram
+	 */
+	static extras(): any {
+		return {
+			autoScale: Diagram.Uniform,
+			allowZoom: false
+		};
 	}
 
 }

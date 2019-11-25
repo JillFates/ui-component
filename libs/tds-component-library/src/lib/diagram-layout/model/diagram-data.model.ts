@@ -11,7 +11,7 @@ export interface IDiagramData {
 	lowScaleTemplate?: Node;
 	mediumScaleTemplate?: Node;
 	rootAsset?: number | string;
-	autoScaleMode?: EnumValue;
+	extras?: any;
 }
 
 export interface ILinkData {

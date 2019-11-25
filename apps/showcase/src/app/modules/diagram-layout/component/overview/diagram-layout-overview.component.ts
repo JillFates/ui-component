@@ -4,6 +4,7 @@ import {
 } from '../../../../../../../../libs/tds-component-library/src/lib/context-menu/model/tds-context-menu.model';
 import {ReplaySubject} from 'rxjs';
 import {DiagramLayoutOverviewHelper} from './diagram-layout-overview.helper';
+import {Diagram} from 'gojs';
 
 @Component({
 	selector: 'app-diagram-layout-overview',
@@ -73,7 +74,10 @@ export class DiagramLayoutOverviewComponent {
 	 * Sets the example data to be passed down to the diagram layout component
 	 **/
 	setData(): void {
-		this.data$.next(DiagramLayoutOverviewHelper.diagramData(1));
+		this.data$.next(DiagramLayoutOverviewHelper.diagramData(1, null, {
+			autoScale: Diagram.Uniform,
+			allowZoom: false
+		}));
 	}
 
 	/**
