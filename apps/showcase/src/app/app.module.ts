@@ -39,9 +39,10 @@ import { DiagramLayoutModule } from './modules/diagram-layout/diagram-layout.mod
 		RouterModule.forRoot(
 			[
 				{
-					path: 'combobox',
-					loadChildren: () => import('./modules/combobox/combobox.module').then(m => m.ComboboxModule),
-				},
+					path: '',
+					redirectTo: '/component/dropdown/overview',
+					pathMatch: 'full'
+				}
 			],
 			{ initialNavigation: 'enabled' }
 		),

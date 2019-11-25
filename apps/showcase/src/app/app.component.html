@@ -18,20 +18,23 @@
 			<label class="nav-header">Dropdown Components</label>
 			<a
 				clrVerticalNavLink
+				*ngIf="this.routeData.url[1]"
 				routerLink="component/dropdown/overview"
-				[ngClass]="{ active: this.routeData.url[1].path === 'dropdown' }"
+				[ngClass]="{ active: this.routeData.url[1]['path'] === 'dropdown' }"
 				>Dropdown</a
 			>
 			<a
 				clrVerticalNavLink
+				*ngIf="this.routeData.url[1]"
 				routerLink="component/combobox/overview"
-				[ngClass]="{ active: this.routeData.url[1].path === 'combobox' }"
+				[ngClass]="{ active: this.routeData.url[1]['path'] === 'combobox' }"
 				>Combobox</a
 			>
 			<a
 				clrVerticalNavLink
+				*ngIf="this.routeData.url[1]"
 				routerLink="component/multiselect/overview"
-				[ngClass]="{ active: this.routeData.url[1].path === 'multiselect' }"
+				[ngClass]="{ active: this.routeData.url[1]['path'] === 'multiselect' }"
 				>Multiselect</a
 			>
 			<div class="nav-divider"></div>
@@ -39,51 +42,57 @@
 
 			<a
 				clrVerticalNavLink
+				*ngIf="this.routeData.url[1]"
 				routerLink="component/tabs/overview"
-				[ngClass]="{ active: this.routeData.url[1].path === 'tabs' }"
+				[ngClass]="{ active: this.routeData.url[1]['path'] === 'tabs' }"
 				>Tabs</a
 			>
 			<a
 				clrVerticalNavLink
+				*ngIf="this.routeData.url[1]"
 				routerLink="component/tab-scroller/overview"
-				[ngClass]="{ active: this.routeData.url[1].path === 'tab-scroller' }"
+				[ngClass]="{ active: this.routeData.url[1]['path'] === 'tab-scroller' }"
 				>Tab Scroller</a
 			>
 			<div class="nav-divider"></div>
 			<label class="nav-header">Other Components</label>
 			<a
 				clrVerticalNavLink
+				*ngIf="this.routeData.url[1]"
 				routerLink="component/grid/overview"
-				[ngClass]="{ active: this.routeData.url[1].path === 'grid' }"
+				[ngClass]="{ active: this.routeData.url[1]['path'] === 'grid' }"
 				>Grid</a
 			>
 			<a
 				clrVerticalNavLink
+				*ngIf="this.routeData.url[1]"
 				routerLink="component/button/overview"
-				[ngClass]="{ active: this.routeData.url[1].path === 'button' }"
+				[ngClass]="{ active: this.routeData.url[1]['path'] === 'button' }"
 				>Button</a
 			>
 			<a
 				clrVerticalNavLink
+				*ngIf="this.routeData.url[1]"
 				routerLink="component/radial-progress/overview"
-				[ngClass]="{ active: this.routeData.url[1].path === 'radial-progress' }"
+				[ngClass]="{ active: this.routeData.url[1]['path'] === 'radial-progress' }"
 				>Radial Progress</a
 			>
 			<a
 				clrVerticalNavLink
+				*ngIf="this.routeData.url[1]"
 				routerLink="component/diagram-layout/overview"
-				[ngClass]="{ active: this.routeData.url[1].path === 'diagram-layout' }"
+				[ngClass]="{ active: this.routeData.url[1]['path'] === 'diagram-layout' }"
 				>Diagram Layout</a
 			>
 		</clr-vertical-nav>
 
-		<div class="content-area">
+		<div class="content-area" *ngIf="this.routeData.url[2]">
 			<clr-tabs>
 				<clr-tab>
 					<button
 						(click)="routeTo(sectionTab.OVERVIEW)"
 						clrTabLink
-						[ngClass]="{ active: this.routeData.url[2].path === 'overview' }"
+						[ngClass]="{ active: this.routeData.url[2]['path'] === 'overview' }"
 					>
 						OVERVIEW
 					</button>
@@ -92,7 +101,7 @@
 					<button
 						(click)="routeTo(sectionTab.API)"
 						clrTabLink
-						[ngClass]="{ active: this.routeData.url[2].path === 'api' }"
+						[ngClass]="{ active: this.routeData.url[2]['path'] === 'api' }"
 					>
 						API
 					</button>
