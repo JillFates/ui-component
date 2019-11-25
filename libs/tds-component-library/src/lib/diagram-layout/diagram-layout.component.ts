@@ -65,7 +65,6 @@ export class DiagramLayoutComponent implements OnChanges, AfterViewInit, OnDestr
 	@Input() hideOverview = false;
 	@Input() hideExpand = true;
 	@Input() hideControlButtons = false;
-	@Input() extras: any;
 	@Output() nodeUpdated: EventEmitter<any> = new EventEmitter<any>();
 	@Output() nodeClicked: EventEmitter<any> = new EventEmitter<any>();
 	@Output() backToFullGraph: EventEmitter<void> = new EventEmitter<void>();
@@ -230,10 +229,10 @@ export class DiagramLayoutComponent implements OnChanges, AfterViewInit, OnDestr
 	 * additional diagram configurations
 	 */
 	diagramExtras(): void {
-		if (this.extras) {
-			this.diagram.commit(d => Object.keys(this.extras)
-				.forEach((k, v) => {
-					d[k] = v;
+		if (this.data.extras) {
+			this.diagram.commit(d => Object.keys(this.data.extras)
+				.forEach(k => {
+					d[k] = this.data.extras[k];
 				})
 			);
 		}

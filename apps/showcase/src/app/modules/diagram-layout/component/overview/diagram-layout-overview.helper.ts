@@ -7,7 +7,7 @@ export class DiagramLayoutOverviewHelper {
 	/**
 	 * Diagram data object
 	 */
-	static diagramData(currentUserId?: any, data?: any): IDiagramData {
+	static diagramData(currentUserId?: any, data?: any, extras?: any, iconOnly?: boolean): IDiagramData {
 		const d = this.data(data);
 		return {
 			nodeDataArray: d.nodeDataArray,
@@ -18,7 +18,7 @@ export class DiagramLayoutOverviewHelper {
 			linkTemplate: this.linkTemplate(),
 			layout: this.layout(),
 			rootAsset: 'a',
-			extras: this.extras()
+			extras: !!extras && extras || this.extras()
 		};
 	}
 
