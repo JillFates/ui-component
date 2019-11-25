@@ -205,13 +205,15 @@ export class DiagramLayoutComponent implements OnChanges, AfterViewInit, OnDestr
 	 **/
 	generateDiagram(): void {
 		if (!this.model) { return; }
+		const extras = this.data.extras;
 		this.diagram.model.nodeDataArray = [];
 		this.diagram.commit(d => {
 			d.initialDocumentSpot = Spot.Center;
 			d.initialViewportSpot = Spot.Center;
 			d.hasHorizontalScrollbar = false;
 			d.hasVerticalScrollbar = false;
-			d.allowZoom = true;
+			d.allowZoom = extras && extras.allowZoom ? extras.allowZoom : true;
+			d.autoScale = extras && extras.autoScale ? extras.autoScale : true;
 			d.zoomToFit();
 			d.layout = this.setLayout();
 			d.nodeTemplate = this.setNodeTemplate();
