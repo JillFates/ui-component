@@ -65,6 +65,7 @@ export class DiagramLayoutComponent implements OnChanges, AfterViewInit, OnDestr
 	@Input() hideOverview = false;
 	@Input() hideExpand = true;
 	@Input() hideControlButtons = false;
+	@Input() extras: any;
 	@Output() nodeUpdated: EventEmitter<any> = new EventEmitter<any>();
 	@Output() nodeClicked: EventEmitter<any> = new EventEmitter<any>();
 	@Output() backToFullGraph: EventEmitter<void> = new EventEmitter<void>();
@@ -212,7 +213,6 @@ export class DiagramLayoutComponent implements OnChanges, AfterViewInit, OnDestr
 			d.hasHorizontalScrollbar = false;
 			d.hasVerticalScrollbar = false;
 			d.allowZoom = true;
-			if (this.data && this.data.autoScaleMode) { d.autoScale = this.data.autoScaleMode; }
 			d.zoomToFit();
 			d.layout = this.setLayout();
 			d.nodeTemplate = this.setNodeTemplate();
@@ -223,6 +223,20 @@ export class DiagramLayoutComponent implements OnChanges, AfterViewInit, OnDestr
 		this.overrideMouseWheel();
 		this.overviewTemplate();
 		this.diagramListeners();
+		this.diagramExtras();
+	}
+
+	/**
+	 * additional diagram configurations
+	 */
+	diagramExtras(): void {
+		if (this.extras) {
+			this.diagram.commit(d => Object.keys(this.extras)
+				.forEach((k, v) => {
+					d[k] = v;
+				})
+			);
+		}
 	}
 
 	/**
