@@ -100,13 +100,15 @@ kendo-grid {
 						}
 					}
 					&.status-Hold {
-						background: $color-hold;
+						background: $color-warning;
 					}
 					&.status-Completed {
 						background: $color-info;
 					}
 					&.status-Pending clr-icon {
-						color: $color-icon;
+                    	color: $color-text;
+						background-color: $color-icon-light;
+
 					}
 					&.status-Warning {
 						background: $color-warning;
