@@ -14,7 +14,10 @@ import {SECTIONS} from './model/tab-section.model';
 })
 export class AppComponent implements OnInit {
 
-	private routeData: RouteDataModel;
+	private routeData: RouteDataModel = {
+		title: '',
+		url: []
+	};
 	public sectionTab = SECTIONS;
 
 	constructor(
