@@ -1,31 +1,34 @@
-import {Diagram, Layout, Link, Node, Shape, TreeLayout} from 'gojs';
+import {Binding, Diagram, GraphObject, Layout, Link, Margin, Node, Panel, Shape, TextBlock, TreeLayout} from 'gojs';
 import {IconModel, IDiagramData} from '../../../../../../../../libs/tds-component-library/src/lib/diagram-layout/model/diagram-data.model';
 import {ITdsContextMenuOption} from '../../../../../../../../libs/tds-component-library/src/lib/context-menu/model/tds-context-menu.model';
+import {IDiagramLayoutHelper} from '../../../../../../../../libs/tds-component-library/src/lib/diagram-layout/model/diagram-layout.helper';
 
-export class DiagramLayoutOverviewHelper {
+export class DiagramLayoutOverviewHelper implements IDiagramLayoutHelper {
 
-	/**
-	 * Diagram data object
-	 */
-	static diagramData(currentUserId?: any, data?: any, extras?: any, iconOnly?: boolean): IDiagramData {
-		const d = this.data(data);
+	constructor() {
+		// Constructor
+	}
+
+	diagramData(params?: any): IDiagramData {
+		const d = this.data(params.data);
 		return {
 			nodeDataArray: d.nodeDataArray,
 			linkDataArray: d.linkDataArray,
-			currentUserId: currentUserId,
+			currentUserId: params.currentUserId,
 			ctxMenuOptions: this.contextMenuOptions(),
 			nodeTemplate: this.nodeTemplate(),
 			linkTemplate: this.linkTemplate(),
 			layout: this.layout(),
 			rootAsset: 'a',
-			extras: !!extras && extras || this.extras()
+			extras: !!params.extras && params.extras || this.extras(),
+			events: params && params.events || this.diagramEvents()
 		};
 	}
 
 	/**
 	 * generate model to be used by diagram with task specific data
 	 **/
-	static data(data?: any): any {
+	data(data?: any): any {
 		return {
 			nodeDataArray: [
 				{
@@ -394,7 +397,7 @@ export class DiagramLayoutOverviewHelper {
 	/**
 	 * LinksPath object
 	 **/
-	static getLinksPath(link: any): any {
+	getLinksPath(link: any): any {
 		const t = Object.assign({}, link);
 		if (t) {
 			return {
@@ -408,20 +411,50 @@ export class DiagramLayoutOverviewHelper {
 	/**
 	 * Node template
 	 **/
-	static nodeTemplate(): Node {
-		return null;
+	nodeTemplate(): Node {
+		const node = new Node(Panel.Horizontal);
+		node.margin = new Margin(1, 1, 1, 1);
+		node.isTreeExpanded = false;
+
+		const panel = new Panel(Panel.Auto);
+		panel.background = '#fff';
+		panel.padding = new Margin(0, 0, 0, 0);
+
+		const nodeShape = new Shape();
+		nodeShape.figure = 'RoundedRectangle';
+		nodeShape.strokeWidth = 2;
+		nodeShape.stroke = '#ddd';
+		nodeShape.fill = 'white';
+
+		const panelBody = new Panel(Panel.Horizontal);
+		panel.padding = new Margin(0, 0, 0, 0);
+		panel.margin = new Margin(0, 0, 0, 0);
+		const textBlock = new TextBlock();
+		textBlock.stroke = '#333';
+		textBlock.bind(new Binding('text', 'name'));
+		panelBody.add(textBlock);
+
+		panel.add(nodeShape);
+		panel.add(panelBody);
+
+		const expandButton = GraphObject.make('TreeExpanderButton');
+
+		node.add(panel);
+		node.add(expandButton);
+
+		return node;
 	}
 
 	/**
 	 * Links Template
 	 **/
-	static linkTemplate(): Link {
+	linkTemplate(): Link {
 		const linkTemplate = new Link();
 		linkTemplate.routing = Link.AvoidsNodes;
 		linkTemplate.corner = 5;
 
 		const linkShape = new Shape();
-		linkShape.strokeWidth = 5;
+		linkShape.strokeWidth = 2;
 		linkShape.stroke = '#ddd';
 		const arrowHead = new Shape();
 		arrowHead.toArrow = 'Standard';
@@ -437,7 +470,7 @@ export class DiagramLayoutOverviewHelper {
 	/**
 	 * Layout template
 	 **/
-	static layout(): Layout {
+	layout(): Layout {
 		const treeLayout = new TreeLayout();
 		treeLayout.angle = 90;
 		treeLayout.layerSpacing = 35;
@@ -447,21 +480,21 @@ export class DiagramLayoutOverviewHelper {
 	/**
 	 * Low scale node template
 	 **/
-	static lowScaleNodeTemplate(): Node {
+	lowScaleNodeTemplate(): Node {
 		return null;
 	}
 
 	/**
 	 * medium scale node template
 	 **/
-	static mediumScaleNodeTemplate(): Node {
+	mediumScaleNodeTemplate(): Node {
 		return null;
 	}
 
 	/**
 	 * context menu options
 	 **/
-	static contextMenuOptions(): ITdsContextMenuOption {
+	contextMenuOptions(): ITdsContextMenuOption {
 		return {
 			fields: [
 				{
@@ -489,16 +522,23 @@ export class DiagramLayoutOverviewHelper {
 	}
 
 	/**
+	 * Diagram events
+	 */
+	diagramEvents(): any[] {
+		return null;
+	}
+
+	/**
 	 * icons for the diagram
 	 **/
-	static icons(): IconModel {
+	icons(): IconModel {
 		return null;
 	}
 
 	/**
 	 * Extra parameters for the diagram
 	 */
-	static extras(): any {
+	extras(): any {
 		return {
 			autoScale: Diagram.Uniform,
 			allowZoom: false

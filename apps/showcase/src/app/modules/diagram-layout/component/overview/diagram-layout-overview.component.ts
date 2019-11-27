@@ -5,6 +5,7 @@ import {
 import {ReplaySubject} from 'rxjs';
 import {DiagramLayoutOverviewHelper} from './diagram-layout-overview.helper';
 import {Diagram} from 'gojs';
+import {IDiagramLayoutHelper} from '../../../../../../../../libs/tds-component-library/src/lib/diagram-layout/model/diagram-layout.helper';
 
 @Component({
 	selector: 'app-diagram-layout-overview',
@@ -65,6 +66,7 @@ import {Diagram} from 'gojs';
 export class DiagramLayoutOverviewComponent {
 	data$: ReplaySubject<any> = new ReplaySubject<any>(1);
 	ctxOpts:  ITdsContextMenuOption;
+	diagramHelper: IDiagramLayoutHelper;
 
 	constructor() {
 		this.setData();
@@ -74,10 +76,20 @@ export class DiagramLayoutOverviewComponent {
 	 * Sets the example data to be passed down to the diagram layout component
 	 **/
 	setData(): void {
-		this.data$.next(DiagramLayoutOverviewHelper.diagramData(1, null, {
-			autoScale: Diagram.Uniform,
-			allowZoom: false
-		}));
+		this.diagramHelper = new DiagramLayoutOverviewHelper();
+		this.data$.next(this.diagramHelper.diagramData({
+				currentUserId: 1,
+				data: null,
+				extras: {
+					diagramOpts: {
+						autoScale: Diagram.Uniform,
+						allowZoom: false
+					},
+					isExpandable: false,
+					initialExpandLevels: 3
+				}
+			})
+		);
 	}
 
 	/**

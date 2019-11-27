@@ -7,6 +7,7 @@ export const enum DiagramEvent {
 	OBJECT_SINGLE_CLICKED = 'ObjectSingleClicked',
 	OBJECT_DOUBLE_CLICKED = 'ObjectDoubleClicked',
 	OBJECT_CONTEXT_CLICKED = 'ObjectContextClicked',
+	INITIAL_LAYOUT_COMPLETED = 'InitialLayoutCompleted'
 }
 
 export const enum DiagramEventAction {

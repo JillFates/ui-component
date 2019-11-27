@@ -1,4 +1,4 @@
-import {Node, Link, Layout, EnumValue} from 'gojs';
+import {Node, Link, Layout, EnumValue, DiagramEventName} from 'gojs';
 
 export interface IDiagramData {
 	nodeDataArray?: any;
@@ -12,6 +12,7 @@ export interface IDiagramData {
 	mediumScaleTemplate?: Node;
 	rootAsset?: number | string;
 	extras?: any;
+	events?: IDiagramEvent[];
 }
 
 export interface ILinkData {
@@ -26,4 +27,9 @@ export interface IconModel {
 		color?: string;
 		background?: string;
 	};
+}
+
+export interface IDiagramEvent {
+	name: DiagramEventName;
+	handler: () => void;
 }

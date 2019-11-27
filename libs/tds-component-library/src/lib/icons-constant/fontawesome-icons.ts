@@ -33,5 +33,7 @@ export const FA_ICONS = {
 	faExpand: ['fas', 'expand'],
 	faCompress: ['fas', 'compress'],
 	faWindowMinimize: ['fas', 'window-minimize'],
-	faWindowMaximize: ['fas', 'window-maximize']
+	faWindowMaximize: ['fas', 'window-maximize'],
+	faPlus: ['fas', 'plus'],
+	faArrowsAltV: ['fas', 'arrows-alt-v']
 };

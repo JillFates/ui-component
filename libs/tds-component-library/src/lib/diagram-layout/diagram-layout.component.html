@@ -11,14 +11,42 @@
       #tdsCtxMenu></tds-context-menu>
 
 		<div id="graph-control-btn-group" *ngIf="!hideControlButtons">
-			<button class="btn">
+			<button
+				class="btn tooltip tooltip-md tooltip-top-left"
+				role="tooltip"
+				aria-haspopup="true"
+				[style.textAlign]="'center'"
+				[style.display]="'none'">
 				<fa-icon [icon]="faIcons.faCog" size="lg"></fa-icon>
+				<span class="tooltip-content">Configuration</span>
 			</button>
-			<button class="btn" (click)="zoomIn()">
+			<button
+				class="btn tooltip tooltip-md tooltip-top-left"
+				*ngIf="(data.extras && data.extras.isExpandable) || !data.nodeTemplate.isTreeExpanded"
+				(click)="expand = !expand; expandAll()"
+				role="tooltip"
+				aria-haspopup="true"
+				[style.textAlign]="'center'">
+					<fa-icon [icon]="faIcons.faArrowsAltV" size="lg"></fa-icon>
+					<span class="tooltip-content">Expand/Collapse all toggle</span>
+			</button>
+			<button
+				class="btn tooltip tooltip-xs tooltip-top-left"
+				(click)="zoomIn()"
+				role="tooltip"
+				aria-haspopup="true"
+				[style.textAlign]="'center'">
 				<fa-icon [icon]="faIcons.faSearchPlus" size="lg"></fa-icon>
+				<span class="tooltip-content">Zoom In</span>
 			</button>
-			<button class="btn" (click)="zoomOut()">
+			<button
+				class="btn tooltip tooltip-xs tooltip-top-left"
+				(click)="zoomOut()"
+				role="tooltip"
+				aria-haspopup="true"
+				[style.textAlign]="'center'">
 				<fa-icon [icon]="faIcons.faSearchMinus" size="lg"></fa-icon>
+				<span class="tooltip-content">Zoom Out</span>
 			</button>
 		</div>
 
