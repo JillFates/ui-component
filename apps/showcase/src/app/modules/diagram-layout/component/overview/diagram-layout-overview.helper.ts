@@ -16,7 +16,7 @@ export class DiagramLayoutOverviewHelper implements IDiagramLayoutHelper {
 			linkDataArray: d.linkDataArray,
 			currentUserId: params.currentUserId,
 			ctxMenuOptions: this.contextMenuOptions(),
-			nodeTemplate: this.nodeTemplate(),
+			nodeTemplate: this.nodeTemplate({ isExpandable: params.extras.isExpandable && params.extras.isExpandable }),
 			linkTemplate: this.linkTemplate(),
 			layout: this.layout(),
 			rootAsset: 'a',
@@ -411,10 +411,9 @@ export class DiagramLayoutOverviewHelper implements IDiagramLayoutHelper {
 	/**
 	 * Node template
 	 **/
-	nodeTemplate(): Node {
+	nodeTemplate(opts?: any): Node {
 		const node = new Node(Panel.Horizontal);
 		node.margin = new Margin(1, 1, 1, 1);
-		node.isTreeExpanded = false;
 
 		const panel = new Panel(Panel.Auto);
 		panel.background = '#fff';
@@ -437,10 +436,13 @@ export class DiagramLayoutOverviewHelper implements IDiagramLayoutHelper {
 		panel.add(nodeShape);
 		panel.add(panelBody);
 
-		const expandButton = GraphObject.make('TreeExpanderButton');
-
 		node.add(panel);
-		node.add(expandButton);
+
+		if (opts.isExpandable) {
+			node.isTreeExpanded = false;
+			const expandButton = GraphObject.make('TreeExpanderButton');
+			node.add(expandButton);
+		}
 
 		return node;
 	}
@@ -451,7 +453,7 @@ export class DiagramLayoutOverviewHelper implements IDiagramLayoutHelper {
 	linkTemplate(): Link {
 		const linkTemplate = new Link();
 		linkTemplate.routing = Link.AvoidsNodes;
-		linkTemplate.corner = 5;
+		linkTemplate.corner = 2;
 
 		const linkShape = new Shape();
 		linkShape.strokeWidth = 2;
