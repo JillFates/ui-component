@@ -215,7 +215,7 @@ export class DiagramLayoutComponent implements OnChanges, AfterViewInit, OnDestr
 			d.hasHorizontalScrollbar = false;
 			d.hasVerticalScrollbar = false;
 			d.allowZoom = extras && extras.allowZoom ? extras.allowZoom : true;
-			d.autoScale = extras && extras.autoScale ? extras.autoScale : true;
+			d.autoScale = extras && extras.autoScale ? extras.autoScale : d.autoScale;
 			d.zoomToFit();
 			d.layout = this.setLayout();
 			d.nodeTemplate = this.setNodeTemplate();
