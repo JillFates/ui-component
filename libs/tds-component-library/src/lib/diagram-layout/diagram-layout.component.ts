@@ -31,7 +31,7 @@ import {
 	Tool,
 	GraphObject,
 	HTMLInfo,
-	Size
+	Size, TreeLayout
 } from 'gojs';
 import {FA_ICONS} from '../icons-constant/fontawesome-icons';
 import {of, ReplaySubject} from 'rxjs';
@@ -39,6 +39,7 @@ import {DiagramEvent} from './model/diagram-event.constant';
 import {TdsContextMenuComponent} from '../context-menu/tds-context-menu.component';
 import {ITdsContextMenuModel, ITdsContextMenuOption} from '../context-menu/model/tds-context-menu.model';
 import {ITooltipData} from './model/tooltip-data.model';
+import {GOJS_LICENSE_KEY} from './constants/gojs-license';
 
 const enum NodeTemplateEnum {
 	HIGH_SCALE,
@@ -91,9 +92,10 @@ export class DiagramLayoutComponent implements OnChanges, AfterViewInit, OnDestr
 	unsubscribe$: ReplaySubject<void> = new ReplaySubject();
 	showFullGraphBtn: boolean;
 	ctxMenuData$: ReplaySubject<ITdsContextMenuModel> = new ReplaySubject();
+	expand: boolean;
 
 	constructor(private renderer: Renderer2) {
-		// Constructor
+		Diagram.licenseKey = GOJS_LICENSE_KEY;
 	}
 
 	/**
@@ -213,7 +215,7 @@ export class DiagramLayoutComponent implements OnChanges, AfterViewInit, OnDestr
 			d.hasHorizontalScrollbar = false;
 			d.hasVerticalScrollbar = false;
 			d.allowZoom = extras && extras.allowZoom ? extras.allowZoom : true;
-			d.autoScale = extras && extras.autoScale ? extras.autoScale : true;
+			d.autoScale = extras && extras.autoScale ? extras.autoScale : d.autoScale;
 			d.zoomToFit();
 			d.layout = this.setLayout();
 			d.nodeTemplate = this.setNodeTemplate();
@@ -231,10 +233,11 @@ export class DiagramLayoutComponent implements OnChanges, AfterViewInit, OnDestr
 	 * additional diagram configurations
 	 */
 	diagramExtras(): void {
-		if (this.data.extras) {
-			this.diagram.commit(d => Object.keys(this.data.extras)
+		const opts = this.data.extras && this.data.extras.diagramOpts;
+		if (opts) {
+			this.diagram.commit(d => Object.keys(opts)
 				.forEach(k => {
-					d[k] = this.data.extras[k];
+					d[k] = opts[k];
 				})
 			);
 		}
@@ -255,6 +258,12 @@ export class DiagramLayoutComponent implements OnChanges, AfterViewInit, OnDestr
 	 * Diagram listeners to be used for custom functionality
 	 */
 	diagramListeners(): void {
+		this.diagram.addDiagramListener(DiagramEvent.INITIAL_LAYOUT_COMPLETED, e => {
+			if (((this.data.extras && this.data.extras.isExpandable) || (!e.diagram.nodeTemplate['isTreeExpanded']))
+				&& e.diagram.layout instanceof TreeLayout) {
+				e.diagram.findTreeRoots().each(r => r.expandTree(this.data.extras.initialExpandLevel || 2));
+			}
+		});
 		this.diagram.addDiagramListener(DiagramEvent.ANIMATION_FINISHED, () => {
 
 			if (this.nodeMove) {
@@ -302,6 +311,12 @@ export class DiagramLayoutComponent implements OnChanges, AfterViewInit, OnDestr
 		this.diagram.addDiagramListener(DiagramEvent.OBJECT_CONTEXT_CLICKED, () => {
 			this.hideToolTip();
 		});
+
+		if (this.data.events && this.data.events.length >= 1) {
+			this.data.events.forEach(e => {
+				this.diagram.addDiagramListener(e.name, e.handler);
+			});
+		}
 	}
 
 	/**
@@ -702,6 +717,16 @@ export class DiagramLayoutComponent implements OnChanges, AfterViewInit, OnDestr
 	 */
 	onCtxMenuActionDispatched(action: string): void {
 		this.ctxMenuActionDispatched.emit(action);
+	}
+
+	/**
+	 * Expand all subtrees
+	 */
+	expandAll(): void {
+		const count = this.diagram.nodes.count;
+		this.diagram
+			.commit(d => d.findTreeRoots()
+			.each(r => this.expand ? r.expandTree(count) : r.collapseTree()));
 	}
 
 	/**
