@@ -115,6 +115,9 @@ kendo-grid {
 					}
 				}
 			}
+			tr.k-grid-norecords {
+				cursor: unset;
+			}
 		}
 	}
 }
