@@ -96,6 +96,7 @@ export class DiagramLayoutComponent implements OnChanges, AfterViewInit, OnDestr
 
 	constructor(private renderer: Renderer2) {
 		Diagram.licenseKey = GOJS_LICENSE_KEY;
+		console.log('GoJS License Applied: ', Diagram.licenseKey.substring(0, 10));
 	}
 
 	/**
