@@ -1,10 +1,10 @@
-<div>
-	<!-- NOTE: Angular Language Service has a bug and will issue and error: "Member 'onClick' is not callable ng(0)". 
+<!-- NOTE: Angular Language Service has a bug and will issue and error: "Member 'onClick' is not callable ng(0)". 
         Ignore this bug. -->
+<div>
 	<ng-container *ngFor="let action of actionButtons">
 		<tds-button
 			*ngIf="action.show"
-			(click)="action.onClick($event)"
+			(click)="action.disabled || action.onClick($event)"
 			[icon]="action.icon"
 			[disabled]="action.disabled"
 			[title]="action.title"

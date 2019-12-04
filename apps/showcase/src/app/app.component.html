@@ -62,10 +62,15 @@
 				*ngIf="this.routeData.url[1]"
 				routerLink="component/grid-header/overview"
 				[ngClass]="{ active: this.routeData.url[1]['path'] === 'grid-header' }"
-				>Grid Header</a
+				>Grid Header Components</a
 			>
-			<div class="nav-divider"></div>
-			<label class="nav-header">Other Components</label>
+			<a
+				clrVerticalNavLink
+				*ngIf="this.routeData.url[1]"
+				routerLink="component/grid-internal/overview"
+				[ngClass]="{ active: this.routeData.url[1]['path'] === 'grid-internal' }"
+				>Internal Grid Components</a
+			>
 			<a
 				clrVerticalNavLink
 				*ngIf="this.routeData.url[1]"
@@ -73,6 +78,8 @@
 				[ngClass]="{ active: this.routeData.url[1]['path'] === 'grid' }"
 				>Grid</a
 			>
+			<div class="nav-divider"></div>
+			<label class="nav-header">Other Components</label>
 			<a
 				clrVerticalNavLink
 				*ngIf="this.routeData.url[1]"

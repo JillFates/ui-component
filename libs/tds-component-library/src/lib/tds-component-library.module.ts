@@ -13,6 +13,7 @@ import { DiagramLayoutComponent } from './diagram-layout/diagram-layout.componen
 import { TdsFontawesomeModule } from './tds-fontawesome.module';
 import { TdsContextMenuComponent } from './context-menu/tds-context-menu.component';
 import { GridHeaderActionButtonsComponent } from './grid-header-action-buttons/grid-header-action-buttons.component';
+import { GridRowDropdownComponent } from './grid-row-dropdown/grid-row-dropdown.component';
 
 @NgModule({
 	imports: [CommonModule, FormsModule, RouterModule, ButtonsModule, ClarityModule, TdsFontawesomeModule],
@@ -24,6 +25,7 @@ import { GridHeaderActionButtonsComponent } from './grid-header-action-buttons/g
 		DiagramLayoutComponent,
 		TdsContextMenuComponent,
 		GridHeaderActionButtonsComponent,
+		GridRowDropdownComponent,
 	],
 	exports: [
 		CardComponent,
@@ -34,6 +36,7 @@ import { GridHeaderActionButtonsComponent } from './grid-header-action-buttons/g
 		DiagramLayoutComponent,
 		TdsContextMenuComponent,
 		GridHeaderActionButtonsComponent,
+		GridRowDropdownComponent,
 	],
 })
 export class TdsComponentLibraryModule {}
