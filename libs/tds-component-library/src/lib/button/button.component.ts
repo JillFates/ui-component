@@ -36,7 +36,7 @@ export class ButtonComponent {
 			this.btnState = ClrLoadingState.DEFAULT;
 		}
 	}
-	
+
 	/**
 	 * Get button classes
 	 * @return Array
@@ -67,5 +67,4 @@ export class ButtonComponent {
 
 		return classnames;
 	}
-	
 }

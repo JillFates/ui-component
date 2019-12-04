@@ -55,6 +55,16 @@
 				>Tab Scroller</a
 			>
 			<div class="nav-divider"></div>
+			<label class="nav-header">Grid Components</label>
+
+			<a
+				clrVerticalNavLink
+				*ngIf="this.routeData.url[1]"
+				routerLink="component/grid-header/overview"
+				[ngClass]="{ active: this.routeData.url[1]['path'] === 'grid-header' }"
+				>Grid Header</a
+			>
+			<div class="nav-divider"></div>
 			<label class="nav-header">Other Components</label>
 			<a
 				clrVerticalNavLink

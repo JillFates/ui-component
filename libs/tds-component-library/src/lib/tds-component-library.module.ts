@@ -12,6 +12,7 @@ import { TabScrollerModule } from './tab-scroller/tab-scroller.module';
 import { DiagramLayoutComponent } from './diagram-layout/diagram-layout.component';
 import { TdsFontawesomeModule } from './tds-fontawesome.module';
 import { TdsContextMenuComponent } from './context-menu/tds-context-menu.component';
+import { GridHeaderActionButtonsComponent } from './grid-header-action-buttons/grid-header-action-buttons.component';
 
 @NgModule({
 	imports: [CommonModule, FormsModule, RouterModule, ButtonsModule, ClarityModule, TdsFontawesomeModule],
@@ -22,6 +23,7 @@ import { TdsContextMenuComponent } from './context-menu/tds-context-menu.compone
 		GridPagerComponent,
 		DiagramLayoutComponent,
 		TdsContextMenuComponent,
+		GridHeaderActionButtonsComponent,
 	],
 	exports: [
 		CardComponent,
@@ -31,6 +33,7 @@ import { TdsContextMenuComponent } from './context-menu/tds-context-menu.compone
 		TabScrollerModule,
 		DiagramLayoutComponent,
 		TdsContextMenuComponent,
+		GridHeaderActionButtonsComponent,
 	],
 })
 export class TdsComponentLibraryModule {}

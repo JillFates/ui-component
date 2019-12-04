@@ -1,0 +1,63 @@
+<h2>Grid Header Component Overview</h2>
+<p>
+	All of the grid header sub components can be seen below. In general, these components wrap other component and take
+	an interface as an input. By doing this, we will be able to create grids using a component factory, thus cutting
+	down on the amount of code we need to manage.
+</p>
+
+<h3>Grid Header Action Buttons</h3>
+<p>
+	The grid header action buttons are meant to be used at the top right of a grid. The component takes an array of
+	HeaderActionButtonData and generates the buttons.
+</p>
+
+<div class="clr-row">
+	<div class="clr-col-12">
+		<h4>Usage Examples</h4>
+	</div>
+
+	<div class="clr-col-12">
+		<tds-card
+			title="Grid Header Action Buttons Example"
+			description="Simple example of the Grid Header Action Buttons component. 
+                Note that the info button is tied to an async function to show that 
+                an async function will execute asynchronously. Note also that the 
+                passed functions must not contain arguments."
+			code='
+//component.html
+<tds-grid-header-action-buttons [actionButtons]="actionButtons"></tds-grid-header-action-buttons>
+
+//component.ts
+export class GridHeaderOverviewComponent {
+	protected actionButtons: HeaderActionButtonData[] = [
+		{ icon: "plus", title: "create", disabled: false, show: true, onClick: this.createAlert },
+		{ icon: "info-circle", title: "info", disabled: false, show: true, onClick: this.infoAlertAsync },
+        { icon: "pencil", title: "edit", disabled: false, show: true, onClick: this.editAlert },
+        { icon: "times", title: "close", disabled: false, show: false, onClick: this.editAlert },
+	];
+
+	constructor() {
+		//
+	}
+
+	private createAlert(event: Event) {
+        console.log(event);
+		event.stopPropagation();
+		alert("Create clicked. See the console for the logged event.");
+	}
+
+	private editAlert() {
+		alert("Edit clicked.");
+	}
+
+	private async infoAlertAsync() {
+		await new Promise(res => setTimeout(res, 2000));
+		alert("Info clicked. This was an async function and resolved after two seconds.");
+	}
+}
+'
+		>
+			<tds-grid-header-action-buttons [actionButtons]="actionButtons"></tds-grid-header-action-buttons>
+		</tds-card>
+	</div>
+</div>
