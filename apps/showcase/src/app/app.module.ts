@@ -14,6 +14,7 @@ import { TabsModule } from './modules/tabs/tabs.module';
 import { TabScrollerModule } from './modules/tabs-scroller/tab-scroller.module';
 import { ComboboxModule } from './modules/combobox/combobox.module';
 import { MultiselectModule } from './modules/multiselect/multiselect.module';
+import { GridHeaderModule } from './modules/grid-header/grid-header.module';
 
 // Component
 import { AppComponent } from './app.component';
@@ -36,13 +37,14 @@ import { DiagramLayoutModule } from './modules/diagram-layout/diagram-layout.mod
 		TabsModule,
 		TabScrollerModule,
 		DiagramLayoutModule,
+		GridHeaderModule,
 		RouterModule.forRoot(
 			[
 				{
 					path: '',
 					redirectTo: '/component/dropdown/overview',
-					pathMatch: 'full'
-				}
+					pathMatch: 'full',
+				},
 			],
 			{ initialNavigation: 'enabled' }
 		),

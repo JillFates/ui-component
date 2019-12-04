@@ -14,7 +14,7 @@ import {SECTIONS} from './model/tab-section.model';
 })
 export class AppComponent implements OnInit {
 
-	private routeData: RouteDataModel = {
+	protected routeData: RouteDataModel = {
 		title: '',
 		url: []
 	};
