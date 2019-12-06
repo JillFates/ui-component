@@ -29,7 +29,7 @@ export interface GridModel {
 	 * This function should return the data that will be used in
 	 * the grid, and be parameterless.
 	 */
-	loadData: Function;
+	loadData(): any | Promise<any>;
 }
 
 export interface GridSettings {

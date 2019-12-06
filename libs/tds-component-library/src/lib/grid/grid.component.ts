@@ -9,22 +9,29 @@ import { CellClickEvent } from '@progress/kendo-angular-grid';
 	styleUrls: ['./grid.component.scss'],
 })
 export class GridComponent implements OnInit {
+	
+	constructor() {
+		//
+	}
 	public gridHelper: DataGridHelper;
 
 	/**
 	 * Grid model to be used in displaying the grid.
 	 */
 	@Input() gridModel: GridModel;
+
 	/**
 	 * Emits cell click events.
 	 */
 	@Output() cellClick = new EventEmitter<CellClickEvent>();
+
 	public filterType = FilterType;
 	public showFilters = false;
-
 	public value: Date = new Date(2000, 2, 10);
-	constructor() {
-		//
+
+	public reloadData = async (): Promise<void> => {
+		const gridData: any = await this.gridModel.loadData();
+		this.gridHelper.reloadData(gridData);
 	}
 
 	/**
@@ -44,7 +51,7 @@ export class GridComponent implements OnInit {
 				title: 'Reload',
 				disabled: false,
 				show: true,
-				onClick: this.gridModel.loadData,
+				onClick: this.reloadData,
 			});
 		}
 	}

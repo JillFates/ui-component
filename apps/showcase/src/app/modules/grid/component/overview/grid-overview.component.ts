@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import {
 	GridRowAction,
 	HeaderActionButtonData,
@@ -14,16 +14,10 @@ import { CellClickEvent } from '@progress/kendo-angular-grid';
 	templateUrl: './grid-overview.component.html',
 	styleUrls: ['./grid-overview.component.scss'],
 })
-export class GridOverviewComponent {
-	private gridRowActions: GridRowAction[] = [
-		{ name: 'View', show: true, disabled: false, onClick: this.viewAlert },
-		{ name: 'Edit', show: true, disabled: false, onClick: this.editAlert },
-		{ name: 'Delete', show: true, disabled: false, onClick: this.deleteAlertAsync },
-	];
+export class GridOverviewComponent implements OnInit {
+	private gridRowActions: GridRowAction[];
 
-	private headerActions: HeaderActionButtonData[] = [
-		{ icon: 'plus', title: 'create', disabled: false, show: true, onClick: this.createAlert },
-	];
+	private headerActions: HeaderActionButtonData[];
 
 	private columnModel: ColumnHeaderData[] = exampleColumnModel;
 
@@ -40,23 +34,44 @@ export class GridOverviewComponent {
 		resizable: true,
 	};
 
-	protected gridModel: GridModel = {
-		columnModel: this.columnModel,
-		gridRowActions: this.gridRowActions,
-		gridSettings: this.gridSettings,
-		headerActionButtons: this.headerActions,
-		showDataReloadButton: true,
-		loadData: this.loadData,
-	};
-
+	protected gridModel: GridModel;
 	constructor() {
 		//
 	}
+	ngOnInit(): void {
+		this.gridRowActions = [
+			{ name: 'View', show: true, disabled: false, onClick: this.viewAlert },
+			{ name: 'Edit', show: true, disabled: false, onClick: this.editAlert },
+			{ name: 'Delete', show: true, disabled: false, onClick: this.deleteAlertAsync },
+		];
 
-	/**
-	 * This function loads the data for the grid. Passed in the gridModel.
-	 */
-	private loadData(event?: Event): any {
+		this.headerActions = [
+			{ icon: 'plus', title: 'create', disabled: false, show: true, onClick: this.createAlert },
+		];
+
+		this.gridModel = {
+			columnModel: this.columnModel,
+			gridRowActions: this.gridRowActions,
+			gridSettings: this.gridSettings,
+			headerActionButtons: this.headerActions,
+			showDataReloadButton: true,
+			loadData: this.loadData,
+		};
+	}
+
+	public viewAlert = (dataItem: any): void => {
+		alert(`View clicked. The dataItem is: ${JSON.stringify(dataItem)}`);
+	}
+
+	public createAlert = (): void => {
+		alert(`Create clicked.`);
+	}
+
+	public editAlert = (dataItem: any): void => {
+		alert(`Edit clicked. The dataItem is: ${JSON.stringify(dataItem)}`);
+	}
+
+	public loadData = (): any => {
 		let data = exampleGridData;
 		for (let index = 0; index < 4; index++) {
 			data = data.concat(exampleGridData);
@@ -64,50 +79,21 @@ export class GridOverviewComponent {
 		return data;
 	}
 
-	/**
-	 * Function executes on cell click.
-	 * @param cellData
-	 */
-	protected onCellClick(event: CellClickEvent): void {
-		console.log(event);
-	}
-
-	/**
-	 * Creates an alert when clicked
-	 * @param event - on click event
-	 */
-	private viewAlert(event: Event, dataItem: CellClickEvent): void {
-		console.log(event);
-		event.stopPropagation();
-		alert(`View clicked. See the console for the logged event. The CellClickEvent is: ${JSON.stringify(dataItem)}`);
-	}
-
-	/**
-	 * Creates an alert when clicked
-	 * @param event - on click event
-	 */
-	private createAlert(event: Event): void {
-		console.log(event);
-		event.stopPropagation();
-		alert('Create clicked. See the console for the logged event.');
-	}
-
-	/**
-	 * Creates an alert when clicked
-	 */
-	private editAlert(event: Event, dataItem: CellClickEvent): void {
-		alert(`Edit clicked. The CellClickEvent is: ${JSON.stringify(dataItem)}`);
-	}
-
-	/**
-	 * Creates an alert when clicked
-	 */
-	private async deleteAlertAsync(event: Event, dataItem: CellClickEvent): Promise<void> {
+	public deleteAlertAsync = async (dataItem: any): Promise<void> => {
 		await new Promise(res => setTimeout(res, 2000));
 		alert(
-			`Delete clicked. This was an async function and resolved after two seconds. The CellClickEvent is: ${JSON.stringify(
+			`Delete clicked. This was an async function and resolved after two seconds. The dataItem is: ${JSON.stringify(
 				dataItem
 			)}`
 		);
+	}
+
+	/**
+	 * Cell click handler
+	 * @param event The cell click event
+	 */
+	public onCellClick(event: CellClickEvent): void {
+		alert('See the console for the event.');
+		console.log(event);
 	}
 }

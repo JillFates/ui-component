@@ -21,13 +21,41 @@
 //component.ts
 export class GridOverviewComponent {
 	
-	// This defines the actions for each row in the grid.
+	public viewAlert = (dataItem: any): void => {
+		alert(`View clicked. The dataItem is: ${JSON.stringify(dataItem)}`);
+	};
+
+	public createAlert = (): void => {
+		alert(`Create clicked.`);
+	};
+
+	public editAlert = (dataItem: any): void => {
+		alert(`Edit clicked. The dataItem is: ${JSON.stringify(dataItem)}`);
+	};
+
+	private loadData = (): any => {
+		let data = exampleGridData;
+		for (let index = 0; index < 4; index++) {
+			data = data.concat(exampleGridData);
+		}
+		return data;
+	};
+
+	public deleteAlertAsync = async (dataItem: any): Promise<void> => {
+		await new Promise(res => setTimeout(res, 2000));
+		alert(
+			`Delete clicked. This was an async function and resolved after two seconds. The dataItem is: ${JSON.stringify(
+				dataItem
+			)}`
+		);
+	};
+
 	private gridRowActions: GridRowAction[] = [
 		{ name: 'View', show: true, disabled: false, onClick: this.viewAlert },
 		{ name: 'Edit', show: true, disabled: false, onClick: this.editAlert },
 		{ name: 'Delete', show: true, disabled: false, onClick: this.deleteAlertAsync },
 	];
-
+	
 	// This defines the actions for the grid header
 	private headerActions: HeaderActionButtonData[] = [
 		{ icon: 'plus', title: 'create', disabled: false, show: true, onClick: this.createAlert },
@@ -64,45 +92,8 @@ export class GridOverviewComponent {
 		//
 	}
 
-	/**
-	 * This function loads the data for the grid. Passed in the gridModel. 
-	 * Returns a type of any, but in general should be strongly typed.
-	 */
-	private loadData(event?: Event): any {
-		let data = exampleGridData;
-		for (let index = 0; index < 4; index++) {
-			data = data.concat(exampleGridData);
-		}
-		return data;
-	}
-
 	protected onCellClick(event: CellClickEvent): void {
 		console.log(event);
-	}
-
-	private viewAlert(event: Event, dataItem: CellClickEvent): void {
-		console.log(event);
-		event.stopPropagation();
-		alert(`View clicked. See the console for the logged event. The CellClickEvent is: ${JSON.stringify(dataItem)}`);
-	}
-
-	private createAlert(event: Event): void {
-		console.log(event);
-		event.stopPropagation();
-		alert('Create clicked. See the console for the logged event.');
-	}
-
-	private editAlert(event: Event, dataItem: CellClickEvent): void {
-		alert(`Edit clicked. The CellClickEvent is: ${JSON.stringify(dataItem)}`);
-	}
-
-	private async deleteAlertAsync(event: Event, dataItem: CellClickEvent): Promise<void> {
-		await new Promise(res => setTimeout(res, 2000));
-		alert(
-			`Delete clicked. This was an async function and resolved after two seconds. The CellClickEvent is: ${JSON.stringify(
-				dataItem
-			)}`
-		);
 	}
 }
 
@@ -113,7 +104,7 @@ export class GridOverviewComponent {
 	</div>
 	<div class="clr-col-12">
 		<tds-card
-			title="Grid Row Dropdown Example"
+			title="Grid Data"
 			description="Data for the grid in the previous example."
 			code="
 import { ColumnHeaderData, FilterType } from 'libs/tds-component-library/src';
