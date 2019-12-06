@@ -9,7 +9,7 @@ import { CellClickEvent } from '@progress/kendo-angular-grid';
 	styleUrls: ['./grid.component.scss'],
 })
 export class GridComponent implements OnInit {
-	protected gridHelper: DataGridHelper;
+	public gridHelper: DataGridHelper;
 
 	/**
 	 * Grid model to be used in displaying the grid.
@@ -19,8 +19,8 @@ export class GridComponent implements OnInit {
 	 * Emits cell click events.
 	 */
 	@Output() cellClick = new EventEmitter<CellClickEvent>();
-	protected filterType = FilterType;
-	protected showFilters = false;
+	public filterType = FilterType;
+	public showFilters = false;
 
 	public value: Date = new Date(2000, 2, 10);
 	constructor() {
@@ -52,21 +52,21 @@ export class GridComponent implements OnInit {
 	/**
 	 * Gets the number of active row actions.
 	 */
-	protected numberRowActions(): number {
+	public numberRowActions(): number {
 		return this.gridModel.gridRowActions.filter(x => x.show).length;
 	}
 
 	/**
 	 * Toggles the grid filter
 	 */
-	protected toggleFilter(): void {
+	public toggleFilter(): void {
 		this.showFilters = !this.showFilters;
 	}
 
 	/**
 	 * Gets the number of grid filters
 	 */
-	protected filterCount(): number {
+	public filterCount(): number {
 		return this.gridModel.columnModel.filter(x => {
 			let isFiltering = false;
 			if (x.filterType === this.filterType.boolean) {
@@ -81,7 +81,7 @@ export class GridComponent implements OnInit {
 	/**
 	 * Checks if filters are applied.
 	 */
-	protected hasFilterApplied(): boolean {
+	public hasFilterApplied(): boolean {
 		return this.filterCount() > 0;
 	}
 
@@ -89,7 +89,7 @@ export class GridComponent implements OnInit {
 	 * Emits a cell click event
 	 * @param cellClickEvent
 	 */
-	protected onCellClick(cellClickEvent: CellClickEvent): void {
+	public onCellClick(cellClickEvent: CellClickEvent): void {
 		// Want to surpress action column clicks.
 		if (this.gridModel.gridRowActions && cellClickEvent.columnIndex === 0) {
 			return;
@@ -101,7 +101,7 @@ export class GridComponent implements OnInit {
 	 * Make the entire header clickable on Grid.
 	 * @param event
 	 */
-	protected onHeaderClick(event: any): void {
+	public onHeaderClick(event: any): void {
 		if (event.target && event.target.parentNode) {
 			event.target.parentNode.click();
 		}
