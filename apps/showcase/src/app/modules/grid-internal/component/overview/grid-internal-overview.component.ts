@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { GridRowAction } from 'libs/tds-component-library/src';
 
 @Component({
@@ -6,28 +6,32 @@ import { GridRowAction } from 'libs/tds-component-library/src';
 	templateUrl: './grid-internal-overview.component.html',
 	styleUrls: ['./grid-internal-overview.component.scss'],
 })
-export class GridInternalOverviewComponent {
+export class GridInternalOverviewComponent implements OnInit {
+	protected gridRowActions: GridRowAction[];
 
 	constructor() {
 		//
 	}
-	protected gridRowActions: GridRowAction[] = [
-		{ name: 'View', show: true, disabled: false, onClick: this.viewAlert },
-		{ name: 'Edit', show: true, disabled: false, onClick: this.editAlert },
-		{ name: 'Info', show: true, disabled: false, onClick: this.infoAlertAsync },
-		{
-			name: 'Disabled',
-			show: true,
-			disabled: true,
-			onClick: this.infoAlertAsync,
-		},
-		{
-			name: 'Not Shown',
-			show: false,
-			disabled: false,
-			onClick: this.infoAlertAsync,
-		},
-	];
+
+	ngOnInit(): void {
+		this.gridRowActions = [
+			{ name: 'View', show: true, disabled: false, onClick: this.viewAlert },
+			{ name: 'Edit', show: true, disabled: false, onClick: this.editAlert },
+			{ name: 'Info', show: true, disabled: false, onClick: this.infoAlertAsync },
+			{
+				name: 'Disabled',
+				show: true,
+				disabled: true,
+				onClick: this.infoAlertAsync,
+			},
+			{
+				name: 'Not Shown',
+				show: false,
+				disabled: false,
+				onClick: this.infoAlertAsync,
+			},
+		];
+	}
 	public viewAlert = (dataItem: any): void => {
 		alert(`View clicked.`);
 	}
