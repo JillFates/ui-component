@@ -1,0 +1,149 @@
+<kendo-grid
+	*ngIf="gridHelper"
+	[data]="gridHelper.gridData"
+	[filter]="gridHelper.state.filter"
+	[filterable]="gridModel.gridSettings.filterable"
+	(filterChange)="gridHelper.filterChange($event)"
+	[sort]="gridHelper.state.sort"
+	[sortable]="gridModel.gridSettings.sortSettings !== undefined"
+	[pageable]="gridModel.gridSettings.pageable"
+	[pageSize]="gridModel.gridSettings.pageSize || 25"
+	[skip]="gridHelper.state.skip"
+	[resizable]="gridModel.gridSettings.resizable"
+	(sortChange)="gridHelper.sortChange($event)"
+	(cellClick)="onCellClick($event)"
+	[selectable]="gridModel.gridSettings.selectableSettings"
+	[ngClass]="{ 'hide-filter': !showFilters }"
+	class="page-height row-actions-{{ numberRowActions() }}-children"
+>
+	<ng-template kendoGridToolbarTemplate [position]="'top'">
+		<div class="clr-row">
+			<div class="clr-col-12">
+				<tds-grid-header-action-buttons
+					[actionButtons]="gridModel.headerActionButtons"
+				></tds-grid-header-action-buttons>
+			</div>
+		</div>
+	</ng-template>
+
+	<!-- Show Filters / Actions column -->
+	<kendo-grid-column [width]="60" [class]="{ 'k-custom-command-column': true }" [minResizableWidth]="60">
+		<ng-template
+			*ngIf="gridModel.gridSettings.filterable"
+			kendoGridHeaderTemplate
+			let-column
+			let-columnIndex="columnIndex"
+		>
+			<tds-button [flat]="true" (click)="toggleFilter()">
+				<clr-icon shape="filter" class="grid-filter-button is-solid">
+					<span *ngIf="hasFilterApplied()" class="badge badge-warning">
+						{{ filterCount() }}
+					</span>
+				</clr-icon>
+			</tds-button>
+		</ng-template>
+		<ng-template *ngIf="gridModel.gridRowActions" kendoGridCellTemplate let-dataItem let-rowIndex="rowIndex">
+			<div class="action-button btn-group btn-link">
+				<tds-grid-row-dropdown
+					[gridRowActions]="gridModel.gridRowActions"
+					[dataItem]="dataItem"
+				></tds-grid-row-dropdown>
+			</div>
+		</ng-template>
+	</kendo-grid-column>
+
+	<kendo-grid-column
+		*ngFor="let column of gridModel.columnModel"
+		field="{{ column.property }}"
+		format="{{ column.format }}"
+		[locked]="column.locked"
+		[width]="
+			!column.width
+				? gridModel.gridSettings.columnMinWidth
+					? gridModel.gridSettings.columnMinWidth
+					: 200
+				: column.width
+		"
+	>
+		<ng-template kendoGridHeaderTemplate>
+			<div class="sortable-column" (click)="onHeaderClick($event)">
+				<label> {{ column.label }}</label>
+			</div>
+		</ng-template>
+		<ng-template kendoGridFilterCellTemplate let-filter>
+			<div class="filter-input">
+				<!-- Number and text filtering -->
+				<input
+					*ngIf="column.filterType === filterType.text || column.filterType === filterType.number"
+					clrInput
+					type="text"
+					(keyup)="gridHelper.onFilter(column)"
+					name="{{ column.property }}"
+					[(ngModel)]="column.filter"
+					placeholder="Filter {{ column.label }}"
+					value=""
+				/>
+
+				<!-- Date filtering -->
+				<kendo-datepicker
+					*ngIf="column.filterType === filterType.date"
+					[format]="column.format"
+					[(ngModel)]="column.filter"
+					(valueChange)="gridHelper.onFilter(column)"
+				></kendo-datepicker>
+
+				<!-- Dropdown/Boolean filtering -->
+				<kendo-dropdownlist
+					*ngIf="column.filterType === filterType.dropdown || column.filterType === filterType.boolean"
+					[data]="column.filterInputData.data"
+					[textField]="'text'"
+					[valueField]="'value'"
+					[valuePrimitive]="true"
+					[(ngModel)]="column.filter"
+					[defaultItem]="column.filterInputData.defaultItem"
+					(valueChange)="gridHelper.onFilter(column)"
+					[popupSettings]="{ popupClass: 'hide-option-label' }"
+				>
+				</kendo-dropdownlist>
+
+				<!-- Tag filtering -->
+				<!-- TODO: Move the asset tag selector component to the library. -->
+				<!-- <tds-asset-tag-selector
+                        #tagSelector
+                        [popupClass]="'assets-view-grid'"
+                        [tagList]="metadata.tagList"
+                        placeholder="{{ 'GLOBAL.FILTER' | translate }}"
+                        [viewFilterModel]="column.filter"
+                        (valueChange)="onTagFilterChange(column, $event)"
+                    >
+                    </tds-asset-tag-selector> -->
+
+				<!-- Clear button -->
+				<tds-button
+					*ngIf="gridHelper.columnHasFilter(column)"
+					(click)="gridHelper.clearFilter(column)"
+					[title]="'Clear Filter'"
+					icon="times-circle"
+					[small]="true"
+					[flat]="true"
+				>
+				</tds-button>
+			</div>
+		</ng-template>
+	</kendo-grid-column>
+
+	<!-- PAGER COMPONENT -->
+	<ng-template kendoPagerTemplate let-total="total" let-totalPages="totalPages" let-currentPage="currentPage">
+		<div class="clr-col-12">
+			<tds-grid-pager
+				[total]="total"
+				[totalPages]="totalPages"
+				[currentPage]="currentPage"
+				[pageSize]="gridHelper.state.take"
+				[pageSizes]="gridHelper.defaultPageOptions"
+				(pageChange)="gridHelper.pageChange($event)"
+			>
+			</tds-grid-pager>
+		</div>
+	</ng-template>
+</kendo-grid>

@@ -1,0 +1,84 @@
+<h2>Internal Grid Component Overview</h2>
+<p>
+	All of the internal grid sub-components can be seen below. In general, these components wrap other component and take
+	an interface as an input. By doing this, we will be able to create grids using a component factory, thus cutting
+	down on the amount of code we need to manage.
+</p>
+
+<h3>Grid Row Dropdown</h3>
+<p>
+	The grid row dropdown component is meant to contain the actions associated with the grid row. The component takes an
+	array of GridRowAction and generates the drop down for that row. Each action can be shown conditionally and/or
+	disabled conditionally. The actions are able to handle asynchonous functions.
+</p>
+
+<p>
+	Note: This component could be used outside of a kendo-grid, but is meant to be used in a kendo-grid.
+</p>
+
+<div class="clr-row">
+	<div class="clr-col-12">
+		<h4>Usage Example</h4>
+	</div>
+
+	<div class="clr-col-12">
+		<tds-card
+			title="Grid Row Dropdown Example"
+			description="Simple example of the Grid Row Dropdown"
+			code='
+//component.html
+<tds-grid-row-dropdown [gridRowActions]="gridRowActions"></tds-grid-row-dropdown>
+
+//component.ts
+export class GridInternalOverviewComponent {
+	private dataItem: DataItem = { id: 1, name: "Gary" };
+	protected gridRowActions: GridRowAction[] = [
+		{ name: "View", show: true, disabled: false, onClick: this.viewAlert, dataItem: this.dataItem },
+		{ name: "Edit", show: true, disabled: false, onClick: this.editAlert, dataItem: this.dataItem },
+		{ name: "Info", show: true, disabled: false, onClick: this.infoAlertAsync, dataItem: this.dataItem },
+		{
+			name: "Disabled",
+			show: true,
+			disabled: true,
+			onClick: this.infoAlertAsync,
+			dataItem: this.dataItem,
+		},
+		{
+			name: "Not Shown",
+			show: false,
+			disabled: false,
+			onClick: this.infoAlertAsync,
+			dataItem: this.dataItem,
+		},
+	];
+
+	constructor() {
+		//
+	}
+
+	private viewAlert(event: Event, dataItem: DataItem): void {
+		console.log(event);
+		event.stopPropagation();
+		alert(`View clicked. See the console for the logged event. The data item is: ${JSON.stringify(dataItem)}`);
+	}
+
+	private editAlert(event: Event, dataItem: DataItem): void {
+		alert(`Edit clicked. The data item is: ${JSON.stringify(dataItem)}`);
+	}
+
+	private async infoAlertAsync(event: Event, dataItem: DataItem): Promise<void> {
+		await new Promise(res => setTimeout(res, 2000));
+		alert(`Info clicked. This was an async function and resolved after two seconds. The data item is: ${JSON.stringify(dataItem)}`);
+	}
+}
+
+interface DataItem {
+	id: number;
+	name: string;
+}
+'
+		>
+			<tds-grid-row-dropdown [gridRowActions]="gridRowActions"></tds-grid-row-dropdown>
+		</tds-card>
+	</div>
+</div>

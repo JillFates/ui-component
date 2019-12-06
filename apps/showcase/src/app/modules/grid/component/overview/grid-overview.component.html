@@ -1,0 +1,249 @@
+<h2>TDS Grid Component Overview</h2>
+<p>
+	This is a wrapper for the kendo grid used in many TDS app pages. It takes in an interface and an event (Reference
+	the API). By doing this, we will be able to create grids using a component factory, thus cutting down on the amount
+	of code we need to manage.
+</p>
+
+<div class="clr-row">
+	<div class="clr-col-12">
+		<h4>Usage Example</h4>
+	</div>
+
+	<div class="clr-col-12">
+		<tds-card
+			title="TDS Grid Example"
+			description="Simple example of the Grid Row Dropdown. See the next code block for data used in the grid. Specifically, take note of the loadData function passed to the grid."
+			code="
+//component.html
+<tds-grid [gridModel]='gridModel' (cellClick)='onCellClick($event)'></tds-grid>
+
+//component.ts
+export class GridOverviewComponent {
+	
+	// This defines the actions for each row in the grid.
+	private gridRowActions: GridRowAction[] = [
+		{ name: 'View', show: true, disabled: false, onClick: this.viewAlert },
+		{ name: 'Edit', show: true, disabled: false, onClick: this.editAlert },
+		{ name: 'Delete', show: true, disabled: false, onClick: this.deleteAlertAsync },
+	];
+
+	// This defines the actions for the grid header
+	private headerActions: HeaderActionButtonData[] = [
+		{ icon: 'plus', title: 'create', disabled: false, show: true, onClick: this.createAlert },
+	];
+
+	// This defines the column model for the grid. See the next code block for the data.
+	private columnModel: ColumnHeaderData[] = exampleColumnModel;
+
+	// Settings for the grid.
+	private gridSettings: GridSettings = {
+		defaultSort: [
+			{
+				field: 'taskNumber',
+				dir: 'asc',
+			},
+		],
+		filterable: true,
+		pageable: true,
+		sortSettings: { mode: 'single' },
+		resizable: true,
+	};
+
+	// The model for the grid.
+	protected gridModel: GridModel = {
+		columnModel: this.columnModel,
+		gridRowActions: this.gridRowActions,
+		gridSettings: this.gridSettings,
+		headerActionButtons: this.headerActions,
+		showDataReloadButton: true,
+		loadData: this.loadData,
+	};
+
+	constructor() {
+		//
+	}
+
+	/**
+	 * This function loads the data for the grid. Passed in the gridModel. 
+	 * Returns a type of any, but in general should be strongly typed.
+	 */
+	private loadData(event?: Event): any {
+		let data = exampleGridData;
+		for (let index = 0; index < 4; index++) {
+			data = data.concat(exampleGridData);
+		}
+		return data;
+	}
+
+	protected onCellClick(event: CellClickEvent): void {
+		console.log(event);
+	}
+
+	private viewAlert(event: Event, dataItem: CellClickEvent): void {
+		console.log(event);
+		event.stopPropagation();
+		alert(`View clicked. See the console for the logged event. The CellClickEvent is: ${JSON.stringify(dataItem)}`);
+	}
+
+	private createAlert(event: Event): void {
+		console.log(event);
+		event.stopPropagation();
+		alert('Create clicked. See the console for the logged event.');
+	}
+
+	private editAlert(event: Event, dataItem: CellClickEvent): void {
+		alert(`Edit clicked. The CellClickEvent is: ${JSON.stringify(dataItem)}`);
+	}
+
+	private async deleteAlertAsync(event: Event, dataItem: CellClickEvent): Promise<void> {
+		await new Promise(res => setTimeout(res, 2000));
+		alert(
+			`Delete clicked. This was an async function and resolved after two seconds. The CellClickEvent is: ${JSON.stringify(
+				dataItem
+			)}`
+		);
+	}
+}
+
+"
+		>
+			<tds-grid [gridModel]="gridModel" (cellClick)="onCellClick($event)"></tds-grid>
+		</tds-card>
+	</div>
+	<div class="clr-col-12">
+		<tds-card
+			title="Grid Row Dropdown Example"
+			description="Data for the grid in the previous example."
+			code="
+import { ColumnHeaderData, FilterType } from 'libs/tds-component-library/src';
+
+export const exampleColumnModel: ColumnHeaderData[] = [
+	{
+		label: 'Task Number',
+		property: 'taskNumber',
+		filterType: FilterType.text,
+		width: 150,
+	},
+	{
+		label: 'Boolean Example',
+		property: 'someBooleanValue',
+		filterType: FilterType.boolean,
+		filterInputData: {
+			data: [
+				{
+					text: 'Yes',
+					value: true,
+				},
+				{
+					text: 'No',
+					value: false,
+				},
+			],
+			defaultItem: { text: 'Please Select', value: null },
+		},
+		width: 150,
+	},
+	{
+		label: 'Description',
+		property: 'comment',
+		filterType: FilterType.text,
+		width: 150,
+	},
+	{
+		label: 'Asset Type',
+		property: 'assetEntityAssetType',
+		filterType: FilterType.text,
+		width: 150,
+	},
+	{
+		label: 'Asset Class',
+		property: 'assetEntityAssetClass',
+		filterType: FilterType.dropdown,
+		filterInputData: {
+			data: [
+				{
+					text: 'application',
+					value: 'APPLICATION',
+				},
+				{
+					text: 'device',
+					value: 'DEVICE',
+				},
+				{
+					text: 'storage',
+					value: 'STORAGE',
+				},
+			],
+			defaultItem: { text: 'Please Select', value: null },
+		},
+		width: 150,
+	},
+	{
+		label: 'Date',
+		property: 'userSelectedCol2',
+		filterType: FilterType.date,
+		width: 150,
+		format: 'dd-MMM-yyyy',
+	},
+];
+
+export const exampleGridData = [
+	{
+		id: 236955,
+		taskNumber: 18266,
+		comment: 'Task - by CN',
+		userSelectedCol0: 'general',
+		userSelectedCol1: '30/09/2019 04:31 PM',
+		updatedTime: '19h 29m',
+		dueDate: '',
+		status: 'Ready',
+		userSelectedCol2: '12/09/2028 09:00 PM',
+		userSelectedCol3: 'SYS_ADMIN',
+		userSelectedCol4: '24/09/2019 03:57 PM',
+		score: 614,
+		taskStatus: 'task_ready',
+		dueClass: '',
+		assetEntityId: 147814,
+		assetEntityAssetType: 'Appliance',
+		assetEntityAssetClass: 'DEVICE',
+		instructionsLinkURL: null,
+		estStartClass: null,
+		estFinishClass: null,
+		isPublished: true,
+		updatedClass: '',
+		someBooleanValue: true,
+	},
+	{
+		id: 236975,
+		taskNumber: 18286,
+		comment: '4 am',
+		userSelectedCol0: 'general',
+		userSelectedCol1: '30/09/2019 04:29 PM',
+		updatedTime: '19h 31m',
+		dueDate: '',
+		status: 'Started',
+		userSelectedCol2: '13/09/2028 09:45 PM',
+		userSelectedCol3: '',
+		userSelectedCol4: '30/09/2019 04:07 PM',
+		nGraphUrl: 0,
+		score: 714,
+		taskStatus: 'task_started',
+		dueClass: '',
+		assetEntityId: null,
+		assetEntityAssetType: null,
+		assetEntityAssetClass: 'APPLICATION',
+		instructionsLinkURL: null,
+		estStartClass: null,
+		estFinishClass: null,
+		isPublished: true,
+		updatedClass: 'task_late',
+		someBooleanValue: true,
+	},
+	...
+]
+	"
+		>
+		</tds-card>
+	</div>
+</div>

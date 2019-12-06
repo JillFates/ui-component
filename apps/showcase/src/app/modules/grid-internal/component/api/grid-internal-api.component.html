@@ -1,0 +1,42 @@
+<div>
+	<h4 class="stack-header">
+		<span class="stack-title">Grid Row Dropdown Component Attributes</span>
+	</h4>
+	<dl class="stack-view">
+		<div class="stack-block">
+			<dt class="stack-block-label">gridRowActions <small class="typedef">GridRowAction[]</small></dt>
+			<dd class="stack-block-content">
+				Array of GridRowAction
+			</dd>
+		</div>
+	</dl>
+
+	<h4 class="stack-header">
+		<span class="stack-title">GridRowAction Interface</span>
+	</h4>
+	<dl class="stack-view">
+		<div class="stack-block">
+			<dt class="stack-block-label">name <small class="typedef">string</small></dt>
+			<dd class="stack-block-content">
+				Name of the action. This is the name that will be will be shown in the dropdown list.
+			</dd>
+			<dt class="stack-block-label">disabled <small class="typedef">boolean</small></dt>
+			<dd class="stack-block-content">
+				True if the action should be disabled.
+			</dd>
+			<dt class="stack-block-label">show <small class="typedef">boolean</small></dt>
+			<dd class="stack-block-content">
+				False if the action should not be shown.
+			</dd>
+			<dt class="stack-block-label">onClick <small class="typedef">Function</small></dt>
+			<dd class="stack-block-content">
+				The function that will be executed when the action is clicked. The function must take an event as it's
+				first parameter and an object as it's second parameter. The "dataItem" object is returned when the
+				action is clicked. This object is the data item associated with the cell's row.The event is passed so
+				that propagation can be stopped if needed. The function may be asynchronous. An example function would
+				be: <br />
+				async exFuncAsync(event: Event, dataItem: any): Promise&lt;void&gt; &#123; ... &#125;
+			</dd>
+		</div>
+	</dl>
+</div>

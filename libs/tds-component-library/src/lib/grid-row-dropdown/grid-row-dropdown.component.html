@@ -1,0 +1,20 @@
+<!-- NOTE: Angular Language Service has a bug and will issue and error: "Member 'onClick' is not callable ng(0)". 
+        Ignore this bug. -->
+
+<div class="action-button btn-group btn-link">
+	<clr-dropdown>
+		<tds-button icon="ellipsis-vertical" clrDropdownTrigger></tds-button>
+		<clr-dropdown-menu *clrIfOpen clrPosition="bottom-left">
+			<ng-container *ngFor="let action of gridRowActions">
+				<a
+					clrDropdownItem
+					*ngIf="action.show"
+					[disabled]="action.disabled"
+					(click)="action.disabled || action.onClick($event, dataItem)"
+				>
+					{{ action.name }}
+				</a>
+			</ng-container>
+		</clr-dropdown-menu>
+	</clr-dropdown>
+</div>

@@ -1,6 +1,23 @@
 kendo-grid {
 	&.k-grid {
 		background-color: transparent;
+
+		// Adding the appropriate class to the grid will fix the issue with the clarity dropdown list action within the kendo-grid
+		// Example if you have a action dropdown in a row with 3 actions, add the class "row-actions-3-children"
+		@for $i from 1 through 10 {
+			&.row-actions-#{$i}-children {
+				tr:nth-last-of-type(-n + #{$i}) {
+					.action-button {
+						clr-dropdown-menu {
+							top: auto !important;
+							bottom: 0px !important;
+							transform: translateY(-25px) !important;
+						}
+					}
+				}
+			}
+		}
+
 		th,
 		td {
 			border: 0;
@@ -29,8 +46,14 @@ kendo-grid {
 		}
 	}
 
+	kendo-grid-toolbar {
+		tds-grid-header-action-buttons {
+			float: right;
+		}
+	}
+
 	.grid-actions {
-		> .clr-checkbox-wrapper{
+		> .clr-checkbox-wrapper {
 			display: inline-block;
 			padding: 8px;
 		}
@@ -55,8 +78,13 @@ kendo-grid {
 	}
 
 	.k-grid-header {
+		background: #d9e4ea;
 		.k-header {
 			background: transparent;
+
+			.sortable-column {
+				display: inline-block;
+			}
 			.btn {
 				line-height: 18px;
 				height: unset;
@@ -72,6 +100,14 @@ kendo-grid {
 				width: 1px;
 			}
 		}
+		.k-icon {
+			color: #5f9fcf;
+			font-size: 20px;
+			&.k-i-sort-asc-sm,
+			&.k-i-sort-desc-sm {
+				float: right;
+			}
+		}
 	}
 
 	.clr-form-control {
@@ -84,12 +120,39 @@ kendo-grid {
 		}
 	}
 
+	kendo-dropdownlist.k-dropdown,
+	kendo-combobox.k-combobox {
+		.k-dropdown-wrap {
+			border-bottom: 0;
+			&:hover {
+				border-bottom: 0;
+			}
+		}
+	}
+	.k-combobox {
+		.k-dropdown-wrap {
+			border: unset;
+			color: black;
+			&.k-state-focused {
+				-webkit-box-shadow: unset;
+				box-shadow: unset;
+				border: unset;
+				border-bottom: 1px solid #0092d1;
+			}
+		}
+		.k-select {
+			background: transparent;
+		}
+	}
+
 	.k-filter-row {
 		.filter-input {
 			position: relative;
+
 			.clr-control-container {
 				width: 100%;
 			}
+
 			.clr-input {
 				background: #ffffff;
 				border: 1px solid $color-border;
@@ -100,6 +163,46 @@ kendo-grid {
 					border-color: $color-active;
 				}
 			}
+
+			kendo-numerictextbox,
+			kendo-datepicker,
+			kendo-dropdownlist {
+				&.k-numerictextbox,
+				&.k-datepicker,
+				&.k-dropdown {
+					width: calc(100% - 2em);
+
+					.k-numeric-wrap,
+					.k-dateinput-wrap,
+					.k-dropdown-wrap {
+						background: #ffffff !important;
+						border: 1px solid #ccc;
+						border-radius: 3px;
+						overflow: hidden;
+
+						&.k-state-focused {
+							border-color: $color-active;
+						}
+					}
+
+					.k-numeric-wrap {
+						height: 1rem;
+						max-height: 1rem;
+
+						.k-input {
+							height: unset;
+						}
+					}
+
+					&.k-datepicker {
+						.k-picker-wrap {
+							border-bottom: unset;
+							border-radius: 3px;
+						}
+					}
+				}
+			}
+
 			tds-button {
 				position: absolute;
 				top: 0;
@@ -143,11 +246,11 @@ kendo-grid {
 					background: $color-success;
 				}
 				&.status-Started {
-					background:transparent;
-					border:0;
-					clr-spinner{
-						width:16px;
-						height:16px;
+					background: transparent;
+					border: 0;
+					clr-spinner {
+						width: 16px;
+						height: 16px;
 					}
 				}
 				&.status-Hold {
