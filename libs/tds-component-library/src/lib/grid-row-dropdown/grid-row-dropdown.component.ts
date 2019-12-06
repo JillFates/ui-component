@@ -8,6 +8,7 @@ import { GridRowAction } from '../models/grid-row-action';
 })
 export class GridRowDropdownComponent {
 	@Input() gridRowActions: GridRowAction[];
+	@Input() dataItem: any;
 	constructor() {
 		//
 	}

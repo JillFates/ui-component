@@ -56,7 +56,13 @@
 			>
 			<div class="nav-divider"></div>
 			<label class="nav-header">Grid Components</label>
-
+			<a
+				clrVerticalNavLink
+				*ngIf="this.routeData.url[1]"
+				routerLink="component/tds-grid/overview"
+				[ngClass]="{ active: this.routeData.url[1]['path'] === 'tds-grid' }"
+				>TDS Grid Component</a
+			>
 			<a
 				clrVerticalNavLink
 				*ngIf="this.routeData.url[1]"

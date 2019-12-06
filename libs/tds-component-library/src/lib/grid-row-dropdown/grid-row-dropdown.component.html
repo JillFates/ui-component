@@ -10,7 +10,7 @@
 					clrDropdownItem
 					*ngIf="action.show"
 					[disabled]="action.disabled"
-					(click)="action.disabled || action.onClick($event, action.dataItem)"
+					(click)="action.disabled || action.onClick($event, dataItem)"
 				>
 					{{ action.name }}
 				</a>

@@ -12,11 +12,8 @@ export interface GridRowAction {
 	 */
 	show: boolean;
 	/**
-	 * The function to be executed when the action item is clicked.
+	 * The function to be executed when the action item is clicked. All click events
+	 * return the click event and the dataItem associated with the grid row.
 	 */
 	onClick: Function;
-	/**
-	 * The data item that will be returned on the click.
-	 */
-	dataItem: any;
 }

@@ -31,15 +31,11 @@
 			<dt class="stack-block-label">onClick <small class="typedef">Function</small></dt>
 			<dd class="stack-block-content">
 				The function that will be executed when the action is clicked. The function must take an event as it's
-				first parameter and an object as it's second parameter. The "dataItem" object is passed as an argument
-				when the action is clicked. The event is passed so that propagation can be stopped if needed. The
-				function may be asynchronous. An example function would be: <br />
-				async exFuncAsync(event: Event, dataItem: DataItem): Promise&lt;void&gt; &#123; ... &#125;
-			</dd>
-			<dt class="stack-block-label">dataItem <small class="typedef">any</small></dt>
-			<dd class="stack-block-content">
-				The data item that will be passed to the input function. Preferable, the developer would set this up as
-				an interface so that strong typing can be used.
+				first parameter and an object as it's second parameter. The "dataItem" object is returned when the
+				action is clicked. This object is the data item associated with the cell's row.The event is passed so
+				that propagation can be stopped if needed. The function may be asynchronous. An example function would
+				be: <br />
+				async exFuncAsync(event: Event, dataItem: any): Promise&lt;void&gt; &#123; ... &#125;
 			</dd>
 		</div>
 	</dl>

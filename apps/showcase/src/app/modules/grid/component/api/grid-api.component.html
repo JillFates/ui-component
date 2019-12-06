@@ -1,0 +1,234 @@
+<div>
+	<h4 class="stack-header">
+		<span class="stack-title">TDS Grid Component Attributes</span>
+	</h4>
+	<dl class="stack-view">
+		<div class="stack-block">
+			<dt class="stack-block-label">gridModel <small class="typedef">GridModel</small></dt>
+			<dd class="stack-block-content">
+				The model of the grid. See the GridModel interface below.
+			</dd>
+			<dt class="stack-block-label">cellClick <small class="typedef">CellClickEvent</small></dt>
+			<dd class="stack-block-content">
+				Event outputed when a cell is clicked. See
+				<a href="https://www.telerik.com/kendo-angular-ui/components/grid/api/CellClickEvent/" target="_blank"
+					>CellClickEvent
+				</a>
+				from Kendo.
+			</dd>
+		</div>
+	</dl>
+
+	<h4 class="stack-header">
+		<span class="stack-title">GridModel Interface</span>
+	</h4>
+	<dl class="stack-view">
+		<div class="stack-block">
+			<dt class="stack-block-label">columnModel <small class="typedef">ColumnHeaderData[]</small></dt>
+			<dd class="stack-block-content">Column model of the grid. See the ColumnHeaderData interface below.</dd>
+			<dt class="stack-block-label">gridRowActions? <small class="typedef">GridRowAction[]</small></dt>
+			<dd class="stack-block-content">
+				See GridRowAction Interface in
+				<a routerLink="/component/grid-internal/api" target="_blank">Grid Internal Components API</a>.
+			</dd>
+			<dt class="stack-block-label">gridSettings? <small class="typedef">GridSettings</small></dt>
+			<dd class="stack-block-content">The settings for the grid. See the GridSettings interface below.</dd>
+			<dt class="stack-block-label">
+				headerActionButtons? <small class="typedef">HeaderActionButtonData[]</small>
+			</dt>
+			<dd class="stack-block-content">
+				See HeaderActionButtonData Interface in
+				<a routerLink="/component/grid-header/api" target="_blank">Grid Header Components API</a>.
+			</dd>
+			<dt class="stack-block-label">showDataReloadButton? <small class="typedef">boolean</small></dt>
+			<dd class="stack-block-content">
+				If true, will render a refresh button at the top of the grid. Clicking this button will execute the
+				loadData function.
+			</dd>
+			<dt class="stack-block-label">loadData <small class="typedef">Function</small></dt>
+			<dd class="stack-block-content">
+				Function used to load the data to displayed in the grid. This function should return the data that will
+				be used in the grid, and be should be parameterless.
+			</dd>
+		</div>
+	</dl>
+
+	<h4 class="stack-header">
+		<span class="stack-title">ColumnHeaderData Interface</span>
+	</h4>
+	<dl class="stack-view">
+		<div class="stack-block">
+			<dt class="stack-block-label">label <small class="typedef">string</small></dt>
+			<dd class="stack-block-content">
+				Label that will be displayed at the top of the column.
+			</dd>
+			<dt class="stack-block-label">property <small class="typedef">string</small></dt>
+			<dd class="stack-block-content">
+				Property corresponding to the data returned by the loadData function in the GridModel.
+			</dd>
+			<dt class="stack-block-label">filterType <small class="typedef">FilterType</small></dt>
+			<dd class="stack-block-content">
+				Type of filter that will be used to filter the column's data. See the FilterType enum below.
+			</dd>
+			<dt class="stack-block-label">format? <small class="typedef">string</small></dt>
+			<dd class="stack-block-content">
+				Optional format to be applied to the columns data before rendering.
+			</dd>
+			<dt class="stack-block-label">filterInputData? <small class="typedef">DropdownFilterData</small></dt>
+			<dd class="stack-block-content">
+				Data that will be used/displayed as the filter. An example would be a dropdown list or boolean filter.
+			</dd>
+			<dt class="stack-block-label">filter? <small class="typedef">any</small></dt>
+			<dd class="stack-block-content">
+				Filter value applied to the column. Typically, this will not be set before passing this to the body. The
+				component takes care of setting this value.
+			</dd>
+			<dt class="stack-block-label">width? <small class="typedef">number | string</small></dt>
+			<dd class="stack-block-content">
+				Width of the column. Will default to a min width value passed to the grid in the GridSettings if not
+				defined. An acceptable string is 'auto'.
+			</dd>
+			<dt class="stack-block-label">locked? <small class="typedef">boolean</small></dt>
+			<dd class="stack-block-content">
+				Toggles the locked (frozen) state of the columns. Defaults to false.
+			</dd>
+		</div>
+	</dl>
+
+	<h4 class="stack-header">
+		<span class="stack-title">GridSettings Interface</span>
+	</h4>
+	<dl class="stack-view">
+		<div class="stack-block">
+			<dt class="stack-block-label">pageable? <small class="typedef">boolean</small></dt>
+			<dd class="stack-block-content">
+				Denotes whether the gridd is pageable. Defaults to false.
+			</dd>
+			<dt class="stack-block-label">pageSize? <small class="typedef">number</small></dt>
+			<dd class="stack-block-content">
+				The initial page size of the grid. Defaults to 25.
+			</dd>
+			<dt class="stack-block-label">defaultPageOptions? <small class="typedef">number[]</small></dt>
+			<dd class="stack-block-content">
+				Page sizes for the grid. Defaults to [25, 50, 100]
+			</dd>
+			<dt class="stack-block-label">defaultSort? <small class="typedef">SortDescriptor[]</small></dt>
+			<dd class="stack-block-content">
+				The sort descriptor for the grid. See
+				<a
+					href="https://www.telerik.com/kendo-angular-ui/components/dataquery/api/SortDescriptor/"
+					target="_blank"
+					>SortDescriptor
+				</a>
+				from Kendo.
+			</dd>
+			<dt class="stack-block-label">sortSettings? <small class="typedef">SortSettings</small></dt>
+			<dd class="stack-block-content">
+				The sort settings for the grid. See
+				<a href="https://www.telerik.com/kendo-angular-ui/components/grid/api/SortSettings/" target="_blank"
+					>SortSettings
+				</a>
+				from Kendo.
+			</dd>
+			<dt class="stack-block-label">selectableSettings? <small class="typedef">SelectableSettings</small></dt>
+			<dd class="stack-block-content">
+				The settings for the selection functionality of the Grid. See
+				<a
+					href="https://www.telerik.com/kendo-angular-ui/components/grid/api/SelectableSettings/"
+					target="_blank"
+					>SelectableSettings
+				</a>
+				from Kendo.
+			</dd>
+			<dt class="stack-block-label">checkboxSelectionConfig? <small class="typedef">any</small></dt>
+			<dd class="stack-block-content">
+				TODO: Determine what this is used for and strongly type it. This has something to do with the bulk
+				action capabilities of the grid.
+			</dd>
+			<dt class="stack-block-label">filterable? <small class="typedef">boolean</small></dt>
+			<dd class="stack-block-content">
+				Denotes if the grid is filterable. Defaults to false.
+			</dd>
+			<dt class="stack-block-label">resizable? <small class="typedef">boolean</small></dt>
+			<dd class="stack-block-content">
+				Denotes if the grid columns are resizable. Defaults to false.
+			</dd>
+			<dt class="stack-block-label">columnMinWidth? <small class="typedef">number</small></dt>
+			<dd class="stack-block-content">
+				Denotes the minimum width of a column in the grid.
+			</dd>
+		</div>
+	</dl>
+
+	<h4 class="stack-header">
+		<span class="stack-title">FilterType Enum</span>
+	</h4>
+	<dl class="stack-view">
+		<div class="stack-block">
+			<dt class="stack-block-label">text</dt>
+			<dd class="stack-block-content">
+				If specified, a text filter will be used for the column.
+			</dd>
+			<dt class="stack-block-label">number</dt>
+			<dd class="stack-block-content">
+				If specified, a number filter will be used for the column.<br />
+				<strong>NOTE: This is not currently functional. Use the text filter instead.</strong>
+			</dd>
+			<dt class="stack-block-label">boolean</dt>
+			<dd class="stack-block-content">
+				If specified, a boolean filter will be used for the column. If using this, you must specify the
+				DropdownFilterData parameter in your column model.
+			</dd>
+			<dt class="stack-block-label">date</dt>
+			<dd class="stack-block-content">
+				If specified, a date filter will be used for the column. If using this, you may want to pass a format in
+				your column model.
+			</dd>
+			<dt class="stack-block-label">dropdown</dt>
+			<dd class="stack-block-content">
+				If specified, a dropdown filter will be used for the column.If using this, you must specify the
+				DropdownFilterData parameter in your column model.
+			</dd>
+			<dt class="stack-block-label">tag</dt>
+			<dd class="stack-block-content">
+				If specified, an asset tag filter will be used for the column.<br />
+				<strong
+					>NOTE: This is not currently functional, but is slated to be added in future development.</strong
+				>
+			</dd>
+		</div>
+	</dl>
+
+	<h4 class="stack-header">
+		<span class="stack-title">DropdownFilterData Interface</span>
+	</h4>
+	<dl class="stack-view">
+		<div class="stack-block">
+			<dt class="stack-block-label">data <small class="typedef">DropdownData[]</small></dt>
+			<dd class="stack-block-content">
+				Sets the data of the DropDownList. This should be an array of data.
+			</dd>
+			<dt class="stack-block-label">defaultItem <small class="typedef">DropdownData</small></dt>
+			<dd class="stack-block-content">
+				Sets the text of the default empty item. The type of the defined value has to match the data type of the
+				value in data.
+			</dd>
+		</div>
+	</dl>
+
+	<h4 class="stack-header">
+		<span class="stack-title">DropdownData Interface</span>
+	</h4>
+	<dl class="stack-view">
+		<div class="stack-block">
+			<dt class="stack-block-label">text <small class="typedef">string</small></dt>
+			<dd class="stack-block-content">
+				Text of the item to be displayed in the dropdown.
+			</dd>
+			<dt class="stack-block-label">value <small class="typedef">string | number | boolean</small></dt>
+			<dd class="stack-block-content">
+				Value corisponding to the text of the item.
+			</dd>
+		</div>
+	</dl>
+</div>
