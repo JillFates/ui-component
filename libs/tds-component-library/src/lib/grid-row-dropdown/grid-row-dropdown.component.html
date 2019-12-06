@@ -1,7 +1,7 @@
 <!-- NOTE: Angular Language Service has a bug and will issue and error: "Member 'onClick' is not callable ng(0)". 
         Ignore this bug. -->
 
-<div class="action-button btn-group btn-link">
+<div class="action-button btn-link">
 	<clr-dropdown>
 		<tds-button icon="ellipsis-vertical" clrDropdownTrigger></tds-button>
 		<clr-dropdown-menu *clrIfOpen clrPosition="bottom-left">
@@ -10,7 +10,7 @@
 					clrDropdownItem
 					*ngIf="action.show"
 					[disabled]="action.disabled"
-					(click)="action.disabled || action.onClick($event, dataItem)"
+					(click)="action.disabled || action.onClick(dataItem)"
 				>
 					{{ action.name }}
 				</a>

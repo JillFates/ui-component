@@ -29,6 +29,19 @@
 
 //component.ts
 export class GridHeaderOverviewComponent {
+	public createAlert = (): void => {
+		alert("Create clicked. See the console for the logged event.");
+	};
+
+	public editAlert = (): void => {
+		alert("Edit clicked.");
+	};
+
+	public infoAlertAsync = async (): Promise<void> => {
+		await new Promise(res => setTimeout(res, 2000));
+		alert("Info clicked. This was an async function and resolved after two seconds.");
+	};
+
 	protected actionButtons: HeaderActionButtonData[] = [
 		{ icon: "plus", title: "create", disabled: false, show: true, onClick: this.createAlert },
 		{ icon: "info-circle", title: "info", disabled: false, show: true, onClick: this.infoAlertAsync },
@@ -38,21 +51,6 @@ export class GridHeaderOverviewComponent {
 
 	constructor() {
 		//
-	}
-
-	private createAlert(event: Event) {
-        console.log(event);
-		event.stopPropagation();
-		alert("Create clicked. See the console for the logged event.");
-	}
-
-	private editAlert() {
-		alert("Edit clicked.");
-	}
-
-	private async infoAlertAsync() {
-		await new Promise(res => setTimeout(res, 2000));
-		alert("Info clicked. This was an async function and resolved after two seconds.");
 	}
 }
 '

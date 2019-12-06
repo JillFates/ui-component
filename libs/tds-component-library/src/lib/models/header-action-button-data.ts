@@ -18,5 +18,5 @@ export interface HeaderActionButtonData {
 	/**
 	 * Function to be bound to the button's click event.
 	 */
-	onClick: Function;
+	onClick(): any | Promise<any> | void | Promise<void>;
 }
