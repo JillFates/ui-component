@@ -260,7 +260,7 @@ export class DiagramLayoutComponent implements OnChanges, AfterViewInit, OnDestr
 	 */
 	diagramListeners(): void {
 		this.diagram.addDiagramListener(DiagramEvent.INITIAL_LAYOUT_COMPLETED, e => {
-			if (((this.data.extras && this.data.extras.isExpandable) || (!e.diagram.nodeTemplate['isTreeExpanded']))
+			if (this.data && ((this.data.extras && this.data.extras.isExpandable) || (!e.diagram.nodeTemplate['isTreeExpanded']))
 				&& e.diagram.layout instanceof TreeLayout) {
 				e.diagram.findTreeRoots().each(r => r.expandTree(this.data.extras.initialExpandLevel || 2));
 			}
@@ -683,7 +683,9 @@ export class DiagramLayoutComponent implements OnChanges, AfterViewInit, OnDestr
 	 * Hide tooltip
 	 */
 	hideToolTip(): void {
-		this.renderer.setStyle(this.nodeTooltip.nativeElement, 'display', 'none');
+		if (this.nodeTooltip) {			
+			this.renderer.setStyle(this.nodeTooltip.nativeElement, 'display', 'none');
+		}
 	}
 
 	/**
