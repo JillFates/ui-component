@@ -13,17 +13,17 @@
 				class="pagination-first"
 				icon="step-forward-2 down"
 				[disabled]="currentPage <= 1"
-				(click)="changePage(1)"
+				(click)="onPageChange(1)"
 			>
 			</tds-button>
 			<tds-button
 				class="pagination-previous"
 				icon="angle left"
 				[disabled]="currentPage <= 1"
-				(click)="changePage(currentPage - 1)"
+				(click)="onPageChange(currentPage - 1)"
 			>
 			</tds-button>
-			<span class="page-selection">
+			<span class="page-selection" *ngIf="showPageSelection">
 				<input
 					clrInput
 					type="number"
@@ -31,22 +31,25 @@
 					[max]="totalPages"
 					[value]="currentPage"
 					name="currentPage"
-					(change)="changePage($event.target.value)"
+					(change)="onPageChange($event.target.value)"
 				/>
 				/ {{ totalPages }}
+			</span>
+			<span class="page-selection" *ngIf="!showPageSelection">
+				{{ currentPage }} / {{ totalPages }}
 			</span>
 			<tds-button
 				class="pagination-next"
 				icon="angle right"
 				[disabled]="currentPage >= totalPages"
-				(click)="changePage(currentPage + 1)"
+				(click)="onPageChange(currentPage + 1)"
 			>
 			</tds-button>
 			<tds-button
 				class="pagination-last"
 				icon="step-forward-2 up"
 				[disabled]="currentPage >= totalPages"
-				(click)="changePage(totalPages)"
+				(click)="onPageChange(totalPages)"
 			>
 			</tds-button>
 		</div>

@@ -36,6 +36,15 @@
 				background: $color-icon;
 				width: 1px;
 			}
+			.btn-link {
+				span.page-selection {
+					font-size: 14px;
+				}
+				&:hover,
+				&:focus {
+					text-decoration: none;
+				}
+			}
 		}
 	}
 }

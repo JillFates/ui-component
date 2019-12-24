@@ -12,6 +12,7 @@ export class GridPagerComponent implements OnInit {
 	@Input() currentPage: number;
 	@Input() pageSize: number;
 	@Input() pageSizes: number[];
+	@Input() showPageSelection: number;
 	@Output() pageChange = new EventEmitter<PageChangeEvent>();
 
 	public page: PageChangeEvent = {
@@ -20,6 +21,9 @@ export class GridPagerComponent implements OnInit {
 	};
 
 	ngOnInit(): void {
+		if (!this.pageSize && this.pageSizes.length) {
+			this.pageSize = this.pageSizes[0];
+		}
 		this.page.take = this.pageSize || this.page.take;
 	}
 
@@ -27,7 +31,7 @@ export class GridPagerComponent implements OnInit {
 	 * changePage
 	 *
 	 * */
-	public changePage(page: any): void {
+	public onPageChange(page: any): void {
 		page = parseInt(page, 10);
 		this.page = {
 			skip: (page - 1) * this.page.take,
