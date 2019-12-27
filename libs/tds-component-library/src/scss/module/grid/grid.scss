@@ -114,6 +114,24 @@ kendo-grid {
 		margin-top: 0;
 	}
 
+	.updated-status {
+	  .task_na {
+		  background-color: $due_task_na;
+	  }
+	  .task_term {
+		  background-color: $due_task_term;
+	  }
+	  .task_tardy {
+		  background-color: $due_task_tardy;
+	  }
+	  .task_late {
+		  background-color: $due_task_late;
+	  }
+	  .task_overdue {
+		  color: $due_task_overdue;
+	  }
+	}
+
 	&.hide-filter {
 		.k-filter-row {
 			display: none;
