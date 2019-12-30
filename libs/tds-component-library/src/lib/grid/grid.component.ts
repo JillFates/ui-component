@@ -46,7 +46,7 @@ export class GridComponent implements OnInit {
 
 		// Now we'll set up the action buttons.
 		if (this.gridModel.showDataReloadButton) {
-			this.gridModel.headerActionButtons.unshift({
+			this.gridModel.headerActionButtons.push({
 				icon: 'sync',
 				title: 'Reload',
 				disabled: false,
