@@ -21,6 +21,11 @@ export class GridComponent implements OnInit {
 	@Input() gridModel: GridModel;
 
 	/**
+	 * string classes to be applied to the kendo grid
+	 */
+	@Input() class: string;
+
+	/**
 	 * Emits cell click events.
 	 */
 	@Output() cellClick = new EventEmitter<CellClickEvent>();
