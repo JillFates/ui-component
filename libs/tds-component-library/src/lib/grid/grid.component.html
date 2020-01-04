@@ -21,6 +21,9 @@
 			<div class="clr-col-12">
 				<tds-grid-header-action-buttons
 					[actionButtons]="gridModel.headerActionButtons"
+                    (clearFilters)="onClearFilters()"
+					[disableClearFilters]="disableClearFilters"
+					(refresh)="reloadData()"
 				></tds-grid-header-action-buttons>
 			</div>
 		</div>

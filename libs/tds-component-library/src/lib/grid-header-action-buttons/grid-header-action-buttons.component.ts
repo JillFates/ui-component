@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import { HeaderActionButtonData } from '../models/header-action-button-data';
 
 @Component({
@@ -6,10 +6,60 @@ import { HeaderActionButtonData } from '../models/header-action-button-data';
 	templateUrl: './grid-header-action-buttons.component.html',
 	styleUrls: ['./grid-header-action-buttons.component.scss'],
 })
-export class GridHeaderActionButtonsComponent {
+export class GridHeaderActionButtonsComponent implements OnInit {
 	@Input() actionButtons: HeaderActionButtonData[];
+	@Input() disableClearFilters: () => boolean;
+	@Output() clearFilters: EventEmitter<void> = new EventEmitter<void>();
+	@Output() refresh: EventEmitter<void> = new EventEmitter<void>();
 
 	constructor() {
 		//
+	}
+
+	/**
+	 * Checks to see if a variable is a function
+	 * @param variableToCheck
+	 */
+	public isFunction(variableToCheck: any): boolean {
+		return variableToCheck instanceof Function;
+	}
+
+	public ngOnInit(): void {
+		// this set of buttons should be present over all grids
+		// disabled: this.isFunction(this.disableClearFilters)  ? this.disableClearFilters : this.disableClearFilters,
+		const defaultButtons: HeaderActionButtonData[] = [
+			{
+				icon: 'times',
+				title: 'Clear filters' ,
+				disabled: this.disableClearFilters  || false,
+				show: true,
+				onClick: this.onClearFilters.bind(this),
+			},
+			{
+				icon: 'sync',
+				iconClass: '',
+				title: 'Refresh' ,
+				flat: true,
+				show: true,
+				onClick: this.onRefresh.bind(this),
+			},
+		];
+
+		// add the default buttons to the buttons provided
+		this.actionButtons = this.actionButtons.concat(defaultButtons);
+	}
+
+	/**
+	 * Emit the event to refresh the data grid
+	 */
+	private onRefresh(): void {
+		this.refresh.emit();
+	}
+
+	/**
+	 * Emit the event to clear the data grid filters
+	 */
+	private onClearFilters(): void {
+		this.clearFilters.emit();
 	}
 }

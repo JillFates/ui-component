@@ -4,9 +4,11 @@
 	<ng-container *ngFor="let action of actionButtons">
 		<tds-button
 			*ngIf="action.show"
-			(click)="action.disabled || action.onClick()"
+			(click)="action.onClick()"
 			[icon]="action.icon"
-			[disabled]="action.disabled"
+			[iconClass]="action.iconClass"
+			[disabled]="isFunction(action.disabled) ? action.disabled() : action.disabled"
+			[flat]="action.flat"
 			[title]="action.title"
 		></tds-button>
 	</ng-container>
