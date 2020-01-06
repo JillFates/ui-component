@@ -16,17 +16,9 @@ export class GridHeaderActionButtonsComponent implements OnInit {
 		//
 	}
 
-	/**
-	 * Checks to see if a variable is a function
-	 * @param variableToCheck
-	 */
-	public isFunction(variableToCheck: any): boolean {
-		return variableToCheck instanceof Function;
-	}
-
 	public ngOnInit(): void {
-		// this set of buttons should be present over all grids
-		// disabled: this.isFunction(this.disableClearFilters)  ? this.disableClearFilters : this.disableClearFilters,
+
+		// This set of buttons should be present all over the grids
 		const defaultButtons: HeaderActionButtonData[] = [
 			{
 				icon: 'times',
@@ -45,7 +37,7 @@ export class GridHeaderActionButtonsComponent implements OnInit {
 			},
 		];
 
-		// add the default buttons to the buttons provided
+		// add the default buttons to the buttons provided as input parameters
 		this.actionButtons = this.actionButtons.concat(defaultButtons);
 	}
 
@@ -61,5 +53,13 @@ export class GridHeaderActionButtonsComponent implements OnInit {
 	 */
 	private onClearFilters(): void {
 		this.clearFilters.emit();
+	}
+
+	/**
+	 * Checks to see if a variable is a function
+	 * @param variableToCheck
+	 */
+	public isFunction(variableToCheck: any): boolean {
+		return variableToCheck instanceof Function;
 	}
 }
