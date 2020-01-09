@@ -1,6 +1,6 @@
 {
 	"name": "tds-component-library",
-	"version": "0.0.30",
+	"version": "0.0.32",
 	"scripts": {
 		"postbuild": "npm run buildtheme",
 		"buildtheme": "scss-bundle -e \"./src/_theme.scss\" -d \"../../dist/libs/tds-component-library/themes.scss\""

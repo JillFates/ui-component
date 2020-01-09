@@ -14,7 +14,7 @@
 	(cellClick)="onCellClick($event)"
 	[selectable]="gridModel.gridSettings.selectableSettings"
 	[ngClass]="{ 'hide-filter': !showFilters }"
-	class="page-height row-actions-{{ numberRowActions() }}-children"
+	class="page-height row-actions-{{ numberRowActions() }}-children {{class || ''}}"
 >
 	<ng-template kendoGridToolbarTemplate [position]="'top'">
 		<div class="clr-row">
