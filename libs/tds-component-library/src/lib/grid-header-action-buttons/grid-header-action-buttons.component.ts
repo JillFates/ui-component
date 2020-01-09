@@ -9,6 +9,7 @@ import { HeaderActionButtonData } from '../models/header-action-button-data';
 export class GridHeaderActionButtonsComponent implements OnInit {
 	@Input() actionButtons: HeaderActionButtonData[];
 	@Input() disableClearFilters: () => boolean;
+	@Input() hasClearAllFilters = true;
 	@Output() clearFilters: EventEmitter<void> = new EventEmitter<void>();
 	@Output() refresh: EventEmitter<void> = new EventEmitter<void>();
 
@@ -19,23 +20,28 @@ export class GridHeaderActionButtonsComponent implements OnInit {
 	public ngOnInit(): void {
 
 		// This set of buttons should be present all over the grids
-		const defaultButtons: HeaderActionButtonData[] = [
-			{
-				icon: 'times',
-				title: 'Clear filters' ,
-				disabled: this.disableClearFilters  || false,
-				show: true,
-				onClick: this.onClearFilters.bind(this),
-			},
-			{
-				icon: 'sync',
-				iconClass: '',
-				title: 'Refresh' ,
-				flat: true,
-				show: true,
-				onClick: this.onRefresh.bind(this),
-			},
-		];
+		const defaultButtons: HeaderActionButtonData[] = [];
+
+		if (this.hasClearAllFilters) {
+			defaultButtons.push(
+				{
+					icon: 'times',
+					title: 'Clear filters' ,
+					disabled: this.disableClearFilters  || false,
+					show: true,
+					onClick: this.onClearFilters.bind(this),
+				}
+			);
+		}
+
+		defaultButtons.push({
+			icon: 'sync',
+			iconClass: '',
+			title: 'Refresh' ,
+			flat: true,
+			show: true,
+			onClick: this.onRefresh.bind(this),
+		});
 
 		// add the default buttons to the buttons provided as input parameters
 		this.actionButtons = this.actionButtons.concat(defaultButtons);
