@@ -38,7 +38,6 @@ export class GridHeaderActionButtonsComponent implements OnInit {
 			icon: 'sync',
 			iconClass: '',
 			title: 'Refresh' ,
-			flat: true,
 			show: true,
 			onClick: this.onRefresh.bind(this),
 		});

@@ -135,6 +135,7 @@ export class GridComponent implements OnInit {
 	 */
 	public onClearFilters(): void {
 		this.gridHelper.clearAllFilters(this.gridModel.columnModel);
+		this.showFilters = false;
 		this.reloadData();
 	}
 }
