@@ -9,7 +9,8 @@ import { CellClickEvent } from '@progress/kendo-angular-grid';
 	styleUrls: ['./grid.component.scss'],
 })
 export class GridComponent implements OnInit {
-	
+	public disableClearFilters: Function;
+
 	constructor() {
 		//
 	}
@@ -43,6 +44,8 @@ export class GridComponent implements OnInit {
 	 * init component
 	 */
 	async ngOnInit(): Promise<void> {
+		this.disableClearFilters = this.onDisableClearFilter.bind(this);
+
 		// First, we load the data.
 		const gridData: any = await this.gridModel.loadData();
 
@@ -117,5 +120,22 @@ export class GridComponent implements OnInit {
 		if (event.target && event.target.parentNode) {
 			event.target.parentNode.click();
 		}
+	}
+
+	/**
+	 * Disable clear filters
+	 */
+	private onDisableClearFilter(): boolean {
+		return !this.hasFilterApplied();
+	}
+
+	/**
+	 * Clear all selected filters
+	 * @param event
+	 */
+	public onClearFilters(): void {
+		this.gridHelper.clearAllFilters(this.gridModel.columnModel);
+		this.showFilters = false;
+		this.reloadData();
 	}
 }
