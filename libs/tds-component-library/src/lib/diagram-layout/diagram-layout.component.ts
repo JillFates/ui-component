@@ -72,6 +72,7 @@ export class DiagramLayoutComponent implements OnChanges, AfterViewInit, OnDestr
 	@Output() diagramAnimationFinished: EventEmitter<void> = new EventEmitter<void>();
 	@Output() ctxMenuActionDispatched: EventEmitter<string> = new EventEmitter<string>();
 	@Output() expandActionDispatched: EventEmitter<void> = new EventEmitter<void>();
+	@Output() diagramClicked: EventEmitter<void> = new EventEmitter<void>();
 	@ViewChild('diagramContainer', {static: false}) diagramContainer: ElementRef;
 	@ViewChild('tdsCtxMenu', {static: false}) tdsCtxMenu: TdsContextMenuComponent;
 	@ViewChild('overviewContainer', {static: false}) overviewContainer: ElementRef;
@@ -211,23 +212,26 @@ export class DiagramLayoutComponent implements OnChanges, AfterViewInit, OnDestr
 		const extras = this.data.extras;
 		this.diagram.model.nodeDataArray = [];
 		this.diagram.commit(d => {
+			d.initialAutoScale = extras && extras.initialAutoScale ? extras.initialAutoScale : d.initialAutoScale;
 			d.initialDocumentSpot = Spot.Center;
 			d.initialViewportSpot = Spot.Center;
 			d.hasHorizontalScrollbar = false;
 			d.hasVerticalScrollbar = false;
 			d.allowZoom = extras && extras.allowZoom ? extras.allowZoom : true;
 			d.autoScale = extras && extras.autoScale ? extras.autoScale : d.autoScale;
-			d.zoomToFit();
 			d.layout = this.setLayout();
 			d.nodeTemplate = this.setNodeTemplate();
 			d.linkTemplate = this.setLinkTemplate();
+			this.diagram.click = () => this.diagramClicked.emit();
 		});
 		this.diagram.model = this.model;
 		this.diagramAvailable = true;
 		this.overrideMouseWheel();
 		this.overviewTemplate();
 		this.diagramListeners();
+		this.overrideDoubleClick();
 		this.diagramExtras();
+		this.diagram.zoomToFit();
 	}
 
 	/**
@@ -252,6 +256,24 @@ export class DiagramLayoutComponent implements OnChanges, AfterViewInit, OnDestr
 		tool.standardMouseWheel = () => {
 			Tool.prototype.standardMouseWheel.call(tool);
 			this.setNodeTemplateByScale(this.diagram.scale, this.diagram.lastInput);
+		};
+	}
+
+	/**
+	 * Override double click handler to add new behaviour
+	 **/
+	overrideDoubleClick(): void {
+		this.diagram.doubleClick = e => {
+			const diagramNodes = e.diagram && e.diagram.nodes;
+			let rootNode;
+			if (diagramNodes && diagramNodes.first().data.rootNodeKey) {
+				rootNode = e.diagram.nodes.filter(n => n.data.key === n.data.rootNodeKey).first();
+			} else {
+				rootNode = e.diagram.findTreeRoots().first();
+			}
+			if (rootNode) {
+				e.diagram.centerRect(rootNode.actualBounds);
+			}
 		};
 	}
 
@@ -282,7 +304,11 @@ export class DiagramLayoutComponent implements OnChanges, AfterViewInit, OnDestr
 				}, 1000);
 			}
 
-			this.diagram.commit(d => d.centerRect(d.findNodeForKey(this.data.rootAsset).actualBounds));
+			const root = this.diagram.findNodeForKey(this.data.rootAsset) || this.diagram.nodes
+				.filter(n => (n.data.key === this.data.rootAsset) || (n.data.id === this.data.rootAsset)).first();
+			if (root) {
+				this.diagram.commit(d => d.centerRect(root.actualBounds));
+			}
 		});
 		if (!this.largeArrayRemaining) {
 			if (this.diagram.linkTemplate.routing !== Link.AvoidsNodes) { this.setLinkTemplate(); }
@@ -313,7 +339,7 @@ export class DiagramLayoutComponent implements OnChanges, AfterViewInit, OnDestr
 			this.hideToolTip();
 		});
 
-		if (this.data.events && this.data.events.length >= 1) {
+		if (this.data && this.data.events) {
 			this.data.events.forEach(e => {
 				this.diagram.addDiagramListener(e.name, e.handler);
 			});
@@ -382,11 +408,13 @@ export class DiagramLayoutComponent implements OnChanges, AfterViewInit, OnDestr
 		if (this.data.nodeTemplate) {
 			this.data.nodeTemplate.toolTip = this.createTooltip();
 			this.data.nodeTemplate.contextMenu = this.contextMenu();
+			this.data.nodeTemplate.mouseLeave = () =>	this.hideToolTip();
 			return this.data.nodeTemplate;
 		}
 		if (this.nodeTemplate) {
 			this.nodeTemplate.toolTip = this.createTooltip();
 			this.nodeTemplate.contextMenu = this.contextMenu();
+			this.data.nodeTemplate.mouseLeave = () =>	this.hideToolTip();
 			return this.nodeTemplate;
 		}
 
@@ -396,6 +424,7 @@ export class DiagramLayoutComponent implements OnChanges, AfterViewInit, OnDestr
 		}
 		const node = new Node(Panel.Horizontal);
 		node.margin = new Margin(1, 1, 1, 1);
+		node.mouseLeave = () =>	this.hideToolTip();
 
 		const panel = new Panel(Panel.Auto);
 		panel.background = '#fff';
@@ -439,7 +468,31 @@ export class DiagramLayoutComponent implements OnChanges, AfterViewInit, OnDestr
 		arrowHead.toArrow = 'Standard';
 		link.add(containerShape);
 		link.add(arrowHead);
+		link.selectionAdornmentTemplate = this.linkSelectionAdornmentTemplate();
 		return link;
+	}
+
+	/**
+	 * Node Adornment template configuration
+	 * @param {go.Node} node > optional node to add the adornment to
+	 **/
+	linkSelectionAdornmentTemplate(node?: go.Node): Adornment {
+		const selAdornmentTemplate = new Adornment(Panel.Link);
+		selAdornmentTemplate.selectionAdorned = true;
+		if (node) { selAdornmentTemplate.adornedObject = node; }
+
+		const linkShape = new Shape();
+		linkShape.isPanelMain = true;
+		linkShape.strokeWidth = 5;
+		linkShape.stroke = 'red';
+		const arrowHead = new Shape();
+		arrowHead.strokeWidth = 4;
+		arrowHead.stroke = '#af1102';
+		arrowHead.toArrow = 'Standard';
+
+		selAdornmentTemplate.add(linkShape);
+		selAdornmentTemplate.add(arrowHead);
+		return selAdornmentTemplate;
 	}
 
 	/**
@@ -461,18 +514,19 @@ export class DiagramLayoutComponent implements OnChanges, AfterViewInit, OnDestr
 	 * update node on graph
 	 **/
 	updateNode(data: any): void {
-		this.diagram.commit(d => {
-			const update = Object.assign({}, data);
-			if (!update.key) { update.key = data.id; }
-			const node = d.nodes.filter(f => f.part.data.key === update.key).first();
-			node.part.data = update;
-			node.updateAdornments();
-			this.nodeUpdated.
-			emit({
-				data: d.model.nodeDataArray,
-				linksPath: this.extractLinks(d.links)
+		if (data && data.id) {
+			this.diagram.commit(d => {
+				const update = Object.assign({}, data);
+				if (!update.key) { update.key = data.id; }
+				const node = d.nodes.filter(n => n.data.key === update.key || n.data.id === update.id).first();
+				node.data = update;
+				this.nodeUpdated.
+				emit({
+					data: d.model.nodeDataArray,
+					linksPath: this.extractLinks(d.links)
+				});
 			});
-		});
+		}
 	}
 
 	/**
@@ -528,6 +582,13 @@ export class DiagramLayoutComponent implements OnChanges, AfterViewInit, OnDestr
 			return this.diagram.commit(d => {
 				this.mediumScaleTemplate.toolTip = this.createTooltip();
 				this.mediumScaleTemplate.contextMenu = this.contextMenu();
+				this.mediumScaleTemplate.mouseOver = () => {
+					this.diagram.currentCursor = 'pointer';
+				};
+				this.mediumScaleTemplate.mouseLeave = () => {
+					this.diagram.currentCursor = 'none';
+					this.hideToolTip();
+				};
 				d.nodeTemplate = this.mediumScaleTemplate;
 			});
 		}
@@ -555,6 +616,13 @@ export class DiagramLayoutComponent implements OnChanges, AfterViewInit, OnDestr
 			return this.diagram.commit(d => {
 				this.lowScaleTemplate.toolTip = this.createTooltip();
 				this.lowScaleTemplate.contextMenu = this.contextMenu();
+				this.lowScaleTemplate.mouseOver = () => {
+					this.diagram.currentCursor = 'pointer';
+				};
+				this.lowScaleTemplate.mouseLeave = () => {
+					this.diagram.currentCursor = 'none';
+					this.hideToolTip();
+				};
 				d.nodeTemplate = this.lowScaleTemplate;
 			});
 		}
@@ -730,6 +798,36 @@ export class DiagramLayoutComponent implements OnChanges, AfterViewInit, OnDestr
 		this.diagram
 			.commit(d => d.findTreeRoots()
 			.each(r => this.expand ? r.expandTree(count) : r.collapseTree()));
+	}
+
+	/**
+	 * highlight nodes on the diagram based on passed filter
+	 **/
+	highlightNodes(filter?: (x: go.Node) => boolean, highlightLinks?: boolean): void {
+		this.diagram.commit(d => {
+			const highlightCollection = d.nodes.filter(filter);
+			if (highlightCollection) {
+				d.selectCollection(highlightCollection);
+				if (highlightLinks) {
+					highlightCollection.each(n => n.linksConnected.each(l => {
+						l.selectionAdornmentTemplate = this.linkSelectionAdornmentTemplate();
+						l.isSelected = true;
+					}));
+				}
+				if (highlightCollection.count > 0 && highlightCollection.first()) {
+					d.centerRect(highlightCollection.first().actualBounds);
+				} else {
+					d.clearSelection();
+				}
+			}
+		});
+	}
+
+	/**
+	 * Clear highlighted nodes
+	 **/
+	clearHighlights(): void {
+		this.diagram.commit(d => d.clearSelection());
 	}
 
 	/**

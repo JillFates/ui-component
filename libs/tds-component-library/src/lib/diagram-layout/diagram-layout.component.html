@@ -57,7 +57,7 @@
 			*ngIf="!hideOverview"
       #overviewContainer></div>
 
-		<div id="node-tooltip" class="card diagram-card" #nodeTooltip>
+		<div id="node-tooltip" class="card diagram-card" (mouseleave)="hideToolTip()" #nodeTooltip>
 			<div class="card-header clr-align-self-center" [style.background]="tooltipData?.headerBackgroundColor">
 				<p [style.color]="tooltipData?.headerTextColor"> {{tooltipData?.headerText}} </p>
 			</div>
