@@ -64,15 +64,19 @@
     margin: 0 0 0.05rem 0 !important;
   }
 
-  #graph-control-btn-group > .btn:hover {
+  .graph-control-btn {
+    opacity: 1 !important;
+  }
+
+  #graph-control-btn-group > .graph-control-btn:hover {
     box-shadow: 0 2rem 0 0 #c4d0dc inset !important;
   }
 
-  #graph-control-btn-group > .btn:active {
+  #graph-control-btn-group > .graph-control-btn:active {
     box-shadow: 0 2rem 0 0 #c4d0dc inset !important;
   }
 
-  #graph-control-btn-group > .btn:focus {
+  #graph-control-btn-group > .graph-control-btn:focus {
     outline: none !important;
   }
 
@@ -114,18 +118,6 @@
       padding: 5px;
       font-size: 1em;
       background-color: #fff;
-      color: #333;
-    }
-
-    .diagram-card-content > .row:nth-child(odd){
-      background-color: #333;
-      color: #fff;
-      border-radius: 3px;
-      box-shadow: 0 0 10px rgba( 0, 0, 0, .4 );
-    }
-
-    .card-block > .card-text > .clr-row:nth-child(even){
-      background-color: #ddd;
       color: #333;
     }
 

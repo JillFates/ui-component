@@ -19,7 +19,7 @@ export class DiagramLayoutOverviewHelper implements IDiagramLayoutHelper {
 			nodeTemplate: this.nodeTemplate({ isExpandable: params.extras.isExpandable && params.extras.isExpandable }),
 			linkTemplate: this.linkTemplate(),
 			layout: this.layout(),
-			rootAsset: 'a',
+			rootNode: 'a',
 			extras: !!params.extras && params.extras || this.extras(),
 			events: params && params.events || this.diagramEvents()
 		};
@@ -42,7 +42,8 @@ export class DiagramLayoutOverviewHelper implements IDiagramLayoutHelper {
 						data: [
 							{
 								label: 'Status',
-								value: 'Hold'
+								value: 'Hold',
+								icon: 'faPlay'
 							},
 							{
 								label: 'key',

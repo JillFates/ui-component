@@ -82,8 +82,8 @@ export class DiagramLayoutOverviewComponent {
 				data: null,
 				extras: {
 					diagramOpts: {
-						autoScale: Diagram.Uniform,
-						allowZoom: false
+						initialAutoScale: Diagram.Uniform,
+						allowZoom: true
 					},
 					isExpandable: false,
 					initialExpandLevels: 3

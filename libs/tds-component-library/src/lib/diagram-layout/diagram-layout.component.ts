@@ -50,7 +50,7 @@ const enum NodeTemplateEnum {
 @Component({
 	selector: 'tds-lib-diagram-layout',
 	templateUrl: './diagram-layout.component.html',
-	styleUrls: ['./diagram-layout.component.scss'],
+	styleUrls: ['./diagram-layout.component.scss']
 })
 export class DiagramLayoutComponent implements OnChanges, AfterViewInit, OnDestroy {
 	@Input() data: IDiagramData;
@@ -70,7 +70,7 @@ export class DiagramLayoutComponent implements OnChanges, AfterViewInit, OnDestr
 	@Output() nodeClicked: EventEmitter<any> = new EventEmitter<any>();
 	@Output() backToFullGraph: EventEmitter<void> = new EventEmitter<void>();
 	@Output() diagramAnimationFinished: EventEmitter<void> = new EventEmitter<void>();
-	@Output() ctxMenuActionDispatched: EventEmitter<string> = new EventEmitter<string>();
+	@Output() ctxMenuActionDispatched: EventEmitter<any> = new EventEmitter<any>();
 	@Output() expandActionDispatched: EventEmitter<void> = new EventEmitter<void>();
 	@Output() diagramClicked: EventEmitter<void> = new EventEmitter<void>();
 	@ViewChild('diagramContainer', {static: false}) diagramContainer: ElementRef;
@@ -217,7 +217,7 @@ export class DiagramLayoutComponent implements OnChanges, AfterViewInit, OnDestr
 			d.initialViewportSpot = Spot.Center;
 			d.hasHorizontalScrollbar = false;
 			d.hasVerticalScrollbar = false;
-			d.allowZoom = extras && extras.allowZoom ? extras.allowZoom : true;
+			d.allowZoom = extras && extras.allowZoom ? extras.allowZoom : d.allowZoom;
 			d.autoScale = extras && extras.autoScale ? extras.autoScale : d.autoScale;
 			d.layout = this.setLayout();
 			d.nodeTemplate = this.setNodeTemplate();
@@ -304,8 +304,8 @@ export class DiagramLayoutComponent implements OnChanges, AfterViewInit, OnDestr
 				}, 1000);
 			}
 
-			const root = this.diagram.findNodeForKey(this.data.rootAsset) || this.diagram.nodes
-				.filter(n => (n.data.key === this.data.rootAsset) || (n.data.id === this.data.rootAsset)).first();
+			const root = this.diagram.findNodeForKey(this.data.rootNode) || this.diagram.nodes
+				.filter(n => (n.data.key === this.data.rootNode) || (n.data.id === this.data.rootNode)).first();
 			if (root) {
 				this.diagram.commit(d => d.centerRect(root.actualBounds));
 			}
@@ -408,13 +408,14 @@ export class DiagramLayoutComponent implements OnChanges, AfterViewInit, OnDestr
 		if (this.data.nodeTemplate) {
 			this.data.nodeTemplate.toolTip = this.createTooltip();
 			this.data.nodeTemplate.contextMenu = this.contextMenu();
-			this.data.nodeTemplate.mouseLeave = () =>	this.hideToolTip();
+			this.data.nodeTemplate.click = (i, o) => this.onNodeClick(i, o);
+			this.data.nodeTemplate.mouseLeave = () => this.hideToolTip();
 			return this.data.nodeTemplate;
 		}
 		if (this.nodeTemplate) {
 			this.nodeTemplate.toolTip = this.createTooltip();
 			this.nodeTemplate.contextMenu = this.contextMenu();
-			this.data.nodeTemplate.mouseLeave = () =>	this.hideToolTip();
+			this.nodeTemplate.mouseLeave = () => this.hideToolTip();
 			return this.nodeTemplate;
 		}
 
@@ -578,26 +579,26 @@ export class DiagramLayoutComponent implements OnChanges, AfterViewInit, OnDestr
 	 * Medium scale node template, this is where nodes are visible but don't provide a lot of visual feedback
 	 **/
 	mediumScaleNodeTemplate(): void {
+		if (this.data.mediumScaleTemplate) {
+			return this.diagram.commit(d => {
+				this.data.mediumScaleTemplate.toolTip = this.createTooltip();
+				this.data.mediumScaleTemplate.contextMenu = this.contextMenu();
+				this.data.mediumScaleTemplate.click = (i, o) => this.onNodeClick(i, o);
+				this.data.mediumScaleTemplate.mouseLeave = () => this.hideToolTip();
+				d.nodeTemplate = this.data.mediumScaleTemplate;
+			});
+		}
 		if (this.mediumScaleTemplate) {
 			return this.diagram.commit(d => {
 				this.mediumScaleTemplate.toolTip = this.createTooltip();
 				this.mediumScaleTemplate.contextMenu = this.contextMenu();
-				this.mediumScaleTemplate.mouseOver = () => {
-					this.diagram.currentCursor = 'pointer';
-				};
-				this.mediumScaleTemplate.mouseLeave = () => {
-					this.diagram.currentCursor = 'none';
-					this.hideToolTip();
-				};
+				this.mediumScaleTemplate.click = (i, o) => this.onNodeClick(i, o);
+				this.mediumScaleTemplate.mouseLeave = () => this.hideToolTip();
 				d.nodeTemplate = this.mediumScaleTemplate;
 			});
 		}
 
 		const node = new Node(Panel.Horizontal);
-
-		// node.add(this.iconShape());
-
-		// node.add(this.assetIconShape());
 		node.toolTip = this.createTooltip();
 		node.contextMenu = this.contextMenu();
 
@@ -612,17 +613,21 @@ export class DiagramLayoutComponent implements OnChanges, AfterViewInit, OnDestr
 	 * Low scale node template, this is where nodes are least visible and provide only color visual feedback
 	 **/
 	lowScaleNodeTemplate(): void {
+		if (this.data.lowScaleTemplate) {
+			return this.diagram.commit(d => {
+				this.data.lowScaleTemplate.toolTip = this.createTooltip();
+				this.data.lowScaleTemplate.contextMenu = this.contextMenu();
+				this.data.lowScaleTemplate.click = (i, o) => this.onNodeClick(i, o);
+				this.data.lowScaleTemplate.mouseLeave = () => this.hideToolTip();
+				d.nodeTemplate = this.data.lowScaleTemplate;
+			});
+		}
 		if (this.lowScaleTemplate) {
 			return this.diagram.commit(d => {
 				this.lowScaleTemplate.toolTip = this.createTooltip();
 				this.lowScaleTemplate.contextMenu = this.contextMenu();
-				this.lowScaleTemplate.mouseOver = () => {
-					this.diagram.currentCursor = 'pointer';
-				};
-				this.lowScaleTemplate.mouseLeave = () => {
-					this.diagram.currentCursor = 'none';
-					this.hideToolTip();
-				};
+				this.lowScaleTemplate.click = (i, o) => this.onNodeClick(i, o);
+				this.lowScaleTemplate.mouseLeave = () => this.hideToolTip();
 				d.nodeTemplate = this.lowScaleTemplate;
 			});
 		}
@@ -741,8 +746,8 @@ export class DiagramLayoutComponent implements OnChanges, AfterViewInit, OnDestr
 		if (this.nodeTooltip.nativeElement && (data && data.tooltipData)) {
 			const mousePt = diagram.lastInput.viewPoint;
 			this.renderer.setStyle(this.nodeTooltip.nativeElement, 'display', 'block');
-			this.renderer.setStyle(this.nodeTooltip.nativeElement, 'left', `${mousePt.x + 10}px`);
-			this.renderer.setStyle(this.nodeTooltip.nativeElement, 'top', `${mousePt.y}px`);
+			this.renderer.setStyle(this.nodeTooltip.nativeElement, 'left', `${mousePt.x}px`);
+			this.renderer.setStyle(this.nodeTooltip.nativeElement, 'top', `${mousePt.y - 22}px`);
 			this.tooltipData = data && data.tooltipData;
 		}
 	}
@@ -786,8 +791,8 @@ export class DiagramLayoutComponent implements OnChanges, AfterViewInit, OnDestr
 	/**
 	 * handler for context menu output "actionDispatched"
 	 */
-	onCtxMenuActionDispatched(action: string): void {
-		this.ctxMenuActionDispatched.emit(action);
+	onCtxMenuActionDispatched(data: any): void {
+		this.ctxMenuActionDispatched.emit(data);
 	}
 
 	/**
@@ -803,7 +808,7 @@ export class DiagramLayoutComponent implements OnChanges, AfterViewInit, OnDestr
 	/**
 	 * highlight nodes on the diagram based on passed filter
 	 **/
-	highlightNodes(filter?: (x: go.Node) => boolean, highlightLinks?: boolean): void {
+	highlightNodes(filter?: (x: Node) => boolean, highlightLinks?: boolean): void {
 		this.diagram.commit(d => {
 			const highlightCollection = d.nodes.filter(filter);
 			if (highlightCollection) {

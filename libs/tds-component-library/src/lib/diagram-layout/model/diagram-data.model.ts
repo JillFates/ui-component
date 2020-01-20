@@ -10,7 +10,7 @@ export interface IDiagramData {
 	layout?: Layout;
 	lowScaleTemplate?: Node;
 	mediumScaleTemplate?: Node;
-	rootAsset?: number | string;
+	rootNode?: number | string;
 	extras?: any;
 	events?: IDiagramEvent[];
 }
