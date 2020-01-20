@@ -5,13 +5,13 @@ import {
 	faCheck, faCircle,
 	faCog, faCogs, faCompress,
 	faCubes, faDatabase, faEdit, faExpand, faEye,
-	faForward, faHome, faLayerGroup, faList,
+	faForward, faHome, faLaptop, faLayerGroup, faList,
 	faListUl,
-	faMinus, faPause, faPlay, faPlus,
+	faMinus, faPause, faPlay, faPlus, faQuestion,
 	faSearchMinus, faSearchPlus, faServer,
 	faSignal,
 	faSitemap, faSortAmountDown, faSpinner,
-	faStream, faSyncAlt, faUndo, faUser, faWindowMaximize, faWindowMinimize
+	faStream, faSyncAlt, faTabletAlt, faUndo, faUser, faWindowMaximize, faWindowMinimize
 } from '@fortawesome/free-solid-svg-icons';
 
 @NgModule({
@@ -58,7 +58,10 @@ export class TdsFontawesomeModule {
 			faWindowMaximize,
 			faWindowMinimize,
 			faPlus,
-			faArrowsAltV
+			faArrowsAltV,
+			faLaptop,
+			faTabletAlt,
+			faQuestion
 		);
 	}
 }

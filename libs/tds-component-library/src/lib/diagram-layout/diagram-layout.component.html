@@ -12,16 +12,16 @@
 
 		<div id="graph-control-btn-group" *ngIf="!hideControlButtons">
 			<button
-				class="btn tooltip tooltip-md tooltip-top-left"
+				class="btn tooltip tooltip-md tooltip-top-left graph-control-btn"
 				role="tooltip"
 				aria-haspopup="true"
 				[style.textAlign]="'center'"
-				[style.display]="'none'">
+				*ngIf="false">
 				<fa-icon [icon]="faIcons.faCog" size="lg"></fa-icon>
 				<span class="tooltip-content">Configuration</span>
 			</button>
 			<button
-				class="btn tooltip tooltip-md tooltip-top-left"
+				class="btn tooltip tooltip-md tooltip-top-left graph-control-btn"
 				*ngIf="(data?.extras && data?.extras?.isExpandable) || !data?.nodeTemplate?.isTreeExpanded"
 				(click)="expand = !expand; expandAll()"
 				role="tooltip"
@@ -31,7 +31,7 @@
 					<span class="tooltip-content">Expand/Collapse all toggle</span>
 			</button>
 			<button
-				class="btn tooltip tooltip-xs tooltip-top-left"
+				class="btn tooltip tooltip-xs tooltip-top-left graph-control-btn"
 				(click)="zoomIn()"
 				role="tooltip"
 				aria-haspopup="true"
@@ -40,7 +40,7 @@
 				<span class="tooltip-content">Zoom In</span>
 			</button>
 			<button
-				class="btn tooltip tooltip-xs tooltip-top-left"
+				class="btn tooltip tooltip-xs tooltip-top-left graph-control-btn"
 				(click)="zoomOut()"
 				role="tooltip"
 				aria-haspopup="true"
@@ -57,7 +57,7 @@
 			*ngIf="!hideOverview"
       #overviewContainer></div>
 
-		<div id="node-tooltip" class="card diagram-card" #nodeTooltip>
+		<div id="node-tooltip" class="card diagram-card" (mouseleave)="hideToolTip()" #nodeTooltip>
 			<div class="card-header clr-align-self-center" [style.background]="tooltipData?.headerBackgroundColor">
 				<p [style.color]="tooltipData?.headerTextColor"> {{tooltipData?.headerText}} </p>
 			</div>
@@ -65,7 +65,11 @@
 			<div class="card-block" *ngIf="tooltipData && tooltipData.data">
 				<div class="card-text" style="text-align: center;">
 					<div class="clr-row" *ngFor="let data of tooltipData.data">
-						<div class="clr-col-6 clr-align-self-center tooltip-data-label">{{data?.label}}: </div> <div class="clr-col-6 clr-align-self-center" style="float: right;">{{data?.value}}</div>
+						<div class="clr-col-6 clr-align-self-center tooltip-data-label">{{data?.label}}: </div>
+						<div class="clr-col-6 clr-align-self-center" style="float: right;">
+							<fa-icon [icon]="faIcons[data.icon]" [size]="'xs'" *ngIf="data.icon"></fa-icon>
+							{{data?.value}}
+						</div>
 					</div>
 				</div>
 			</div>

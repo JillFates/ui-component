@@ -5,5 +5,6 @@ export interface ITooltipData {
 	data?: {
 		label?: string;
 		value?: string;
+		icon?: string;
 	}[];
 }

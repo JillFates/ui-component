@@ -35,5 +35,11 @@ export const FA_ICONS = {
 	faWindowMinimize: ['fas', 'window-minimize'],
 	faWindowMaximize: ['fas', 'window-maximize'],
 	faPlus: ['fas', 'plus'],
-	faArrowsAltV: ['fas', 'arrows-alt-v']
+	faArrowsAltV: ['fas', 'arrows-alt-v'],
+	faPlay: ['fas', 'play'],
+	faPause: ['fas', 'pause'],
+	faTabletAlt: ['fas', 'tablet-alt'],
+	faPowerOff: ['fas', 'power-off'],
+	faLaptop: ['fas', 'laptop'],
+	faArchive: ['fas', 'archive']
 };

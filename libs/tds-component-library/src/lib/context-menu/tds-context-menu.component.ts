@@ -19,7 +19,7 @@ import {FA_ICONS} from '../icons-constant/fontawesome-icons';
 			<ul *ngIf="data">
 				<li id="hold"
 						*ngFor="let option of data.options.fields"
-						[ngStyle]="{display: option.hasPermission() && option.isAvailable(data.selectedNode) ? 'block' : 'none'}">
+						[style.display]="option.hasPermission() && option.isAvailable(data.selectedNode) ? 'block' : 'none'">
 					<button class="btn ctx-menu-btn clr-align-self-center" (click)="dispatchAction(option.event)">
 						<div class="clr-row">
 							<div class="clr-col-2 clr-align-self-center">
@@ -39,7 +39,7 @@ import {FA_ICONS} from '../icons-constant/fontawesome-icons';
 })
 export class TdsContextMenuComponent implements OnInit, OnChanges {
 	@Input() data: ITdsContextMenuModel;
-	@Output() actionDispatched: EventEmitter<string> = new EventEmitter();
+	@Output() actionDispatched: EventEmitter<any> = new EventEmitter();
 	@ViewChild('ctxMenu', {static: false}) ctxMenu: ElementRef;
 	faIcons = FA_ICONS;
 
@@ -72,7 +72,7 @@ export class TdsContextMenuComponent implements OnInit, OnChanges {
 	 **/
 	dispatchAction(action: string): void {
 		this.hideCtxMenu();
-		this.actionDispatched.emit(action);
+		this.actionDispatched.emit({name: action, node: this.data.selectedNode});
 	}
 
 	/**
