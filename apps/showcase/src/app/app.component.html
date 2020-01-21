@@ -85,6 +85,13 @@
 				>Grid</a
 			>
 			<div class="nav-divider"></div>
+			<label class="nav-header">Dialog Components</label>
+			<a clrVerticalNavLink
+			   *ngIf="this.routeData.url[1]"
+			   routerLink="component/dialog/overview"
+			   [ngClass]="{ active: this.routeData.url[1]['path'] === 'dialog' }"
+			>Dialog</a>
+			<div class="nav-divider"></div>
 			<label class="nav-header">Other Components</label>
 			<a
 				clrVerticalNavLink
