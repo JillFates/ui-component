@@ -4,10 +4,29 @@ import {Observer} from 'rxjs';
 export class ModalConfigurationModel {
 	public showBackground?: boolean;
 	public modalSize?: ModalSize;
+	// Helps to determinate if the default state was show or hide
+	private _defaultShowBackground ? = true;
+
 	constructor() {
-		this.showBackground = true;
+		this.showBackground = this._defaultShowBackground;
 		this.modalSize = ModalSize.SM;
 	}
+
+	/**
+	 * Change the default
+	 * @param showBackground
+	 */
+	public setDefaultShowBackground?(value: boolean): void {
+		this._defaultShowBackground = value;
+	}
+
+	/**
+	 * Get the Default State
+	 */
+	public getDefaultShowBackground?(): boolean {
+		return this._defaultShowBackground;
+	}
+
 }
 
 /**

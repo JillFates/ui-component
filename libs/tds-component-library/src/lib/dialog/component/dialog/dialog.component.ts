@@ -74,12 +74,20 @@ export class DialogComponent {
 		if (dynamicHostModel.dialogModel.modalConfiguration) {
 			dynamicHostModel.dynamicHostComponent.modalConfigurationModel =
 				Object.assign(dynamicHostModel.dynamicHostComponent.modalConfigurationModel, dynamicHostModel.dialogModel.modalConfiguration);
+			// If the user wants to set the background as empty, we change the default so we can revert it to that
+			if (!dynamicHostModel.dynamicHostComponent.modalConfigurationModel.showBackground) {
+				dynamicHostModel.dynamicHostComponent.modalConfigurationModel.setDefaultShowBackground(
+					dynamicHostModel.dynamicHostComponent.modalConfigurationModel.showBackground
+				);
+			}
 		}
 
 		// Save the instance
 		dynamicHostModel.currentDialogComponentInstance = currentDialogComponentInstance;
 		dynamicHostModel.dynamicHostComponent.currentDialogComponentInstance = currentDialogComponentInstance;
 
+		// Before to open the Dialog, we hide any other background
+		this.showHideBackgrounds();
 		// Open the dialog
 		dynamicHostModel.dynamicHostComponent.isDialogOpen = true;
 
@@ -91,6 +99,10 @@ export class DialogComponent {
 				// Last element of the array only
 				dynamicHostModel.dynamicHostComponent.isDialogOpen = false;
 				this.dynamicDialogList.pop();
+				setTimeout(() => {
+					// After close a Dialog, we show any other background
+					this.showHideBackgrounds();
+				});
 			});
 		}
 	}
@@ -109,5 +121,17 @@ export class DialogComponent {
 				currentDialogComponentInstance.onDismiss();
 			}
 		}
+	}
+
+	/**
+	 * After a new Dialog open, we hide the background backtrack
+	 */
+	private showHideBackgrounds(): void {
+		this.dynamicHostList.forEach((dynamicHostComponent: DynamicHostComponent, index) => {
+			dynamicHostComponent.modalConfigurationModel.showBackground = dynamicHostComponent.modalConfigurationModel.getDefaultShowBackground();
+			if (index < (this.dynamicHostList.length - 1)) {
+				dynamicHostComponent.modalConfigurationModel.showBackground = false;
+			}
+		});
 	}
 }

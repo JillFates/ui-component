@@ -35,5 +35,6 @@ export class NoBackgroundDialogComponent extends Dialog {
 	public onDismiss(): void {
 		// If user try to dismiss, validate if the Dialog is ready or not to be closed
 		console.log('User Tried to dismiss Dialog');
+		this.onCancel();
 	}
 }

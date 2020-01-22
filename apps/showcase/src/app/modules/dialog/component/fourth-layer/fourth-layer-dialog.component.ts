@@ -1,13 +1,19 @@
+// Angular
 import {Component, EventEmitter, Input, Output} from '@angular/core';
+// Model
 import {Dialog} from '../../../../../../../../libs/tds-component-library/src/lib/dialog/model/dialog.interface';
 
 @Component({
-	selector: 'app-basic-dialog',
-	templateUrl: './basic-dialog.component.html'
+	selector: 'app-fourth-layer-dialog',
+	templateUrl: './fourth-layer-dialog.component.html'
 })
-export class BasicDialogComponent extends Dialog {
+export class FourthLayerDialogComponent extends Dialog {
 	@Input() data: any;
 	@Output() successEvent: EventEmitter<any> = new EventEmitter<any>();
+
+	constructor() {
+		super();
+	}
 
 	/**
 	 * Close the Dialog properly

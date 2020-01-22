@@ -1,9 +1,15 @@
 <div class="modal">
-    <div class="modal-dialog" role="dialog" aria-hidden="true">
+    <div class="modal-dialog"
+         [ngClass]="{
+            'modal-sm': modalConfigurationModel.modalSize === modalSize.SM,
+            'modal-lg': modalConfigurationModel.modalSize === modalSize.LG,
+            'modal-xl': modalConfigurationModel.modalSize === modalSize.XL
+         }"
+         role="dialog" aria-hidden="true">
         <div class="modal-content">
             <div class="modal-header">
                 <button aria-label="Close" class="close" type="button">
-                    <clr-icon aria-hidden="true" shape="close"></clr-icon>
+                    <clr-icon aria-hidden="true" shape="close" (click)="onCancel()"></clr-icon>
                 </button>
                 <h3 class="modal-title">I have a nice title</h3>
             </div>

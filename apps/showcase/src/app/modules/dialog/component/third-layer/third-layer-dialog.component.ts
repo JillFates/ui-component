@@ -3,17 +3,15 @@ import {Component, ComponentFactoryResolver, EventEmitter, Input, Output} from '
 // Model
 import {Dialog} from '../../../../../../../../libs/tds-component-library/src/lib/dialog/model/dialog.interface';
 import {ModalSize} from '../../../../../../../../libs/tds-component-library/src/lib/dialog/model/dialog.model';
-// Component
-import {BasicDialogComponent} from '../basic-dialog/basic-dialog.component';
 // Service
 import {DialogService} from '../../../../../../../../libs/tds-component-library/src/lib/dialog/service/dialog.service';
-import {ThirdLayerDialogComponent} from '../third-layer/third-layer-dialog.component';
+import {FourthLayerDialogComponent} from '../fourth-layer/fourth-layer-dialog.component';
 
 @Component({
-	selector: 'app-multiple-dialog',
-	templateUrl: './multiple-dialog.component.html'
+	selector: 'app-third-layer-dialog',
+	templateUrl: './third-layer-dialog.component.html'
 })
-export class MultipleDialogComponent extends Dialog {
+export class ThirdLayerDialogComponent extends Dialog {
 	@Input() data: any;
 	@Output() successEvent: EventEmitter<any> = new EventEmitter<any>();
 
@@ -53,32 +51,17 @@ export class MultipleDialogComponent extends Dialog {
 	/**
 	 * Open a new basic Window
 	 */
-	public bluePill(): void {
+	public keepGoing(): void {
 		this.dialogService.open({
 			componentFactoryResolver: this.componentFactoryResolver,
-			component: BasicDialogComponent,
+			component: FourthLayerDialogComponent,
 			data: null,
 			modalConfiguration: {
 				modalSize: ModalSize.SM
 			}
 		}).subscribe((data: any) => {
-			console.log('Basic Dialog was closed successfully: ', data);
+			console.log('Fourth Dialog was closed successfully: ', data);
 		});
 	}
 
-	/**
-	 * Open the Multiple Dialog Inception
-	 */
-	public redPill(): void {
-		this.dialogService.open({
-			componentFactoryResolver: this.componentFactoryResolver,
-			component: ThirdLayerDialogComponent,
-			data: null,
-			modalConfiguration: {
-				modalSize: ModalSize.MD
-			}
-		}).subscribe((data: any) => {
-			console.log('Basic Dialog was closed successfully: ', data);
-		});
-	}
 }
