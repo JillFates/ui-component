@@ -1,5 +1,61 @@
 @import '../../../../theme';
 
-:host {
+.modal.dynamic-host-component {
+  .modal-content {
+    border-radius: unset;
+    padding: 0px;
 
+    .modal-header,
+    .modal-body,
+    .modal-footer {
+      margin-left: 40px;
+    }
+
+    .modal-header,
+    .modal-body {
+      padding-left: 18px;
+      padding-bottom: 20px;
+      padding-right: 18px;
+    }
+
+    .modal-header {
+      padding-bottom: 0px;
+      padding-top: 20px;
+      padding-right: 24px;
+    }
+
+    .modal-footer {
+      -webkit-box-pack: end;
+      -ms-flex-pack: end;
+      justify-content: flex-end;
+      border-top: 1px solid #f4f4f4;
+      padding-top: 12px;
+      padding-bottom: 13px;
+      padding-right: 18px;
+    }
+
+    .modal-sidenav {
+      position: absolute;
+      top: 0;
+      width: 40px;
+      bottom: 0;
+      left: 0;
+      padding-top: 12px;
+      border: solid 1px #d9e4ea;
+      border-width: 0 1px 0 0;
+
+      .btn.btn-link {
+        color: #000 !important;
+        height: 40px !important;
+        width: 40px;
+        margin: 0;
+        border: unset;
+        padding: unset;
+        clr-icon {
+          margin-right: 0px;
+        }
+      }
+    }
+  }
 }
+

@@ -2,7 +2,7 @@
  * Place holder to use dynamically inject dialog component on runtime
  */
 // Angular
-import {Component, ViewChild} from '@angular/core';
+import {Component, ViewChild, ViewEncapsulation} from '@angular/core';
 // Modal
 import {ModalConfigurationModel, ModalSize} from '../../model/dialog.model';
 // Directive
@@ -11,6 +11,7 @@ import {DynamicHostDirective} from '../../directive/dynamic-host.directive';
 @Component({
 	selector: 'tds-dynamic-host',
 	styleUrls: ['./dynamic-host.component.scss'],
+	encapsulation: ViewEncapsulation.None,
 	templateUrl: './dynamic-host.component.html',
 })
 export class DynamicHostComponent {

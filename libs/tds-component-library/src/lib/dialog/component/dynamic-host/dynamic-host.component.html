@@ -1,4 +1,4 @@
-<div class="modal">
+<div class="modal dynamic-host-component">
     <div class="modal-dialog"
          [ngClass]="{
             'modal-sm': modalConfigurationModel.modalSize === modalSize.SM,
@@ -17,8 +17,13 @@
                 <ng-template tdsDynamicDialog></ng-template>
             </div>
             <div class="modal-footer">
-                <button class="btn btn-outline" type="button" (click)="onCancel()">Cancel</button>
-                <button class="btn btn-primary" type="button" (click)="onAccept()">Ok</button>
+                <tds-button icon="user">Inner Action</tds-button>
+            </div>
+            <div class="modal-sidenav">
+                <tds-button icon="pencil" [flat]="true"></tds-button>
+                <tds-button icon="floppy" [flat]="true" (click)="onAccept()"></tds-button>
+                <tds-button icon="trash" [flat]="true"></tds-button>
+                <tds-button icon="ban" [flat]="true" (click)="onCancel()"></tds-button>
             </div>
         </div>
     </div>
