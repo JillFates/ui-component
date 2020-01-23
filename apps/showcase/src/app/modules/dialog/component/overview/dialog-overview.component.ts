@@ -6,6 +6,9 @@ import {DialogService} from '../../../../../../../../libs/tds-component-library/
 import {BasicDialogComponent} from '../basic-dialog/basic-dialog.component';
 import {MultipleDialogComponent} from '../multiple-dialog/multiple-dialog.component';
 import {NoBackgroundDialogComponent} from '../no-background-dialog/no-background-dialog.component';
+import {ButtonActionDialogComponent} from '../button-action-dialog/button-action-dialog.component';
+import {ButtonContextDialogComponent} from '../button-context-dialog/button-context-dialog.component';
+import {ButtonActionContextDialogComponent} from '../button-action-context-dialog/button-action-context-dialog.component';
 // Model
 import {
 	ModalSize
@@ -84,6 +87,54 @@ export class DialogOverviewComponent {
 			data: null,
 			modalConfiguration: {
 				modalSize: modelSize
+			}
+		}).subscribe((data: any) => {
+			console.log('Basic Dialog with Size was closed successfully: ', data);
+		});
+	}
+
+	/**
+	 * Open a Basic Dialog with different Size
+	 */
+	public openActionButtonDialog(): void {
+		this.dialogService.open({
+			componentFactoryResolver: this.componentFactoryResolver,
+			component: ButtonActionDialogComponent,
+			data: null,
+			modalConfiguration: {
+				modalSize: ModalSize.MD
+			}
+		}).subscribe((data: any) => {
+			console.log('Basic Dialog with Size was closed successfully: ', data);
+		});
+	}
+
+	/**
+	 * Open a Basic Dialog with different Size
+	 */
+	public openContextButtonDialog(): void {
+		this.dialogService.open({
+			componentFactoryResolver: this.componentFactoryResolver,
+			component: ButtonContextDialogComponent,
+			data: null,
+			modalConfiguration: {
+				modalSize: ModalSize.MD
+			}
+		}).subscribe((data: any) => {
+			console.log('Basic Dialog with Size was closed successfully: ', data);
+		});
+	}
+
+	/**
+	 * Open a Basic Dialog with different Size
+	 */
+	public openActionContextButtonDialog(): void {
+		this.dialogService.open({
+			componentFactoryResolver: this.componentFactoryResolver,
+			component: ButtonActionContextDialogComponent,
+			data: null,
+			modalConfiguration: {
+				modalSize: ModalSize.MD
 			}
 		}).subscribe((data: any) => {
 			console.log('Basic Dialog with Size was closed successfully: ', data);

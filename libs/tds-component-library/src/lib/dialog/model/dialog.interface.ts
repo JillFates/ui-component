@@ -5,6 +5,10 @@
 export abstract class Dialog {
 	public data: any;
 	public successEvent: any;
+	// Contains the left action buttons
+	public actionButtons: any;
+	// Contains buttons at the bottom that are considered for context only
+	public contextButtons: any;
 
 	/**
 	 * Generic accept method

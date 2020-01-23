@@ -2,12 +2,18 @@ import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {Dialog} from '../../../../../../../../libs/tds-component-library/src/lib/dialog/model/dialog.interface';
 
 @Component({
-	selector: 'app-basic-dialog',
-	templateUrl: './basic-dialog.component.html'
+	selector: 'app-button-action-dialog',
+	templateUrl: './button-action-dialog.component.html'
 })
-export class BasicDialogComponent extends Dialog {
+export class ButtonActionDialogComponent extends Dialog implements OnInit {
 	@Input() data: any;
+	@Input() contextButtons: any;
+	@Input() actionButtons: any;
 	@Output() successEvent: EventEmitter<any> = new EventEmitter<any>();
+
+	ngOnInit(): void {
+		this.actionButtons.push({ name: ''});
+	}
 
 	/**
 	 * Close the Dialog properly

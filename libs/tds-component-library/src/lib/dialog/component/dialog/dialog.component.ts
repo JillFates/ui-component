@@ -70,6 +70,9 @@ export class DialogComponent {
 		const currentDialogComponentInstance = <Dialog>componentRef.instance;
 		currentDialogComponentInstance.data = dynamicHostModel.dialogModel.data;
 
+		currentDialogComponentInstance.actionButtons = [];
+		currentDialogComponentInstance.contextButtons = [];
+
 		// Overwrite the property configuration
 		if (dynamicHostModel.dialogModel.modalConfiguration) {
 			dynamicHostModel.dynamicHostComponent.modalConfigurationModel =
@@ -83,13 +86,14 @@ export class DialogComponent {
 		}
 
 		// Save the instance
-		dynamicHostModel.currentDialogComponentInstance = currentDialogComponentInstance;
 		dynamicHostModel.dynamicHostComponent.currentDialogComponentInstance = currentDialogComponentInstance;
 
-		// Before to open the Dialog, we hide any other background
-		this.showHideBackgrounds();
 		// Open the dialog
-		dynamicHostModel.dynamicHostComponent.isDialogOpen = true;
+		setTimeout(() => {
+			// Before to open the Dialog, we hide any other background
+			this.showHideBackgrounds();
+			dynamicHostModel.dynamicHostComponent.isDialogOpen = true;
+		});
 
 		// Emits on Success
 		if (currentDialogComponentInstance.successEvent) {
@@ -117,7 +121,7 @@ export class DialogComponent {
 				return innerDynamicHostModel.dynamicHostComponent === this.dynamicHostList.last;
 			});
 			if (dynamicHostModel) {
-				const currentDialogComponentInstance = <Dialog>dynamicHostModel.currentDialogComponentInstance;
+				const currentDialogComponentInstance = <Dialog>dynamicHostModel.dynamicHostComponent.currentDialogComponentInstance;
 				currentDialogComponentInstance.onDismiss();
 			}
 		}

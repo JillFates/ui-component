@@ -36,7 +36,7 @@ export class DialogModel {
 	public componentFactoryResolver: ComponentFactoryResolver;
 	public component: any;
 	public data: any;
-	public modalConfiguration: ModalConfigurationModel;
+	public modalConfiguration?: ModalConfigurationModel;
 	public observable?: Observer<any>;
 }
 

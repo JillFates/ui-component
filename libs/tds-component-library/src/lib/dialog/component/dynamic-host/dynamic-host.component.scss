@@ -18,10 +18,19 @@
       padding-right: 18px;
     }
 
+    .modal-no-action-buttons.modal-header,
+    .modal-no-action-buttons.modal-body {
+      padding-left: 0px !important;
+    }
+
     .modal-header {
       padding-bottom: 0px;
       padding-top: 20px;
       padding-right: 24px;
+    }
+
+    .modal-body {
+      padding-top: 10px;
     }
 
     .modal-footer {

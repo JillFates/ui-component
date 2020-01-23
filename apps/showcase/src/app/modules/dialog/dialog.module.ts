@@ -12,6 +12,9 @@ import {MultipleDialogComponent} from './component/multiple-dialog/multiple-dial
 import {ThirdLayerDialogComponent} from './component/third-layer/third-layer-dialog.component';
 import {NoBackgroundDialogComponent} from './component/no-background-dialog/no-background-dialog.component';
 import {FourthLayerDialogComponent} from './component/fourth-layer/fourth-layer-dialog.component';
+import {ButtonActionContextDialogComponent} from './component/button-action-context-dialog/button-action-context-dialog.component';
+import {ButtonActionDialogComponent} from './component/button-action-dialog/button-action-dialog.component';
+import {ButtonContextDialogComponent} from './component/button-context-dialog/button-context-dialog.component';
 
 @NgModule({
 	imports: [
@@ -27,7 +30,10 @@ import {FourthLayerDialogComponent} from './component/fourth-layer/fourth-layer-
 		MultipleDialogComponent,
 		ThirdLayerDialogComponent,
 		FourthLayerDialogComponent,
-		NoBackgroundDialogComponent
+		NoBackgroundDialogComponent,
+		ButtonActionDialogComponent,
+		ButtonContextDialogComponent,
+		ButtonActionContextDialogComponent
 	],
 	exports: [
 		DialogOverviewComponent,
@@ -35,14 +41,20 @@ import {FourthLayerDialogComponent} from './component/fourth-layer/fourth-layer-
 		MultipleDialogComponent,
 		ThirdLayerDialogComponent,
 		FourthLayerDialogComponent,
-		NoBackgroundDialogComponent
+		NoBackgroundDialogComponent,
+		ButtonActionDialogComponent,
+		ButtonContextDialogComponent,
+		ButtonActionContextDialogComponent
 	],
 	entryComponents: [
 		BasicDialogComponent,
 		MultipleDialogComponent,
 		ThirdLayerDialogComponent,
 		FourthLayerDialogComponent,
-		NoBackgroundDialogComponent
+		NoBackgroundDialogComponent,
+		ButtonActionDialogComponent,
+		ButtonContextDialogComponent,
+		ButtonActionContextDialogComponent
 	]
 })
 export class DialogModule {
