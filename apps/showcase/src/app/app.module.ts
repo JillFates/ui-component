@@ -21,6 +21,7 @@ import { GridModule } from './modules/grid/grid.module';
 // Component
 import { AppComponent } from './app.component';
 import { DiagramLayoutModule } from './modules/diagram-layout/diagram-layout.module';
+import {DialogModule} from './modules/dialog/dialog.module';
 
 @NgModule({
 	declarations: [AppComponent],
@@ -42,6 +43,7 @@ import { DiagramLayoutModule } from './modules/diagram-layout/diagram-layout.mod
 		GridHeaderModule,
 		GridInternalModule,
 		GridModule,
+		DialogModule,
 		RouterModule.forRoot(
 			[
 				{

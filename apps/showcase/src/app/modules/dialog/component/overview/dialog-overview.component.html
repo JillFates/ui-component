@@ -1,0 +1,84 @@
+<div class="button-overview-component">
+	<h2>Dialog Component</h2>
+	<p>Based on the <a target="_blank" href="https://v2.clarity.design/modals">Clarity Modals</a> with extensible Action buttons and configurable options.</p>
+	<div class="clr-row">
+		<div class="clr-col-12">
+			<h3>Examples</h3>
+		</div>
+		<div class="clr-col-12">
+			<tds-card title="Basic Dialog">
+				<tds-button (click)="openDialog()">Open</tds-button>
+			</tds-card>
+		</div>
+		<div class="clr-col-12">
+			<tds-card title="Multiple Dialogs">
+				<tds-button (click)="openMultipleDialogs()">Open</tds-button>
+			</tds-card>
+		</div>
+		<div class="clr-col-12">
+			<tds-card title="No Background Dialog">
+				<tds-button (click)="openNoBackgroundDialogs()">Open</tds-button>
+			</tds-card>
+		</div>
+		<div class="clr-col-12">
+			<tds-card title="Dialog Size">
+				<tds-button (click)="openSize(modelSize.SM)">Small</tds-button>
+				<tds-button (click)="openSize(modelSize.MD)">Medium</tds-button>
+				<tds-button (click)="openSize(modelSize.LG)">Large</tds-button>
+				<tds-button (click)="openSize(modelSize.XL)">X Large</tds-button>
+			</tds-card>
+		</div>
+		<div class="clr-col-12">
+			<tds-card title="Action and Context Button Dialogs">
+				<tds-button (click)="openActionButtonDialog()">Action Button Open</tds-button>
+				<tds-button (click)="openContextButtonDialog()">Context Button Open</tds-button>
+				<tds-button (click)="openActionContextButtonDialog()">Action and Context Buttons Open</tds-button>
+			</tds-card>
+		</div>
+		<div class="clr-col-12">
+			<tds-card title="Reactive Buttons">
+				<tds-button (click)="openReactiveActionButtonDialog()">Open</tds-button>
+			</tds-card>
+		</div>
+		<div class="clr-col-12">
+			<tds-card title="Headless Dialogs">
+				<tds-button (click)="openHeadlessDialog()">Open</tds-button>
+			</tds-card>
+		</div>
+	</div>
+
+	<div class="clr-row">
+		<div class="clr-col-12">
+			<h3>Usage Examples</h3>
+		</div>
+		<div class="clr-col-12">
+			<tds-card
+				title="1.- Dynamic Layout Component"
+				code='<tds-dialog></tds-dialog>'
+			>
+				<p>Copy and Paste the following code in your app into a root level template, like app.component.html</p>
+				<tds-dialog></tds-dialog>
+			</tds-card>
+		</div>
+		<div class="clr-col-12">
+			<tds-card
+					title="2.- Typescript implementation"
+					code='
+this.dialogService.open({
+	componentFactoryResolver: this.componentFactoryResolver,
+	component: BasicDialogComponent,
+	data: null,
+	modalConfiguration: {
+		title: "Dialog",
+		modalSize: ModalSize.SM,
+	}
+}).subscribe((data: any) => {
+	console.log("Basic Dialog was closed successfully: ", data);
+});
+'
+			>
+				<p>All Dialogs have the same basic structure</p>
+			</tds-card>
+		</div>
+	</div>
+</div>

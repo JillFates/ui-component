@@ -1,0 +1,44 @@
+<div class="modal dynamic-host-component">
+    <div class="modal-dialog"
+         [ngClass]="{
+            'modal-sm': modalConfigurationModel.modalSize === modalSize.SM,
+            'modal-lg': modalConfigurationModel.modalSize === modalSize.LG,
+            'modal-xl': modalConfigurationModel.modalSize === modalSize.XL
+         }"
+         role="dialog" aria-hidden="true">
+        <div class="modal-content">
+            <div class="modal-header" [ngClass]="{  'modal-no-action-buttons': !showLeftActionButtonsPanel}">
+                <button aria-label="Close" class="close" type="button">
+                    <clr-icon aria-hidden="true" shape="close" (click)="onDismiss()"></clr-icon>
+                </button>
+                <h3 class="modal-title" *ngIf="modalConfigurationModel.title">{{modalConfigurationModel.title}}</h3>
+            </div>
+            <div class="modal-body" [ngClass]="{  'modal-no-action-buttons': !showLeftActionButtonsPanel}">
+                <ng-template tdsDynamicDialog></ng-template>
+            </div>
+            <div class="modal-footer" *ngIf="showContextButtons " [ngClass]="{  'modal-no-action-buttons': !showLeftActionButtonsPanel}">
+                <ng-template ngFor let-contextButton [ngForOf]="currentDialogComponentInstance.buttons">
+                    <tds-button
+                            *ngIf="((contextButton.show !== undefined)? contextButton.show : true) && contextButton.type === dialogButtonType.CONTEXT"
+                            icon="{{contextButton.icon}}"
+                            [disabled]="contextButton.disabled"
+                            (click)="contextButton.action()">
+                        {{contextButton.text}}
+                    </tds-button>
+                </ng-template>
+            </div>
+            <div class="modal-sidenav"*ngIf="showActionButtons">
+                <ng-template ngFor let-actionButton [ngForOf]="currentDialogComponentInstance.buttons">
+                    <tds-button
+                            *ngIf="((actionButton.show !== undefined)? actionButton.show : true) && actionButton.type === dialogButtonType.ACTION"
+                            icon="{{actionButton.icon}}"
+                            [disabled]="actionButton.disabled"
+                            [flat]="true"
+                            (click)="actionButton.action()">
+                    </tds-button>
+                </ng-template>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal-backdrop" aria-hidden="true" *ngIf="isDialogOpen && modalConfigurationModel.showBackground"></div>
