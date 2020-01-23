@@ -47,20 +47,14 @@ export class ReactiveButtonsDialogComponent extends Dialog implements OnInit {
 	 * Enable the Disabled Button
 	 */
 	public enableSave(): void {
-		const saveButton = this.buttons.find( (button: DialogButtonModel) => {
-			return button.name === 'save';
-		});
-		saveButton.disabled = false;
+		this.changeButton('save', {disabled: false});
 	}
 
 	/**
 	 * Show the hidden delete button
 	 */
 	public showDelete(): void {
-		const saveButton = this.buttons.find( (button: DialogButtonModel) => {
-			return button.name === 'delete';
-		});
-		saveButton.show = true;
+		this.changeButton('delete', {show: true});
 	}
 
 	/**

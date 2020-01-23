@@ -32,10 +32,16 @@ export abstract class Dialog {
 
 	/**
 	 * Override a button from the list
+	 * @param name
 	 * @param dialogButtonModel
 	 */
-	protected changeButton(dialogButtonModel: DialogButtonModel): void {
-		//
+	protected changeButton(name: string, dialogButtonModel: DialogButtonModel): void {
+		const button = this.buttons.find((buttonModel: DialogButtonModel) => {
+			return buttonModel.name === name;
+		});
+		if (button) {
+			Object.assign(button, dialogButtonModel);
+		}
 	}
 
 }
