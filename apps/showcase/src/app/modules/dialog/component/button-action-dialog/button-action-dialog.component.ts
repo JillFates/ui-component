@@ -16,7 +16,7 @@ export class ButtonActionDialogComponent extends Dialog implements OnInit {
 		const editButton: DialogButtonModel = {
 			name: 'save',
 			icon: 'floppy',
-			// show? Do You have the Permission?
+			disabled: true,
 			action: this.onAccept.bind(this)
 		};
 
@@ -29,6 +29,7 @@ export class ButtonActionDialogComponent extends Dialog implements OnInit {
 		const trashButton: DialogButtonModel = {
 			name: 'delete',
 			icon: 'trash',
+			show: false,
 			action: this.onCancel.bind(this)
 		};
 

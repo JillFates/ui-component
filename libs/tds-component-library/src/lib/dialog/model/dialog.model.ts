@@ -66,8 +66,9 @@ export enum ModalSize {
  */
 export class DialogButtonModel {
 	public name?: string;
+	public text?: string;
 	public icon?: string;
 	public show?: boolean;
-	public text?: string;
+	public disabled?: boolean;
 	public action?: Function;
 }

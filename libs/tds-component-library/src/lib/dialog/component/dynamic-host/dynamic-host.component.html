@@ -17,20 +17,26 @@
                 <ng-template tdsDynamicDialog></ng-template>
             </div>
             <div class="modal-footer" *ngIf="showContextButtons " [ngClass]="{  'modal-no-action-buttons': !showLeftActionButtonsPanel}">
-                <tds-button
-                        *ngFor="let contextButton of currentDialogComponentInstance.contextButtons"
-                        icon="{{contextButton.icon}}"
-                        (click)="contextButton.action()">
-                    {{contextButton.text}}
-                </tds-button>
+                <ng-template ngFor let-contextButton [ngForOf]="currentDialogComponentInstance.contextButtons">
+                    <tds-button
+                            *ngIf="((contextButton.show !== undefined)? contextButton.show : true)"
+                            icon="{{contextButton.icon}}"
+                            [disabled]="contextButton.disabled"
+                            (click)="contextButton.action()">
+                        {{contextButton.text}}
+                    </tds-button>
+                </ng-template>
             </div>
             <div class="modal-sidenav"*ngIf="showActionButtons">
-                <tds-button
-                        *ngFor="let actionButton of currentDialogComponentInstance.actionButtons"
-                        icon="{{actionButton.icon}}"
-                        [flat]="true"
-                        (click)="actionButton.action()">
-                </tds-button>
+                <ng-template ngFor let-actionButton [ngForOf]="currentDialogComponentInstance.actionButtons">
+                    <tds-button
+                            *ngIf="((actionButton.show !== undefined)? actionButton.show : true)"
+                            icon="{{actionButton.icon}}"
+                            [disabled]="actionButton.disabled"
+                            [flat]="true"
+                            (click)="actionButton.action()">
+                    </tds-button>
+                </ng-template>
             </div>
         </div>
     </div>
