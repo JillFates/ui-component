@@ -16,7 +16,6 @@ import {DynamicHostModel} from '../../model/dynamic-host.model';
 
 @Component({
 	selector: 'tds-dialog',
-	styleUrls: ['./dialog.component.scss'],
 	templateUrl: './dialog.component.html',
 })
 export class DialogComponent {

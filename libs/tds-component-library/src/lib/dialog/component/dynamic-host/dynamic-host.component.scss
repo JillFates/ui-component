@@ -45,7 +45,7 @@
       -webkit-box-pack: end;
       -ms-flex-pack: end;
       justify-content: flex-end;
-      border-top: 1px solid #f4f4f4;
+      border-top: 1px solid $color-border-dialog;
       padding-top: 12px;
       padding-bottom: 13px;
       padding-right: 18px;
@@ -58,11 +58,11 @@
       bottom: 0;
       left: 0;
       padding-top: 12px;
-      border: solid 1px #d9e4ea;
+      border: solid 1px $color-head;
       border-width: 0 1px 0 0;
 
       .btn.btn-link {
-        color: #000 !important;
+        color: $color-black !important;
         height: 40px !important;
         width: 40px;
         margin: 0;
