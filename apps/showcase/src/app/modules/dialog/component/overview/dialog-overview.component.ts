@@ -13,6 +13,7 @@ import {ButtonActionContextDialogComponent} from '../button-action-context-dialo
 import {
 	ModalSize
 } from '../../../../../../../../libs/tds-component-library/src/lib/dialog/model/dialog.model';
+import {ReactiveButtonsDialogComponent} from '../reactive-buttons-dialog/reactive-buttons-dialog.component';
 
 @Component({
 	selector: 'app-dialog-overview',
@@ -145,6 +146,23 @@ export class DialogOverviewComponent {
 			}
 		}).subscribe((data: any) => {
 			console.log('Action and Context Buttons Dialog was closed successfully: ', data);
+		});
+	}
+
+	/**
+	 * Open a Reactive Buttons Dialog
+	 */
+	public openReactiveActionButtonDialog(): void {
+		this.dialogService.open({
+			componentFactoryResolver: this.componentFactoryResolver,
+			component: ReactiveButtonsDialogComponent,
+			data: null,
+			modalConfiguration: {
+				title: 'Reactive Buttons',
+				modalSize: ModalSize.MD
+			}
+		}).subscribe((data: any) => {
+			console.log('Reactive Buttons Dialog was closed successfully: ', data);
 		});
 	}
 

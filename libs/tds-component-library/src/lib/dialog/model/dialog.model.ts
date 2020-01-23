@@ -61,6 +61,10 @@ export enum ModalSize {
 	XL = 'xl'
 }
 
+export enum DialogButtonType {
+	ACTION = 'action',
+	CONTEXT = ''
+}
 /**
  * Dialog Model to Open
  */
@@ -68,6 +72,7 @@ export class DialogButtonModel {
 	public name?: string;
 	public text?: string;
 	public icon?: string;
+	public type?: DialogButtonType;
 	public show?: boolean;
 	public disabled?: boolean;
 	public action?: Function;

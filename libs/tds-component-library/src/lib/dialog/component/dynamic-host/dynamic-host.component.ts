@@ -4,7 +4,7 @@
 // Angular
 import {Component, OnInit, ViewChild, ViewEncapsulation} from '@angular/core';
 // Modal
-import {ModalConfigurationModel, ModalSize} from '../../model/dialog.model';
+import {DialogButtonType, ModalConfigurationModel, ModalSize} from '../../model/dialog.model';
 // Directive
 import {DynamicHostDirective} from '../../directive/dynamic-host.directive';
 import {Dialog} from '../../model/dialog.interface';
@@ -24,6 +24,7 @@ export class DynamicHostComponent implements OnInit {
 	public showLeftActionButtonsPanel = false;
 	public showActionButtons = false;
 	public showContextButtons = false;
+	public dialogButtonType = DialogButtonType;
 
 	@ViewChild(DynamicHostDirective, {static: true}) dynamicContent: DynamicHostDirective;
 

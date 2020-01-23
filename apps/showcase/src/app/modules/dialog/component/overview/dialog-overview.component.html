@@ -1,6 +1,6 @@
 <div class="button-overview-component">
 	<h2>Dialog Component</h2>
-	<p>Based on the <a target="_blank" href="https://v2.clarity.design/modals">Clarity Modals</a></p>
+	<p>Based on the <a target="_blank" href="https://v2.clarity.design/modals">Clarity Modals</a> with extensible Action buttons and configurable options.</p>
 	<div class="clr-row">
 		<div class="clr-col-12">
 			<h3>Examples</h3>
@@ -33,6 +33,11 @@
 				<tds-button (click)="openActionButtonDialog()">Action Button Open</tds-button>
 				<tds-button (click)="openContextButtonDialog()">Context Button Open</tds-button>
 				<tds-button (click)="openActionContextButtonDialog()">Action and Context Buttons Open</tds-button>
+			</tds-card>
+		</div>
+		<div class="clr-col-12">
+			<tds-card title="Reactive Buttons">
+				<tds-button (click)="openReactiveActionButtonDialog()">Open</tds-button>
 			</tds-card>
 		</div>
 		<div class="clr-col-12">

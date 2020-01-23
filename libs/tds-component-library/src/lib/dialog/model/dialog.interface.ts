@@ -32,4 +32,12 @@ export abstract class Dialog {
 		this.successEvent.emit(result);
 	}
 
+	/**
+	 * Override a button from the list
+	 * @param dialogButtonModel
+	 */
+	protected changeButton(dialogButtonModel: DialogButtonModel): void {
+		//
+	}
+
 }

@@ -15,6 +15,7 @@ import {FourthLayerDialogComponent} from './component/fourth-layer/fourth-layer-
 import {ButtonActionContextDialogComponent} from './component/button-action-context-dialog/button-action-context-dialog.component';
 import {ButtonActionDialogComponent} from './component/button-action-dialog/button-action-dialog.component';
 import {ButtonContextDialogComponent} from './component/button-context-dialog/button-context-dialog.component';
+import {ReactiveButtonsDialogComponent} from './component/reactive-buttons-dialog/reactive-buttons-dialog.component';
 
 @NgModule({
 	imports: [
@@ -33,7 +34,8 @@ import {ButtonContextDialogComponent} from './component/button-context-dialog/bu
 		NoBackgroundDialogComponent,
 		ButtonActionDialogComponent,
 		ButtonContextDialogComponent,
-		ButtonActionContextDialogComponent
+		ButtonActionContextDialogComponent,
+		ReactiveButtonsDialogComponent
 	],
 	exports: [
 		DialogOverviewComponent,
@@ -44,7 +46,8 @@ import {ButtonContextDialogComponent} from './component/button-context-dialog/bu
 		NoBackgroundDialogComponent,
 		ButtonActionDialogComponent,
 		ButtonContextDialogComponent,
-		ButtonActionContextDialogComponent
+		ButtonActionContextDialogComponent,
+		ReactiveButtonsDialogComponent
 	],
 	entryComponents: [
 		BasicDialogComponent,
@@ -54,7 +57,8 @@ import {ButtonContextDialogComponent} from './component/button-context-dialog/bu
 		NoBackgroundDialogComponent,
 		ButtonActionDialogComponent,
 		ButtonContextDialogComponent,
-		ButtonActionContextDialogComponent
+		ButtonActionContextDialogComponent,
+		ReactiveButtonsDialogComponent
 	]
 })
 export class DialogModule {
