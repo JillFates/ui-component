@@ -1,6 +1,11 @@
+// Angular
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+// Model
 import {Dialog} from '../../../../../../../../libs/tds-component-library/src/lib/dialog/model/dialog.interface';
-import {DialogButtonModel} from '../../../../../../../../libs/tds-component-library/src/lib/dialog/model/dialog.model';
+import {
+	DialogButtonModel,
+	DialogButtonType
+} from '../../../../../../../../libs/tds-component-library/src/lib/dialog/model/dialog.model';
 
 @Component({
 	selector: 'app-button-context-dialog',
@@ -8,8 +13,7 @@ import {DialogButtonModel} from '../../../../../../../../libs/tds-component-libr
 })
 export class ButtonContextDialogComponent extends Dialog implements OnInit {
 	@Input() data: any;
-	@Input() contextButtons: any;
-	@Input() actionButtons: any;
+	@Input() buttons: any;
 	@Output() successEvent: EventEmitter<any> = new EventEmitter<any>();
 
 	ngOnInit(): void {
@@ -17,11 +21,12 @@ export class ButtonContextDialogComponent extends Dialog implements OnInit {
 			name: 'calendar',
 			icon: 'calendar',
 			text: 'Appointments',
+			type: DialogButtonType.CONTEXT,
 			// show? Do You have the Permission?
 			action: this.onCancel.bind(this)
 		};
 
-		this.contextButtons.push(calendarButton);
+		this.buttons.push(calendarButton);
 	}
 
 	/**

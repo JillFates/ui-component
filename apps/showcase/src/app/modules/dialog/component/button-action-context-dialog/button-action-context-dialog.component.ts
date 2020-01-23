@@ -1,6 +1,11 @@
+// Angular
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+// Model
 import {Dialog} from '../../../../../../../../libs/tds-component-library/src/lib/dialog/model/dialog.interface';
-import {DialogButtonModel} from '../../../../../../../../libs/tds-component-library/src/lib/dialog/model/dialog.model';
+import {
+	DialogButtonModel,
+	DialogButtonType
+} from '../../../../../../../../libs/tds-component-library/src/lib/dialog/model/dialog.model';
 
 @Component({
 	selector: 'app-button-action-context-dialog',
@@ -8,14 +13,14 @@ import {DialogButtonModel} from '../../../../../../../../libs/tds-component-libr
 })
 export class ButtonActionContextDialogComponent extends Dialog implements OnInit {
 	@Input() data: any;
-	@Input() contextButtons: any;
-	@Input() actionButtons: any;
+	@Input() buttons: any;
 	@Output() successEvent: EventEmitter<any> = new EventEmitter<any>();
 
 	ngOnInit(): void {
 		const editButton: DialogButtonModel = {
 			name: 'save',
 			icon: 'floppy',
+			type: DialogButtonType.ACTION,
 			// show? Do You have the Permission?
 			action: this.onAccept.bind(this)
 		};
@@ -23,12 +28,14 @@ export class ButtonActionContextDialogComponent extends Dialog implements OnInit
 		const cancelButton: DialogButtonModel = {
 			name: 'cancel',
 			icon: 'ban',
+			type: DialogButtonType.ACTION,
 			action: this.onCancel.bind(this)
 		};
 
 		const trashButton: DialogButtonModel = {
 			name: 'delete',
 			icon: 'trash',
+			type: DialogButtonType.ACTION,
 			action: this.onCancel.bind(this)
 		};
 
@@ -36,15 +43,15 @@ export class ButtonActionContextDialogComponent extends Dialog implements OnInit
 			name: 'calendar',
 			icon: 'calendar',
 			text: 'Appointments',
+			type: DialogButtonType.CONTEXT,
 			// show? Do You have the Permission?
 			action: this.onCancel.bind(this)
 		};
 
-		this.contextButtons.push(calendarButton);
-
-		this.actionButtons.push(editButton);
-		this.actionButtons.push(trashButton);
-		this.actionButtons.push(cancelButton);
+		this.buttons.push(editButton);
+		this.buttons.push(trashButton);
+		this.buttons.push(cancelButton);
+		this.buttons.push(calendarButton);
 	}
 
 	/**

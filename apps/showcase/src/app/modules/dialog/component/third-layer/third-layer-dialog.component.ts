@@ -3,9 +3,10 @@ import {Component, ComponentFactoryResolver, EventEmitter, Input, Output} from '
 // Model
 import {Dialog} from '../../../../../../../../libs/tds-component-library/src/lib/dialog/model/dialog.interface';
 import {ModalSize} from '../../../../../../../../libs/tds-component-library/src/lib/dialog/model/dialog.model';
+// Component
+import {FourthLayerDialogComponent} from '../fourth-layer/fourth-layer-dialog.component';
 // Service
 import {DialogService} from '../../../../../../../../libs/tds-component-library/src/lib/dialog/service/dialog.service';
-import {FourthLayerDialogComponent} from '../fourth-layer/fourth-layer-dialog.component';
 
 @Component({
 	selector: 'app-third-layer-dialog',

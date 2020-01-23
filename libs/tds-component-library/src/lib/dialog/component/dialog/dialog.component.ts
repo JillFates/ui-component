@@ -70,8 +70,7 @@ export class DialogComponent {
 		const currentDialogComponentInstance = <Dialog>componentRef.instance;
 		currentDialogComponentInstance.data = dynamicHostModel.dialogModel.data;
 
-		currentDialogComponentInstance.actionButtons = [];
-		currentDialogComponentInstance.contextButtons = [];
+		currentDialogComponentInstance.buttons = [];
 
 		// Overwrite the property configuration
 		if (dynamicHostModel.dialogModel.modalConfiguration) {

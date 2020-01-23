@@ -4,7 +4,7 @@
 // Angular
 import {Component, OnInit, ViewChild, ViewEncapsulation} from '@angular/core';
 // Modal
-import {DialogButtonType, ModalConfigurationModel, ModalSize} from '../../model/dialog.model';
+import {DialogButtonModel, DialogButtonType, ModalConfigurationModel, ModalSize} from '../../model/dialog.model';
 // Directive
 import {DynamicHostDirective} from '../../directive/dynamic-host.directive';
 import {Dialog} from '../../model/dialog.interface';
@@ -30,20 +30,24 @@ export class DynamicHostComponent implements OnInit {
 
 	ngOnInit(): void {
 		setTimeout(() => {
-			this.showLeftActionButtonsPanel = !(!this.currentDialogComponentInstance ||
-				!this.currentDialogComponentInstance.actionButtons ||
-				this.currentDialogComponentInstance.actionButtons.length === 0);
+			if (!this.currentDialogComponentInstance) {
+				// if instance is empty, does not show anything
+				this.showActionButtons = this.showContextButtons = this.showLeftActionButtonsPanel = false;
+			} else {
+				const actionButtons = this.currentDialogComponentInstance.buttons.filter((button: DialogButtonModel) => {
+					return button.type === DialogButtonType.ACTION;
+				});
+				const contextButtons = this.currentDialogComponentInstance.buttons.filter((button: DialogButtonModel) => {
+					return button.type === DialogButtonType.CONTEXT;
+				});
 
-			if (this.currentDialogComponentInstance) {
-				this.showActionButtons = (
-					this.currentDialogComponentInstance.actionButtons &&
-					this.currentDialogComponentInstance.actionButtons.length > 0
-				);
+				if (!actionButtons || actionButtons.length === 0) {
+					this.showLeftActionButtonsPanel = false;
+				} else if (actionButtons && actionButtons.length > 0) {
+					this.showLeftActionButtonsPanel = this.showActionButtons = true;
+				}
 
-				this.showContextButtons = (
-					this.currentDialogComponentInstance.contextButtons &&
-					this.currentDialogComponentInstance.contextButtons.length > 0
-				);
+				this.showContextButtons = (contextButtons && contextButtons.length > 0);
 			}
 		});
 	}

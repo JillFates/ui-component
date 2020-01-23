@@ -1,6 +1,11 @@
+// Angular
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+// Model
 import {Dialog} from '../../../../../../../../libs/tds-component-library/src/lib/dialog/model/dialog.interface';
-import {DialogButtonModel} from '../../../../../../../../libs/tds-component-library/src/lib/dialog/model/dialog.model';
+import {
+	DialogButtonModel,
+	DialogButtonType
+} from '../../../../../../../../libs/tds-component-library/src/lib/dialog/model/dialog.model';
 
 @Component({
 	selector: 'app-button-action-dialog',
@@ -8,8 +13,7 @@ import {DialogButtonModel} from '../../../../../../../../libs/tds-component-libr
 })
 export class ButtonActionDialogComponent extends Dialog implements OnInit {
 	@Input() data: any;
-	@Input() contextButtons: any;
-	@Input() actionButtons: any;
+	@Input() buttons: any;
 	@Output() successEvent: EventEmitter<any> = new EventEmitter<any>();
 
 	ngOnInit(): void {
@@ -17,12 +21,14 @@ export class ButtonActionDialogComponent extends Dialog implements OnInit {
 			name: 'save',
 			icon: 'floppy',
 			disabled: true,
+			type: DialogButtonType.ACTION,
 			action: this.onAccept.bind(this)
 		};
 
 		const cancelButton: DialogButtonModel = {
 			name: 'cancel',
 			icon: 'ban',
+			type: DialogButtonType.ACTION,
 			action: this.onCancel.bind(this)
 		};
 
@@ -30,12 +36,13 @@ export class ButtonActionDialogComponent extends Dialog implements OnInit {
 			name: 'delete',
 			icon: 'trash',
 			show: false,
+			type: DialogButtonType.ACTION,
 			action: this.onCancel.bind(this)
 		};
 
-		this.actionButtons.push(editButton);
-		this.actionButtons.push(trashButton);
-		this.actionButtons.push(cancelButton);
+		this.buttons.push(editButton);
+		this.buttons.push(trashButton);
+		this.buttons.push(cancelButton);
 	}
 
 	/**

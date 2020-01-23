@@ -1,6 +1,7 @@
+// Angular
 import {Component, EventEmitter, Input, Output} from '@angular/core';
+// Model
 import {Dialog} from '../../../../../../../../libs/tds-component-library/src/lib/dialog/model/dialog.interface';
-import {EventService} from '../../../../../../../../libs/tds-component-library/src/lib/service/event-service/event.service';
 
 @Component({
 	selector: 'app-no-background-dialog',
@@ -10,15 +11,6 @@ import {EventService} from '../../../../../../../../libs/tds-component-library/s
 export class NoBackgroundDialogComponent extends Dialog {
 	@Input() data: any;
 	@Output() successEvent: EventEmitter<any> = new EventEmitter<any>();
-
-	/**
-	 * Close the Dialog properly
-	 * @param result
-	 */
-	public onAccept(): void {
-		const data = {};
-		super.onAcceptSuccess(data);
-	}
 
 	/**
 	 * Close the Dialog by Cancel/Close/Dismiss

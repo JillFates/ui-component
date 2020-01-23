@@ -5,9 +5,9 @@ import {Dialog} from '../../../../../../../../libs/tds-component-library/src/lib
 import {ModalSize} from '../../../../../../../../libs/tds-component-library/src/lib/dialog/model/dialog.model';
 // Component
 import {BasicDialogComponent} from '../basic-dialog/basic-dialog.component';
+import {ThirdLayerDialogComponent} from '../third-layer/third-layer-dialog.component';
 // Service
 import {DialogService} from '../../../../../../../../libs/tds-component-library/src/lib/dialog/service/dialog.service';
-import {ThirdLayerDialogComponent} from '../third-layer/third-layer-dialog.component';
 
 @Component({
 	selector: 'app-multiple-dialog',

@@ -11,10 +11,6 @@ export class FourthLayerDialogComponent extends Dialog {
 	@Input() data: any;
 	@Output() successEvent: EventEmitter<any> = new EventEmitter<any>();
 
-	constructor() {
-		super();
-	}
-
 	/**
 	 * Close the Dialog by Cancel/Close/Dismiss
 	 * @param result

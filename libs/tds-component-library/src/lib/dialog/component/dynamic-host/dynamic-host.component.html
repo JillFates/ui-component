@@ -17,7 +17,7 @@
                 <ng-template tdsDynamicDialog></ng-template>
             </div>
             <div class="modal-footer" *ngIf="showContextButtons " [ngClass]="{  'modal-no-action-buttons': !showLeftActionButtonsPanel}">
-                <ng-template ngFor let-contextButton [ngForOf]="currentDialogComponentInstance.contextButtons">
+                <ng-template ngFor let-contextButton [ngForOf]="currentDialogComponentInstance.buttons">
                     <tds-button
                             *ngIf="((contextButton.show !== undefined)? contextButton.show : true) && contextButton.type === dialogButtonType.CONTEXT"
                             icon="{{contextButton.icon}}"
@@ -28,7 +28,7 @@
                 </ng-template>
             </div>
             <div class="modal-sidenav"*ngIf="showActionButtons">
-                <ng-template ngFor let-actionButton [ngForOf]="currentDialogComponentInstance.actionButtons">
+                <ng-template ngFor let-actionButton [ngForOf]="currentDialogComponentInstance.buttons">
                     <tds-button
                             *ngIf="((actionButton.show !== undefined)? actionButton.show : true) && actionButton.type === dialogButtonType.ACTION"
                             icon="{{actionButton.icon}}"
