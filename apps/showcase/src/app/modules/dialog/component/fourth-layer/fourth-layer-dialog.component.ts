@@ -16,15 +16,6 @@ export class FourthLayerDialogComponent extends Dialog {
 	}
 
 	/**
-	 * Close the Dialog properly
-	 * @param result
-	 */
-	public onAccept(): void {
-		const data = {};
-		super.onAcceptSuccess(data);
-	}
-
-	/**
 	 * Close the Dialog by Cancel/Close/Dismiss
 	 * @param result
 	 */

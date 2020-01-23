@@ -35,6 +35,11 @@
 				<tds-button (click)="openActionContextButtonDialog()">Action and Context Buttons Open</tds-button>
 			</tds-card>
 		</div>
+		<div class="clr-col-12">
+			<tds-card title="Headless Dialogs">
+				<tds-button (click)="openHeadlessDialog()">Open</tds-button>
+			</tds-card>
+		</div>
 	</div>
 
 	<div class="clr-row">
@@ -59,6 +64,7 @@ this.dialogService.open({
 	component: BasicDialogComponent,
 	data: null,
 	modalConfiguration: {
+		title: "Dialog",
 		modalSize: ModalSize.SM,
 	}
 }).subscribe((data: any) => {

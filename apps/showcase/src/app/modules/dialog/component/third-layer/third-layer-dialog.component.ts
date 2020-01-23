@@ -22,15 +22,6 @@ export class ThirdLayerDialogComponent extends Dialog {
 	}
 
 	/**
-	 * Close the Dialog properly
-	 * @param result
-	 */
-	public onAccept(): void {
-		const data = {};
-		super.onAcceptSuccess(data);
-	}
-
-	/**
 	 * Close the Dialog by Cancel/Close/Dismiss
 	 * @param result
 	 */
@@ -57,6 +48,7 @@ export class ThirdLayerDialogComponent extends Dialog {
 			component: FourthLayerDialogComponent,
 			data: null,
 			modalConfiguration: {
+				title: 'Last Chance',
 				modalSize: ModalSize.SM
 			}
 		}).subscribe((data: any) => {

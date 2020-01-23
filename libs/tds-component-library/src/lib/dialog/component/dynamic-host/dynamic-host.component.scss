@@ -23,10 +23,18 @@
       padding-left: 0px !important;
     }
 
+    .modal-no-action-buttons.modal-footer {
+      margin-left: 0px !important;
+    }
+
     .modal-header {
       padding-bottom: 0px;
       padding-top: 20px;
       padding-right: 24px;
+      .modal-title {
+        padding-left: 0px;
+        font-weight: 500;
+      }
     }
 
     .modal-body {

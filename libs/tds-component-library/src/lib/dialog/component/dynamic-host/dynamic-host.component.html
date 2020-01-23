@@ -7,23 +7,30 @@
          }"
          role="dialog" aria-hidden="true">
         <div class="modal-content">
-            <div class="modal-header" [ngClass]="{  'modal-no-action-buttons': showLeftActionButtonsPanel}">
+            <div class="modal-header" [ngClass]="{  'modal-no-action-buttons': !showLeftActionButtonsPanel}">
                 <button aria-label="Close" class="close" type="button">
-                    <clr-icon aria-hidden="true" shape="close" (click)="onCancel()"></clr-icon>
+                    <clr-icon aria-hidden="true" shape="close" (click)="onDismiss()"></clr-icon>
                 </button>
-                <h3 class="modal-title">I have a nice title</h3>
+                <h3 class="modal-title" *ngIf="modalConfigurationModel.title">{{modalConfigurationModel.title}}</h3>
             </div>
-            <div class="modal-body" [ngClass]="{  'modal-no-action-buttons': showLeftActionButtonsPanel}">
+            <div class="modal-body" [ngClass]="{  'modal-no-action-buttons': !showLeftActionButtonsPanel}">
                 <ng-template tdsDynamicDialog></ng-template>
             </div>
-            <div class="modal-footer" *ngIf="showContextButtons ">
-                <tds-button icon="user">Inner Action</tds-button>
+            <div class="modal-footer" *ngIf="showContextButtons " [ngClass]="{  'modal-no-action-buttons': !showLeftActionButtonsPanel}">
+                <tds-button
+                        *ngFor="let contextButton of currentDialogComponentInstance.contextButtons"
+                        icon="{{contextButton.icon}}"
+                        (click)="contextButton.action()">
+                    {{contextButton.text}}
+                </tds-button>
             </div>
             <div class="modal-sidenav"*ngIf="showActionButtons">
-                <tds-button icon="pencil" [flat]="true"></tds-button>
-                <tds-button icon="floppy" [flat]="true" (click)="onAccept()"></tds-button>
-                <tds-button icon="trash" [flat]="true"></tds-button>
-                <tds-button icon="ban" [flat]="true" (click)="onCancel()"></tds-button>
+                <tds-button
+                        *ngFor="let actionButton of currentDialogComponentInstance.actionButtons"
+                        icon="{{actionButton.icon}}"
+                        [flat]="true"
+                        (click)="actionButton.action()">
+                </tds-button>
             </div>
         </div>
     </div>

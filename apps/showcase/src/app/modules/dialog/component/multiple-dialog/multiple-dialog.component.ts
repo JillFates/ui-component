@@ -24,15 +24,6 @@ export class MultipleDialogComponent extends Dialog {
 	}
 
 	/**
-	 * Close the Dialog properly
-	 * @param result
-	 */
-	public onAccept(): void {
-		const data = {};
-		super.onAcceptSuccess(data);
-	}
-
-	/**
 	 * Close the Dialog by Cancel/Close/Dismiss
 	 * @param result
 	 */
@@ -59,6 +50,7 @@ export class MultipleDialogComponent extends Dialog {
 			component: BasicDialogComponent,
 			data: null,
 			modalConfiguration: {
+				title: 'Blue Pill choice',
 				modalSize: ModalSize.SM
 			}
 		}).subscribe((data: any) => {
@@ -75,6 +67,7 @@ export class MultipleDialogComponent extends Dialog {
 			component: ThirdLayerDialogComponent,
 			data: null,
 			modalConfiguration: {
+				title: 'Red Pill choice',
 				modalSize: ModalSize.MD
 			}
 		}).subscribe((data: any) => {

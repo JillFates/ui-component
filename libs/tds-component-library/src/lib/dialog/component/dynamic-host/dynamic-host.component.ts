@@ -29,7 +29,7 @@ export class DynamicHostComponent implements OnInit {
 
 	ngOnInit(): void {
 		setTimeout(() => {
-			this.showLeftActionButtonsPanel = (!this.currentDialogComponentInstance ||
+			this.showLeftActionButtonsPanel = !(!this.currentDialogComponentInstance ||
 				!this.currentDialogComponentInstance.actionButtons ||
 				this.currentDialogComponentInstance.actionButtons.length === 0);
 
@@ -48,20 +48,11 @@ export class DynamicHostComponent implements OnInit {
 	}
 
 	/**
-	 * On Accept
+	 * On Dismiss
 	 */
-	public onAccept(): void {
+	public onDismiss(): void {
 		if (this.currentDialogComponentInstance) {
-			this.currentDialogComponentInstance.onAccept();
-		}
-	}
-
-	/**
-	 * On Cancel
-	 */
-	public onCancel(): void {
-		if (this.currentDialogComponentInstance) {
-			this.currentDialogComponentInstance.onCancel();
+			this.currentDialogComponentInstance.onDismiss();
 		}
 	}
 }

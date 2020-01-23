@@ -2,6 +2,7 @@ import {ComponentFactoryResolver} from '@angular/core';
 import {Observer} from 'rxjs';
 
 export class ModalConfigurationModel {
+	public title?: string;
 	public showBackground?: boolean;
 	public modalSize?: ModalSize;
 	// Helps to determinate if the default state was show or hide
@@ -48,10 +49,25 @@ export enum DialogEventType {
 	CLOSE = 'dialog-event-type-close'
 }
 
+export enum DialogExit {
+	ACCEPT = 'accept',
+	CLOSE = 'close'
+}
+
 export enum ModalSize {
 	SM = 'sm',
-	MD = 'none',
+	MD = 'md',
 	LG = 'lg',
-	XL = 'xl',
-	CUSTOM = 'custom'
+	XL = 'xl'
+}
+
+/**
+ * Dialog Model to Open
+ */
+export class DialogButtonModel {
+	public name?: string;
+	public icon?: string;
+	public show?: boolean;
+	public text?: string;
+	public action?: Function;
 }

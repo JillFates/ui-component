@@ -38,6 +38,7 @@ export class DialogOverviewComponent {
 			component: BasicDialogComponent,
 			data: null,
 			modalConfiguration: {
+				title: 'Basic Dialog',
 				modalSize: ModalSize.SM
 			}
 		}).subscribe((data: any) => {
@@ -54,6 +55,7 @@ export class DialogOverviewComponent {
 			component: MultipleDialogComponent,
 			data: null,
 			modalConfiguration: {
+				title: 'Multiple Dialog',
 				modalSize: ModalSize.LG,
 			}
 		}).subscribe((data: any) => {
@@ -62,7 +64,7 @@ export class DialogOverviewComponent {
 	}
 
 	/**
-	 * Open a Multiple Dialog
+	 * Open a Dialog without Background
 	 */
 	public openNoBackgroundDialogs(): void {
 		this.dialogService.open({
@@ -70,6 +72,7 @@ export class DialogOverviewComponent {
 			component: NoBackgroundDialogComponent,
 			data: null,
 			modalConfiguration: {
+				title: 'No Background',
 				showBackground: false
 			}
 		}).subscribe((data: any) => {
@@ -86,15 +89,16 @@ export class DialogOverviewComponent {
 			component: BasicDialogComponent,
 			data: null,
 			modalConfiguration: {
+				title: 'Dialog Size ' + modelSize,
 				modalSize: modelSize
 			}
 		}).subscribe((data: any) => {
-			console.log('Basic Dialog with Size was closed successfully: ', data);
+			console.log('Dialog with Size was closed successfully: ', data);
 		});
 	}
 
 	/**
-	 * Open a Basic Dialog with different Size
+	 * Open an Dialog with Action Buttons
 	 */
 	public openActionButtonDialog(): void {
 		this.dialogService.open({
@@ -102,15 +106,16 @@ export class DialogOverviewComponent {
 			component: ButtonActionDialogComponent,
 			data: null,
 			modalConfiguration: {
+				title: 'Action Buttons',
 				modalSize: ModalSize.MD
 			}
 		}).subscribe((data: any) => {
-			console.log('Basic Dialog with Size was closed successfully: ', data);
+			console.log('Action Buttons Dialog was closed successfully: ', data);
 		});
 	}
 
 	/**
-	 * Open a Basic Dialog with different Size
+	 * Open an Dialog with Context Buttons
 	 */
 	public openContextButtonDialog(): void {
 		this.dialogService.open({
@@ -118,15 +123,16 @@ export class DialogOverviewComponent {
 			component: ButtonContextDialogComponent,
 			data: null,
 			modalConfiguration: {
+				title: 'Context Buttons',
 				modalSize: ModalSize.MD
 			}
 		}).subscribe((data: any) => {
-			console.log('Basic Dialog with Size was closed successfully: ', data);
+			console.log('Context Buttons Dialog was closed successfully: ', data);
 		});
 	}
 
 	/**
-	 * Open a Basic Dialog with different Size
+	 * Open an Dialog with Action and Context Buttons
 	 */
 	public openActionContextButtonDialog(): void {
 		this.dialogService.open({
@@ -134,10 +140,27 @@ export class DialogOverviewComponent {
 			component: ButtonActionContextDialogComponent,
 			data: null,
 			modalConfiguration: {
+				title: 'Action and Context Buttons',
 				modalSize: ModalSize.MD
 			}
 		}).subscribe((data: any) => {
-			console.log('Basic Dialog with Size was closed successfully: ', data);
+			console.log('Action and Context Buttons Dialog was closed successfully: ', data);
+		});
+	}
+
+	/**
+	 * Open a Headless Basic Dialog
+	 */
+	public openHeadlessDialog(): void {
+		this.dialogService.open({
+			componentFactoryResolver: this.componentFactoryResolver,
+			component: BasicDialogComponent,
+			data: null,
+			modalConfiguration: {
+				modalSize: ModalSize.SM
+			}
+		}).subscribe((data: any) => {
+			console.log('Headless Dialog was closed successfully: ', data);
 		});
 	}
 }
