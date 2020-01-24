@@ -8,9 +8,10 @@ import { HeaderActionButtonData } from 'libs/tds-component-library/src';
 })
 export class GridHeaderOverviewComponent implements OnInit {
 	public actionButtons: HeaderActionButtonData[];
+	disableClearFilters: Function;
 
 	constructor() {
-		//
+		this.disableClearFilters = this.disabledClearFilterImpl.bind(this);
 	}
 
 	ngOnInit(): void {
@@ -20,6 +21,13 @@ export class GridHeaderOverviewComponent implements OnInit {
 			{ icon: 'pencil', title: 'edit', disabled: false, show: true, onClick: this.editAlert },
 			{ icon: 'times', title: 'close', disabled: false, show: false, onClick: this.editAlert },
 		];
+	}
+
+	/**
+	 * Function to check if clear filters should be disabled:
+	 */
+	disabledClearFilterImpl(): boolean {
+		return false;
 	}
 
 	public createAlert = (): void => {
