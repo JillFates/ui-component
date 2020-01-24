@@ -8,7 +8,7 @@ import { HeaderActionButtonData } from '../models/header-action-button-data';
 })
 export class GridHeaderActionButtonsComponent implements OnInit {
 	@Input() actionButtons: HeaderActionButtonData[];
-	@Input() disableClearFilters: () => boolean;
+	@Input() disableClearFilters: () => boolean | boolean;
 	@Input() hasClearAllFilters = true;
 	@Output() clearFilters: EventEmitter<void> = new EventEmitter<void>();
 	@Output() refresh: EventEmitter<void> = new EventEmitter<void>();
@@ -27,7 +27,7 @@ export class GridHeaderActionButtonsComponent implements OnInit {
 				{
 					icon: 'times',
 					title: 'Clear filters' ,
-					disabled: this.disableClearFilters  || false,
+					disabled: this.disableClearFilters,
 					show: true,
 					onClick: this.onClearFilters.bind(this),
 				}
