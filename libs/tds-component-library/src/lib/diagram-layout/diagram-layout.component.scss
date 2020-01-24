@@ -85,40 +85,22 @@
     z-index: 999;
     box-shadow: 0 0 10px rgba( 0, 0, 0, .4 );
     position: absolute;
-    width: auto;
+    max-width: 7rem;
     height: auto;
     min-width: 300px;
     border-radius: 5px;
+    text-overflow: ellipsis;
 
-    .card-header > p {
-      word-break: break-all;
-      text-align: center;
-      font-size: 1.2rem;
-    }
-
-    .diagram-card-header {
-      margin-top: 0;
-      width: auto;
-      height: auto;
-      min-height: 45px;
-      padding: 0 3px 0 3px;
-      text-align: center;
-      font-size: 1.5em;
-      background-color: #0b63a8;
-      color: #fff;
-      word-wrap: break-spaces;
-      font-weight: bold;
-      h4 {
-        word-break: break-word;
+    .card-header {
+      padding: .3rem .4rem;
+      label {
+        display: block;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        text-align: center;
+        font-size: .90rem;
       }
-    }
 
-    .diagram-card-content {
-      width: auto;
-      padding: 5px;
-      font-size: 1em;
-      background-color: #fff;
-      color: #333;
     }
 
     .tooltip-data-label {
