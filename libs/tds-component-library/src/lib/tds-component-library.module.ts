@@ -10,7 +10,7 @@ import {GridModule} from '@progress/kendo-angular-grid';
 import {DateInputsModule} from '@progress/kendo-angular-dateinputs';
 import {DropDownsModule} from '@progress/kendo-angular-dropdowns';
 import {TdsFontawesomeModule} from './tds-fontawesome.module';
-// TDS Component Library
+import {NgResizableModule} from 'ngresizable';
 // Component
 import {CardComponent} from './card/card.component';
 import {ButtonComponent} from './button/button.component';
@@ -26,6 +26,7 @@ import {DialogComponent} from './dialog/component/dialog/dialog.component';
 // Directive
 import {DynamicHostComponent} from './dialog/component/dynamic-host/dynamic-host.component';
 import {DynamicHostDirective} from './dialog/directive/dynamic-host.directive';
+import {DraggableDirective} from './dialog/directive/draggable.directive';
 
 @NgModule({
 	imports: [
@@ -37,7 +38,8 @@ import {DynamicHostDirective} from './dialog/directive/dynamic-host.directive';
 		DateInputsModule,
 		DropDownsModule,
 		ClarityModule,
-		TdsFontawesomeModule,
+		NgResizableModule,
+		TdsFontawesomeModule
 	],
 	declarations: [
 		CardComponent,
@@ -52,7 +54,8 @@ import {DynamicHostDirective} from './dialog/directive/dynamic-host.directive';
 		GridComponent,
 		DynamicHostComponent,
 		// Directive
-		DynamicHostDirective
+		DynamicHostDirective,
+		DraggableDirective
 	],
 	exports: [
 		CardComponent,
@@ -68,7 +71,8 @@ import {DynamicHostDirective} from './dialog/directive/dynamic-host.directive';
 		GridComponent,
 		DynamicHostComponent,
 		// Directive
-		DynamicHostDirective
+		DynamicHostDirective,
+		DraggableDirective
 	],
 })
 export class TdsComponentLibraryModule {

@@ -1,13 +1,21 @@
-<div class="modal dynamic-host-component">
-    <div class="modal-dialog"
+<div tdsDraggableDialog
+     [draggable]="modalConfigurationModel.draggable"
+     [draggableHandle]="dialogHeader"
+    class="modal dynamic-host-component">
+    <div class="modal-dialog" #dialogContainer
          [ngClass]="{
             'modal-sm': modalConfigurationModel.modalSize === modalSize.SM,
             'modal-lg': modalConfigurationModel.modalSize === modalSize.LG,
             'modal-xl': modalConfigurationModel.modalSize === modalSize.XL
          }"
          role="dialog" aria-hidden="true">
-        <div class="modal-content">
-            <div class="modal-header" [ngClass]="{  'modal-no-action-buttons': !showLeftActionButtonsPanel}">
+        <div class="modal-content"
+             ngResizable
+             [directions]="['bottom', 'top', 'left', 'right']"
+             [minWidth]="20"
+             [minHeight]="20"
+        >
+            <div class="modal-header" #dialogHeader [ngClass]="{  'modal-no-action-buttons': !showLeftActionButtonsPanel}">
                 <button aria-label="Close" class="close" type="button">
                     <clr-icon aria-hidden="true" shape="close" (click)="onDismiss()"></clr-icon>
                 </button>

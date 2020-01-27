@@ -5,6 +5,8 @@ export class ModalConfigurationModel {
 	public title?: string;
 	public showBackground?: boolean;
 	public modalSize?: ModalSize;
+	public draggable?: boolean;
+	public resizable?: boolean;
 	// Helps to determinate if the default state was show or hide
 	private _defaultShowBackground ? = true;
 
