@@ -7,7 +7,9 @@ export class ModalConfigurationModel {
 	public modalSize?: ModalSize;
 	public draggable?: boolean;
 	public resizable?: boolean;
-	// Helps to determinate if the default state was show or hide
+	public fullScreen?: boolean;
+	public defaultFullScreen?: boolean;
+	// Helps to determinate default values
 	private _defaultShowBackground ? = true;
 
 	constructor() {

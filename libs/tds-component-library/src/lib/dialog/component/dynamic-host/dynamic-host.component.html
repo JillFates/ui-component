@@ -1,6 +1,9 @@
 <div tdsDraggableDialog
      [draggable]="modalConfigurationModel.draggable"
      [draggableHandle]="dialogHeader"
+     [ngClass]="{
+        'full-screen-dialog': fullScreen
+     }"
     class="modal dynamic-host-component">
     <div class="modal-dialog" #dialogContainer
          [ngClass]="{
@@ -8,11 +11,15 @@
             'modal-lg': modalConfigurationModel.modalSize === modalSize.LG,
             'modal-xl': modalConfigurationModel.modalSize === modalSize.XL,
             'resize-enabled': modalConfigurationModel.resizable,
-            'resize-disabled': !modalConfigurationModel.resizable
+            'resize-disabled': !modalConfigurationModel.resizable,
+            'full-screen-dialog': fullScreen
          }"
          role="dialog" aria-hidden="true">
         <div class="modal-content"
              #dialogContent
+             [ngClass]="{
+                'full-screen-dialog': fullScreen
+             }"
              mwlResizable
              [enableGhostResize]="modalConfigurationModel.resizable"
              [resizeEdges]="{ bottom: true, right: true, top: true, left: true }"
@@ -22,6 +29,20 @@
                 <button aria-label="Close" class="close" type="button">
                     <clr-icon aria-hidden="true" shape="close" (click)="onDismiss()"></clr-icon>
                 </button>
+                <ng-template [ngIf]="showFullScreen">
+                    <button aria-label="Minimize" type="button"
+                            class="btn btn-link minimize-btn"
+                            *ngIf="fullScreen"
+                            (click)="minimizeDialog($event)">
+                        <fa-icon [icon]="faCompressArrowsAlt"></fa-icon>
+                    </button>
+                    <button aria-label="Maximize" type="button"
+                            *ngIf="!fullScreen"
+                            class="btn btn-link maximize-btn"
+                            (click)="maximizeDialog($event)">
+                        <fa-icon [icon]="faExpandArrowsAlt"></fa-icon>
+                    </button>
+                </ng-template>
                 <h3 class="modal-title" *ngIf="modalConfigurationModel.title">{{modalConfigurationModel.title}}</h3>
             </div>
             <div class="modal-body" [ngClass]="{  'modal-no-action-buttons': !showLeftActionButtonsPanel}">

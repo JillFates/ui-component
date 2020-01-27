@@ -217,4 +217,40 @@ export class DialogOverviewComponent {
 			console.log('Basic Resizable Dialog was closed successfully: ', data);
 		});
 	}
+
+	/**
+	 * Open a Basic Dialog Full Screen
+	 */
+	public openFullScreenConfig(): void {
+		this.dialogService.open({
+			componentFactoryResolver: this.componentFactoryResolver,
+			component: BasicDialogComponent,
+			data: null,
+			modalConfiguration: {
+				title: 'Basic Full Screen Dialog',
+				fullScreen: true,
+				modalSize: ModalSize.MD
+			}
+		}).subscribe((data: any) => {
+			console.log('Basic Full Screen Dialog was closed successfully: ', data);
+		});
+	}
+
+	/**
+	 * Open a Basic Dialog Default On Full Screen
+	 */
+	public openDefaultFullScreenConfig(): void {
+		this.dialogService.open({
+			componentFactoryResolver: this.componentFactoryResolver,
+			component: BasicDialogComponent,
+			data: null,
+			modalConfiguration: {
+				title: 'Basic Default Full Screen Dialog',
+				defaultFullScreen: true,
+				modalSize: ModalSize.MD
+			}
+		}).subscribe((data: any) => {
+			console.log('Basic Defaul Full Screen Dialog was closed successfully: ', data);
+		});
+	}
 }

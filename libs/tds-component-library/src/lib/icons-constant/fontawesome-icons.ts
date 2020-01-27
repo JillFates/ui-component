@@ -31,6 +31,8 @@ export const FA_ICONS = {
 	faHome: ['fas', 'home'],
 	faBuilding: ['fas', 'building'],
 	faExpand: ['fas', 'expand'],
+	faExpandAlt: ['fas', 'expand-alt'],
+	faExpandArrowsAlt: ['fas', 'expand-arrows-alt'],
 	faCompress: ['fas', 'compress'],
 	faWindowMinimize: ['fas', 'window-minimize'],
 	faWindowMaximize: ['fas', 'window-maximize'],

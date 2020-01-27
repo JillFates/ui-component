@@ -3,8 +3,9 @@
  */
 // Angular
 import {Component, ElementRef, OnInit, Renderer2, ViewChild, ViewEncapsulation} from '@angular/core';
-// Modal
+// Model
 import {DialogButtonModel, DialogButtonType, ModalConfigurationModel, ModalSize} from '../../model/dialog.model';
+import {faExpandArrowsAlt, faCompressArrowsAlt} from '@fortawesome/free-solid-svg-icons';
 // Directive
 import {DynamicHostDirective} from '../../directive/dynamic-host.directive';
 import {Dialog} from '../../model/dialog.interface';
@@ -25,6 +26,12 @@ export class DynamicHostComponent implements OnInit {
 	public showActionButtons = false;
 	public showContextButtons = false;
 	public dialogButtonType = DialogButtonType;
+	// Full Screen
+	public showFullScreen = false;
+	public fullScreen = false;
+	// Icons
+	public faExpandArrowsAlt = faExpandArrowsAlt;
+	public faCompressArrowsAlt = faCompressArrowsAlt;
 
 	@ViewChild(DynamicHostDirective, {static: true}) dynamicContent: DynamicHostDirective;
 	@ViewChild('dialogContainer', {static: true}) dialogContainer: ElementRef;
@@ -53,6 +60,11 @@ export class DynamicHostComponent implements OnInit {
 				}
 
 				this.showContextButtons = (contextButtons && contextButtons.length > 0);
+
+				if (this.modalConfigurationModel.fullScreen || this.modalConfigurationModel.defaultFullScreen) {
+					this.showFullScreen = true;
+					this.fullScreen = this.modalConfigurationModel.defaultFullScreen;
+				}
 			}
 		});
 	}
@@ -68,6 +80,22 @@ export class DynamicHostComponent implements OnInit {
 			this.renderer.setStyle(this.dialogContent.nativeElement, 'width', `${event.rectangle.width}px`);
 			this.renderer.setStyle(this.dialogContent.nativeElement, 'height', `${event.rectangle.height}px`);
 		}
+	}
+
+	/**
+	 * Maximize the Dialog
+	 * @param event
+	 */
+	public maximizeDialog(event: any): void {
+		this.fullScreen = true;
+	}
+
+	/**
+	 * Minimize the Dialog
+	 * @param event
+	 */
+	public minimizeDialog(event: any): void {
+		this.fullScreen = false;
 	}
 
 	/**

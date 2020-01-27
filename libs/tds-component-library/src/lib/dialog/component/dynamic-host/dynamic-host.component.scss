@@ -5,6 +5,26 @@
     border-radius: unset;
     padding: 0px;
 
+    .maximize-btn,
+    .minimize-btn {
+      color: $color-black-light;
+      font-size: 18px;
+      margin-top: 1px;
+      padding: 0;
+      cursor: pointer;
+      background: 0 0;
+      border: 0;
+      -webkit-appearance: none;
+      float: right;
+      transition: color linear .2s;
+      font-weight: 200;
+      text-shadow: none;
+      line-height: inherit;
+      min-width: 22px;
+      height: 23px;
+      margin-right: 20px;
+    }
+
     .modal-header,
     .modal-body,
     .modal-footer {
@@ -73,6 +93,17 @@
         }
       }
     }
+
+  }
+
+  // Full Screen Dialog
+  .full-screen-dialog {
+    height: 100% !important;
+    width: 100% !important;
+  }
+
+  &.full-screen-dialog {
+    padding: 15px;
   }
 
   // Applies a grabbing hand on top of the div that's draggable
