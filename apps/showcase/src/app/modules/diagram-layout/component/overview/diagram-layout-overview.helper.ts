@@ -36,7 +36,8 @@ export class DiagramLayoutOverviewHelper implements IDiagramLayoutHelper {
 					key: 'a',
 					status: 'hold',
 					tooltipData: {
-						headerText: 'Test',
+						// tslint:disable-next-line:max-line-length
+						headerText: 'testtesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttest',
 						headerBackgroundColor: '#0b63a8',
 						headerTextColor: '#ffffff',
 						data: [
