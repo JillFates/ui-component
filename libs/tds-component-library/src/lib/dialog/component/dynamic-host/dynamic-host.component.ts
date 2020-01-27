@@ -28,6 +28,7 @@ export class DynamicHostComponent implements OnInit {
 
 	@ViewChild(DynamicHostDirective, {static: true}) dynamicContent: DynamicHostDirective;
 	@ViewChild('dialogContainer', {static: true}) dialogContainer: ElementRef;
+	@ViewChild('dialogContent', {static: true}) dialogContent: ElementRef;
 
 	constructor(private renderer: Renderer2) {
 	}
@@ -61,8 +62,12 @@ export class DynamicHostComponent implements OnInit {
 	 * @param event
 	 */
 	public onResizeEnd(event: any): void {
-		this.renderer.setStyle(this.dialogContainer.nativeElement, 'width', `${event.size.width}px`);
-		this.renderer.setStyle(this.dialogContainer.nativeElement, 'height', `${event.size.height}px`);
+		if (event.rectangle.width !== 0 && event.rectangle.height !== 0 && this.modalConfigurationModel.resizable) {
+			this.renderer.setStyle(this.dialogContainer.nativeElement, 'width', `${event.rectangle.width}px`);
+			this.renderer.setStyle(this.dialogContainer.nativeElement, 'height', `${event.rectangle.height}px`);
+			this.renderer.setStyle(this.dialogContent.nativeElement, 'width', `${event.rectangle.width}px`);
+			this.renderer.setStyle(this.dialogContent.nativeElement, 'height', `${event.rectangle.height}px`);
+		}
 	}
 
 	/**

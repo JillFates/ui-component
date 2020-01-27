@@ -10,7 +10,7 @@ import {GridModule} from '@progress/kendo-angular-grid';
 import {DateInputsModule} from '@progress/kendo-angular-dateinputs';
 import {DropDownsModule} from '@progress/kendo-angular-dropdowns';
 import {TdsFontawesomeModule} from './tds-fontawesome.module';
-import {NgResizableModule} from 'ngresizable';
+import {ResizableModule} from 'angular-resizable-element';
 // Component
 import {CardComponent} from './card/card.component';
 import {ButtonComponent} from './button/button.component';
@@ -38,7 +38,7 @@ import {DraggableDirective} from './dialog/directive/draggable/draggable.directi
 		DateInputsModule,
 		DropDownsModule,
 		ClarityModule,
-		NgResizableModule,
+		ResizableModule,
 		TdsFontawesomeModule
 	],
 	declarations: [
