@@ -67,7 +67,7 @@ export enum ModalSize {
 
 export enum DialogButtonType {
 	ACTION = 'action',
-	CONTEXT = ''
+	CONTEXT = 'context'
 }
 /**
  * Dialog Model to Open
