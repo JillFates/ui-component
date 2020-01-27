@@ -2,7 +2,7 @@
  * Place holder to use dynamically inject dialog component on runtime
  */
 // Angular
-import {Component, OnInit, ViewChild, ViewEncapsulation} from '@angular/core';
+import {Component, ElementRef, OnInit, Renderer2, ViewChild, ViewEncapsulation} from '@angular/core';
 // Modal
 import {DialogButtonModel, DialogButtonType, ModalConfigurationModel, ModalSize} from '../../model/dialog.model';
 // Directive
@@ -27,6 +27,10 @@ export class DynamicHostComponent implements OnInit {
 	public dialogButtonType = DialogButtonType;
 
 	@ViewChild(DynamicHostDirective, {static: true}) dynamicContent: DynamicHostDirective;
+	@ViewChild('dialogContainer', {static: true}) dialogContainer: ElementRef;
+
+	constructor(private renderer: Renderer2) {
+	}
 
 	ngOnInit(): void {
 		setTimeout(() => {
@@ -50,6 +54,15 @@ export class DynamicHostComponent implements OnInit {
 				this.showContextButtons = (contextButtons && contextButtons.length > 0);
 			}
 		});
+	}
+
+	/**
+	 * On Resize Finish
+	 * @param event
+	 */
+	public onResizeEnd(event: any): void {
+		this.renderer.setStyle(this.dialogContainer.nativeElement, 'width', `${event.size.width}px`);
+		this.renderer.setStyle(this.dialogContainer.nativeElement, 'height', `${event.size.height}px`);
 	}
 
 	/**

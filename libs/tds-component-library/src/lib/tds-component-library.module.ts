@@ -26,7 +26,7 @@ import {DialogComponent} from './dialog/component/dialog/dialog.component';
 // Directive
 import {DynamicHostComponent} from './dialog/component/dynamic-host/dynamic-host.component';
 import {DynamicHostDirective} from './dialog/directive/dynamic-host.directive';
-import {DraggableDirective} from './dialog/directive/draggable.directive';
+import {DraggableDirective} from './dialog/directive/draggable/draggable.directive';
 
 @NgModule({
 	imports: [

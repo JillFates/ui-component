@@ -11,9 +11,10 @@
          role="dialog" aria-hidden="true">
         <div class="modal-content"
              ngResizable
-             [directions]="['bottom', 'top', 'left', 'right']"
+             [directions]="['bottom', 'top', 'left', 'right', 'top-left', 'bottom-left', 'top-right', 'bottom-right']"
              [minWidth]="20"
              [minHeight]="20"
+             (resizeEnd)="onResizeEnd($event)"
         >
             <div class="modal-header" #dialogHeader [ngClass]="{  'modal-no-action-buttons': !showLeftActionButtonsPanel}">
                 <button aria-label="Close" class="close" type="button">
