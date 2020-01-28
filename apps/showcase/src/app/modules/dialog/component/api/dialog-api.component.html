@@ -113,13 +113,32 @@
 	<h4 class="stack-header">
 		<span class="stack-title">Dialog Events</span>
 	</h4>
+	<div class="dialog-api-component">
+		Most of the inner events of the dialogs are hidden but they can be exposed if required. The Event Buttons are manage by every component. There are only to real event Actions. Cancel/Dismiss and Accept.
+	</div>
 	<dl class="stack-view">
 		<div class="stack-block">
 			<dt class="stack-block-label">
-				nodeClicked <small class="typedef">EventEmitter</small>
+				onAcceptSuccess <small class="typedef">Observable</small>
 			</dt>
 			<dd class="stack-block-content">
-				Event emitted when a node is clicked.
+				Inherited from (Dialog class), will close the Dialog with a DialogExit.ACCEPT property
+			</dd>
+		</div>
+		<div class="stack-block">
+			<dt class="stack-block-label">
+				onCancelClose <small class="typedef">Observable</small>
+			</dt>
+			<dd class="stack-block-content">
+				Inherited from (Dialog class), will close the Dialog with a DialogExit.CLOSE property
+			</dd>
+		</div>
+		<div class="stack-block">
+			<dt class="stack-block-label">
+				onDismiss <small class="typedef">Observable</small>
+			</dt>
+			<dd class="stack-block-content">
+				Inherited from (Dialog class), will try to close the Dialog if the user press ESC or the Cross icon. The event can be handled in the component.
 			</dd>
 		</div>
 	</dl>
