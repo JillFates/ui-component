@@ -1,10 +1,145 @@
+<h2>Dialog Component API</h2>
+<div class="dialog-api-component">
+	The Dialog is an abstraction of the Clarity default Modal
+</div>
 <div class="dialog-api-component">
 	<h4 class="stack-header">
 		<span class="stack-title">Dialog Component Attributes</span>
 	</h4>
+	<div class="dialog-api-component">
+		A Dialog can be initialized with any of the following options from model <strong>ModalConfigurationModel</strong>:
+	</div>
 	<dl class="stack-view">
 		<div class="stack-block">
-
+			<dt class="stack-block-label">data <small class="typedef">any</small></dt>
+			<dd class="stack-block-content">
+				The data to be passed to the Dialog to be used in the component
+			</dd>
+		</div>
+		<div class="stack-block">
+			<dt class="stack-block-label">title <small class="typedef">string</small></dt>
+			<dd class="stack-block-content">
+				Defined the Title of the Dialog, at this point it can't be change after initialized
+			</dd>
+		</div>
+		<div class="stack-block">
+			<dt class="stack-block-label">modalSize <small class="typedef">ModalSize</small></dt>
+			<dd class="stack-block-content">
+				Determinate the Size of the Modal. Values: "sm", "md" "lg" "xl"
+			</dd>
+		</div>
+		<div class="stack-block">
+			<dt class="stack-block-label">draggable <small class="typedef">boolean (False)</small></dt>
+			<dd class="stack-block-content">
+				Allows the Dialog to be Draggable from the Header
+			</dd>
+		</div>
+		<div class="stack-block">
+			<dt class="stack-block-label">resizable <small class="typedef">boolean (False)</small></dt>
+			<dd class="stack-block-content">
+				Allows the be Resizable from the borders: top, right, bottom, left, top-right, top-left, bottom-right, bottom-left
+			</dd>
+		</div>
+		<div class="stack-block">
+			<dt class="stack-block-label">fullScreen <small class="typedef">boolean (False)</small></dt>
+			<dd class="stack-block-content">
+				Enables the buttons to be able to Maximize and Minimize a Dialog
+			</dd>
+		</div>
+		<div class="stack-block">
+			<dt class="stack-block-label">defaultFullScreen <small class="typedef">boolean (False)</small></dt>
+			<dd class="stack-block-content">
+				By Default init the dialog in full screen and also enables the buttons to be able to Maximize and Minimize a Dialog
+			</dd>
+		</div>
+		<div class="stack-block">
+			<dt class="stack-block-label">showBackground <small class="typedef">boolean (False)</small></dt>
+			<dd class="stack-block-content">
+				By Default it Shows the background (Gray Layout) unless is passed as false. Also even disabled, user can't interact with anything behind the dialog.
+			</dd>
+		</div>
+	</dl>
+	<h4 class="stack-header">
+		<span class="stack-title">Dialog Buttons Implementation</span>
+	</h4>
+	<div class="dialog-api-component">
+		Beside of the options, every component is in charge of describe the behavior by extending the <strong>Dialog</strong> class.
+		Buttons are models from <strong>DialogButtonModel</strong> described as:
+	</div>
+	<dl class="stack-view">
+		<div class="stack-block">
+			<dt class="stack-block-label">type <small class="typedef">DialogButtonType</small></dt>
+			<dd class="stack-block-content">
+				it can be DialogButtonType.ACTION (shows on the left panel) or DialogButtonType.CONTEXT shows at the bottom
+			</dd>
+		</div>
+		<div class="stack-block">
+			<dt class="stack-block-label">name <small class="typedef">string</small></dt>
+			<dd class="stack-block-content">
+				Inner Button name that can be referenced to apply any change later, like hide or show
+			</dd>
+		</div>
+		<div class="stack-block">
+			<dt class="stack-block-label">text <small class="typedef">string</small></dt>
+			<dd class="stack-block-content">
+				The label text of the button that applies only to type DialogButtonType.CONTEXT
+			</dd>
+		</div>
+		<div class="stack-block">
+			<dt class="stack-block-label">icon <small class="typedef">string</small></dt>
+			<dd class="stack-block-content">
+				Icon to be used following Clarity Icons or Font-awesomeshow
+			</dd>
+		</div>
+		<div class="stack-block">
+			<dt class="stack-block-label">show <small class="typedef">boolean</small></dt>
+			<dd class="stack-block-content">
+				Show or hide the button, it can be change at running time.
+			</dd>
+		</div>
+		<div class="stack-block">
+			<dt class="stack-block-label">disabled <small class="typedef">boolean</small></dt>
+			<dd class="stack-block-content">
+				Disable the button, it can be change at running time.
+			</dd>
+		</div>
+		<div class="stack-block">
+			<dt class="stack-block-label">action <small class="typedef">Function</small></dt>
+			<dd class="stack-block-content">
+				Returns a callback after the button event propagate on click
+			</dd>
+		</div>
+	</dl>
+	<h4 class="stack-header">
+		<span class="stack-title">Dialog Events</span>
+	</h4>
+	<div class="dialog-api-component">
+		Most of the inner events of the dialogs are hidden but they can be exposed if required. The Event Buttons are manage by every component. There are only to real event Actions. Cancel/Dismiss and Accept.
+	</div>
+	<dl class="stack-view">
+		<div class="stack-block">
+			<dt class="stack-block-label">
+				onAcceptSuccess <small class="typedef">Observable</small>
+			</dt>
+			<dd class="stack-block-content">
+				Inherited from (Dialog class), will close the Dialog with a DialogExit.ACCEPT property
+			</dd>
+		</div>
+		<div class="stack-block">
+			<dt class="stack-block-label">
+				onCancelClose <small class="typedef">Observable</small>
+			</dt>
+			<dd class="stack-block-content">
+				Inherited from (Dialog class), will close the Dialog with a DialogExit.CLOSE property
+			</dd>
+		</div>
+		<div class="stack-block">
+			<dt class="stack-block-label">
+				onDismiss <small class="typedef">Observable</small>
+			</dt>
+			<dd class="stack-block-content">
+				Inherited from (Dialog class), will try to close the Dialog if the user press ESC or the Cross icon. The event can be handled in the component.
+			</dd>
 		</div>
 	</dl>
 </div>

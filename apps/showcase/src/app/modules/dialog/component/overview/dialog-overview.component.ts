@@ -181,4 +181,76 @@ export class DialogOverviewComponent {
 			console.log('Headless Dialog was closed successfully: ', data);
 		});
 	}
+
+	/**
+	 * Open a Basic Dialog
+	 */
+	public openDraggable(): void {
+		this.dialogService.open({
+			componentFactoryResolver: this.componentFactoryResolver,
+			component: BasicDialogComponent,
+			data: null,
+			modalConfiguration: {
+				title: 'Basic Draggable Dialog',
+				draggable: true,
+				modalSize: ModalSize.MD
+			}
+		}).subscribe((data: any) => {
+			console.log('Basic Draggable Dialog was closed successfully: ', data);
+		});
+	}
+
+	/**
+	 * Open a Basic Dialog
+	 */
+	public openResizable(): void {
+		this.dialogService.open({
+			componentFactoryResolver: this.componentFactoryResolver,
+			component: BasicDialogComponent,
+			data: null,
+			modalConfiguration: {
+				title: 'Basic Resizable Dialog',
+				resizable: true,
+				modalSize: ModalSize.MD
+			}
+		}).subscribe((data: any) => {
+			console.log('Basic Resizable Dialog was closed successfully: ', data);
+		});
+	}
+
+	/**
+	 * Open a Basic Dialog Full Screen
+	 */
+	public openFullScreenConfig(): void {
+		this.dialogService.open({
+			componentFactoryResolver: this.componentFactoryResolver,
+			component: BasicDialogComponent,
+			data: null,
+			modalConfiguration: {
+				title: 'Basic Full Screen Dialog',
+				fullScreen: true,
+				modalSize: ModalSize.MD
+			}
+		}).subscribe((data: any) => {
+			console.log('Basic Full Screen Dialog was closed successfully: ', data);
+		});
+	}
+
+	/**
+	 * Open a Basic Dialog Default On Full Screen
+	 */
+	public openDefaultFullScreenConfig(): void {
+		this.dialogService.open({
+			componentFactoryResolver: this.componentFactoryResolver,
+			component: BasicDialogComponent,
+			data: null,
+			modalConfiguration: {
+				title: 'Basic Default Full Screen Dialog',
+				defaultFullScreen: true,
+				modalSize: ModalSize.MD
+			}
+		}).subscribe((data: any) => {
+			console.log('Basic Defaul Full Screen Dialog was closed successfully: ', data);
+		});
+	}
 }

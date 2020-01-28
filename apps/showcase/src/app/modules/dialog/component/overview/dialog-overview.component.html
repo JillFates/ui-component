@@ -1,3 +1,4 @@
+<tds-dialog></tds-dialog>
 <div class="button-overview-component">
 	<h2>Dialog Component</h2>
 	<p>Based on the <a target="_blank" href="https://v2.clarity.design/modals">Clarity Modals</a> with extensible Action buttons and configurable options.</p>
@@ -45,6 +46,14 @@
 				<tds-button (click)="openHeadlessDialog()">Open</tds-button>
 			</tds-card>
 		</div>
+		<div class="clr-col-12">
+			<tds-card title="Special Features Dialogs">
+				<tds-button (click)="openDraggable()">Basic Draggable Open</tds-button>
+				<tds-button (click)="openResizable()">Basic Resizable Open</tds-button>
+				<tds-button (click)="openFullScreenConfig()">Basic Full Screen Open</tds-button>
+				<tds-button (click)="openDefaultFullScreenConfig()">Basic Default On Full Screen Open</tds-button>
+			</tds-card>
+		</div>
 	</div>
 
 	<div class="clr-row">
@@ -57,7 +66,6 @@
 				code='<tds-dialog></tds-dialog>'
 			>
 				<p>Copy and Paste the following code in your app into a root level template, like app.component.html</p>
-				<tds-dialog></tds-dialog>
 			</tds-card>
 		</div>
 		<div class="clr-col-12">

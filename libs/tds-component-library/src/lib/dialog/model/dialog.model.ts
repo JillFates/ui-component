@@ -5,7 +5,11 @@ export class ModalConfigurationModel {
 	public title?: string;
 	public showBackground?: boolean;
 	public modalSize?: ModalSize;
-	// Helps to determinate if the default state was show or hide
+	public draggable?: boolean;
+	public resizable?: boolean;
+	public fullScreen?: boolean;
+	public defaultFullScreen?: boolean;
+	// Helps to determinate default values
 	private _defaultShowBackground ? = true;
 
 	constructor() {
@@ -63,7 +67,7 @@ export enum ModalSize {
 
 export enum DialogButtonType {
 	ACTION = 'action',
-	CONTEXT = ''
+	CONTEXT = 'context'
 }
 /**
  * Dialog Model to Open
