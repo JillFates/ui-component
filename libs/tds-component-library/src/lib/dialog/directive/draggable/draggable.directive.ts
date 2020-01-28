@@ -85,7 +85,7 @@ export class DraggableDirective implements OnInit {
 	 * @param event
 	 */
 	@HostListener('document:touchend', ['$event'])
-	onTouchEnd(): void {
+	onTouchEnd(event: TouchEvent): void {
 		this.md = false;
 	}
 
