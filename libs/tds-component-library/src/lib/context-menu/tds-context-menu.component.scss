@@ -56,7 +56,12 @@
 
 .ctx-menu-btn {
   width: 100% !important;
+  max-height: 30px;
   background-color: transparent !important;
+  color: #333 !important;
+  text-transform: capitalize;
+  font-weight: bold;
+  text-align: left;
 }
 
 .ctx-menu-divider {
