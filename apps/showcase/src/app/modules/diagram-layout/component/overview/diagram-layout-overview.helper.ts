@@ -48,7 +48,7 @@ export class DiagramLayoutOverviewHelper implements IDiagramLayoutHelper {
 							},
 							{
 								label: 'key',
-								value: 'a'
+								value: 'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa'
 							},
 							{
 								label: 'label1',
@@ -512,7 +512,77 @@ export class DiagramLayoutOverviewHelper implements IDiagramLayoutHelper {
 					hasPermission: () => ['view', 'edit'].includes('view')
 				},
 				{
-					label: 'test2',
+					label: 'test2 test2 test2 test2',
+					event: 'test2',
+					icon: {
+						icon: 'faUser'
+					},
+					status: 'stat',
+					isAvailable: (n: any) => !(n.status === 'started'),
+					hasPermission: () => ['view', 'edit'].includes('view')
+				},
+				{
+					label: 'test2 test2 test2 test2',
+					event: 'test2',
+					icon: {
+						icon: 'faUser'
+					},
+					status: 'stat',
+					isAvailable: (n: any) => !(n.status === 'started'),
+					hasPermission: () => ['view', 'edit'].includes('view')
+				},
+				{
+					label: 'test2 test2 test2 test2',
+					event: 'test2',
+					icon: {
+						icon: 'faUser'
+					},
+					status: 'stat',
+					isAvailable: (n: any) => !(n.status === 'started'),
+					hasPermission: () => ['view', 'edit'].includes('view')
+				},
+				{
+					label: 'test2 test2 test2 test2',
+					event: 'test2',
+					icon: {
+						icon: 'faUser'
+					},
+					status: 'stat',
+					isAvailable: (n: any) => !(n.status === 'started'),
+					hasPermission: () => ['view', 'edit'].includes('view')
+				},
+				{
+					label: 'test2 test2 test2 test2',
+					event: 'test2',
+					icon: {
+						icon: 'faUser'
+					},
+					status: 'stat',
+					isAvailable: (n: any) => !(n.status === 'started'),
+					hasPermission: () => ['view', 'edit'].includes('view')
+				},
+				{
+					label: 'test2 test2 test2 test2',
+					event: 'test2',
+					icon: {
+						icon: 'faUser'
+					},
+					status: 'stat',
+					isAvailable: (n: any) => !(n.status === 'started'),
+					hasPermission: () => ['view', 'edit'].includes('view')
+				},
+				{
+					label: 'test2 test2 test2 test2',
+					event: 'test2',
+					icon: {
+						icon: 'faUser'
+					},
+					status: 'stat',
+					isAvailable: (n: any) => !(n.status === 'started'),
+					hasPermission: () => ['view', 'edit'].includes('view')
+				},
+				{
+					label: 'test2 test2 test2 test2',
 					event: 'test2',
 					icon: {
 						icon: 'faUser'
