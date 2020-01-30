@@ -20,7 +20,7 @@ export class ButtonActionDialogComponent extends Dialog implements OnInit {
 		const editButton: DialogButtonModel = {
 			name: 'save',
 			icon: 'floppy',
-			disabled: true,
+			disabled: () => true,
 			type: DialogButtonType.ACTION,
 			action: this.onAccept.bind(this)
 		};
@@ -35,7 +35,7 @@ export class ButtonActionDialogComponent extends Dialog implements OnInit {
 		const trashButton: DialogButtonModel = {
 			name: 'delete',
 			icon: 'trash',
-			show: false,
+			show: () => false,
 			type: DialogButtonType.ACTION,
 			action: this.onCancel.bind(this)
 		};

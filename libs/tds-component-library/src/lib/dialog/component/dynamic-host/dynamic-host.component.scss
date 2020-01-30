@@ -92,6 +92,14 @@
           margin-right: 0px;
         }
       }
+
+      .active-button {
+        .btn.btn-link {
+          color: white !important;
+          border-radius: 0px;
+          background: $color-active-dark-1;
+        }
+      }
     }
 
   }

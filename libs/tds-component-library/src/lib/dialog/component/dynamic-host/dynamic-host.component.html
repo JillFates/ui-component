@@ -51,22 +51,23 @@
             <div class="modal-footer" *ngIf="showContextButtons " [ngClass]="{  'modal-no-action-buttons': !showLeftActionButtonsPanel}">
                 <ng-template ngFor let-contextButton [ngForOf]="currentDialogComponentInstance.buttons">
                     <tds-button
-                            *ngIf="((contextButton.show !== undefined)? contextButton.show : true) && contextButton.type === dialogButtonType.CONTEXT"
+                            *ngIf="((contextButton.show !== undefined)? contextButton.show() : true) && contextButton.type === dialogButtonType.CONTEXT"
                             icon="{{contextButton.icon}}"
-                            [disabled]="contextButton.disabled"
+                            [disabled]="contextButton.disabled !== undefined && contextButton.disabled()"
                             (click)="contextButton.action()">
                         {{contextButton.text}}
                     </tds-button>
                 </ng-template>
             </div>
-            <div class="modal-sidenav"*ngIf="showActionButtons">
+            <div class="modal-sidenav" *ngIf="showActionButtons">
                 <ng-template ngFor let-actionButton [ngForOf]="currentDialogComponentInstance.buttons">
                     <tds-button
-                            *ngIf="((actionButton.show !== undefined)? actionButton.show : true) && actionButton.type === dialogButtonType.ACTION"
+                            *ngIf="((actionButton.show !== undefined)? actionButton.show() : true) && actionButton.type === dialogButtonType.ACTION"
                             icon="{{actionButton.icon}}"
-                            [disabled]="actionButton.disabled"
+                            [disabled]="(actionButton.disabled !== undefined && actionButton.disabled())"
                             [flat]="true"
-                            (click)="actionButton.action()">
+                            (click)="actionButton.action()"
+                            [ngClass]="{'active-button': actionButton.active !== undefined && actionButton.active()}">
                     </tds-button>
                 </ng-template>
             </div>

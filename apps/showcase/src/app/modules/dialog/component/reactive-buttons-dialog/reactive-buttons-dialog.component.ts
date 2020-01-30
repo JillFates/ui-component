@@ -14,11 +14,14 @@ export class ReactiveButtonsDialogComponent extends Dialog implements OnInit {
 	@Input() buttons: any;
 	@Output() successEvent: EventEmitter<any> = new EventEmitter<any>();
 
+	private isSaveDisabled = true;
+	private isShowDelete = false;
+
 	ngOnInit(): void {
 		const editButton: DialogButtonModel = {
 			name: 'save',
 			icon: 'floppy',
-			disabled: true,
+			disabled: () => this.isSaveDisabled,
 			type: DialogButtonType.ACTION,
 			action: this.onAccept.bind(this)
 		};
@@ -33,7 +36,7 @@ export class ReactiveButtonsDialogComponent extends Dialog implements OnInit {
 		const trashButton: DialogButtonModel = {
 			name: 'delete',
 			icon: 'trash',
-			show: false,
+			show: () => this.isShowDelete,
 			type: DialogButtonType.ACTION,
 			action: this.onCancel.bind(this)
 		};
@@ -47,14 +50,14 @@ export class ReactiveButtonsDialogComponent extends Dialog implements OnInit {
 	 * Enable the Disabled Button
 	 */
 	public enableSave(): void {
-		this.changeButton('save', {disabled: false});
+		this.isSaveDisabled = false;
 	}
 
 	/**
 	 * Show the hidden delete button
 	 */
 	public showDelete(): void {
-		this.changeButton('delete', {show: true});
+		this.isShowDelete = true;
 	}
 
 	/**

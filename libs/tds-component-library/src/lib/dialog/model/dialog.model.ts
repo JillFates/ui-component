@@ -77,7 +77,8 @@ export class DialogButtonModel {
 	public text?: string;
 	public icon?: string;
 	public type?: DialogButtonType;
-	public show?: boolean;
-	public disabled?: boolean;
+	public show?: Function;
+	public active?: Function;
+	public disabled?: Function;
 	public action?: Function;
 }

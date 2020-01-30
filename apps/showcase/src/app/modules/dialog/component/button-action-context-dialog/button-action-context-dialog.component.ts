@@ -21,7 +21,6 @@ export class ButtonActionContextDialogComponent extends Dialog implements OnInit
 			name: 'save',
 			icon: 'floppy',
 			type: DialogButtonType.ACTION,
-			// show? Do You have the Permission?
 			action: this.onAccept.bind(this)
 		};
 
@@ -44,7 +43,6 @@ export class ButtonActionContextDialogComponent extends Dialog implements OnInit
 			icon: 'calendar',
 			text: 'Appointments',
 			type: DialogButtonType.CONTEXT,
-			// show? Do You have the Permission?
 			action: this.onCancel.bind(this)
 		};
 
