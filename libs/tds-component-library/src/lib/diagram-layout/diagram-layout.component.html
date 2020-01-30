@@ -58,15 +58,17 @@
       #overviewContainer></div>
 
 		<div id="node-tooltip" class="card diagram-card" (mouseleave)="hideToolTip()" #nodeTooltip>
-			<div class="card-header clr-align-self-center" [style.background]="tooltipData?.headerBackgroundColor">
-				<label [style.color]="tooltipData?.headerTextColor"> {{tooltipData?.headerText}} </label>
+			<div class="card-header clr-align-self-center"
+				 [style.background]="tooltipData?.headerBackgroundColor"
+				 [style.color]="tooltipData?.headerTextColor">
+				 {{tooltipData?.headerText}}
 			</div>
 
 			<div class="card-block" *ngIf="tooltipData && tooltipData.data">
 				<div class="card-text" style="text-align: center;">
 					<div class="clr-row" *ngFor="let data of tooltipData.data">
 						<div class="clr-col-6 clr-align-self-center tooltip-data-label">{{data?.label}}: </div>
-						<div class="clr-col-6 clr-align-self-center" style="float: right;">
+						<div class="clr-col-6 clr-align-self-center tooltip-data-value">
 							<fa-icon [icon]="faIcons[data.icon]" [size]="'xs'" *ngIf="data.icon"></fa-icon>
 							{{data?.value}}
 						</div>

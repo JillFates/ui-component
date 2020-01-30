@@ -21,14 +21,14 @@ import {FA_ICONS} from '../icons-constant/fontawesome-icons';
 				<li	*ngFor="let option of data.options.fields"
 						[style.display]="option.hasPermission() && option.isAvailable(data.selectedNode) ? 'block' : 'none'">
 					<button class="btn ctx-menu-btn clr-align-self-center" (click)="dispatchAction(option.event)">
-						<div class="clr-row">
-							<div class="clr-col-2 clr-align-self-center">
+						<div class="clr-row ctx-menu-btn-content">
+							<div class="clr-col-2 clr-align-self-center ctx-menu-btn-icon">
 								<fa-icon [icon]="faIcons[option.icon.icon]"
 												 [styles]="{ color: option.icon.color, float: 'left' }">
 								</fa-icon>								
 							</div>
-							<div class="clr-col-10 clr-align-self-center">
-								{{ option.label }}								
+							<div class="clr-col clr-align-self-center ctx-menu-btn-label">
+									{{ option.label }}
 							</div>
 						</div>
 					</button>

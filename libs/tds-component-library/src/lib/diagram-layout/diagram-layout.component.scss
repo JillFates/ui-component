@@ -93,18 +93,23 @@
 
     .card-header {
       padding: .3rem .4rem;
-      label {
-        display: block;
-        overflow: hidden;
-        text-overflow: ellipsis;
-        text-align: center;
-        font-size: .90rem;
-      }
-
+      max-height: 60px;
+      display: block;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      text-align: center;
+      font-size: .7rem;
     }
 
     .tooltip-data-label {
       font-weight: bold;
+      text-align: left;
+    }
+
+    .tooltip-data-value {
+      text-align: left;
+      overflow: hidden;
+      text-overflow: ellipsis;
     }
   }
 
