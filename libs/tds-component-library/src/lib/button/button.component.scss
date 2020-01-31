@@ -1,4 +1,5 @@
-@import '../../theme';
+@import '../../scss/variables';
+@import '../../scss/mixins';
 
 :host {
 	pointer-events: none;
