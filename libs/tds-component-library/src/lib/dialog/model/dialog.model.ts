@@ -41,6 +41,7 @@ export class DialogModel {
 	public componentFactoryResolver: ComponentFactoryResolver;
 	public component: any;
 	public data: any;
+	public content?: any;
 	public modalConfiguration?: ModalConfigurationModel;
 	public observable?: Observer<any>;
 }
@@ -69,6 +70,12 @@ export enum DialogButtonType {
 	ACTION = 'action',
 	CONTEXT = 'context'
 }
+
+export enum DialogConfirmAction {
+	CONFIRM = 'confirm',
+	CANCEL = 'cancel'
+}
+
 /**
  * Dialog Model to Open
  */

@@ -3,10 +3,10 @@ import {NgModule} from '@angular/core';
 // Module
 import {DialogRoutingModule} from './dialog-routing.module';
 import {SharedModule} from '../../shared/shared.module';
+import {ClarityModule} from '@clr/angular';
 // Components
 import {DialogOverviewComponent} from './component/overview/dialog-overview.component';
 import {DialogApiComponent} from './component/api/dialog-api.component';
-import {ClarityModule} from '@clr/angular';
 import {BasicDialogComponent} from './component/basic-dialog/basic-dialog.component';
 import {MultipleDialogComponent} from './component/multiple-dialog/multiple-dialog.component';
 import {ThirdLayerDialogComponent} from './component/third-layer/third-layer-dialog.component';

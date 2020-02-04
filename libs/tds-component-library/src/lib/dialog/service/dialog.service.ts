@@ -1,7 +1,9 @@
 // Angular
-import {Injectable} from '@angular/core';
+import {ComponentFactoryResolver, Injectable} from '@angular/core';
 // Model
-import {DialogEventType, DialogModel} from '../model/dialog.model';
+import {DialogEventType, DialogModel, ModalSize} from '../model/dialog.model';
+// Component
+import {DialogConfirmComponent} from '../component/dialog-confirm/dialog-confirm.component';
 // Other
 import {Observable, Observer} from 'rxjs';
 import {EventService} from '../../service/event-service/event.service';
@@ -11,7 +13,9 @@ import {EventService} from '../../service/event-service/event.service';
 })
 export class DialogService {
 
-	constructor(private eventService: EventService) {
+	constructor(
+		private eventService: EventService,
+		private componentFactoryResolver: ComponentFactoryResolver) {
 	}
 
 	/**
@@ -25,6 +29,24 @@ export class DialogService {
 				name: DialogEventType.OPEN,
 				event: dialogModel
 			});
+		});
+	}
+
+	/**
+	 * Open a Confirmation Dialog that return CONFIRM or CANCEL
+	 * @param title
+	 * @param content
+	 */
+	public confirm(title: string, content: string): Observable<any> {
+		return this.open({
+			componentFactoryResolver: this.componentFactoryResolver,
+			component: DialogConfirmComponent,
+			data: null,
+			content: content,
+			modalConfiguration: {
+				title: title,
+				modalSize: ModalSize.MD
+			}
 		});
 	}
 

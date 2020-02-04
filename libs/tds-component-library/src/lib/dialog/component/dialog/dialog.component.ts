@@ -68,6 +68,7 @@ export class DialogComponent {
 		);
 		const currentDialogComponentInstance = <Dialog>componentRef.instance;
 		currentDialogComponentInstance.data = dynamicHostModel.dialogModel.data;
+		currentDialogComponentInstance.content = dynamicHostModel.dialogModel.content;
 
 		currentDialogComponentInstance.buttons = [];
 

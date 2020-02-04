@@ -23,6 +23,7 @@ import {GridHeaderActionButtonsComponent} from './grid-header-action-buttons/gri
 import {GridRowDropdownComponent} from './grid-row-dropdown/grid-row-dropdown.component';
 import {GridComponent} from './grid/grid.component';
 import {DialogComponent} from './dialog/component/dialog/dialog.component';
+import {DialogConfirmComponent} from './dialog/component/dialog-confirm/dialog-confirm.component';
 // Directive
 import {DynamicHostComponent} from './dialog/component/dynamic-host/dynamic-host.component';
 import {DynamicHostDirective} from './dialog/directive/dynamic-host.directive';
@@ -53,6 +54,7 @@ import {DraggableDirective} from './dialog/directive/draggable/draggable.directi
 		GridRowDropdownComponent,
 		GridComponent,
 		DynamicHostComponent,
+		DialogConfirmComponent,
 		// Directive
 		DynamicHostDirective,
 		DraggableDirective
@@ -70,10 +72,14 @@ import {DraggableDirective} from './dialog/directive/draggable/draggable.directi
 		GridRowDropdownComponent,
 		GridComponent,
 		DynamicHostComponent,
+		DialogConfirmComponent,
 		// Directive
 		DynamicHostDirective,
 		DraggableDirective
 	],
+	entryComponents: [
+		DialogConfirmComponent
+	]
 })
 export class TdsComponentLibraryModule {
 }

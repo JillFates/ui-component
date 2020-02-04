@@ -5,6 +5,8 @@ import {DialogExit, DialogButtonModel} from './dialog.model';
 
 export abstract class Dialog {
 	public data: any;
+	// Content is a very specific property that can be used to create custom Confirms
+	public content: any;
 	public successEvent: any;
 	// Contains action/context buttons
 	public buttons: DialogButtonModel[];

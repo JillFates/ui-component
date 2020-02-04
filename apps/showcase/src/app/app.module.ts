@@ -20,6 +20,7 @@ import {GridInternalModule} from './modules/grid-internal/grid-internal.module';
 import {GridModule} from './modules/grid/grid.module';
 import {DiagramLayoutModule} from './modules/diagram-layout/diagram-layout.module';
 import {DialogModule} from './modules/dialog/dialog.module';
+import {DialogConfirmModule} from './modules/dialog-confirm/dialog-confirm.module';
 // Component
 import {AppComponent} from './app.component';
 
@@ -44,6 +45,7 @@ import {AppComponent} from './app.component';
 		GridInternalModule,
 		GridModule,
 		DialogModule,
+		DialogConfirmModule,
 		RouterModule.forRoot(
 			[
 				{
