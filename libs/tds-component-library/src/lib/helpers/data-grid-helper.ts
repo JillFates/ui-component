@@ -1,5 +1,4 @@
 // TODO: This is largely copied from the existing TDS app. We should go through it and refactor.
-
 import {
 	GridDataResult,
 	RowArgs,
@@ -7,12 +6,40 @@ import {
 	PageChangeEvent,
 	CellClickEvent,
 } from '@progress/kendo-angular-grid';
-import { State, SortDescriptor, DataResult, CompositeFilterDescriptor, process } from '@progress/kendo-data-query';
+import {
+	State,
+	SortDescriptor,
+	DataResult,
+	CompositeFilterDescriptor,
+	process,
+	FilterDescriptor
+} from '@progress/kendo-data-query';
 import { ColumnHeaderData, FilterType, GridSettings } from '../models/grid-models';
 
 export class DataGridHelper {
-	// private notifier: NotifierService;
+	public gridData: GridDataResult = {
+		data: [],
+		total: 0,
+	};
+	public resultSet: Array<any>;
+	public state: State = {
+		filter: {
+			filters: [],
+			logic: 'and',
+		},
+		skip: 0,
+		take: 25,
+	};
+	public selectedRows = [];
+	public bulkItems: any = {};
+	public selectAllCheckboxes = false;
+	public defaultPageOptions = [25, 50, 100];
+	DefaultBooleanFilterData = 'All';
+	private selectableSettings: SelectableSettings;
+	private checkboxSelectionConfig: any;
+	private filterType = FilterType;
 
+	// private notifier: NotifierService;
 	constructor(result: any, gridSettings?: GridSettings) {
 		// this.notifier = new NotifierService();
 		this.state.sort = gridSettings.defaultSort;
@@ -34,27 +61,6 @@ export class DataGridHelper {
 		}
 		this.loadPageData();
 	}
-	public gridData: GridDataResult = {
-		data: [],
-		total: 0,
-	};
-	public resultSet: Array<any>;
-	public state: State = {
-		filter: {
-			filters: [],
-			logic: 'and',
-		},
-		skip: 0,
-		take: 25,
-	};
-	public selectedRows = [];
-	public bulkItems: any = {};
-	public selectAllCheckboxes = false;
-	private selectableSettings: SelectableSettings;
-	private checkboxSelectionConfig: any;
-	public defaultPageOptions = [25, 50, 100];
-	private filterType = FilterType;
-	DefaultBooleanFilterData = 'All';
 
 	public isRowSelected = (e: RowArgs) => this.selectedRows.indexOf(e.index) >= 0;
 
@@ -68,22 +74,50 @@ export class DataGridHelper {
 	}
 
 	/**
+	 * Set the value of the filter and call the filtering process
+	 * @param value Value to be sent to the filter, could be boolean, date, string, etc...
+	 * @param column Column to filtering
+	 * @param operator Type of filter operation
+	 */
+	public onFilterWithValue(value: any, column: ColumnHeaderData | any, operator?: string): void {
+		column.filter = value;
+		let root = this.getFilter(column, operator);
+		root = this.removeEmptyFilters(root, column);
+		this.filterChange(root);
+	}
+
+	/**
+	 * Remove any empty filters who remains over the currenc selected filters collection
+	 * @param root Collection containing all filters
+	 * @param column column of the current filter selected
+	 */
+	public removeEmptyFilters(root: CompositeFilterDescriptor, column: ColumnHeaderData | any): CompositeFilterDescriptor {
+		// clear (string/date) values
+		root.filters = (root.filters || []).filter((filter: any) => filter.value !== '');
+		// clear boolean filter value
+		if (column.filter === '' && column.type === 'boolean') {
+			root.filters = root.filters.filter((filter: any) => filter.field !== column.property);
+		}
+		return root;
+	}
+
+	/**
 	 * Get the filter for the column.
 	 * @param column Column to be operated on
 	 * @param operator Operator.
 	 */
-	public getFilter(column: ColumnHeaderData, operator?: string): CompositeFilterDescriptor {
+	public getFilter(column: ColumnHeaderData | any, operator?: string): CompositeFilterDescriptor {
 		const root = this.state.filter || { logic: 'and', filters: [] };
 		let [filter] = this.Flatten(root).filter((x: { field: string }) => x.field === column.property);
 		if (!column.filter && column.filterType !== this.filterType.number && column.filter !== 0) {
 			column.filter = '';
 		}
 		// check for number types and null value (clear out the filters)
-		if (column.filterType === this.filterType.number && column.filter === null) {
+		if ((column.filterType === this.filterType.number || column.filterType === 'number') && column.filter === null) {
 			this.clearValue(column);
 			return; // exit
 		}
-		if (column.filterType === this.filterType.number) {
+		if (column.filterType === this.filterType.number || column.filterType === 'number') {
 			if (!filter) {
 				root.filters.push({
 					field: column.property,
@@ -97,7 +131,7 @@ export class DataGridHelper {
 				filter.value = Number(column.filter);
 			}
 		}
-		if (column.filterType === this.filterType.text) {
+		if (column.filterType === this.filterType.text || column.filterType === 'text') {
 			if (!filter) {
 				root.filters.push({
 					field: column.property,
@@ -112,15 +146,16 @@ export class DataGridHelper {
 				filter.value = column.filter;
 			}
 		}
-		if (column.filterType === this.filterType.date) {
+		if (column.filterType === this.filterType.date || column.filterType === 'date'
+			|| column.filterType === this.filterType.datetime || column.filterType === 'datetime') {
 			const { init, end } = this.getInitEndFromDate(column.filter);
 			if (filter) {
 				this.state.filter.filters = this.getFiltersExcluding(column.property);
 			}
-			root.filters.push({ field: column.property, operator: 'gte', value: init });
-			root.filters.push({ field: column.property, operator: 'lte', value: end });
+			root.filters.push({ field: column.property, operator: 'gte', value: init || '' });
+			root.filters.push({ field: column.property, operator: 'lte', value: end || '' });
 		}
-		if (column.filterType === this.filterType.boolean) {
+		if (column.filterType === this.filterType.boolean || column.filterType === 'boolean') {
 			if (!filter) {
 				root.filters.push({
 					field: column.property,
@@ -128,7 +163,7 @@ export class DataGridHelper {
 					value: column.filter === 'True' || column.filter === true,
 				});
 			} else {
-				if (column.filter === this.DefaultBooleanFilterData) {
+				if (column.filter === this.DefaultBooleanFilterData || column.filter === '' || column.filter === null) {
 					this.clearValue(column);
 				} else {
 					filter = root.filters.find(r => {
@@ -138,7 +173,7 @@ export class DataGridHelper {
 				}
 			}
 		}
-		if (column.filterType === this.filterType.dropdown) {
+		if (column.filterType === this.filterType.dropdown || column.filterType === 'dropdown') {
 			if (!filter) {
 				root.filters.push({
 					field: column.property,
@@ -167,6 +202,7 @@ export class DataGridHelper {
 		}
 		return column.filter;
 	}
+
 	/**
 	 * Update the filters state structure removing the column filter provided
 	 * @param {ColumnHeaderData} column: Column to exclude from filters
@@ -193,17 +229,6 @@ export class DataGridHelper {
 		columns.forEach(column => {
 			this.clearFilter(column);
 		});
-	}
-
-	/**
-	 * Get the filters state structure excluding the column filter name provided
-	 * @param {string} excludeFilterName:  Name of the filter column to exclude
-	 * @param {any} state: Current filters state
-	 * @returns void
-	 */
-	private getFiltersExcluding(excludeFilterName: string): any {
-		const filters = (this.state.filter && this.state.filter.filters) || [];
-		return filters.filter(r => r['field'] !== excludeFilterName);
 	}
 
 	/**
@@ -367,6 +392,14 @@ export class DataGridHelper {
 		}
 	}
 
+	// }
+	/**
+	 * Calculates and returns the current page number based on the current grid state & skip states.
+	 */
+	public getCurrentPage(): number {
+		return this.state.skip / this.state.take + 1;
+	}
+
 	/**
 	 * Notify the event to update the grid height
 	 */
@@ -376,15 +409,6 @@ export class DataGridHelper {
 	// 	});
 	// 	// when dealing with locked columns Kendo grid fails to update the height, leaving a lot of empty space
 	// 	jQuery('.k-grid-content-locked').addClass('element-height-100-per-i');
-	// }
-
-	/**
-	 * Calculates and returns the current page number based on the current grid state & skip states.
-	 */
-	public getCurrentPage(): number {
-		return this.state.skip / this.state.take + 1;
-	}
-
 	/**
 	 * Calculates and returns the real row index based on the current pagination state.
 	 */
@@ -424,9 +448,33 @@ export class DataGridHelper {
 	 * @returns {init, end}
 	 */
 	public getInitEndFromDate(date: Date): { init: Date; end: Date } {
-		const init = new Date(date.getFullYear(), date.getMonth(), date.getDate());
-		const end = new Date(date.getFullYear(), date.getMonth(), date.getDate(), 23, 59, 59);
-
+		const init = date ? new Date(date.getFullYear(), date.getMonth(), date.getDate()) : null;
+		const end = date ? new Date(date.getFullYear(), date.getMonth(), date.getDate(), 23, 59, 59) : null;
 		return { init, end };
+	}
+
+	/**
+	 * Get the filters state structure excluding the column filter name provided
+	 * @param {string} excludeFilterName:  Name of the filter column to exclude
+	 * @param {any} state: Current filters state
+	 * @returns void
+	 */
+	private getFiltersExcluding(excludeFilterName: string): any {
+		const filters = (this.state.filter && this.state.filter.filters) || [];
+		return filters.filter(r => r['field'] !== excludeFilterName);
+	}
+
+	/**
+	 * Returns true if grid has filters applied
+	 */
+	public hasFilterApplied(): boolean {
+		return this.state && this.state.filter && this.state.filter.filters.length > 0;
+	}
+
+	/**
+	 * Returns the number of filters currently applied.
+	 */
+	public filterCount(): number {
+		return this.state && this.state.filter ? this.state.filter.filters.length : 0;
 	}
 }

@@ -1,0 +1,16 @@
+.tds-filter-input {
+  ::ng-deep kendo-datepicker {
+    .k-select {
+      top: 1px;
+    }
+    .k-dateinput .k-input {
+      opacity: .54;
+    }
+    &.is-filtered {
+      .k-dateinput .k-input {
+        opacity: 1;
+        color: #000;
+      }
+    }
+  }
+}

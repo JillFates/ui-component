@@ -21,29 +21,44 @@
 			<div class="clr-col-12">
 				<tds-grid-header-action-buttons
 					[actionButtons]="gridModel.headerActionButtons"
-                    (clearFilters)="onClearFilters()"
-					[disableClearFilters]="disableClearFilters"
-					(refresh)="reloadData()"
-				></tds-grid-header-action-buttons>
+					(refresh)="reloadData()">
+				</tds-grid-header-action-buttons>
 			</div>
 		</div>
 	</ng-template>
 
 	<!-- Show Filters / Actions column -->
-	<kendo-grid-column [width]="60" [class]="{ 'k-custom-command-column': true }" [minResizableWidth]="60">
+	<kendo-grid-column [width]="60"
+										 [field]="'x'"
+										 [sortable]="false"
+										 [class]="{ 'k-custom-command-column': true }"
+										 [minResizableWidth]="60">
 		<ng-template
 			*ngIf="gridModel.gridSettings.filterable"
 			kendoGridHeaderTemplate
 			let-column
-			let-columnIndex="columnIndex"
-		>
+			let-columnIndex="columnIndex">
 			<tds-button [flat]="true" (click)="toggleFilter()">
 				<clr-icon shape="filter" class="grid-filter-button is-solid">
-					<span *ngIf="hasFilterApplied()" class="badge badge-warning">
-						{{ filterCount() }}
+					<span *ngIf="gridHelper.hasFilterApplied()" class="badge badge-warning">
+						{{ gridHelper.filterCount() }}
 					</span>
 				</clr-icon>
 			</tds-button>
+		</ng-template>
+		<!-- Clear all Filters button -->
+		<ng-template kendoGridFilterCellTemplate let-filter>
+			<tds-grid-clear-all-filters-button [show]="gridHelper.hasFilterApplied()"
+																				 (clearFilters)="onClearFilters()">
+			</tds-grid-clear-all-filters-button>
+			<!--<tds-button
+				*ngIf="gridHelper.hasFilterApplied()"
+				(click)="onClearFilters()"
+				[title]="'Clear All Filters'"
+				icon="times-circle"
+				[small]="true"
+				[flat]="true">
+			</tds-button>-->
 		</ng-template>
 		<ng-template *ngIf="gridModel.gridRowActions" kendoGridCellTemplate let-dataItem let-rowIndex="rowIndex">
 			<div class="action-button btn-link">
@@ -75,8 +90,17 @@
 		</ng-template>
 		<ng-template kendoGridFilterCellTemplate let-filter>
 			<div class="filter-input">
+				<tds-filter-input
+					name="{{column.property}}"
+					[value]="column.filter || ''"
+					[columnType]="column.filterType"
+					[dateFormat]="column.format"
+					[dropdownData]="column.filterInputData ? column.filterInputData.data : []"
+					placeholder="Filter"
+					(filter)="gridHelper.onFilterWithValue($event, column)">
+				</tds-filter-input>
 				<!-- Number and text filtering -->
-				<input
+				<!--<input
 					*ngIf="column.filterType === filterType.text || column.filterType === filterType.number"
 					clrInput
 					type="text"
@@ -85,18 +109,18 @@
 					[(ngModel)]="column.filter"
 					placeholder="Filter {{ column.label }}"
 					value=""
-				/>
+				/>-->
 
 				<!-- Date filtering -->
-				<kendo-datepicker
+				<!--<kendo-datepicker
 					*ngIf="column.filterType === filterType.date"
 					[format]="column.format"
 					[(ngModel)]="column.filter"
 					(valueChange)="gridHelper.onFilter(column)"
-				></kendo-datepicker>
+				></kendo-datepicker>-->
 
 				<!-- Dropdown/Boolean filtering -->
-				<kendo-dropdownlist
+				<!--<kendo-dropdownlist
 					*ngIf="column.filterType === filterType.dropdown || column.filterType === filterType.boolean"
 					[data]="column.filterInputData.data"
 					[textField]="'text'"
@@ -107,7 +131,7 @@
 					(valueChange)="gridHelper.onFilter(column)"
 					[popupSettings]="{ popupClass: 'hide-option-label' }"
 				>
-				</kendo-dropdownlist>
+				</kendo-dropdownlist>-->
 
 				<!-- Tag filtering -->
 				<!-- TODO: Move the asset tag selector component to the library. -->
@@ -122,7 +146,7 @@
                     </tds-asset-tag-selector> -->
 
 				<!-- Clear button -->
-				<tds-button
+				<!--<tds-button
 					*ngIf="gridHelper.columnHasFilter(column)"
 					(click)="gridHelper.clearFilter(column)"
 					[title]="'Clear Filter'"
@@ -130,7 +154,7 @@
 					[small]="true"
 					[flat]="true"
 				>
-				</tds-button>
+				</tds-button>-->
 			</div>
 		</ng-template>
 	</kendo-grid-column>
