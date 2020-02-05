@@ -34,12 +34,6 @@
 					</clr-checkbox-wrapper>
 					<div class="btn-sm">
 						<tds-button icon="plus">Create Task</tds-button>
-						<tds-button
-							[disabled]="!hasFilterApplied('columnModelTaskGrid')"
-							(click)="onClearFilters('columnModelTaskGrid')"
-							icon="close"
-							>Clear filters</tds-button
-						>
 						<tds-button icon="repeat"></tds-button>
 					</div>
 				</div>
@@ -57,7 +51,11 @@
 			</div>
 		</ng-template>
 
-		<kendo-grid-column width="70" [filterable]="false" [columnMenu]="false" field="ActionsColumn">
+		<kendo-grid-column [width]="80"
+											 [columnMenu]="false"
+											 [minResizableWidth]="80"
+											 [field]="'ActionsColumn'"
+											 [sortable]="false">
 			<ng-template kendoGridHeaderTemplate let-column let-columnIndex="columnIndex">
 				<tds-button [flat]="true" (click)="toggleTasksFilter()">
 					<clr-icon shape="filter" class="is-solid">
@@ -67,7 +65,12 @@
 					</clr-icon>
 				</tds-button>
 			</ng-template>
-
+			<!-- Clear all Filters button -->
+			<ng-template kendoGridFilterCellTemplate let-filter>
+				<tds-grid-clear-all-filters-button [show]="hasFilterApplied('columnModelTaskGrid')"
+																					 (clearFilters)="onClearFilters('columnModelTaskGrid')">
+				</tds-grid-clear-all-filters-button>
+			</ng-template>
 			<ng-template kendoGridCellTemplate let-dataItem let-rowIndex="rowIndex">
 				<div class="action-button btn-group btn-link">
 					<clr-dropdown>
@@ -88,27 +91,16 @@
 			[width]="column.width"
 			[columnMenu]="column.columnMenu"
 			[filterable]="column.filterable"
-			[ngClass]="{ 'hide-filter': !showDetailsFilter }"
 		>
 			<ng-template kendoGridFilterCellTemplate let-filter>
 				<div class="filter-input">
-					<input
-						clrInput
-						type="text"
-						class="text-filter"
-						[name]="column.field"
-						[(ngModel)]="column.filter"
-						placeholder="Filter"
-					/>
-					<tds-button
-						*ngIf="column.filter"
-						(click)="onClearFilter(column)"
-						[title]="'Clear Filter'"
-						icon="times-circle"
-						[small]="true"
-						[flat]="true"
-					>
-					</tds-button>
+					<tds-grid-filter-input
+						name="{{column.property}}"
+						[value]="column.filter || ''"
+						[columnType]="column.type"
+						[placeholder]="'Filter'"
+						(filter)="column.filter = $event">
+					</tds-grid-filter-input>
 				</div>
 			</ng-template>
 
@@ -216,7 +208,7 @@
 			</ng-template>
 		</kendo-grid-column>
 
-		<kendo-grid-column width="40" [filterable]="false" [columnMenu]="false" field="ActionsColumn">
+		<kendo-grid-column width="40" [columnMenu]="false" field="ActionsColumn">
 			<ng-template kendoGridHeaderTemplate let-column let-columnIndex="columnIndex">
 				<tds-button [flat]="true" (click)="toggleAssetsFilter()">
 					<clr-icon shape="filter" class="is-solid">
@@ -225,6 +217,12 @@
 						}}</span>
 					</clr-icon>
 				</tds-button>
+			</ng-template>
+			<!-- Clear all Filters button -->
+			<ng-template kendoGridFilterCellTemplate let-filter>
+				<tds-grid-clear-all-filters-button [show]="hasFilterApplied('columnModelAssetsGrid')"
+																					 (clearFilters)="onClearFilters('columnModelAssetsGrid')">
+				</tds-grid-clear-all-filters-button>
 			</ng-template>
 			<ng-template kendoGridCellTemplate let-dataItem let-rowIndex="rowIndex">
 				<div class="action-button btn-group btn-link">
@@ -252,6 +250,13 @@
 		>
 			<ng-template kendoGridFilterCellTemplate let-filter>
 				<div class="filter-input">
+					<tds-grid-filter-input
+						name="{{column.property}}"
+						[value]="column.filter || ''"
+						[columnType]="column.type"
+						[placeholder]="'Filter'"
+						(filter)="column.filter = $event">
+					</tds-grid-filter-input>
 					<input
 						clrInput
 						type="text"
@@ -293,12 +298,6 @@
 							</clr-icon>
 							Bulk Action
 						</tds-button>
-						<tds-button
-							[disabled]="!hasFilterApplied('columnModelAssetsGrid')"
-							(click)="onClearFilters('columnModelAssetsGrid')"
-							icon="close"
-							>Clear filters</tds-button
-						>
 						<tds-button icon="repeat"></tds-button>
 					</div>
 				</div>
@@ -392,7 +391,6 @@
 						[width]="column.width"
 						[columnMenu]="column.columnMenu"
 						[filterable]="column.filterable"
-						[ngClass]="{ 'hide-filter': !showDetailsFilter }"
 					>
 						<ng-template kendoGridFilterCellTemplate let-filter>
 							<div class="filter-input">

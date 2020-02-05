@@ -8,7 +8,7 @@
 				 [name]="name"
 				 [value]="value"
 				 (change)="onFilter($event.target.value)"
-				 [placeholder]="placeholder"
+				 [placeholder]="placeholder || 'Filter'"
 				 input-paste
 				 (onPaste)="onPaste($event)"/>
 
@@ -18,8 +18,7 @@
 										[format]="dateFormat"
 										[ngClass]="{'is-filtered': value}"
 										[value]="value"
-										(valueChange)="onFilter($event)"
-										[style.width.%]="value ? 80 : 100">
+										(valueChange)="onFilter($event)">
 	</kendo-datepicker>
 
 	<!-- datetime -->
@@ -28,8 +27,7 @@
 										[format]="dateFormat"
 										[ngClass]="{'is-filtered': value}"
 										[value]="value"
-										(valueChange)="onFilter($event)"
-										[style.width.%]="value ? 80 : 100">
+										(valueChange)="onFilter($event)">
 	</kendo-datepicker>
 
 	<!-- boolean -->
@@ -37,8 +35,7 @@
 											#filterInput
 											[data]="booleanFilterData"
 											[value]="value"
-											(valueChange)="onFilter($event)"
-											[style.width.%]="value ? 70 : 100">
+											(valueChange)="onFilter($event)">
 	</kendo-dropdownlist>
 
 	<kendo-dropdownlist
@@ -60,9 +57,21 @@
 				 class="text-filter"
 				 [name]="name"
 				 [value]="value"
-				 [placeholder]="placeholder"
+				 [placeholder]="placeholder || 'Filter'"
 				 input-paste
 				 (onPaste)="onPaste($event)"/>
+
+	<!-- Tag filtering -->
+	<!-- TODO: Move the asset tag selector component to the library. -->
+	<!-- <tds-asset-tag-selector
+									#tagSelector
+									[popupClass]="'assets-view-grid'"
+									[tagList]="metadata.tagList"
+									placeholder="{{ 'GLOBAL.FILTER' | translate }}"
+									[viewFilterModel]="column.filter"
+									(valueChange)="onTagFilterChange(column, $event)"
+							>
+							</tds-asset-tag-selector> -->
 
 	<!-- Clear filter button -->
 	<tds-button

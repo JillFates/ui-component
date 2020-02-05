@@ -23,7 +23,7 @@ import { KEYSTROKE } from '../models/constants';
 import { ColumnHeaderData, FilterType } from '../models/grid-models';
 
 @Component({
-	selector: 'tds-filter-input',
+	selector: 'tds-grid-filter-input',
 	templateUrl: './grid-filter-input.component.html',
 	styleUrls: ['./grid-filter-input.component.scss']
 })
@@ -62,11 +62,6 @@ export class GridFilterInputComponent implements AfterViewInit, OnDestroy, OnCha
 		}
 	}
 
-	// ngOnInit() {
-	// 	if (this.value === undefined) {
-	// 		this.value = '';
-	// 	}
-	// }
 	/**
 	 * On input changes update the value of the input control
 	 * @param {SimpleChanges} changes - Object with the input properties updated bye the host component

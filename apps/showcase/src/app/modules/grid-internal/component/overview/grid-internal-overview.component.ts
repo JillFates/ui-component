@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { GridRowAction } from 'libs/tds-component-library/src';
+import { FilterType, GridRowAction } from 'libs/tds-component-library/src';
 
 @Component({
 	selector: 'app-grid-internal-overview',
@@ -7,6 +7,12 @@ import { GridRowAction } from 'libs/tds-component-library/src';
 	styleUrls: ['./grid-internal-overview.component.scss'],
 })
 export class GridInternalOverviewComponent implements OnInit {
+	filter = [
+		{ type: FilterType.dropdown, value: null },
+		{ type: FilterType.date, value: null },
+		{ type: FilterType.boolean, value: null },
+		{ type: FilterType.number, value: null },
+		{ type: FilterType.text, value: null }];
 	protected gridRowActions: GridRowAction[];
 
 	constructor() {
@@ -32,14 +38,13 @@ export class GridInternalOverviewComponent implements OnInit {
 			},
 		];
 	}
+
 	public viewAlert = (dataItem: any): void => {
 		alert(`View clicked.`);
 	}
-
 	public editAlert = (dataItem: any): void => {
 		alert(`Edit clicked`);
 	}
-
 	public infoAlertAsync = async (dataItem: any): Promise<void> => {
 		await new Promise(res => setTimeout(res, 2000));
 		alert(`Info clicked. This was an async function and resolved after two seconds.`);
