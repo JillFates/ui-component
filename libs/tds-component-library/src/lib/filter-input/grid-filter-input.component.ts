@@ -32,7 +32,7 @@ export class GridFilterInputComponent implements AfterViewInit, OnDestroy, OnCha
 	@Input() dropdownData: Array<any> = [];
 	@Input() placeholder = '';
 	@Input() value: String | Date | boolean = '';
-	@Input() columnType: FilterType | 'text' | 'boolean' | 'date' | 'datetime' | 'dropdown';
+	@Input() columnType: string;
 	@Input() dateFormat = '';
 	@Input() column: ColumnHeaderData | any;
 	@Output() filter: EventEmitter<string | Date | boolean> = new EventEmitter<string | Date | boolean>();

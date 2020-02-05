@@ -53,6 +53,7 @@
 
 		<kendo-grid-column [width]="80"
 											 [columnMenu]="false"
+											 [headerClass]="'text-center'"
 											 [minResizableWidth]="80"
 											 [field]="'ActionsColumn'"
 											 [sortable]="false">
@@ -208,7 +209,7 @@
 			</ng-template>
 		</kendo-grid-column>
 
-		<kendo-grid-column width="40" [columnMenu]="false" field="ActionsColumn">
+		<kendo-grid-column width="40" [columnMenu]="false" field="ActionsColumn" [headerClass]="'text-center'">
 			<ng-template kendoGridHeaderTemplate let-column let-columnIndex="columnIndex">
 				<tds-button [flat]="true" (click)="toggleAssetsFilter()">
 					<clr-icon shape="filter" class="is-solid">
@@ -257,23 +258,6 @@
 						[placeholder]="'Filter'"
 						(filter)="column.filter = $event">
 					</tds-grid-filter-input>
-					<input
-						clrInput
-						type="text"
-						class="text-filter"
-						[name]="column.field"
-						[(ngModel)]="column.filter"
-						placeholder="Filter"
-					/>
-					<tds-button
-						*ngIf="column.filter"
-						(click)="onClearFilter(column)"
-						[title]="'Clear Filter'"
-						icon="times-circle"
-						[small]="true"
-						[flat]="true"
-					>
-					</tds-button>
 				</div>
 			</ng-template>
 
