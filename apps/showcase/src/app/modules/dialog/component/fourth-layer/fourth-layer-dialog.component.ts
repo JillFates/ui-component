@@ -1,5 +1,5 @@
 // Angular
-import {Component, EventEmitter, Input, Output} from '@angular/core';
+import {Component, Input} from '@angular/core';
 // Model
 import {Dialog} from '../../../../../../../../libs/tds-component-library/src/lib/dialog/model/dialog.interface';
 
@@ -9,7 +9,6 @@ import {Dialog} from '../../../../../../../../libs/tds-component-library/src/lib
 })
 export class FourthLayerDialogComponent extends Dialog {
 	@Input() data: any;
-	@Output() successEvent: EventEmitter<any> = new EventEmitter<any>();
 
 	/**
 	 * Close the Dialog by Cancel/Close/Dismiss

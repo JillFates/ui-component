@@ -3,7 +3,7 @@ import {
 	Component,
 	HostListener,
 	QueryList,
-	ViewChildren
+	ViewChildren, ViewEncapsulation
 } from '@angular/core';
 // Service
 import {EventService} from '../../../service/event-service/event.service';
@@ -16,12 +16,13 @@ import {DynamicHostModel} from '../../model/dynamic-host.model';
 
 @Component({
 	selector: 'tds-dialog',
+	styleUrls: ['./dialog.component.scss'],
 	templateUrl: './dialog.component.html',
 })
 export class DialogComponent {
 	@ViewChildren(DynamicHostComponent) dynamicHostList !: QueryList<DynamicHostComponent>;
 	// Contains a list of every available dialog open as an Stack
-	public dynamicDialogList = <any>[];
+	public dynamicDialogList: DynamicHostModel[] = <any>[];
 
 	constructor(private eventService: EventService) {
 		this.registerDialog();
@@ -34,12 +35,13 @@ export class DialogComponent {
 		this.eventService.on(DialogEventType.OPEN, (dialogModel: any) => {
 			// We initialize the Model with the incoming Model event
 			const dynamicHostModel: DynamicHostModel = {
-				dialogModel: dialogModel.event
+				dialogModel: dialogModel.event,
+				instantiated: false
 			};
 
 			// We add a new Empty element to the dynamicDialogList
 			this.dynamicDialogList.push(dynamicHostModel);
-
+			// Wait a millisecond to be registered
 			setTimeout(() => {
 				// We get the lasted change added
 				// Save to the List which host component is attached
@@ -55,58 +57,56 @@ export class DialogComponent {
 	 */
 	public createComponent(dynamicHostModel: DynamicHostModel): void {
 
-		// Create new instance
-		const componentFactory = dynamicHostModel.dialogModel.componentFactoryResolver.resolveComponentFactory(
-			dynamicHostModel.dialogModel.component
-		);
+		try {
+			// Create new instance
+			const componentFactory = dynamicHostModel.dialogModel.componentFactoryResolver.resolveComponentFactory(
+				dynamicHostModel.dialogModel.component
+			);
+			const currentViewContainerRef = dynamicHostModel.dynamicHostComponent.dynamicContent.viewContainerRef;
+			currentViewContainerRef.clear();
+			const componentRef = currentViewContainerRef.createComponent(
+				componentFactory
+			);
 
-		const currentViewContainerRef = dynamicHostModel.dynamicHostComponent.dynamicContent.viewContainerRef;
-		currentViewContainerRef.clear();
+			const currentDialogComponentInstance = <Dialog>componentRef.instance;
+			currentDialogComponentInstance.data = dynamicHostModel.dialogModel.data;
+			currentDialogComponentInstance.content = dynamicHostModel.dialogModel.content;
+			currentDialogComponentInstance.buttons = [];
 
-		const componentRef = currentViewContainerRef.createComponent(
-			componentFactory
-		);
-		const currentDialogComponentInstance = <Dialog>componentRef.instance;
-		currentDialogComponentInstance.data = dynamicHostModel.dialogModel.data;
-		currentDialogComponentInstance.content = dynamicHostModel.dialogModel.content;
-
-		currentDialogComponentInstance.buttons = [];
-
-		// Overwrite the property configuration
-		if (dynamicHostModel.dialogModel.modalConfiguration) {
-			dynamicHostModel.dynamicHostComponent.modalConfigurationModel =
-				Object.assign(dynamicHostModel.dynamicHostComponent.modalConfigurationModel, dynamicHostModel.dialogModel.modalConfiguration);
-			// If the user wants to set the background as empty, we change the default so we can revert it to that
-			if (!dynamicHostModel.dynamicHostComponent.modalConfigurationModel.showBackground) {
-				dynamicHostModel.dynamicHostComponent.modalConfigurationModel.setDefaultShowBackground(
-					dynamicHostModel.dynamicHostComponent.modalConfigurationModel.showBackground
-				);
+			// Overwrite the property configuration
+			if (dynamicHostModel.dialogModel.modalConfiguration) {
+				dynamicHostModel.dynamicHostComponent.modalConfigurationModel =
+					Object.assign(dynamicHostModel.dynamicHostComponent.modalConfigurationModel, dynamicHostModel.dialogModel.modalConfiguration);
+				// If the user wants to set the background as empty, we change the default so we can revert it to that
+				if (!dynamicHostModel.dynamicHostComponent.modalConfigurationModel.showBackground) {
+					dynamicHostModel.dynamicHostComponent.modalConfigurationModel.setDefaultShowBackground(
+						dynamicHostModel.dynamicHostComponent.modalConfigurationModel.showBackground
+					);
+				}
 			}
-		}
 
-		// Save the instance
-		dynamicHostModel.dynamicHostComponent.currentDialogComponentInstance = currentDialogComponentInstance;
+			// Save the instance
+			dynamicHostModel.dynamicHostComponent.currentDialogComponentInstance = currentDialogComponentInstance;
 
-		// Open the dialog
-		setTimeout(() => {
 			// Before to open the Dialog, we hide any other background
 			this.showHideBackgrounds();
-			dynamicHostModel.dynamicHostComponent.isDialogOpen = true;
-		});
 
-		// Emits on Success
-		if (currentDialogComponentInstance.successEvent) {
-			currentDialogComponentInstance.successEvent.subscribe((result) => {
-				dynamicHostModel.dialogModel.observable.next(result);
-				dynamicHostModel.dialogModel.observable.complete();
-				// Last element of the array only
-				dynamicHostModel.dynamicHostComponent.isDialogOpen = false;
-				this.dynamicDialogList.pop();
-				setTimeout(() => {
-					// After close a Dialog, we show any other background
-					this.showHideBackgrounds();
+			// Emits on Success
+			if (currentDialogComponentInstance.successEvent) {
+				currentDialogComponentInstance.successEvent.subscribe((result) => {
+					dynamicHostModel.dialogModel.observable.next(result);
+					dynamicHostModel.dialogModel.observable.complete();
+					// Last element of the array only
+					this.dynamicDialogList.pop();
+					setTimeout(() => {
+						// After close a Dialog, we show any other background
+						this.showHideBackgrounds();
+					});
 				});
-			});
+			}
+			dynamicHostModel.instantiated = true;
+		} catch (e) {
+			console.error('Dialog can\'t be instantiated/created', e);
 		}
 	}
 

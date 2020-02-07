@@ -43,7 +43,7 @@
                         <fa-icon [icon]="faExpandArrowsAlt"></fa-icon>
                     </button>
                 </ng-template>
-                <h3 class="modal-title" *ngIf="modalConfigurationModel.title">{{modalConfigurationModel.title}}</h3>
+                <h3 class="modal-title" *ngIf="modalConfigurationModel.title">{{currentDialogComponentInstance.getTitle()}}</h3>
             </div>
             <div class="modal-body" [ngClass]="{  'modal-no-action-buttons': !showLeftActionButtonsPanel}">
                 <ng-template tdsDynamicDialog></ng-template>
@@ -74,4 +74,4 @@
         </div>
     </div>
 </div>
-<div class="modal-backdrop" aria-hidden="true" *ngIf="isDialogOpen && modalConfigurationModel.showBackground"></div>
+<div class="modal-backdrop" aria-hidden="true" *ngIf="modalConfigurationModel.showBackground"></div>
