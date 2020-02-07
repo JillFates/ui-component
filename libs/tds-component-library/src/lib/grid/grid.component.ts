@@ -64,7 +64,7 @@ export class GridComponent implements OnInit {
 	/**
 	 * Toggles the grid filter
 	 */
-	public toggleFilter(): void {
+	public toggleFilters(): void {
 		this.showFilters = !this.showFilters;
 	}
 

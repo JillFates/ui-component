@@ -25,11 +25,12 @@ import { GridComponent } from './grid/grid.component';
 import { DialogComponent } from './dialog/component/dialog/dialog.component';
 import { DialogConfirmComponent } from './dialog/component/dialog-confirm/dialog-confirm.component';
 import { GridFilterInputComponent } from './filter-input/grid-filter-input.component';
-import { GridClearAllFiltersButtonComponent } from './grid-clear-all-button/grid-clear-all-filters-button.component';
+import { GridClearAllFiltersButtonComponent } from './grid-clear-all-filters-button/grid-clear-all-filters-button.component';
 // Directive
 import { DynamicHostComponent } from './dialog/component/dynamic-host/dynamic-host.component';
 import { DynamicHostDirective } from './dialog/directive/dynamic-host.directive';
 import { DraggableDirective } from './dialog/directive/draggable/draggable.directive';
+import { GridShowHideFiltersButtonComponent } from './grid-show-hide-filters-button/grid-show-hide-filters-button.component';
 
 @NgModule({
 	imports: [
@@ -55,6 +56,7 @@ import { DraggableDirective } from './dialog/directive/draggable/draggable.direc
 		TdsContextMenuComponent,
 		GridFilterInputComponent,
 		GridClearAllFiltersButtonComponent,
+		GridShowHideFiltersButtonComponent,
 		GridHeaderActionButtonsComponent,
 		GridRowDropdownComponent,
 		GridComponent,
@@ -75,6 +77,7 @@ import { DraggableDirective } from './dialog/directive/draggable/draggable.direc
 		TdsContextMenuComponent,
 		GridFilterInputComponent,
 		GridClearAllFiltersButtonComponent,
+		GridShowHideFiltersButtonComponent,
 		GridHeaderActionButtonsComponent,
 		GridRowDropdownComponent,
 		GridComponent,

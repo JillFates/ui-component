@@ -39,6 +39,13 @@ export class GridInternalOverviewComponent implements OnInit {
 		];
 	}
 
+	/**
+	 * Count current filters applied
+	 */
+	countFiltersApplied(): number {
+		return this.filter.filter(item => item.value !== null).length;
+	}
+
 	public viewAlert = (dataItem: any): void => {
 		alert(`View clicked.`);
 	}

@@ -1,0 +1,7 @@
+<tds-button [flat]="true" (click)="onToggleFilters()">
+	<clr-icon shape="filter" class="grid-filter-button is-solid">
+					<span *ngIf="filterCount" class="badge badge-warning">
+						{{ filterCount }}
+					</span>
+	</clr-icon>
+</tds-button>

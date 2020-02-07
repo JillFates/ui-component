@@ -58,13 +58,9 @@
 											 [field]="'ActionsColumn'"
 											 [sortable]="false">
 			<ng-template kendoGridHeaderTemplate let-column let-columnIndex="columnIndex">
-				<tds-button [flat]="true" (click)="toggleTasksFilter()">
-					<clr-icon shape="filter" class="is-solid">
-						<span *ngIf="filterCount('columnModelTaskGrid'); let filters" class="badge badge-warning">{{
-							filters
-						}}</span>
-					</clr-icon>
-				</tds-button>
+				<tds-grid-show-hide-filters-button [filterCount]="filterCount('columnModelTaskGrid')"
+																					 (toggleFilters)="toggleTasksFilter()">
+				</tds-grid-show-hide-filters-button>
 			</ng-template>
 			<!-- Clear all Filters button -->
 			<ng-template kendoGridFilterCellTemplate let-filter>
@@ -211,13 +207,9 @@
 
 		<kendo-grid-column width="40" [columnMenu]="false" field="ActionsColumn" [headerClass]="'text-center'">
 			<ng-template kendoGridHeaderTemplate let-column let-columnIndex="columnIndex">
-				<tds-button [flat]="true" (click)="toggleAssetsFilter()">
-					<clr-icon shape="filter" class="is-solid">
-						<span *ngIf="filterCount('columnModelAssetsGrid'); let filters" class="badge badge-warning">{{
-							filters
-						}}</span>
-					</clr-icon>
-				</tds-button>
+				<tds-grid-show-hide-filters-button [filterCount]="filterCount('columnModelAssetsGrid')"
+																					 (toggleFilters)="toggleAssetsFilter()">
+				</tds-grid-show-hide-filters-button>
 			</ng-template>
 			<!-- Clear all Filters button -->
 			<ng-template kendoGridFilterCellTemplate let-filter>

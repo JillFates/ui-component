@@ -83,7 +83,11 @@ interface DataItem {
 	</div>
 </div>
 
-<h3>Grid Filter Input & Grid Clear All Filters Button</h3>
+<h3>
+	Grid Show Hide Filters Button
+	<br>Grid Clear All Filters Button
+	<br>Grid Filter Input
+</h3>
 <p>
 	Input filters for grid columns and Clear All Filters button
 </p>
@@ -100,8 +104,11 @@ interface DataItem {
 	<div class="clr-col-12">
 		<tds-card
 			title="Grid Filter Input Example"
-			description="Example of filter types & the Clear All Filters button"
 			code='
+// Show hide filters button and counter
+<tds-grid-show-hide-filters-button [filterCount]="countFiltersApplied()" (toggleFilters)="toggleFilter()">
+</tds-grid-show-hide-filters-button>
+
 // Clear All Filters Button
 	<tds-grid-clear-all-filters-button
 		[show]="filter[0].value !== null || filter[1].value !== null || filter[2].value !== null || filter[3].value !== null || filter[4].value !== null"
@@ -122,6 +129,12 @@ interface DataItem {
 		</tds-grid-filter-input>
 	</div>
 '>
+			<div>
+				<label>Filter trigger button & counter, when filters are entered counter will increase</label>
+				<br>
+				<tds-grid-show-hide-filters-button [filterCount]="countFiltersApplied()">
+				</tds-grid-show-hide-filters-button>
+			</div>
 			<div class="clear-all">
 				<label>When filters are entered the button will show up</label>
 				<tds-grid-clear-all-filters-button
