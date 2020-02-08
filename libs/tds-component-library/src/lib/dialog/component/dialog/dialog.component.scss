@@ -1,6 +1,12 @@
 tds-dynamic-host {
-  visibility: hidden;
+  visibility: hidden !important;
+  .modal-dialog {
+    visibility: hidden !important;
+  }
 }
 tds-dynamic-host.model-instantiated {
-  visibility: visible;
+  visibility: visible !important;
+  .modal-dialog {
+    visibility: visible !important;
+  }
 }

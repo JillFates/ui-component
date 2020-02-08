@@ -17,6 +17,7 @@ import {DynamicHostModel} from '../../model/dynamic-host.model';
 @Component({
 	selector: 'tds-dialog',
 	styleUrls: ['./dialog.component.scss'],
+	encapsulation: ViewEncapsulation.None,
 	templateUrl: './dialog.component.html',
 })
 export class DialogComponent {
@@ -104,7 +105,9 @@ export class DialogComponent {
 					});
 				});
 			}
-			dynamicHostModel.instantiated = true;
+			setTimeout(() => {
+				dynamicHostModel.instantiated = true;
+			});
 		} catch (e) {
 			console.error('Dialog can\'t be instantiated/created', e);
 		}
