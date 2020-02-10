@@ -82,3 +82,121 @@ interface DataItem {
 		</tds-card>
 	</div>
 </div>
+
+<h3>
+	Grid Show Hide Filters Button
+	<br>Grid Clear All Filters Button
+	<br>Grid Filter Input
+</h3>
+<p>
+	Input filters for grid columns and Clear All Filters button
+</p>
+
+<p>
+	Note: This components could be used outside of a kendo-grid, but is meant to be used in a kendo-grid.
+</p>
+
+<div class="clr-row">
+	<div class="clr-col-12">
+		<h4>Usage Example</h4>
+	</div>
+
+	<div class="clr-col-12">
+		<tds-card
+			title="Grid Filter Input Example"
+			code='
+// Show hide filters button and counter
+<tds-grid-show-hide-filters-button [filterCount]="countFiltersApplied()" (toggleFilters)="toggleFilter()">
+</tds-grid-show-hide-filters-button>
+
+// Clear All Filters Button
+	<tds-grid-clear-all-filters-button
+		[show]="filter[0].value !== null || filter[1].value !== null || filter[2].value !== null || filter[3].value !== null || filter[4].value !== null"
+		(clearFilters)="filter[0].value = null; filter[1].value = null; filter[2].value = null; filter[3].value = null; filter[4].value = null;">
+	</tds-grid-clear-all-filters-button>
+
+
+// Filter
+	<div class="filter-input">
+		<tds-grid-filter-input
+			[name]="column.property"
+			[value]="column.filter"
+			[columnType]="column.filterType || column.type"
+			[dateFormat]="column.format"
+			[dropdownData]="[{text: `one`, value: 1}, {text: `two`, value: 2}]"
+			[placeholder]="`Filter`"
+			(filter)="column.filter = $event">
+		</tds-grid-filter-input>
+	</div>
+'>
+			<div>
+				<label>Filter trigger button & counter, when filters are entered counter will increase</label>
+				<br>
+				<tds-grid-show-hide-filters-button [filterCount]="countFiltersApplied()">
+				</tds-grid-show-hide-filters-button>
+			</div>
+			<div class="clear-all">
+				<label>When filters are entered the button will show up</label>
+				<tds-grid-clear-all-filters-button
+					[show]="filter[0].value !== null || filter[1].value !== null || filter[2].value !== null || filter[3].value !== null || filter[4].value !== null"
+					(clearFilters)="filter[0].value = null; filter[1].value = null; filter[2].value = null; filter[3].value = null; filter[4].value = null;">
+				</tds-grid-clear-all-filters-button>
+			</div>
+			<div class="kendo-grid">
+				<div class="k-filter-row">
+					<label> Dropdown </label>
+					<div class="filter-input">
+						<tds-grid-filter-input
+							[name]="filter[0].type"
+							[value]="filter[0].value"
+							[columnType]="filter[0].type"
+							[dropdownData]="[{text: 'one', value: 1}, {text: 'two', value: 2}]"
+							[placeholder]="'Filter'"
+							(filter)="filter[0].value = $event">
+						</tds-grid-filter-input>
+					</div>
+					<label> Date/Datetime </label>
+					<div class="filter-input">
+						<tds-grid-filter-input
+							[name]="filter[1].type"
+							[value]="filter[1].value"
+							[columnType]="filter[1].type"
+							[placeholder]="'Filter'"
+							(filter)="filter[1].value = $event">
+						</tds-grid-filter-input>
+					</div>
+					<label> Boolean </label>
+					<div class="filter-input">
+						<tds-grid-filter-input
+							[name]="filter[2].type"
+							[value]="filter[2].value"
+							[columnType]="filter[2].type"
+							[placeholder]="'Filter'"
+							(filter)="filter[2].value = $event">
+						</tds-grid-filter-input>
+					</div>
+					<label> Number </label>
+					<div class="filter-input">
+						<tds-grid-filter-input
+							[name]="filter[3].type"
+							[value]="filter[3].value"
+							[columnType]="filter[3].type"
+							[placeholder]="'Filter'"
+							(filter)="filter[3].value = $event">
+						</tds-grid-filter-input>
+					</div>
+					<label> Text </label>
+					<div class="filter-input">
+						<tds-grid-filter-input
+							[name]="filter[4].type"
+							[value]="filter[4].value"
+							[columnType]="filter[4].type"
+							[placeholder]="'Filter'"
+							(filter)="filter[4].value = $event">
+						</tds-grid-filter-input>
+					</div>
+				</div>
+			</div>
+		</tds-card>
+	</div>
+</div>

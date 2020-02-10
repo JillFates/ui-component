@@ -605,6 +605,7 @@ export const columnModelTaskGrid = [
 		width: 90,
 		filter: null,
 		isActionable: true,
+		type: 'text'
 	},
 	{
 		columnMenu: true,
@@ -614,6 +615,7 @@ export const columnModelTaskGrid = [
 		locked: false,
 		width: 160,
 		filter: null,
+		type: 'text'
 	},
 	{
 		columnMenu: true,
@@ -623,6 +625,7 @@ export const columnModelTaskGrid = [
 		locked: false,
 		width: 160,
 		filter: null,
+		type: 'text'
 	},
 	{
 		columnMenu: false,
@@ -632,6 +635,7 @@ export const columnModelTaskGrid = [
 		locked: false,
 		width: 170,
 		filter: null,
+		type: 'text'
 	},
 	{
 		columnMenu: false,
@@ -641,6 +645,7 @@ export const columnModelTaskGrid = [
 		locked: false,
 		width: 170,
 		filter: null,
+		type: 'text'
 	},
 	{
 		columnMenu: false,
@@ -650,6 +655,7 @@ export const columnModelTaskGrid = [
 		locked: false,
 		width: 130,
 		filter: null,
+		type: 'text'
 	},
 	{
 		columnMenu: false,
@@ -659,6 +665,7 @@ export const columnModelTaskGrid = [
 		locked: false,
 		width: 130,
 		filter: null,
+		type: 'text'
 	},
 	{
 		columnMenu: false,
@@ -668,6 +675,7 @@ export const columnModelTaskGrid = [
 		locked: false,
 		width: 170,
 		filter: null,
+		type: 'text'
 	},
 	{
 		columnMenu: false,
@@ -677,6 +685,7 @@ export const columnModelTaskGrid = [
 		locked: false,
 		width: 180,
 		filter: null,
+		type: 'text'
 	},
 ];
 export const columnMenu = [
@@ -836,6 +845,7 @@ export const columnModelAssetsGrid = [
 		width: 160,
 		filter: null,
 		isActionable: true,
+		type: 'text'
 	},
 	{
 		columnMenu: false,
@@ -845,6 +855,7 @@ export const columnModelAssetsGrid = [
 		locked: false,
 		width: 160,
 		filter: null,
+		type: 'text'
 	},
 	{
 		columnMenu: true,
@@ -854,6 +865,7 @@ export const columnModelAssetsGrid = [
 		locked: false,
 		width: 160,
 		filter: null,
+		type: 'text'
 	},
 	{
 		columnMenu: false,
@@ -863,5 +875,6 @@ export const columnModelAssetsGrid = [
 		locked: false,
 		width: 170,
 		filter: null,
+		type: 'text'
 	},
 ];
