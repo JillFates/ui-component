@@ -20,10 +20,7 @@ export interface GridModel {
 	 * Actions to be displayed in the grid header.
 	 */
 	headerActionButtons?: HeaderActionButtonData[];
-	/**
-	 * Show reload action button
-	 */
-	showDataReloadButton?: boolean;
+
 	/**
 	 * Function used to load the data to displayed in the grid.
 	 * This function should return the data that will be used in
@@ -88,7 +85,7 @@ export interface ColumnHeaderData {
 	/**
 	 * Type of filter that will be used to filter the column's data.
 	 */
-	filterType: FilterType;
+	filterType: FilterType | 'text' | 'boolean' | 'date' | 'datetime' | 'dropdown';
 	/**
 	 * Optional format to be applied to the columns data before rendering.
 	 */
@@ -121,6 +118,7 @@ export enum FilterType {
 	number = 'NUMBER',
 	boolean = 'BOOLEAN',
 	date = 'DATE',
+	datetime = 'DATETIME',
 	dropdown = 'DROPDOWN',
 	tag = 'TAG',
 }

@@ -52,16 +52,6 @@ export class GridComponent implements OnInit {
 		// Next, we pass the grid data to the data-grid-helper.
 		this.gridHelper = new DataGridHelper(gridData, this.gridModel.gridSettings);
 
-		// Now we'll set up the action buttons.
-		if (this.gridModel.showDataReloadButton) {
-			this.gridModel.headerActionButtons.push({
-				icon: 'sync',
-				title: 'Reload',
-				disabled: false,
-				show: true,
-				onClick: this.reloadData,
-			});
-		}
 	}
 
 	/**
@@ -74,7 +64,7 @@ export class GridComponent implements OnInit {
 	/**
 	 * Toggles the grid filter
 	 */
-	public toggleFilter(): void {
+	public toggleFilters(): void {
 		this.showFilters = !this.showFilters;
 	}
 
@@ -135,7 +125,6 @@ export class GridComponent implements OnInit {
 	 */
 	public onClearFilters(): void {
 		this.gridHelper.clearAllFilters(this.gridModel.columnModel);
-		this.showFilters = false;
 		this.reloadData();
 	}
 }

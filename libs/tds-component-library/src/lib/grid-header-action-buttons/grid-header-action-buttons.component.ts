@@ -8,9 +8,6 @@ import { HeaderActionButtonData } from '../models/header-action-button-data';
 })
 export class GridHeaderActionButtonsComponent implements OnInit {
 	@Input() actionButtons: HeaderActionButtonData[];
-	@Input() disableClearFilters: () => boolean | boolean;
-	@Input() hasClearAllFilters = true;
-	@Output() clearFilters: EventEmitter<void> = new EventEmitter<void>();
 	@Output() refresh: EventEmitter<void> = new EventEmitter<void>();
 
 	constructor() {
@@ -21,18 +18,6 @@ export class GridHeaderActionButtonsComponent implements OnInit {
 
 		// This set of buttons should be present all over the grids
 		const defaultButtons: HeaderActionButtonData[] = [];
-
-		if (this.hasClearAllFilters) {
-			defaultButtons.push(
-				{
-					icon: 'times',
-					title: 'Clear filters' ,
-					disabled: this.disableClearFilters,
-					show: true,
-					onClick: this.onClearFilters.bind(this),
-				}
-			);
-		}
 
 		defaultButtons.push({
 			icon: 'sync',
@@ -51,13 +36,6 @@ export class GridHeaderActionButtonsComponent implements OnInit {
 	 */
 	private onRefresh(): void {
 		this.refresh.emit();
-	}
-
-	/**
-	 * Emit the event to clear the data grid filters
-	 */
-	private onClearFilters(): void {
-		this.clearFilters.emit();
 	}
 
 	/**

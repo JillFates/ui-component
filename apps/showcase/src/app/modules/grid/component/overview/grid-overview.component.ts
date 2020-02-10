@@ -54,7 +54,6 @@ export class GridOverviewComponent implements OnInit {
 			gridRowActions: this.gridRowActions,
 			gridSettings: this.gridSettings,
 			headerActionButtons: this.headerActions,
-			showDataReloadButton: true,
 			loadData: this.loadData,
 		};
 	}
