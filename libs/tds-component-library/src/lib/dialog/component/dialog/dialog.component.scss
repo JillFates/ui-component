@@ -3,6 +3,19 @@ tds-dynamic-host {
   .modal-dialog {
     visibility: hidden !important;
   }
+
+  /* Dialog Overrides for Size*/
+
+  /* Medium is the Default*/
+  .modal-dialog {
+    width: 28rem;
+  }
+  .modal-dialog.modal-lg {
+    width: 45rem;
+  }
+  .modal-dialog.modal-xl {
+    width: 56rem;
+  }
 }
 tds-dynamic-host.model-instantiated {
   visibility: visible !important;
