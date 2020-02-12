@@ -17,7 +17,7 @@ import {FA_ICONS} from '../icons-constant/fontawesome-icons';
 				 (contextmenu)="avoidDefault($event)"
 		     (mouseleave)="hideCtxMenu()"
 				 #ctxMenu>
-			<ul *ngIf="data">
+			<ul *ngIf="data && data.options && data.options.fields">
 				<li	*ngFor="let option of data.options.fields"
 						[style.display]="option.hasPermission() && option.isAvailable(data.selectedNode) ? 'block' : 'none'">
 					<button class="btn ctx-menu-btn clr-align-self-center" (click)="dispatchAction(option.event)">
