@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Input, Output} from '@angular/core';
+import {Component, Input} from '@angular/core';
 import {Dialog} from '../../../../../../../../libs/tds-component-library/src/lib/dialog/model/dialog.interface';
 
 @Component({
@@ -7,7 +7,6 @@ import {Dialog} from '../../../../../../../../libs/tds-component-library/src/lib
 })
 export class BasicDialogComponent extends Dialog {
 	@Input() data: any;
-	@Output() successEvent: EventEmitter<any> = new EventEmitter<any>();
 
 	/**
 	 * Abstract method that is auto called if the user tries to close the Dialog by pressing Escape or the Cross Icon

@@ -1,0 +1,85 @@
+<div class="tds-filter-input">
+	<!-- number -->
+	<input *ngIf="columnType === FilterType.number || columnType === 'number'"
+				 clrInput
+				 #filterInput
+				 type="number"
+				 class="text-filter"
+				 [name]="name"
+				 [value]="value"
+				 (change)="onFilter($event.target.value)"
+				 [placeholder]="placeholder || 'Filter'"
+				 input-paste
+				 (onPaste)="onPaste($event)"/>
+
+	<!-- date -->
+	<kendo-datepicker *ngIf="columnType === 'date' || columnType === FilterType.date"
+										#filterInput
+										[format]="dateFormat"
+										[ngClass]="{'is-filtered': value}"
+										[value]="value"
+										(valueChange)="onFilter($event)">
+	</kendo-datepicker>
+
+	<!-- datetime -->
+	<kendo-datepicker *ngIf="columnType === 'datetime' || columnType === FilterType.datetime"
+										#filterInput
+										[format]="dateFormat"
+										[ngClass]="{'is-filtered': value}"
+										[value]="value"
+										(valueChange)="onFilter($event)">
+	</kendo-datepicker>
+
+	<!-- boolean -->
+	<kendo-dropdownlist *ngIf="columnType === 'boolean' || columnType === FilterType.boolean"
+											#filterInput
+											[data]="booleanFilterData"
+											[value]="value"
+											(valueChange)="onFilter($event)">
+	</kendo-dropdownlist>
+
+	<kendo-dropdownlist
+		*ngIf="columnType === FilterType.dropdown || columnType === 'dropdown'"
+		[data]="dropdownData"
+		[textField]="'text'"
+		[valueField]="'value'"
+		[(value)]="value"
+		[valuePrimitive]="true"
+		(valueChange)="onFilter($event)"
+		[popupSettings]="{ popupClass: 'hide-option-label' }">
+	</kendo-dropdownlist>
+
+	<!-- Text as well the default if not provided -->
+	<input *ngIf="columnType === 'text' || columnType === FilterType.text"
+				 clrInput
+				 #filterInput
+				 type="text"
+				 class="text-filter"
+				 [name]="name"
+				 [value]="value"
+				 [placeholder]="placeholder || 'Filter'"
+				 input-paste
+				 (onPaste)="onPaste($event)"/>
+
+	<!-- Tag filtering -->
+	<!-- TODO: Move the asset tag selector component to the library. -->
+	<!-- <tds-asset-tag-selector
+									#tagSelector
+									[popupClass]="'assets-view-grid'"
+									[tagList]="metadata.tagList"
+									placeholder="{{ 'GLOBAL.FILTER' | translate }}"
+									[viewFilterModel]="column.filter"
+									(valueChange)="onTagFilterChange(column, $event)"
+							>
+							</tds-asset-tag-selector> -->
+
+	<!-- Clear filter button -->
+	<tds-button
+		*ngIf="value || value === false"
+		(click)="onClearFilter()"
+		[title]="'Clear Filter'"
+		icon="times-circle"
+		[small]="true"
+		[flat]="true">
+	</tds-button>
+</div>

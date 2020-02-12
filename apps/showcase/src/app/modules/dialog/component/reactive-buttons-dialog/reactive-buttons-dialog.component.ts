@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import {Dialog} from '../../../../../../../../libs/tds-component-library/src/lib/dialog/model/dialog.interface';
 import {
 	DialogButtonModel,
@@ -11,8 +11,6 @@ import {
 })
 export class ReactiveButtonsDialogComponent extends Dialog implements OnInit {
 	@Input() data: any;
-	@Input() buttons: any;
-	@Output() successEvent: EventEmitter<any> = new EventEmitter<any>();
 
 	private isSaveDisabled = true;
 	private isShowDelete = false;
@@ -58,6 +56,13 @@ export class ReactiveButtonsDialogComponent extends Dialog implements OnInit {
 	 */
 	public showDelete(): void {
 		this.isShowDelete = true;
+	}
+
+	/**
+	 * Show the hidden delete button
+	 */
+	public changeTitle(): void {
+		this.setTitle('Title has changed!');
 	}
 
 	/**

@@ -7,4 +7,5 @@ import {DynamicHostComponent} from '../component/dynamic-host/dynamic-host.compo
 export class DynamicHostModel {
 	public dynamicHostComponent?: DynamicHostComponent;
 	public dialogModel?: DialogModel;
+	public instantiated: boolean;
 }

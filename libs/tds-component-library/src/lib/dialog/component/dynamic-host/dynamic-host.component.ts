@@ -2,7 +2,14 @@
  * Place holder to use dynamically inject dialog component on runtime
  */
 // Angular
-import {Component, ElementRef, OnInit, Renderer2, ViewChild, ViewEncapsulation} from '@angular/core';
+import {
+	Component,
+	ElementRef,
+	OnInit,
+	Renderer2,
+	ViewChild,
+	ViewEncapsulation
+} from '@angular/core';
 // Model
 import {DialogButtonModel, DialogButtonType, ModalConfigurationModel, ModalSize} from '../../model/dialog.model';
 import {faExpandArrowsAlt, faCompressArrowsAlt} from '@fortawesome/free-solid-svg-icons';
@@ -19,7 +26,6 @@ import {Dialog} from '../../model/dialog.interface';
 export class DynamicHostComponent implements OnInit {
 	public modalConfigurationModel = new ModalConfigurationModel();
 	public currentDialogComponentInstance: Dialog;
-	public isDialogOpen = false;
 	public modalSize = ModalSize;
 	// Show Hide Sections
 	public showLeftActionButtonsPanel = false;
@@ -46,6 +52,9 @@ export class DynamicHostComponent implements OnInit {
 				// if instance is empty, does not show anything
 				this.showActionButtons = this.showContextButtons = this.showLeftActionButtonsPanel = false;
 			} else {
+				// Set the Title
+				this.currentDialogComponentInstance.setTitle(this.modalConfigurationModel.title);
+
 				const actionButtons = this.currentDialogComponentInstance.buttons.filter((button: DialogButtonModel) => {
 					return button.type === DialogButtonType.ACTION;
 				});

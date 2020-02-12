@@ -1,16 +1,19 @@
 /**
  * Define the possible data that a Dialog component can expose
  */
-import {DialogExit, DialogButtonModel} from './dialog.model';
+import {DialogExit, DialogButtonModel, ModalConfigurationModel} from './dialog.model';
+import {EventEmitter} from '@angular/core';
 
 export abstract class Dialog {
+	// Dialog specific data
 	public data: any;
 	// Content is a very specific property that can be used to create custom Confirms
 	public content: any;
-	public successEvent: any;
+	public successEvent = new EventEmitter<any>();
 	// Contains action/context buttons
-	public buttons: DialogButtonModel[];
-
+	public buttons: DialogButtonModel[] = new Array();
+	// Title
+	private title = '';
 	/**
 	 * Generic dismiss method
 	 */
@@ -46,4 +49,19 @@ export abstract class Dialog {
 		}
 	}
 
+	/**
+	 * Change
+	 * @param title
+	 */
+	public setTitle(title: string): void {
+		this.title = title;
+	}
+
+	/**
+	 * Get Current title
+	 * @param title
+	 */
+	public getTitle(): string {
+		return this.title;
+	}
 }

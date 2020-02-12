@@ -1,5 +1,5 @@
 // Angular
-import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 // Model
 import {Dialog} from '../../../../../../../../libs/tds-component-library/src/lib/dialog/model/dialog.interface';
 import {
@@ -14,7 +14,6 @@ import {
 export class ButtonActionContextDialogComponent extends Dialog implements OnInit {
 	@Input() data: any;
 	@Input() buttons: any;
-	@Output() successEvent: EventEmitter<any> = new EventEmitter<any>();
 
 	ngOnInit(): void {
 		const editButton: DialogButtonModel = {

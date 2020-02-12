@@ -1,5 +1,5 @@
 // Angular
-import {Component, ComponentFactoryResolver, EventEmitter, Input, Output} from '@angular/core';
+import {Component, ComponentFactoryResolver, Input} from '@angular/core';
 // Model
 import {Dialog} from '../../../../../../../../libs/tds-component-library/src/lib/dialog/model/dialog.interface';
 import {ModalSize} from '../../../../../../../../libs/tds-component-library/src/lib/dialog/model/dialog.model';
@@ -14,7 +14,6 @@ import {DialogService} from '../../../../../../../../libs/tds-component-library/
 })
 export class ThirdLayerDialogComponent extends Dialog {
 	@Input() data: any;
-	@Output() successEvent: EventEmitter<any> = new EventEmitter<any>();
 
 	constructor(
 		private dialogService: DialogService,
