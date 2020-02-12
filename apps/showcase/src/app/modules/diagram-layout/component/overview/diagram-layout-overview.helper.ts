@@ -16,7 +16,7 @@ export class DiagramLayoutOverviewHelper implements IDiagramLayoutHelper {
 			linkDataArray: d.linkDataArray,
 			currentUserId: params.currentUserId,
 			ctxMenuOptions: this.contextMenuOptions(),
-			nodeTemplate: this.nodeTemplate({ isExpandable: params.extras.isExpandable && params.extras.isExpandable }),
+			nodeTemplate: this.nodeTemplate({ isExpandable: params.extras && params.extras.isExpandable }),
 			linkTemplate: this.linkTemplate(),
 			layout: this.layout(),
 			rootNode: 'a',
@@ -37,7 +37,7 @@ export class DiagramLayoutOverviewHelper implements IDiagramLayoutHelper {
 					status: 'hold',
 					tooltipData: {
 						// tslint:disable-next-line:max-line-length
-						headerText: 'testtesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttest',
+						headerText: 'test',
 						headerBackgroundColor: '#0b63a8',
 						headerTextColor: '#ffffff',
 						data: [
@@ -512,7 +512,7 @@ export class DiagramLayoutOverviewHelper implements IDiagramLayoutHelper {
 					hasPermission: () => ['view', 'edit'].includes('view')
 				},
 				{
-					label: 'test2 test2 test2 test2',
+					label: 'test2',
 					event: 'test2',
 					icon: {
 						icon: 'faUser'
@@ -522,68 +522,8 @@ export class DiagramLayoutOverviewHelper implements IDiagramLayoutHelper {
 					hasPermission: () => ['view', 'edit'].includes('view')
 				},
 				{
-					label: 'test2 test2 test2 test2',
-					event: 'test2',
-					icon: {
-						icon: 'faUser'
-					},
-					status: 'stat',
-					isAvailable: (n: any) => !(n.status === 'started'),
-					hasPermission: () => ['view', 'edit'].includes('view')
-				},
-				{
-					label: 'test2 test2 test2 test2',
-					event: 'test2',
-					icon: {
-						icon: 'faUser'
-					},
-					status: 'stat',
-					isAvailable: (n: any) => !(n.status === 'started'),
-					hasPermission: () => ['view', 'edit'].includes('view')
-				},
-				{
-					label: 'test2 test2 test2 test2',
-					event: 'test2',
-					icon: {
-						icon: 'faUser'
-					},
-					status: 'stat',
-					isAvailable: (n: any) => !(n.status === 'started'),
-					hasPermission: () => ['view', 'edit'].includes('view')
-				},
-				{
-					label: 'test2 test2 test2 test2',
-					event: 'test2',
-					icon: {
-						icon: 'faUser'
-					},
-					status: 'stat',
-					isAvailable: (n: any) => !(n.status === 'started'),
-					hasPermission: () => ['view', 'edit'].includes('view')
-				},
-				{
-					label: 'test2 test2 test2 test2',
-					event: 'test2',
-					icon: {
-						icon: 'faUser'
-					},
-					status: 'stat',
-					isAvailable: (n: any) => !(n.status === 'started'),
-					hasPermission: () => ['view', 'edit'].includes('view')
-				},
-				{
-					label: 'test2 test2 test2 test2',
-					event: 'test2',
-					icon: {
-						icon: 'faUser'
-					},
-					status: 'stat',
-					isAvailable: (n: any) => !(n.status === 'started'),
-					hasPermission: () => ['view', 'edit'].includes('view')
-				},
-				{
-					label: 'test2 test2 test2 test2',
-					event: 'test2',
+					label: 'test3',
+					event: 'test3',
 					icon: {
 						icon: 'faUser'
 					},

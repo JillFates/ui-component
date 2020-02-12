@@ -22,7 +22,7 @@
 			</button>
 			<button
 				class="btn tooltip tooltip-md tooltip-top-left graph-control-btn"
-				*ngIf="(data?.extras && data?.extras?.isExpandable) || !data?.nodeTemplate?.isTreeExpanded"
+				*ngIf="showCollapseBtn"
 				(click)="expand = !expand; expandAll()"
 				role="tooltip"
 				aria-haspopup="true"

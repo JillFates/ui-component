@@ -94,6 +94,7 @@ export class DiagramLayoutComponent implements OnChanges, AfterViewInit, OnDestr
 	showFullGraphBtn: boolean;
 	ctxMenuData$: ReplaySubject<ITdsContextMenuModel> = new ReplaySubject();
 	expand: boolean;
+	showCollapseBtn = false;
 
 	constructor(private renderer: Renderer2) {
 		Diagram.licenseKey = GOJS_LICENSE_KEY;
@@ -222,6 +223,7 @@ export class DiagramLayoutComponent implements OnChanges, AfterViewInit, OnDestr
 			d.layout = this.setLayout();
 			d.nodeTemplate = this.setNodeTemplate();
 			d.linkTemplate = this.setLinkTemplate();
+			this.showCollapseBtn = (extras && extras.isExpandable) || !this.data.nodeTemplate.isTreeExpanded;
 			this.diagram.click = () => this.diagramClicked.emit();
 		});
 		this.diagram.model = this.model;
