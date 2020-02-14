@@ -46,6 +46,10 @@ const enum NodeTemplateEnum {
 	MEDIUM_SCALE,
 	LOW_SCALE
 }
+const HIGH_SCALE = 0.6446089162177968;
+const LOW_SCALE = 0.4581115219913999;
+const NODES_MAX_LENGTH = 600;
+const	DATA_CHUNKS_SIZE = 200;
 
 @Component({
 	selector: 'tds-lib-diagram-layout',
@@ -83,7 +87,6 @@ export class DiagramLayoutComponent implements OnChanges, AfterViewInit, OnDestr
 	resetOvIndex: boolean;
 	tooltipData: ITooltipData;
 	largeArrayRemaining: boolean;
-	DATA_CHUNKS_SIZE = 200;
 	remainingData: any;
 	remainingLinks: any;
 	diagramOverview: Overview;
@@ -95,6 +98,7 @@ export class DiagramLayoutComponent implements OnChanges, AfterViewInit, OnDestr
 	ctxMenuData$: ReplaySubject<ITdsContextMenuModel> = new ReplaySubject();
 	expand: boolean;
 	showCollapseBtn = false;
+	isGraphZoomedToFit: boolean;
 
 	constructor(private renderer: Renderer2) {
 		Diagram.licenseKey = GOJS_LICENSE_KEY;
@@ -136,14 +140,14 @@ export class DiagramLayoutComponent implements OnChanges, AfterViewInit, OnDestr
 	 * Load data model used by the diagram
 	 **/
 	loadModel(): void {
-		if (this.data.nodeDataArray.length < 600) {
+		if (this.data.nodeDataArray.length < NODES_MAX_LENGTH) {
 			this.model = new GraphLinksModel(this.data.nodeDataArray, this.data.linkDataArray);
 		} else {
 			this.remainingData = this.data.nodeDataArray.slice();
 			this.remainingLinks = this.data.linkDataArray.slice();
 			this.model = new GraphLinksModel(
-				this.remainingData.splice(0, this.DATA_CHUNKS_SIZE),
-				this.remainingLinks.splice(0, this.DATA_CHUNKS_SIZE));
+				this.remainingData.splice(0, DATA_CHUNKS_SIZE),
+				this.remainingLinks.splice(0, DATA_CHUNKS_SIZE));
 			this.largeArrayRemaining = true;
 		}
 	}
@@ -158,13 +162,13 @@ export class DiagramLayoutComponent implements OnChanges, AfterViewInit, OnDestr
 		const dataChunks = [];
 		const linkChunks = [];
 
-		while (dataCopy.length > this.DATA_CHUNKS_SIZE) {
-			dataChunks.push(dataCopy.splice(0, this.DATA_CHUNKS_SIZE));
+		while (dataCopy.length > DATA_CHUNKS_SIZE) {
+			dataChunks.push(dataCopy.splice(0, DATA_CHUNKS_SIZE));
 		}
 		dataChunks.push(dataCopy);
 
-		while (linksCopy.length > this.DATA_CHUNKS_SIZE) {
-			linkChunks.push(linksCopy.splice(0, this.DATA_CHUNKS_SIZE));
+		while (linksCopy.length > DATA_CHUNKS_SIZE) {
+			linkChunks.push(linksCopy.splice(0, DATA_CHUNKS_SIZE));
 		}
 		linkChunks.push(linksCopy);
 
@@ -234,6 +238,9 @@ export class DiagramLayoutComponent implements OnChanges, AfterViewInit, OnDestr
 		this.overrideDoubleClick();
 		this.diagramExtras();
 		this.diagram.zoomToFit();
+		if (this.diagram.initialAutoScale === Diagram.Uniform) {
+			this.isGraphZoomedToFit = true;
+		}
 	}
 
 	/**
@@ -421,7 +428,7 @@ export class DiagramLayoutComponent implements OnChanges, AfterViewInit, OnDestr
 			return this.nodeTemplate;
 		}
 
-		if (this.diagram.scale < 0.6446089162177968) {
+		if (this.diagram.scale < HIGH_SCALE) {
 			this.setNodeTemplateByScale();
 			return null;
 		}
@@ -549,22 +556,19 @@ export class DiagramLayoutComponent implements OnChanges, AfterViewInit, OnDestr
 	 **/
 	setNodeTemplateByScale(scale?: number, inputEvent?: InputEvent): void {
 		if (inputEvent.control) {
-			if (scale >= 0.6446089162177968
+			if (scale >= HIGH_SCALE
 				&& this.actualNodeTemplate !== NodeTemplateEnum.HIGH_SCALE) {
 				this.actualNodeTemplate = NodeTemplateEnum.HIGH_SCALE;
-				console.log('scale >= 0.6446089162177968');
 				this.highScaleNodeTemplate();
 			}
-			if (scale < 0.6446089162177968 && scale > 0.4581115219913999
+			if (scale < HIGH_SCALE && scale > LOW_SCALE
 				&& this.actualNodeTemplate !== NodeTemplateEnum.MEDIUM_SCALE) {
 				this.actualNodeTemplate = NodeTemplateEnum.MEDIUM_SCALE;
-				console.log('scale < 0.6446089162177968');
 				this.mediumScaleNodeTemplate();
 			}
-			if (scale <= 0.4581115219913999
+			if (scale <= LOW_SCALE
 				&& this.actualNodeTemplate !== NodeTemplateEnum.LOW_SCALE) {
 				this.actualNodeTemplate = NodeTemplateEnum.LOW_SCALE;
-				console.log('scale <= 0.4581115219913999');
 				this.lowScaleNodeTemplate();
 			}
 		}
@@ -770,6 +774,10 @@ export class DiagramLayoutComponent implements OnChanges, AfterViewInit, OnDestr
 		this.diagram.commandHandler.increaseZoom(1.2);
 		const input = new InputEvent();
 		input.control = true;
+		if (this.isGraphZoomedToFit && this.diagram.scale < HIGH_SCALE) {
+			this.diagram.scale = HIGH_SCALE;
+			this.isGraphZoomedToFit = false;
+		}
 		this.setNodeTemplateByScale(this.diagram.scale, input);
 	}
 
