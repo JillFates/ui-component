@@ -79,13 +79,25 @@ export interface ColumnHeaderData {
 	 */
 	label: string;
 	/**
+	 * To keep the custom name and dont loose the property name original
+	 */
+	customPropertyName?: string;
+	/**
+	 * use this when it's a multi-level object accessor. i.e. [dataItem.currentValues.name]
+	 */
+	properties?: Array<string>;
+	/**
 	 * Property corresponding to the grid data.
 	 */
 	property: string;
 	/**
 	 * Type of filter that will be used to filter the column's data.
 	 */
-	filterType: FilterType | 'text' | 'boolean' | 'date' | 'datetime' | 'dropdown';
+	filterType?: FilterType | 'text' | 'boolean' | 'date' | 'datetime' | 'dropdown';
+	/**
+	 * Type of column display.
+	 */
+	type?: 'text' | 'boolean' | 'date' | 'datetime';
 	/**
 	 * Optional format to be applied to the columns data before rendering.
 	 */
@@ -108,6 +120,21 @@ export interface ColumnHeaderData {
 	 * Toggles the locked (frozen) state of the columns. Default to false.
 	 */
 	locked?: boolean;
+	/**
+	 * Enable/Disable columnMenu for column.
+	 */
+	columnMenu?: boolean;
+	/**
+	 * Enable/Disable filtering for column.
+	 */
+	filterable?: boolean;
+	resizable?: boolean;
+	headerStyle?: any;
+	headerClass?: string | Array<string>;
+	cellStyle?: any;
+	cellClass?: string | Array<string>;
+	sort?: 'asc' | 'desc';
+	dropdownData?: Array<{text: string, value: any}>;
 }
 
 /**

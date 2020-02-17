@@ -1,6 +1,6 @@
 <div class="tds-filter-input">
 	<!-- number -->
-	<input *ngIf="columnType === FilterType.number || columnType === 'number'"
+	<input *ngIf="filterType === FilterType.number || filterType === 'number'"
 				 clrInput
 				 #filterInput
 				 type="number"
@@ -13,7 +13,7 @@
 				 (onPaste)="onPaste($event)"/>
 
 	<!-- date -->
-	<kendo-datepicker *ngIf="columnType === 'date' || columnType === FilterType.date"
+	<kendo-datepicker *ngIf="filterType === 'date' || filterType === FilterType.date"
 										#filterInput
 										[format]="dateFormat"
 										[ngClass]="{'is-filtered': value}"
@@ -22,7 +22,7 @@
 	</kendo-datepicker>
 
 	<!-- datetime -->
-	<kendo-datepicker *ngIf="columnType === 'datetime' || columnType === FilterType.datetime"
+	<kendo-datepicker *ngIf="filterType === 'datetime' || filterType === FilterType.datetime"
 										#filterInput
 										[format]="dateFormat"
 										[ngClass]="{'is-filtered': value}"
@@ -31,7 +31,7 @@
 	</kendo-datepicker>
 
 	<!-- boolean -->
-	<kendo-dropdownlist *ngIf="columnType === 'boolean' || columnType === FilterType.boolean"
+	<kendo-dropdownlist *ngIf="filterType === 'boolean' || filterType === FilterType.boolean"
 											#filterInput
 											[data]="booleanFilterData"
 											[value]="value"
@@ -39,7 +39,7 @@
 	</kendo-dropdownlist>
 
 	<kendo-dropdownlist
-		*ngIf="columnType === FilterType.dropdown || columnType === 'dropdown'"
+		*ngIf="filterType === FilterType.dropdown || filterType === 'dropdown'"
 		[data]="dropdownData"
 		[textField]="'text'"
 		[valueField]="'value'"
@@ -50,7 +50,7 @@
 	</kendo-dropdownlist>
 
 	<!-- Text as well the default if not provided -->
-	<input *ngIf="columnType === 'text' || columnType === FilterType.text"
+	<input *ngIf="filterType === 'text' || filterType === FilterType.text"
 				 clrInput
 				 #filterInput
 				 type="text"

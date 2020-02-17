@@ -40,7 +40,7 @@ export class KendoGridOverviewComponent {
 	};
 	public assetsGrid: any = {
 		pageable: {
-			pageSizes: [5, 10, 25, 50, 100],
+			pageSizes: [25, 50, 100],
 			info: true,
 			type: 'input',
 		},

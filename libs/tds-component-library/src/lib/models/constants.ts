@@ -5,3 +5,5 @@ export enum KEYSTROKE {
 	SHIFT_LEFT = 'ShiftLeft',
 	ESCAPE = 'Escape'
 }
+
+export const COLUMN_MIN_WIDTH = 360;

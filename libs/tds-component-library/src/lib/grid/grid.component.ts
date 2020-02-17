@@ -58,7 +58,7 @@ export class GridComponent implements OnInit {
 	 * Gets the number of active row actions.
 	 */
 	public numberRowActions(): number {
-		return this.gridModel.gridRowActions.filter(x => x.show).length;
+		return this.gridModel.gridRowActions.filter(x => x.show).length + 1;
 	}
 
 	/**

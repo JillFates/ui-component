@@ -14,6 +14,7 @@ import {
 	process,
 	FilterDescriptor
 } from '@progress/kendo-data-query';
+import { pathOr, uniq } from 'ramda';
 import { ColumnHeaderData, FilterType, GridSettings } from '../models/grid-models';
 
 export class DataGridHelper {
@@ -115,7 +116,7 @@ export class DataGridHelper {
 		// check for number types and null value (clear out the filters)
 		if ((column.filterType === this.filterType.number || column.filterType === 'number') && column.filter === null) {
 			this.clearValue(column);
-			return; // exit
+			return root;
 		}
 		if (column.filterType === this.filterType.number || column.filterType === 'number') {
 			if (!filter) {
@@ -472,9 +473,11 @@ export class DataGridHelper {
 	}
 
 	/**
-	 * Returns the number of filters currently applied.
+	 * Returns the number of distinct currently selected filters
+	 * @param state optionally pass the state otherwise use the current state
 	 */
-	public filterCount(): number {
-		return this.state && this.state.filter ? this.state.filter.filters.length : 0;
+	public getFilterCounter(state: State = null): number {
+		const filters = pathOr(0, ['filter', 'filters'], state || this.state);
+		return uniq(filters.map((filter: any) => filter.field)).length;
 	}
 }

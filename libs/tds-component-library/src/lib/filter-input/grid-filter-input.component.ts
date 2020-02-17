@@ -32,7 +32,7 @@ export class GridFilterInputComponent implements AfterViewInit, OnDestroy, OnCha
 	@Input() dropdownData: Array<any> = [];
 	@Input() placeholder = '';
 	@Input() value: String | Date | boolean = '';
-	@Input() columnType: string;
+	@Input() filterType: string;
 	@Input() dateFormat = '';
 	@Input() column: ColumnHeaderData | any;
 	@Output() filter: EventEmitter<string | Date | boolean> = new EventEmitter<string | Date | boolean>();
@@ -68,7 +68,7 @@ export class GridFilterInputComponent implements AfterViewInit, OnDestroy, OnCha
 	 */
 	ngOnChanges(changes: SimpleChanges): void {
 		if (changes.value && !changes.value.firstChange
-			&& (this.columnType === FilterType.dropdown || this.columnType === 'dropdown')) {
+			&& (this.filterType === FilterType.dropdown || this.filterType === 'dropdown')) {
 			if (!changes.value.currentValue) {
 				this.value = null;
 			}

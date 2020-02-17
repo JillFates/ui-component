@@ -6,7 +6,12 @@
     "declaration": true,
     "inlineSources": true,
     "types": [],
-    "lib": ["dom", "es2018"]
+    "lib": ["dom", "es2018"],
+    "paths": {
+      "ramda": [
+        "node_modules/@types/ramda/index"
+      ]
+    }
   },
   "angularCompilerOptions": {
     "annotateForClosureCompiler": false,

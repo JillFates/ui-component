@@ -1,123 +1,341 @@
 @mixin grid-label {
-	.grid-label {
-		font-size: 18px;
-		line-height: 48px;
-	}
+  .grid-label {
+    font-size: 18px;
+    line-height: 48px;
+  }
 }
 
 kendo-grid {
-	&.tds-table {
-		@include grid-label();
+  &.tds-table {
+    @include grid-label();
 
-		.k-grid-content table {
-			border-collapse: collapse;
-		}
+    .k-grid-content table {
+      border-collapse: collapse;
+    }
 
-		.k-grid-header {
-			background: unset;
+    .k-grid-header {
+      background: unset;
 
-			.k-header {
-				> .k-link {
-					margin: unset;
-					padding: 5px 0;
-				}
-			}
-		}
+      .k-header {
+        > .k-link {
+          margin: unset;
+          padding: 5px 0;
+        }
+      }
+    }
 
-		.k-icon {
-			font-size: unset;
-		}
-	}
+    .k-icon {
+      font-size: unset;
+    }
+  }
+
+  /**
+    FIXED SCROLLABLE GRID CONTENT
+   */
+  // Defaults .. & calculate the height of the grid, in order to content be fixed and scrollable
+  &.page-height {
+    --subtraction-height: 260px;
+    --filter-height: 34px;
+  }
+  &.page-height .k-grid-container {
+    max-height: calc( 100vh - var(--subtraction-height) - var(--filter-height))
+  }
+
+  /**
+    CONTEXT MENU STYLE
+   */
+  // Adding the appropriate class to the grid will fix the issue with the clarity dropdown list action within the kendo-grid
+  // Example if you have a action dropdown in a row with 3 actions, add the class "row-actions-3-children"
+  @for $i from 1 through 10 {
+    &.row-actions-#{$i}-children {
+      tr:nth-last-of-type(-n + #{$i}) {
+        .action-button {
+          clr-dropdown-menu {
+            top: auto !important;
+            bottom: 0px !important;
+            transform: translateY(-25px) !important;
+          }
+        }
+      }
+    }
+  }
+  &.fixed-context-menu {
+    .k-grid-table {
+      transform: none !important
+    }
+
+    @for $i from 1 through 10 {
+      &.row-actions-#{$i}-children {
+        tr:nth-last-of-type(-n + #{$i}) {
+          &:nth-child(-n + #{$i}) {
+            .action-button {
+              clr-dropdown-menu {
+                position: fixed !important;
+                top: inherit !important;
+                left: inherit !important;
+                bottom: auto !important;
+                transform: translateY(-5px) !important;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+
+  /**
+    NARROWER ROWS & ELLIPSIS MODE ON TEXT WIDTH OVERFLOW
+   */
+  // wrap overflow text in ellipsis mode.
+  &.narrow-rows {
+    td {
+      padding: 0px 8px !important;;
+      line-height: 10px !important;
+      word-break: normal;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      &:not(.actions-column) {
+        overflow: hidden !important
+      }
+    }
+    .filter-input {
+      margin-bottom: 5px;
+    }
+    td.actions-column {
+      text-overflow: unset;
+    }
+  }
+
+  /**
+    CLICKABLE ROWS STYLE
+   */
+  &.clickable-rows {
+    tr {
+      cursor: pointer;
+    }
+  }
+  .action-button clr-dropdown-menu {
+    line-height: 20px !important;
+    .k-button:focus {
+      box-shadow: none;
+    }
+  }
+
+  .k-grid-header {
+    background: #d9e4ea;
+    .show-filters {
+      text-align: center;
+      text-overflow: unset;
+      button.tds-button {
+        min-width: 0;
+      }
+    }
+  }
+
+  /**
+    KENDO INPUT STYLING ON THE GRID
+   */
+  kendo-dropdownlist.k-dropdown,
+  kendo-combobox.k-combobox {
+    .k-dropdown-wrap {
+      border-bottom: 0;
+
+      &:hover {
+        border-bottom: 0;
+      }
+    }
+  }
+  .k-combobox {
+    .k-dropdown-wrap {
+      border: unset;
+      color: black;
+
+      &.k-state-focused {
+        -webkit-box-shadow: unset;
+        box-shadow: unset;
+        border: unset;
+        border-bottom: 1px solid #0092d1;
+      }
+    }
+
+    .k-select {
+      background: transparent;
+    }
+  }
+  .k-filter-row {
+    .filter-input {
+      position: relative;
+
+      kendo-numerictextbox,
+      kendo-datepicker,
+      kendo-dropdownlist {
+        &.k-numerictextbox,
+        &.k-datepicker,
+        &.k-dropdown {
+          width: calc(100% - 2em);
+
+          .k-numeric-wrap,
+          .k-dateinput-wrap,
+          .k-dropdown-wrap {
+            background: #ffffff !important;
+            border: 1px solid #ccc;
+            border-radius: 3px;
+            overflow: hidden;
+
+            &.k-state-focused {
+              border-color: $color-active;
+            }
+          }
+
+          .k-numeric-wrap {
+            height: 1rem;
+            max-height: 1rem;
+
+            .k-input {
+              height: unset;
+            }
+          }
+
+          &.k-datepicker {
+            .k-picker-wrap {
+              border-bottom: unset;
+              border-radius: 3px;
+            }
+
+            .k-select {
+              bottom: 0;
+            }
+          }
+        }
+      }
+    }
+  }
+  kendo-dropdownlist.k-dropdown .k-dropdown-wrap,
+  .k-dropdown-wrap {
+    border-bottom: 1px solid #999;
+
+    &:hover {
+      border-bottom: 1px solid #999;
+      border-color: rgba(222, 222, 222, 0.5);
+    }
+  }
+  .clr-checkbox-wrapper input[type=checkbox]+label::after {
+    left: 3px;
+    top: 3px;
+  }
+
+  // general style fixes
+  tr.k-grid-norecords {
+    cursor: unset;
+    > td {
+      padding: 10px 0 10px 0 !important;
+    }
+  }
+
 }
 
+// TODO: is this used or needed?
 .tds-table {
-	@include grid-label();
-	table {
-		width: 100%;
-		border-collapse: collapse;
-		thead {
-			background: #d9e4ea;
+  @include grid-label();
 
-			th {
-				font-weight: 500;
-				font-size: 13px;
-				line-height: 12px;
-				padding: 5px 0 5px 12px;
-				color: #3c8dbc;
-				text-align: left;
-			}
-		}
+  table {
+    width: 100%;
+    border-collapse: collapse;
 
-		tbody {
-			tr {
-				cursor: pointer;
+    thead {
+      background: #d9e4ea;
 
-				td {
-					font-size: 13px;
-					color: #333333;
-					border-style: solid;
-					border-color: #d9e4ea;
-					padding: 0 0 0 12px;
+      th {
+        font-weight: 500;
+        font-size: 13px;
+        line-height: 12px;
+        padding: 5px 0 5px 12px;
+        color: #3c8dbc;
+        text-align: left;
+      }
+    }
 
-					&:first-child {
-						border-width: 1px 0 1px 1px;
-					}
+    tbody {
+      tr {
+        cursor: pointer;
 
-					&:not(:first-child):not(:last-child) {
-						border-width: 1px 0;
-					}
+        td {
+          font-size: 13px;
+          color: #333333;
+          border-style: solid;
+          border-color: #d9e4ea;
+          padding: 0 0 0 12px;
 
-					&:last-child {
-						border-width: 1px 1px 1px 0;
-					}
-				}
+          &:first-child {
+            border-width: 1px 0 1px 1px;
+          }
 
-				td .status {
-					display: inline-block;
-					width: 16px;
-					height: 16px;
-					text-align: center;
-					line-height: 13px;
-					border: 1px solid $color-icon;
-					border-radius: 3px;
-					background: $color-border;
+          &:not(:first-child):not(:last-child) {
+            border-width: 1px 0;
+          }
 
-					clr-icon {
-						color: $color-text-inverse;
-						width: 12px;
-						height: 12px;
-						margin-bottom: 1px;
-					}
-					&.status-Ready {
-						background: $color-success;
-					}
-					&.status-Started {
-						background: transparent;
-						border: 0;
-						clr-spinner {
-							width: 16px;
-							height: 16px;
-						}
-					}
-					&.status-Hold {
-						background: $color-warning;
-					}
-					&.status-Completed {
-						background: $color-info;
-					}
-					&.status-Pending clr-icon {
-                    	color: $color-text;
-						background-color: $color-icon-light;
+          &:last-child {
+            border-width: 1px 1px 1px 0;
+          }
+        }
 
-					}
-					&.status-Warning {
-						background: $color-warning;
-					}
-				}
-			}
-			tr.k-grid-norecords {
-				cursor: unset;
-			}
-		}
-	}
+        td .status {
+          display: inline-block;
+          width: 16px;
+          height: 16px;
+          text-align: center;
+          line-height: 13px;
+          border: 1px solid $color-icon;
+          border-radius: 3px;
+          background: $color-border;
+
+          clr-icon {
+            color: $color-text-inverse;
+            width: 12px;
+            height: 12px;
+            margin-bottom: 1px;
+          }
+
+          &.status-Ready {
+            background: $color-success;
+          }
+
+          &.status-Started {
+            background: transparent;
+            border: 0;
+
+            clr-spinner {
+              width: 16px;
+              height: 16px;
+            }
+          }
+
+          &.status-Hold {
+            background: $color-warning;
+          }
+
+          &.status-Completed {
+            background: $color-info;
+          }
+
+          &.status-Pending clr-icon {
+            color: $color-text;
+            background-color: $color-icon-light;
+
+          }
+
+          &.status-Warning {
+            background: $color-warning;
+          }
+        }
+      }
+
+      tr.k-grid-norecords {
+        cursor: unset;
+        > td {
+          padding: 10px 0 10px 0 !important;
+        }
+      }
+    }
+  }
 }

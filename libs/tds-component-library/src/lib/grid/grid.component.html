@@ -39,7 +39,7 @@
 			kendoGridHeaderTemplate
 			let-column
 			let-columnIndex="columnIndex">
-			<tds-grid-show-hide-filters-button [filterCount]="gridHelper.filterCount()"
+			<tds-grid-show-hide-filters-button [filterCount]="gridHelper.getFilterCounter()"
 																				 (toggleFilters)="toggleFilters()">
 			</tds-grid-show-hide-filters-button>
 		</ng-template>
@@ -82,7 +82,7 @@
 				<tds-grid-filter-input
 					[name]="column.property"
 					[value]="column.filter || ''"
-					[columnType]="column.filterType"
+					[filterType]="column.filterType"
 					[dateFormat]="column.format"
 					[dropdownData]="column.filterInputData ? column.filterInputData.data : []"
 					[placeholder]="'Filter'"
