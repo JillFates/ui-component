@@ -121,17 +121,6 @@ kendo-grid {
     }
   }
 
-  .k-grid-header {
-    background: #d9e4ea;
-    .show-filters {
-      text-align: center;
-      text-overflow: unset;
-      button.tds-button {
-        min-width: 0;
-      }
-    }
-  }
-
   /**
     KENDO INPUT STYLING ON THE GRID
    */
@@ -225,13 +214,32 @@ kendo-grid {
   }
 
   // general style fixes
+  .k-grid-header {
+    background: #d9e4ea;
+    .show-filters {
+      text-align: center;
+      text-overflow: unset;
+      button.tds-button {
+        min-width: 0;
+      }
+    }
+  }
   tr.k-grid-norecords {
     cursor: unset;
     > td {
       padding: 10px 0 10px 0 !important;
     }
   }
-
+  tr.k-state-selected {
+    background-color: rgba(95, 159, 207, 0.25) !important;
+    > td {
+      background-color: rgba(95, 159, 207, 0.25) !important;
+    }
+  }
+  &.k-grid ::selection {
+    background: #3399FF;
+    color: #fff;
+  }
 }
 
 // TODO: is this used or needed?

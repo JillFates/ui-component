@@ -13,7 +13,7 @@
 	[resizable]="gridSettings.resizable"
 	[selectable]="gridSettings.selectableSettings"
 	[rowSelected]="gridHelper.isRowSelected"
-	(cellClick)="onCellClick($event)">
+	(cellClick)="gridHelper.selectCell($event)">
 
 	<!-- Toolbar Template -->
 	<ng-template kendoGridToolbarTemplate [position]="'top'">
