@@ -29,10 +29,10 @@
 
 	<!-- Show Filters / Actions column -->
 	<kendo-grid-column [width]="60"
-										 [headerClass]="'text-center'"
-										 [field]="'x'"
+										 [headerClass]="'show-filters text-center'"
+										 [field]="'_showFilters'"
 										 [sortable]="false"
-										 [class]="{ 'k-custom-command-column': true }"
+										 [class]="{ 'k-custom-command-column': true, 'actions-column': true }"
 										 [minResizableWidth]="60">
 		<ng-template
 			*ngIf="gridModel.gridSettings.filterable"

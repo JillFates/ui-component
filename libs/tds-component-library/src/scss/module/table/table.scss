@@ -35,7 +35,7 @@ kendo-grid {
   // Defaults .. & calculate the height of the grid, in order to content be fixed and scrollable
   &.page-height {
     --subtraction-height: 260px;
-    --filter-height: 34px;
+    --filter-height: 40px;
   }
   &.page-height .k-grid-container {
     max-height: calc( 100vh - var(--subtraction-height) - var(--filter-height))
@@ -209,8 +209,8 @@ kendo-grid {
     }
   }
   .clr-checkbox-wrapper input[type=checkbox]+label::after {
-    left: 3px;
-    top: 3px;
+    // left: 3px; Removed this since on TM it looks ok without it.
+    // top: 3px; Removed this since on TM it looks ok without it.
   }
 
   // general style fixes
