@@ -34,7 +34,7 @@ import {
 	Size, TreeLayout
 } from 'gojs';
 import {FA_ICONS} from '../icons-constant/fontawesome-icons';
-import {interval, of, ReplaySubject} from 'rxjs';
+import {of, ReplaySubject} from 'rxjs';
 import {DiagramEvent} from './model/diagram-event.constant';
 import {TdsContextMenuComponent} from '../context-menu/tds-context-menu.component';
 import {ITdsContextMenuModel, ITdsContextMenuOption} from '../context-menu/model/tds-context-menu.model';
@@ -47,9 +47,11 @@ const enum NodeTemplateEnum {
 	LOW_SCALE
 }
 const HIGH_SCALE = 0.6446089162177968;
+const MEDIUM_SCALE = 0.5446089162177968;
 const LOW_SCALE = 0.4581115219913999;
 const NODES_MAX_LENGTH = 600;
 const	DATA_CHUNKS_SIZE = 600;
+const	INITIAL_WAIT_TIME = 500;
 const	WAIT_TIME = 1000;
 
 @Component({
@@ -162,8 +164,8 @@ export class DiagramLayoutComponent implements OnChanges, AfterViewInit, OnDestr
 		const linksCopy = this.data.linkDataArray.slice();
 		const dataChunks = [];
 		const linkChunks = [];
-		let nodeWaitTime = WAIT_TIME;
-		let linkWaitTime = WAIT_TIME;
+		let nodeWaitTime = INITIAL_WAIT_TIME;
+		let linkWaitTime = INITIAL_WAIT_TIME;
 
 		while (dataCopy.length > DATA_CHUNKS_SIZE) {
 			dataChunks.push(dataCopy.splice(0, DATA_CHUNKS_SIZE));
@@ -809,6 +811,10 @@ export class DiagramLayoutComponent implements OnChanges, AfterViewInit, OnDestr
 		this.diagram.commandHandler.decreaseZoom(0.8);
 		const input = new InputEvent();
 		input.control = true;
+		if (this.isGraphZoomedToFit && this.diagram.scale <= LOW_SCALE) {
+			this.diagram.scale = MEDIUM_SCALE;
+			this.isGraphZoomedToFit = false;
+		}
 		this.setNodeTemplateByScale(this.diagram.scale, input);
 	}
 
