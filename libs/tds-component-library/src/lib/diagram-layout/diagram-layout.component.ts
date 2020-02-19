@@ -34,7 +34,7 @@ import {
 	Size, TreeLayout
 } from 'gojs';
 import {FA_ICONS} from '../icons-constant/fontawesome-icons';
-import {of, ReplaySubject} from 'rxjs';
+import {interval, of, ReplaySubject} from 'rxjs';
 import {DiagramEvent} from './model/diagram-event.constant';
 import {TdsContextMenuComponent} from '../context-menu/tds-context-menu.component';
 import {ITdsContextMenuModel, ITdsContextMenuOption} from '../context-menu/model/tds-context-menu.model';
@@ -49,7 +49,8 @@ const enum NodeTemplateEnum {
 const HIGH_SCALE = 0.6446089162177968;
 const LOW_SCALE = 0.4581115219913999;
 const NODES_MAX_LENGTH = 600;
-const	DATA_CHUNKS_SIZE = 200;
+const	DATA_CHUNKS_SIZE = 600;
+const	WAIT_TIME = 1000;
 
 @Component({
 	selector: 'tds-lib-diagram-layout',
@@ -161,22 +162,36 @@ export class DiagramLayoutComponent implements OnChanges, AfterViewInit, OnDestr
 		const linksCopy = this.data.linkDataArray.slice();
 		const dataChunks = [];
 		const linkChunks = [];
+		let nodeWaitTime = WAIT_TIME;
+		let linkWaitTime = WAIT_TIME;
 
 		while (dataCopy.length > DATA_CHUNKS_SIZE) {
 			dataChunks.push(dataCopy.splice(0, DATA_CHUNKS_SIZE));
 		}
-		dataChunks.push(dataCopy);
+		if (dataCopy) {
+			dataChunks.push(dataCopy);
+		}
 
 		while (linksCopy.length > DATA_CHUNKS_SIZE) {
 			linkChunks.push(linksCopy.splice(0, DATA_CHUNKS_SIZE));
 		}
-		linkChunks.push(linksCopy);
+		if (linksCopy) {
+			linkChunks.push(linksCopy);
+		}
 
 		of(...dataChunks)
-			.subscribe(chunk => this.addNewNodesToDiagram(chunk));
+			.pipe()
+			.subscribe(chunk => {
+				this.addNewNodesToDiagram(chunk, nodeWaitTime);
+				nodeWaitTime = nodeWaitTime + WAIT_TIME;
+			});
 
 		of(...linkChunks)
-			.subscribe(chunk => this.addNewLinksToDiagram(chunk));
+			.pipe()
+			.subscribe(chunk => {
+				this.addNewLinksToDiagram(chunk, linkWaitTime);
+				linkWaitTime = linkWaitTime + WAIT_TIME;
+			});
 
 		this.largeArrayRemaining = false;
 
@@ -185,21 +200,27 @@ export class DiagramLayoutComponent implements OnChanges, AfterViewInit, OnDestr
 	/**
 	 * Add nodes to diagram programmatically
 	 * @param c
+	 * @param waitTime
 	 */
-	addNewNodesToDiagram(c: any): void {
-		this.diagram.commitTransaction('add node data');
-		this.model.addNodeDataCollection(c);
-		this.diagram.commitTransaction('added new node data');
+	addNewNodesToDiagram(c: any, waitTime: number): void {
+		setTimeout(() => {
+			this.diagram.commitTransaction('add node data');
+			this.model.addNodeDataCollection(c);
+			this.diagram.commitTransaction('added new node data');
+		}, waitTime);
 	}
 
 	/**
 	 * Add links to diagram programmatically
 	 * @param c
+	 * @param waitTime
 	 */
-	addNewLinksToDiagram(c: any): void {
-		this.diagram.commitTransaction('add link data');
-		this.model.addLinkDataCollection(c);
-		this.diagram.commitTransaction('added new link data');
+	addNewLinksToDiagram(c: any, waitTime: number): void {
+		setTimeout(() => {
+			this.diagram.commitTransaction('add link data');
+			this.model.addLinkDataCollection(c);
+			this.diagram.commitTransaction('added new link data');
+		}, waitTime);
 	}
 
 	/**
