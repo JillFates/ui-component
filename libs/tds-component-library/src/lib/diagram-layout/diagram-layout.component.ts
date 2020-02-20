@@ -182,14 +182,12 @@ export class DiagramLayoutComponent implements OnChanges, AfterViewInit, OnDestr
 		}
 
 		of(...dataChunks)
-			.pipe()
 			.subscribe(chunk => {
 				this.addNewNodesToDiagram(chunk, nodeWaitTime);
 				nodeWaitTime = nodeWaitTime + WAIT_TIME;
 			});
 
 		of(...linkChunks)
-			.pipe()
 			.subscribe(chunk => {
 				this.addNewLinksToDiagram(chunk, linkWaitTime);
 				linkWaitTime = linkWaitTime + WAIT_TIME;
