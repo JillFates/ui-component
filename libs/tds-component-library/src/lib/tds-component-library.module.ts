@@ -32,6 +32,7 @@ import { DynamicHostDirective } from './dialog/directive/dynamic-host.directive'
 import { DraggableDirective } from './dialog/directive/draggable/draggable.directive';
 import { GridShowHideFiltersButtonComponent } from './grid-show-hide-filters-button/grid-show-hide-filters-button.component';
 import { GridSelectedItemsCounterComponent } from './grid-selected-items-counter/grid-selected-items-counter.component';
+import { GridContextMenuFixedPositionDirective } from './grid-context-menu-fixed-position/grid-context-menu-fixed-position.directive';
 
 @NgModule({
 	imports: [
@@ -66,7 +67,8 @@ import { GridSelectedItemsCounterComponent } from './grid-selected-items-counter
 		DialogConfirmComponent,
 		// Directive
 		DynamicHostDirective,
-		DraggableDirective
+		DraggableDirective,
+		GridContextMenuFixedPositionDirective,
 	],
 	exports: [
 		CardComponent,
@@ -88,7 +90,8 @@ import { GridSelectedItemsCounterComponent } from './grid-selected-items-counter
 		DialogConfirmComponent,
 		// Directive
 		DynamicHostDirective,
-		DraggableDirective
+		DraggableDirective,
+		GridContextMenuFixedPositionDirective
 	],
 	entryComponents: [
 		DialogConfirmComponent

@@ -1,6 +1,6 @@
 <kendo-grid
 	*ngIf="gridHelper"
-	class="page-height narrow-rows clickable-rows row-actions-6-children fixed-context-menu"
+	class="page-height narrow-rows clickable-rows"
 	[ngClass]="{ 'hide-filter': !showFilters }"
 	[data]="gridHelper.gridData"
 	[filterable]="gridSettings.filterable"
@@ -68,10 +68,11 @@
 								 let-dataItem
 								 let-rowIndex="rowIndex">
 			<div class="action-button btn-link">
-				<clr-dropdown>
-					<tds-button
-						icon="ellipsis-vertical"
-						clrDropdownTrigger></tds-button>
+				<clr-dropdown #dropdown>
+					<tds-button icon="ellipsis-vertical"
+											clrDropdownTrigger
+											tdsGridContextMenuFixedPosition [clrDropdown]="dropdown">
+					</tds-button>
 					<clr-dropdown-menu *clrIfOpen clrPosition="bottom-left">
 						<a clrDropdownItem>
 							Edit

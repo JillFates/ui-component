@@ -13,8 +13,8 @@
 	(sortChange)="gridHelper.sortChange($event)"
 	(cellClick)="onCellClick($event)"
 	[selectable]="gridModel.gridSettings.selectableSettings"
-	[ngClass]="{ 'hide-filter': !showFilters }"
-	class="page-height row-actions-{{ numberRowActions() }}-children {{class || ''}}"
+	[ngClass]="{ 'hide-filter': !showFilters, 'clickable-rows': (gridModel.gridSettings.selectableSettings && gridModel.gridSettings.selectableSettings.enabled)}"
+	class="page-height {{class || ''}}"
 >
 	<ng-template kendoGridToolbarTemplate [position]="'top'">
 		<div class="clr-row">
@@ -32,7 +32,7 @@
 										 [headerClass]="'show-filters text-center'"
 										 [field]="'_showFilters'"
 										 [sortable]="false"
-										 [class]="{ 'k-custom-command-column': true, 'actions-column': true }"
+										 [class]="{'k-custom-command-column': true, 'actions-column': true }"
 										 [minResizableWidth]="60">
 		<ng-template
 			*ngIf="gridModel.gridSettings.filterable"
@@ -50,7 +50,7 @@
 			</tds-grid-clear-all-filters-button>
 		</ng-template>
 		<ng-template *ngIf="gridModel.gridRowActions" kendoGridCellTemplate let-dataItem let-rowIndex="rowIndex">
-			<div class="action-button btn-link">
+			<div class="action-button btn-link k-grid-ignore-click">
 				<tds-grid-row-dropdown
 					[gridRowActions]="gridModel.gridRowActions"
 					[dataItem]="dataItem"

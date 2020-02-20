@@ -6,6 +6,7 @@
 }
 
 kendo-grid {
+  // TODO: do we need this? it is used?
   &.tds-table {
     @include grid-label();
 
@@ -214,6 +215,9 @@ kendo-grid {
   }
 
   // general style fixes
+  .k-grid-table {
+    transform: none !important;
+  }
   .k-grid-header {
     background: #d9e4ea;
     .show-filters {
@@ -239,6 +243,17 @@ kendo-grid {
   &.k-grid ::selection {
     background: #3399FF;
     color: #fff;
+  }
+  .is-grid-link {
+    font-weight: bold;
+    span, label, div, span.is-grid-link, label.is-grid-link, div.is-grid-link {
+      font-weight: bold;
+      cursor: pointer;
+    }
+  }
+  span.is-grid-link, label.is-grid-link, div.is-grid-link {
+    font-weight: bold;
+    cursor: pointer;
   }
 }
 

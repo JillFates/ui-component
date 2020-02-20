@@ -95,11 +95,15 @@ export class GridComponent implements OnInit {
 	 * @param cellClickEvent
 	 */
 	public onCellClick(cellClickEvent: CellClickEvent): void {
-		// Want to surpress action column clicks.
+		// Want to suppress action column clicks.
 		if (this.gridModel.gridRowActions && cellClickEvent.columnIndex === 0) {
-			return;
+			// do nothing, ignore click
+		} else {
+			if (this.gridModel.gridSettings.selectableSettings.enabled) {
+				this.gridHelper.selectCell(cellClickEvent);
+			}
+			this.cellClick.emit(cellClickEvent);
 		}
-		this.cellClick.emit(cellClickEvent);
 	}
 
 	/**
