@@ -2,8 +2,10 @@
         Ignore this bug. -->
 
 <div class="action-button btn-link">
-	<clr-dropdown>
-		<tds-button icon="ellipsis-vertical" clrDropdownTrigger></tds-button>
+	<clr-dropdown #dropdown>
+		<tds-button icon="ellipsis-vertical"
+								clrDropdownTrigger
+								tdsGridContextMenuFixedPosition [clrDropdown]="dropdown"></tds-button>
 		<clr-dropdown-menu *clrIfOpen clrPosition="bottom-left">
 			<ng-container *ngFor="let action of gridRowActions">
 				<a

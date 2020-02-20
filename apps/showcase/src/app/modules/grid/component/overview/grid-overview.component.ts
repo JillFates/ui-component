@@ -32,6 +32,7 @@ export class GridOverviewComponent implements OnInit {
 		pageable: true,
 		sortSettings: { mode: 'single' },
 		resizable: true,
+		selectableSettings: {enabled: true, mode: 'single', checkboxOnly: false}
 	};
 
 	protected gridModel: GridModel;

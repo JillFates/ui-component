@@ -13,8 +13,8 @@
 	(sortChange)="gridHelper.sortChange($event)"
 	(cellClick)="onCellClick($event)"
 	[selectable]="gridModel.gridSettings.selectableSettings"
-	[ngClass]="{ 'hide-filter': !showFilters }"
-	class="page-height row-actions-{{ numberRowActions() }}-children {{class || ''}}"
+	[ngClass]="{ 'hide-filter': !showFilters, 'clickable-rows': (gridModel.gridSettings.selectableSettings && gridModel.gridSettings.selectableSettings.enabled)}"
+	class="page-height {{class || ''}}"
 >
 	<ng-template kendoGridToolbarTemplate [position]="'top'">
 		<div class="clr-row">
@@ -29,17 +29,17 @@
 
 	<!-- Show Filters / Actions column -->
 	<kendo-grid-column [width]="60"
-										 [headerClass]="'text-center'"
-										 [field]="'x'"
+										 [headerClass]="'show-filters text-center'"
+										 [field]="'_showFilters'"
 										 [sortable]="false"
-										 [class]="{ 'k-custom-command-column': true }"
+										 [class]="{'k-custom-command-column': true, 'actions-column': true }"
 										 [minResizableWidth]="60">
 		<ng-template
 			*ngIf="gridModel.gridSettings.filterable"
 			kendoGridHeaderTemplate
 			let-column
 			let-columnIndex="columnIndex">
-			<tds-grid-show-hide-filters-button [filterCount]="gridHelper.filterCount()"
+			<tds-grid-show-hide-filters-button [filterCount]="gridHelper.getFilterCounter()"
 																				 (toggleFilters)="toggleFilters()">
 			</tds-grid-show-hide-filters-button>
 		</ng-template>
@@ -50,7 +50,7 @@
 			</tds-grid-clear-all-filters-button>
 		</ng-template>
 		<ng-template *ngIf="gridModel.gridRowActions" kendoGridCellTemplate let-dataItem let-rowIndex="rowIndex">
-			<div class="action-button btn-link">
+			<div class="action-button btn-link k-grid-ignore-click">
 				<tds-grid-row-dropdown
 					[gridRowActions]="gridModel.gridRowActions"
 					[dataItem]="dataItem"
@@ -82,7 +82,7 @@
 				<tds-grid-filter-input
 					[name]="column.property"
 					[value]="column.filter || ''"
-					[columnType]="column.filterType"
+					[filterType]="column.filterType"
 					[dateFormat]="column.format"
 					[dropdownData]="column.filterInputData ? column.filterInputData.data : []"
 					[placeholder]="'Filter'"
