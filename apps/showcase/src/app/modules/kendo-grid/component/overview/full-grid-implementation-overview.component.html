@@ -1,0 +1,151 @@
+<kendo-grid
+	*ngIf="gridHelper"
+	class="page-height narrow-rows clickable-rows"
+	[ngClass]="{ 'hide-filter': !showFilters }"
+	[data]="gridHelper.gridData"
+	[filterable]="gridSettings.filterable"
+	[sort]="gridHelper.state.sort"
+	[sortable]="gridSettings.sortSettings"
+	(sortChange)="gridHelper.sortChange($event)"
+	[skip]="gridHelper.state.skip"
+	[pageable]="{pageSizes: gridHelper.defaultPageOptions, info: true}"
+	[pageSize]="gridHelper.state.take"
+	[resizable]="gridSettings.resizable"
+	[selectable]="gridSettings.selectableSettings"
+	[rowSelected]="gridHelper.isRowSelected"
+	(cellClick)="gridHelper.selectCell($event)">
+
+	<!-- Toolbar Template -->
+	<ng-template kendoGridToolbarTemplate [position]="'top'">
+		<div class="clr-row">
+			<div class="clr-col-12">
+				<div class="pull-right header-action-buttons">
+					<tds-grid-header-action-buttons
+						[actionButtons]="headerActionButtons"
+						(refresh)="onRefresh()">
+					</tds-grid-header-action-buttons>
+				</div>
+			</div>
+		</div>
+	</ng-template>
+
+	<!-- Select All -->
+	<kendo-grid-column [resizable]="false"
+										 [filterable]="false"
+										 [width]="30"
+										 [class]="{'actions-column': true}">
+		<ng-template kendoGridCellTemplate let-dataItem>
+			<label class="k-grid-ignore-click">
+				<input clrCheckbox
+							 type="checkbox"
+							 [(ngModel)]="gridHelper.bulkItems[dataItem[gridSettings.checkboxSelectionConfig.useColumn]]"
+							 name="checkbox_{{dataItem[gridSettings.checkboxSelectionConfig.useColumn]}}"
+							 (change)="gridHelper.onCheckboxChange(dataItem[gridSettings.checkboxSelectionConfig.useColumn])">
+			</label>
+		</ng-template>
+	</kendo-grid-column>
+
+	<!-- Show Filters / Actions column -->
+	<kendo-grid-column [field]="'_showFilters'"
+										 [headerClass]="'show-filters'"
+										 [sortable]="false"
+										 [class]="{ 'k-custom-command-column': true, 'actions-column': true }"
+										 [width]="50"
+										 [minResizableWidth]="60">
+		<!-- Toggle Filters button -->
+		<ng-template kendoGridHeaderTemplate>
+			<tds-grid-show-hide-filters-button [filterCount]="gridHelper.getFilterCounter()"
+																				 (toggleFilters)="toggleFilter()">
+			</tds-grid-show-hide-filters-button>
+		</ng-template>
+		<!-- Clear all Filters button -->
+		<ng-template kendoGridFilterCellTemplate let-filter>
+			<tds-grid-clear-all-filters-button [show]="gridHelper.getFilterCounter()"
+																				 (clearFilters)="gridHelper.clearAllFilters(gridColumns)">
+			</tds-grid-clear-all-filters-button>
+		</ng-template>
+		<ng-template kendoGridCellTemplate
+								 let-dataItem
+								 let-rowIndex="rowIndex">
+			<div class="action-button btn-link">
+				<clr-dropdown #dropdown>
+					<tds-button icon="ellipsis-vertical"
+											clrDropdownTrigger
+											tdsGridContextMenuFixedPosition [clrDropdown]="dropdown">
+					</tds-button>
+					<clr-dropdown-menu *clrIfOpen clrPosition="bottom-left">
+						<a clrDropdownItem>
+							Edit
+						</a>
+						<a clrDropdownItem>
+							Create Task
+						</a>
+						<a clrDropdownItem>
+							Show Tasks
+						</a>
+						<a clrDropdownItem>
+							Create Comment
+						</a>
+						<a clrDropdownItem>
+							Show Comments
+						</a>
+						<a clrDropdownItem>
+							Clone
+						</a>
+					</clr-dropdown-menu>
+				</clr-dropdown>
+			</div>
+		</ng-template>
+	</kendo-grid-column>
+
+	<!-- Columns -->
+	<kendo-grid-column *ngFor="let column of gridColumns"
+										 field="{{column.property}}"
+										 [locked]="column.locked"
+										 format="{{column.format}}"
+										 [headerClass]="column.headerClass ? column.headerClass : ''"
+										 [headerStyle]="column.headerStyle ? column.headerStyle : []"
+										 [class]="column.cellClass ? column.cellClass : ''"
+										 [style]="column.cellStyle ? column.cellStyle : []"
+										 [width]="!column.width ? COLUMN_MIN_WIDTH : column.width">
+
+		<!-- Header Template -->
+		<ng-template kendoGridHeaderTemplate>
+			<label>{{column.label}}</label>
+		</ng-template>
+
+		<!-- Filter Inputs -->
+		<ng-template kendoGridFilterCellTemplate let-filter>
+			<div class="filter-input">
+				<tds-grid-filter-input
+					[name]="column.property"
+					[value]="column.filter || ''"
+					[filterType]="column.filterType"
+					[dropdownData]="column.dropdownData || []"
+					[dateFormat]="column.format"
+					[placeholder]="'Filter'"
+					(filter)="gridHelper.onFilterWithValue($event, column)">
+				</tds-grid-filter-input>
+			</div>
+		</ng-template>
+
+	</kendo-grid-column>
+
+	<!-- Pagination Footer -->
+	<ng-template kendoPagerTemplate let-total="total" let-totalPages="totalPages" let-currentPage="currentPage">
+		<div class="clr-col-4">
+			<tds-grid-selected-items-counter [itemsSelected]="gridHelper.getCheckboxSelectedItems().length">
+			</tds-grid-selected-items-counter>
+		</div>
+		<div class="clr-col-8">
+			<tds-grid-pager
+				[total]="total"
+				[totalPages]="totalPages"
+				[currentPage]="currentPage"
+				[pageSize]="gridHelper.state.take"
+				[pageSizes]="gridHelper.defaultPageOptions"
+				(pageChange)="gridHelper.pageChange($event)">
+			</tds-grid-pager>
+		</div>
+	</ng-template>
+</kendo-grid>
