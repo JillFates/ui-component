@@ -10,52 +10,54 @@
 			(actionDispatched)="onCtxMenuActionDispatched($event)"
       #tdsCtxMenu></tds-context-menu>
 
-		<div id="graph-control-btn-group" *ngIf="!hideControlButtons">
-			<button
-				class="btn tooltip tooltip-md tooltip-top-left graph-control-btn"
-				role="tooltip"
-				aria-haspopup="true"
-				[style.textAlign]="'center'"
-				*ngIf="false">
-				<fa-icon [icon]="faIcons.faCog" size="lg"></fa-icon>
-				<span class="tooltip-content">Configuration</span>
-			</button>
-			<button
-				class="btn tooltip tooltip-md tooltip-top-left graph-control-btn"
-				*ngIf="showCollapseBtn"
-				(click)="expand = !expand; expandAll()"
-				role="tooltip"
-				aria-haspopup="true"
-				[style.textAlign]="'center'">
+
+        <div class="overview-group"  [class.reset-overview-index]="resetOvIndex">
+			<div id="graph-control-btn-group" *ngIf="!hideControlButtons">
+				<button
+						class="btn tooltip tooltip-md tooltip-top-left graph-control-btn"
+						role="tooltip"
+						aria-haspopup="true"
+						[style.textAlign]="'center'"
+						*ngIf="false">
+					<fa-icon [icon]="faIcons.faCog" size="lg"></fa-icon>
+					<span class="tooltip-content">Configuration</span>
+				</button>
+				<button
+						class="btn tooltip tooltip-md tooltip-top-left graph-control-btn"
+						*ngIf="showCollapseBtn"
+						(click)="expand = !expand; expandAll()"
+						role="tooltip"
+						aria-haspopup="true"
+						[style.textAlign]="'center'">
 					<fa-icon [icon]="faIcons.faArrowsAltV" size="lg"></fa-icon>
 					<span class="tooltip-content">Expand/Collapse all toggle</span>
-			</button>
-			<button
-				class="btn tooltip tooltip-xs tooltip-top-left graph-control-btn"
-				(click)="zoomIn()"
-				role="tooltip"
-				aria-haspopup="true"
-				[style.textAlign]="'center'">
-				<fa-icon [icon]="faIcons.faSearchPlus" size="lg"></fa-icon>
-				<span class="tooltip-content">Zoom In</span>
-			</button>
-			<button
-				class="btn tooltip tooltip-xs tooltip-top-left graph-control-btn"
-				(click)="zoomOut()"
-				role="tooltip"
-				aria-haspopup="true"
-				[style.textAlign]="'center'">
-				<fa-icon [icon]="faIcons.faSearchMinus" size="lg"></fa-icon>
-				<span class="tooltip-content">Zoom Out</span>
-			</button>
+				</button>
+				<button
+						class="btn tooltip tooltip-xs tooltip-top-left graph-control-btn"
+						(click)="zoomIn()"
+						role="tooltip"
+						aria-haspopup="true"
+						[style.textAlign]="'center'">
+					<fa-icon [icon]="faIcons.faSearchPlus" size="lg"></fa-icon>
+					<span class="tooltip-content">Zoom In</span>
+				</button>
+				<button
+						class="btn tooltip tooltip-xs tooltip-top-left graph-control-btn"
+						(click)="zoomOut()"
+						role="tooltip"
+						aria-haspopup="true"
+						[style.textAlign]="'center'">
+					<fa-icon [icon]="faIcons.faSearchMinus" size="lg"></fa-icon>
+					<span class="tooltip-content">Zoom Out</span>
+				</button>
+			</div>
+
+			<div class="overview-container" id="overview-container"
+				 *ngIf="!hideOverview"
+				 #overviewContainer>
+			</div>
 		</div>
 
-		<div
-			id="overview-container"
-			class="overview-container"
-			[class.reset-overview-index]="resetOvIndex"
-			*ngIf="!hideOverview"
-      #overviewContainer></div>
 
 		<div id="node-tooltip" class="card diagram-card" (mouseleave)="hideToolTip()" #nodeTooltip>
 			<div class="card-header clr-align-self-center"

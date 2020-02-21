@@ -20,17 +20,22 @@
       overflow: hidden !important;
     }
   }
-
-  .overview-container {
+  .overview-group {
     position: absolute;
+    bottom: 0;
+    right: 0;
+    display: flex;
+    z-index: 70; /* make sure its in front */
     width: 20%;
     max-width: 250px;
     height: 20%;
     max-height: 150px;
-    top: 10px;
-    left: 20px;
+  }
+
+  .overview-container {
+    width: 100%;
+    height: 100%;
     background-color: aliceblue;
-    z-index: 70; /* make sure its in front */
     border: solid 1px blue;
   }
 
@@ -46,10 +51,7 @@
   }
 
   #graph-control-btn-group {
-    position: absolute !important;
-    bottom: 10px !important;
-    right: 35px !important;
-    z-index: 999 !important;
+    margin-left: -40px;
     width: 1.5rem !important;
   }
 
