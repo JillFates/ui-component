@@ -45,7 +45,7 @@ export class DialogService {
 			content: content,
 			modalConfiguration: {
 				title: title,
-				modalSize: ModalSize.MD
+				modalSize: ModalSize.CONFIRM
 			}
 		});
 	}

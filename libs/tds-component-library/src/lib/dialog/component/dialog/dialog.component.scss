@@ -10,6 +10,13 @@ tds-dynamic-host {
   .modal-dialog {
     width: 28rem;
   }
+
+  /**
+   * Confirm is a medium with a little width
+   */
+  .modal-dialog.modal-confirm {
+    width: 25rem;
+  }
   .modal-dialog.modal-lg {
     width: 45rem;
   }
