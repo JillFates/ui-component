@@ -23,6 +23,13 @@ tds-dynamic-host {
   .modal-dialog.modal-xl {
     width: 56rem;
   }
+
+  /**
+    * Overwrites teh maximum Height coming from Clarity to be 90% of the page as Max
+    */
+  .modal-body {
+    max-height: 90vh;
+  }
 }
 tds-dynamic-host.model-instantiated {
   visibility: visible !important;
