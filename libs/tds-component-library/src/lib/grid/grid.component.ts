@@ -99,7 +99,7 @@ export class GridComponent implements OnInit {
 		if (this.gridModel.gridRowActions && cellClickEvent.columnIndex === 0) {
 			// do nothing, ignore click
 		} else {
-			if (this.gridModel.gridSettings.selectableSettings.enabled) {
+			if (this.gridModel.gridSettings.selectableSettings && this.gridModel.gridSettings.selectableSettings.enabled) {
 				this.gridHelper.selectCell(cellClickEvent);
 			}
 			this.cellClick.emit(cellClickEvent);
