@@ -3,7 +3,7 @@ import {
 	COLUMN_MIN_WIDTH,
 	ColumnHeaderData,
 	DataGridHelper,
-	GridSettings, HeaderActionButtonData
+	GridSettings, HeaderActionButtonData, generateRandomID
 } from 'libs/tds-component-library/src';
 import { AssetColumnsModel, AssetData } from '../model/asset-columns.model';
 
@@ -36,8 +36,8 @@ export class FullGridImplementationOverviewComponent {
 		for (let i = 0; i < 100; i++) {
 			gridData.push({
 				id: i,
-				assetName: this.makeid(8),
-				comment: this.makeid(32),
+				assetName: generateRandomID(8),
+				comment: generateRandomID(32),
 				userSelectedCol0: gridData[i].userSelectedCol0 === 'general' ? 'other' : 'general',
 				userSelectedCol1: '30/09/2019 04:31 PM',
 				checked: !gridData[i].checked,
@@ -61,20 +61,6 @@ export class FullGridImplementationOverviewComponent {
 				onClick: () => console.log('bulk edit'),
 			},
 		];
-	}
-
-	/**
-	 * Generate random string text.
-	 * @param length
-	 */
-	private makeid(length: number): string {
-		let result = '';
-		const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-		const charactersLength = characters.length;
-		for ( let i = 0; i < length; i++ ) {
-			result += characters.charAt(Math.floor(Math.random() * charactersLength));
-		}
-		return result;
 	}
 
 	/**

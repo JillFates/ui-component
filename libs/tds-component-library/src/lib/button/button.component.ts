@@ -1,5 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { ClrLoadingState } from '@clr/angular';
+import { generateRandomID } from '../utils/utils';
 
 @Component({
 	selector: 'tds-button',
@@ -23,6 +24,12 @@ export class ButtonComponent {
 	@Input() title: string;
 	@Input() id: string;
 	@Input() tabindex: string;
+
+	constructor() {
+		if (!this.id) {
+			this.id = generateRandomID(8);
+		}
+	}
 
 	get state(): string {
 		return this._state;
