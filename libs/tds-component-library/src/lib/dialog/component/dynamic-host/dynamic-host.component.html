@@ -5,7 +5,7 @@
         'full-screen-dialog': fullScreen
      }"
     class="modal dynamic-host-component">
-    <div class="modal-dialog" #dialogContainer
+    <div class="modal-dialog {{modalConfigurationModel.modalCustomClass}}" #dialogContainer
          [ngClass]="{
             'modal-sm': modalConfigurationModel.modalSize === modalSize.SM,
             'modal-lg': modalConfigurationModel.modalSize === modalSize.LG,

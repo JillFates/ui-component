@@ -5,6 +5,7 @@ export class ModalConfigurationModel {
 	public title?: string;
 	public showBackground?: boolean;
 	public modalSize?: ModalSize;
+	public modalCustomClass?: string;
 	public draggable?: boolean;
 	public resizable?: boolean;
 	public fullScreen?: boolean;
