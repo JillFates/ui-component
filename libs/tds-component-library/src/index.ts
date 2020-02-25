@@ -14,3 +14,5 @@ export * from './lib/grid/grid.component';
 // Services
 export * from './lib/dialog/service/dialog.service';
 export * from './lib/helpers/data-grid-helper';
+// Utils
+export * from './lib/utils/utils';
