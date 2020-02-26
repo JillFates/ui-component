@@ -1,6 +1,6 @@
 <tds-dialog></tds-dialog>
 <div class="button-overview-component">
-	<h2>Dialog Confirm Component</h2>
+	<h2>Dialog Notify Component</h2>
 	<p>Based on the <a target="_blank" href="https://v2.clarity.design/modals">Clarity Modals</a> with extensible Action buttons and configurable options.</p>
 	<div class="clr-row">
 		<div class="clr-col-12">
@@ -8,7 +8,7 @@
 		</div>
 		<div class="clr-col-12">
 			<tds-card title="Confirm Dialog">
-				<tds-button (click)="openConfirm()">Open</tds-button>
+				<tds-button (click)="openNotify()">Open</tds-button>
 			</tds-card>
 		</div>
 	</div>
@@ -21,11 +21,11 @@
 			<tds-card
 					title="Typescript implementation"
 					code='
-this.dialogService.confirm({
-	title: "Abandon Changes?",
-	content: "You have unsaved changes. Click Confirm to abandon your changes"
+this.dialogService.notify({
+	title: "Alert",
+	content: "This is a notification Message"
 }).subscribe((data: any) => {
-	console.log("Confirmation Action was: ", data);
+	console.log("Notification Action was: ", data);
 });
 '
 			>

@@ -24,6 +24,7 @@ import { GridRowDropdownComponent } from './grid-row-dropdown/grid-row-dropdown.
 import { GridComponent } from './grid/grid.component';
 import { DialogComponent } from './dialog/component/dialog/dialog.component';
 import { DialogConfirmComponent } from './dialog/component/dialog-confirm/dialog-confirm.component';
+import {DialogNotifyComponent} from './dialog/component/dialog-notify/dialog-notify.component';
 import { GridFilterInputComponent } from './filter-input/grid-filter-input.component';
 import { GridClearAllFiltersButtonComponent } from './grid-clear-all-filters-button/grid-clear-all-filters-button.component';
 // Directive
@@ -65,6 +66,7 @@ import { GridContextMenuFixedPositionDirective } from './grid-context-menu-fixed
 		GridComponent,
 		DynamicHostComponent,
 		DialogConfirmComponent,
+		DialogNotifyComponent,
 		// Directive
 		DynamicHostDirective,
 		DraggableDirective,
@@ -88,13 +90,15 @@ import { GridContextMenuFixedPositionDirective } from './grid-context-menu-fixed
 		GridComponent,
 		DynamicHostComponent,
 		DialogConfirmComponent,
+		DialogNotifyComponent,
 		// Directive
 		DynamicHostDirective,
 		DraggableDirective,
 		GridContextMenuFixedPositionDirective
 	],
 	entryComponents: [
-		DialogConfirmComponent
+		DialogConfirmComponent,
+		DialogNotifyComponent,
 	]
 })
 export class TdsComponentLibraryModule {

@@ -21,6 +21,7 @@ import {GridModule} from './modules/grid/grid.module';
 import {DiagramLayoutModule} from './modules/diagram-layout/diagram-layout.module';
 import {DialogModule} from './modules/dialog/dialog.module';
 import {DialogConfirmModule} from './modules/dialog-confirm/dialog-confirm.module';
+import {DialogNotifyModule} from './modules/dialog-notify/dialog-notify.module';
 // Component
 import {AppComponent} from './app.component';
 
@@ -46,6 +47,7 @@ import {AppComponent} from './app.component';
 		GridModule,
 		DialogModule,
 		DialogConfirmModule,
+		DialogNotifyModule,
 		RouterModule.forRoot(
 			[
 				{

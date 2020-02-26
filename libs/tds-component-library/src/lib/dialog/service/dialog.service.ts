@@ -4,6 +4,7 @@ import {ComponentFactoryResolver, Injectable} from '@angular/core';
 import {DialogEventType, DialogModel, ModalSize} from '../model/dialog.model';
 // Component
 import {DialogConfirmComponent} from '../component/dialog-confirm/dialog-confirm.component';
+import {DialogNotifyComponent} from '../component/dialog-notify/dialog-notify.component';
 // Other
 import {Observable, Observer} from 'rxjs';
 import {EventService} from '../../service/event-service/event.service';
@@ -41,6 +42,24 @@ export class DialogService {
 		return this.open({
 			componentFactoryResolver: this.componentFactoryResolver,
 			component: DialogConfirmComponent,
+			data: null,
+			content: content,
+			modalConfiguration: {
+				title: title,
+				modalSize: ModalSize.CONFIRM
+			}
+		});
+	}
+
+	/**
+	 * Open a Notification Dialog that return CONFIRM or CANCEL
+	 * @param title
+	 * @param content
+	 */
+	public notify(title: string, content: string): Observable<any> {
+		return this.open({
+			componentFactoryResolver: this.componentFactoryResolver,
+			component: DialogNotifyComponent,
 			data: null,
 			content: content,
 			modalConfiguration: {
