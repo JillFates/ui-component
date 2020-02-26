@@ -13,6 +13,7 @@ import {
 	faSitemap, faSortAmountDown, faSpinner,
 	faStream, faSyncAlt, faTabletAlt, faUndo, faUser, faWindowMaximize, faWindowMinimize
 } from '@fortawesome/free-solid-svg-icons';
+import {faAdn} from '@fortawesome/free-brands-svg-icons';
 
 @NgModule({
 	imports: [FontAwesomeModule],
@@ -61,7 +62,8 @@ export class TdsFontawesomeModule {
 			faArrowsAltV,
 			faLaptop,
 			faTabletAlt,
-			faQuestion
+			faQuestion,
+			faAdn
 		);
 	}
 }

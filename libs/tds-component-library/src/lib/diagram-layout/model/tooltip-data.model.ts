@@ -5,6 +5,6 @@ export interface ITooltipData {
 	data?: {
 		label?: string;
 		value?: string;
-		icon?: string;
+		icon?: {name?: string, color?: string, background?: string};
 	}[];
 }

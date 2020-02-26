@@ -44,7 +44,10 @@ export class DiagramLayoutOverviewHelper implements IDiagramLayoutHelper {
 							{
 								label: 'Status',
 								value: 'Hold',
-								icon: 'faPlay'
+								icon: {
+									name: 'faPlay',
+									color: 'lightblue'
+								}
 							},
 							{
 								label: 'key',
