@@ -44,5 +44,6 @@ export const FA_ICONS = {
 	faPowerOff: ['fas', 'power-off'],
 	faLaptop: ['fas', 'laptop'],
 	faArchive: ['fas', 'archive'],
-	faAdn: ['fab', 'adn']
+	faAdn: ['fab', 'adn'],
+	faBox: ['fas', 'box']
 };

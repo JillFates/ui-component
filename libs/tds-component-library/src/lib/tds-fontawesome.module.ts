@@ -1,7 +1,7 @@
 import {NgModule} from '@angular/core';
 import {FaIconLibrary, FontAwesomeModule} from '@fortawesome/angular-fontawesome';
 import {
-	faAdjust, faArrowsAltV, faBars, faBoxOpen, faBuilding,
+	faAdjust, faArrowsAltV, faBars, faBox, faBoxOpen, faBuilding,
 	faCheck, faCircle,
 	faCog, faCogs, faCompress,
 	faCubes, faDatabase, faEdit, faExpand, faEye,
@@ -63,7 +63,8 @@ export class TdsFontawesomeModule {
 			faLaptop,
 			faTabletAlt,
 			faQuestion,
-			faAdn
+			faAdn,
+			faBox
 		);
 	}
 }
