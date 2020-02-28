@@ -71,7 +71,11 @@
 					<div class="clr-row" *ngFor="let data of tooltipData.data">
 						<div class="clr-col-6 clr-align-self-center tooltip-data-label">{{data?.label}}: </div>
 						<div class="clr-col-6 clr-align-self-center tooltip-data-value">
-							<fa-icon [icon]="faIcons[data.icon]" [size]="'xs'" *ngIf="data.icon"></fa-icon>
+							<fa-icon *ngIf="data.icon"
+									 [icon]="faIcons[data.icon.name]"
+									 [size]="'xs'"
+									 [style.background]="data.icon.background"
+									 [style.color]="data.icon.color"></fa-icon>
 							{{data?.value}}
 						</div>
 					</div>

@@ -1,7 +1,7 @@
 import {NgModule} from '@angular/core';
 import {FaIconLibrary, FontAwesomeModule} from '@fortawesome/angular-fontawesome';
 import {
-	faAdjust, faArrowsAltV, faBars, faBoxOpen, faBuilding,
+	faAdjust, faArrowsAltV, faBars, faBox, faBoxOpen, faBuilding,
 	faCheck, faCircle,
 	faCog, faCogs, faCompress,
 	faCubes, faDatabase, faEdit, faExpand, faEye,
@@ -13,6 +13,7 @@ import {
 	faSitemap, faSortAmountDown, faSpinner,
 	faStream, faSyncAlt, faTabletAlt, faUndo, faUser, faWindowMaximize, faWindowMinimize
 } from '@fortawesome/free-solid-svg-icons';
+import {faAdn} from '@fortawesome/free-brands-svg-icons';
 
 @NgModule({
 	imports: [FontAwesomeModule],
@@ -61,7 +62,9 @@ export class TdsFontawesomeModule {
 			faArrowsAltV,
 			faLaptop,
 			faTabletAlt,
-			faQuestion
+			faQuestion,
+			faAdn,
+			faBox
 		);
 	}
 }

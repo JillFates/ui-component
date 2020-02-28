@@ -43,5 +43,7 @@ export const FA_ICONS = {
 	faTabletAlt: ['fas', 'tablet-alt'],
 	faPowerOff: ['fas', 'power-off'],
 	faLaptop: ['fas', 'laptop'],
-	faArchive: ['fas', 'archive']
+	faArchive: ['fas', 'archive'],
+	faAdn: ['fab', 'adn'],
+	faBox: ['fas', 'box']
 };
