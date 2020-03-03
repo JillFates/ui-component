@@ -1,5 +1,6 @@
+import { DialogService } from './../../service/dialog.service';
 // Angular
-import { Component, HostListener, QueryList, ViewChildren, ViewEncapsulation } from '@angular/core';
+import { Component, HostListener, QueryList, ViewChildren, ViewEncapsulation, OnInit, OnDestroy } from '@angular/core';
 // Service
 import { EventService } from '../../../service/event-service/event.service';
 // Component
@@ -8,6 +9,7 @@ import { DynamicHostComponent } from '../dynamic-host/dynamic-host.component';
 import { DialogEventType } from '../../model/dialog.model';
 import { Dialog } from '../../model/dialog.interface';
 import { DynamicHostModel } from '../../model/dynamic-host.model';
+import { Subscription } from 'rxjs';
 
 @Component({
 	selector: 'tds-dialog',
@@ -15,12 +17,22 @@ import { DynamicHostModel } from '../../model/dynamic-host.model';
 	encapsulation: ViewEncapsulation.None,
 	templateUrl: './dialog.component.html',
 })
-export class DialogComponent {
+export class DialogComponent implements OnInit, OnDestroy {
 	@ViewChildren(DynamicHostComponent) dynamicHostList!: QueryList<DynamicHostComponent>;
+
 	// Contains a list of every available dialog open as an Stack
 	public dynamicDialogList: DynamicHostModel[] = <any>[];
+	public dropdownActivated = false;
 
-	constructor(private eventService: EventService) {
+	dropdownSub: Subscription;
+
+	ngOnDestroy(): void {
+		if (this.dropdownSub) {
+			this.dropdownSub.unsubscribe();
+		}
+	}
+
+	constructor(private eventService: EventService, private dialogService: DialogService) {
 		this.registerDialog();
 	}
 
@@ -119,11 +131,12 @@ export class DialogComponent {
 				}
 			);
 			if (dynamicHostModel) {
-				// console.log('dynamicHostModel:', dynamicHostModel);
-				const currentDialogComponentInstance = <Dialog>(
-					dynamicHostModel.dynamicHostComponent.currentDialogComponentInstance
-				);
-				currentDialogComponentInstance.onDismiss();
+				if (!this.dropdownActivated) {
+					const currentDialogComponentInstance = <Dialog>(
+						dynamicHostModel.dynamicHostComponent.currentDialogComponentInstance
+					);
+					currentDialogComponentInstance.onDismiss();
+				}
 			}
 		}
 	}
@@ -137,6 +150,12 @@ export class DialogComponent {
 			if (index < this.dynamicHostList.length - 1) {
 				dynamicHostComponent.modalConfigurationModel.showBackground = false;
 			}
+		});
+	}
+
+	ngOnInit(): void {
+		this.dropdownSub = this.dialogService.activatedDropdown.subscribe(didActivate => {
+			this.dropdownActivated = didActivate;
 		});
 	}
 }

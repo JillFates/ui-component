@@ -1,24 +1,22 @@
 import { DialogDropdownComponent } from './../component/dialog-dropdown/dialog-dropdown.component';
 // Angular
-import {ComponentFactoryResolver, Injectable} from '@angular/core';
+import { ComponentFactoryResolver, Injectable, EventEmitter } from '@angular/core';
 // Model
-import {DialogEventType, DialogModel, ModalSize} from '../model/dialog.model';
+import { DialogEventType, DialogModel, ModalSize } from '../model/dialog.model';
 // Component
-import {DialogConfirmComponent} from '../component/dialog-confirm/dialog-confirm.component';
-import {DialogNotifyComponent} from '../component/dialog-notify/dialog-notify.component';
+import { DialogConfirmComponent } from '../component/dialog-confirm/dialog-confirm.component';
+import { DialogNotifyComponent } from '../component/dialog-notify/dialog-notify.component';
 // Other
-import {Observable, Observer} from 'rxjs';
-import {EventService} from '../../service/event-service/event.service';
+import { Observable, Observer, Subject } from 'rxjs';
+import { EventService } from '../../service/event-service/event.service';
 
 @Injectable({
-	providedIn: 'root'
+	providedIn: 'root',
 })
 export class DialogService {
+	activatedDropdown = new Subject<boolean>();
 
-	constructor(
-		private eventService: EventService,
-		private componentFactoryResolver: ComponentFactoryResolver) {
-	}
+	constructor(private eventService: EventService, private componentFactoryResolver: ComponentFactoryResolver) {}
 
 	/**
 	 * Broadcast an event to open a Dialog.
@@ -29,7 +27,7 @@ export class DialogService {
 			dialogModel.observable = observer;
 			this.eventService.broadcast({
 				name: DialogEventType.OPEN,
-				event: dialogModel
+				event: dialogModel,
 			});
 		});
 	}
@@ -47,8 +45,8 @@ export class DialogService {
 			content: content,
 			modalConfiguration: {
 				title: title,
-				modalSize: ModalSize.CONFIRM
-			}
+				modalSize: ModalSize.CONFIRM,
+			},
 		});
 	}
 
@@ -65,8 +63,8 @@ export class DialogService {
 			content: content,
 			modalConfiguration: {
 				title: title,
-				modalSize: ModalSize.CONFIRM
-			}
+				modalSize: ModalSize.CONFIRM,
+			},
 		});
 	}
 
@@ -83,9 +81,8 @@ export class DialogService {
 			content: content,
 			modalConfiguration: {
 				title: title,
-				modalSize: ModalSize.CONFIRM
-			}
+				modalSize: ModalSize.CONFIRM,
+			},
 		});
 	}
-
 }

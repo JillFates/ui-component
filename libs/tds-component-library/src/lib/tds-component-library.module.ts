@@ -1,3 +1,4 @@
+import { PreventEscDirective } from './dialog/directive/prevent-esc.directive';
 import { DialogDropdownComponent } from './dialog/component/dialog-dropdown/dialog-dropdown.component';
 // Angular
 import { NgModule } from '@angular/core';
@@ -72,6 +73,7 @@ import { GridContextMenuFixedPositionDirective } from './grid-context-menu-fixed
 		// Directive
 		DynamicHostDirective,
 		DraggableDirective,
+		PreventEscDirective,
 		GridContextMenuFixedPositionDirective,
 	],
 	exports: [
@@ -97,6 +99,7 @@ import { GridContextMenuFixedPositionDirective } from './grid-context-menu-fixed
 		// Directive
 		DynamicHostDirective,
 		DraggableDirective,
+		PreventEscDirective,
 		GridContextMenuFixedPositionDirective,
 	],
 	entryComponents: [DialogConfirmComponent, DialogNotifyComponent, DialogDropdownComponent],
