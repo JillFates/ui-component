@@ -1,3 +1,4 @@
+import { DialogDropdownComponent } from './../component/dialog-dropdown/dialog-dropdown.component';
 // Angular
 import {ComponentFactoryResolver, Injectable} from '@angular/core';
 // Model
@@ -42,6 +43,24 @@ export class DialogService {
 		return this.open({
 			componentFactoryResolver: this.componentFactoryResolver,
 			component: DialogConfirmComponent,
+			data: null,
+			content: content,
+			modalConfiguration: {
+				title: title,
+				modalSize: ModalSize.CONFIRM
+			}
+		});
+	}
+
+	/**
+	 * Open a Dropdown Dialog
+	 * @param title
+	 * @param content
+	 */
+	public freezeEscape(title: string, content: string): Observable<any> {
+		return this.open({
+			componentFactoryResolver: this.componentFactoryResolver,
+			component: DialogDropdownComponent,
 			data: null,
 			content: content,
 			modalConfiguration: {

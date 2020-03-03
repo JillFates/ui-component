@@ -83,7 +83,8 @@
     "typedef": [true,
       "call-signature",
       "parameter",
-      "property-declaration"],
+      "property-declaration"
+    ],
     "typedef-whitespace": [
       true,
       {
@@ -108,12 +109,10 @@
       true,
       {
         "allow": [],
-        "depConstraints": [
-          {
-            "sourceTag": "*",
-            "onlyDependOnLibsWithTags": ["*"]
-          }
-        ]
+        "depConstraints": [{
+          "sourceTag": "*",
+          "onlyDependOnLibsWithTags": ["*"]
+        }]
       }
     ],
     "directive-selector": [true, "attribute", ["cv", "app"], "camelCase"],

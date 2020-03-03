@@ -1,18 +1,13 @@
 // Angular
-import {
-	Component,
-	HostListener,
-	QueryList,
-	ViewChildren, ViewEncapsulation
-} from '@angular/core';
+import { Component, HostListener, QueryList, ViewChildren, ViewEncapsulation } from '@angular/core';
 // Service
-import {EventService} from '../../../service/event-service/event.service';
+import { EventService } from '../../../service/event-service/event.service';
 // Component
-import {DynamicHostComponent} from '../dynamic-host/dynamic-host.component';
+import { DynamicHostComponent } from '../dynamic-host/dynamic-host.component';
 // Model
-import {DialogEventType} from '../../model/dialog.model';
-import {Dialog} from '../../model/dialog.interface';
-import {DynamicHostModel} from '../../model/dynamic-host.model';
+import { DialogEventType } from '../../model/dialog.model';
+import { Dialog } from '../../model/dialog.interface';
+import { DynamicHostModel } from '../../model/dynamic-host.model';
 
 @Component({
 	selector: 'tds-dialog',
@@ -21,7 +16,7 @@ import {DynamicHostModel} from '../../model/dynamic-host.model';
 	templateUrl: './dialog.component.html',
 })
 export class DialogComponent {
-	@ViewChildren(DynamicHostComponent) dynamicHostList !: QueryList<DynamicHostComponent>;
+	@ViewChildren(DynamicHostComponent) dynamicHostList!: QueryList<DynamicHostComponent>;
 	// Contains a list of every available dialog open as an Stack
 	public dynamicDialogList: DynamicHostModel[] = <any>[];
 
@@ -37,7 +32,7 @@ export class DialogComponent {
 			// We initialize the Model with the incoming Model event
 			const dynamicHostModel: DynamicHostModel = {
 				dialogModel: dialogModel.event,
-				instantiated: false
+				instantiated: false,
 			};
 
 			// We add a new Empty element to the dynamicDialogList
@@ -57,7 +52,6 @@ export class DialogComponent {
 	 * @param componentFactoryResolver
 	 */
 	public createComponent(dynamicHostModel: DynamicHostModel): void {
-
 		try {
 			// Create new instance
 			const componentFactory = dynamicHostModel.dialogModel.componentFactoryResolver.resolveComponentFactory(
@@ -65,9 +59,7 @@ export class DialogComponent {
 			);
 			const currentViewContainerRef = dynamicHostModel.dynamicHostComponent.dynamicContent.viewContainerRef;
 			currentViewContainerRef.clear();
-			const componentRef = currentViewContainerRef.createComponent(
-				componentFactory
-			);
+			const componentRef = currentViewContainerRef.createComponent(componentFactory);
 
 			const currentDialogComponentInstance = <Dialog>componentRef.instance;
 			currentDialogComponentInstance.data = dynamicHostModel.dialogModel.data;
@@ -76,8 +68,10 @@ export class DialogComponent {
 
 			// Overwrite the property configuration
 			if (dynamicHostModel.dialogModel.modalConfiguration) {
-				dynamicHostModel.dynamicHostComponent.modalConfigurationModel =
-					Object.assign(dynamicHostModel.dynamicHostComponent.modalConfigurationModel, dynamicHostModel.dialogModel.modalConfiguration);
+				dynamicHostModel.dynamicHostComponent.modalConfigurationModel = Object.assign(
+					dynamicHostModel.dynamicHostComponent.modalConfigurationModel,
+					dynamicHostModel.dialogModel.modalConfiguration
+				);
 				// If the user wants to set the background as empty, we change the default so we can revert it to that
 				if (!dynamicHostModel.dynamicHostComponent.modalConfigurationModel.showBackground) {
 					dynamicHostModel.dynamicHostComponent.modalConfigurationModel.setDefaultShowBackground(
@@ -94,7 +88,7 @@ export class DialogComponent {
 
 			// Emits on Success
 			if (currentDialogComponentInstance.successEvent) {
-				currentDialogComponentInstance.successEvent.subscribe((result) => {
+				currentDialogComponentInstance.successEvent.subscribe(result => {
 					dynamicHostModel.dialogModel.observable.next(result);
 					dynamicHostModel.dialogModel.observable.complete();
 					// Last element of the array only
@@ -109,7 +103,7 @@ export class DialogComponent {
 				dynamicHostModel.instantiated = true;
 			});
 		} catch (e) {
-			console.error('Dialog can\'t be instantiated/created', e);
+			console.error("Dialog can't be instantiated/created", e);
 		}
 	}
 
@@ -119,11 +113,16 @@ export class DialogComponent {
 	 */
 	@HostListener('document:keyup.escape', ['$event']) onKeydownHandler(event: KeyboardEvent): void {
 		if (event.key === 'Escape' || event.code === 'Escape') {
-			const dynamicHostModel: DynamicHostModel = this.dynamicDialogList.find((innerDynamicHostModel: DynamicHostModel) => {
-				return innerDynamicHostModel.dynamicHostComponent === this.dynamicHostList.last;
-			});
+			const dynamicHostModel: DynamicHostModel = this.dynamicDialogList.find(
+				(innerDynamicHostModel: DynamicHostModel) => {
+					return innerDynamicHostModel.dynamicHostComponent === this.dynamicHostList.last;
+				}
+			);
 			if (dynamicHostModel) {
-				const currentDialogComponentInstance = <Dialog>dynamicHostModel.dynamicHostComponent.currentDialogComponentInstance;
+				// console.log('dynamicHostModel:', dynamicHostModel);
+				const currentDialogComponentInstance = <Dialog>(
+					dynamicHostModel.dynamicHostComponent.currentDialogComponentInstance
+				);
 				currentDialogComponentInstance.onDismiss();
 			}
 		}
@@ -135,7 +134,7 @@ export class DialogComponent {
 	private showHideBackgrounds(): void {
 		this.dynamicHostList.forEach((dynamicHostComponent: DynamicHostComponent, index) => {
 			dynamicHostComponent.modalConfigurationModel.showBackground = dynamicHostComponent.modalConfigurationModel.getDefaultShowBackground();
-			if (index < (this.dynamicHostList.length - 1)) {
+			if (index < this.dynamicHostList.length - 1) {
 				dynamicHostComponent.modalConfigurationModel.showBackground = false;
 			}
 		});

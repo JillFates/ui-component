@@ -24,6 +24,7 @@ import {DialogConfirmModule} from './modules/dialog-confirm/dialog-confirm.modul
 import {DialogNotifyModule} from './modules/dialog-notify/dialog-notify.module';
 // Component
 import {AppComponent} from './app.component';
+import { DialogDropdownModule } from './modules/dialog-dropdown/dialog-dropdown.module';
 
 @NgModule({
 	declarations: [AppComponent],
@@ -48,6 +49,7 @@ import {AppComponent} from './app.component';
 		DialogModule,
 		DialogConfirmModule,
 		DialogNotifyModule,
+		DialogDropdownModule,
 		RouterModule.forRoot(
 			[
 				{
