@@ -284,8 +284,15 @@ export class DiagramLayoutComponent implements OnChanges, AfterViewInit, OnDestr
 	overrideMouseWheel(): void {
 		const tool = this.diagram.currentTool;
 		tool.standardMouseWheel = () => {
+			const lastScale = this.diagram.scale;
 			Tool.prototype.standardMouseWheel.call(tool);
-			this.setNodeTemplateByScale(this.diagram.scale, this.diagram.lastInput);
+			const newScale = this.diagram.scale;
+			if (newScale > lastScale) {
+				this.shouldUseHighScale();
+			} else {
+				this.shouldUseMediumScale();
+			}
+			this.setNodeTemplateByScale(newScale, this.diagram.lastInput);
 		};
 	}
 
@@ -795,11 +802,28 @@ export class DiagramLayoutComponent implements OnChanges, AfterViewInit, OnDestr
 		this.diagram.commandHandler.increaseZoom(1.2);
 		const input = new InputEvent();
 		input.control = true;
+		this.shouldUseHighScale();
+		this.setNodeTemplateByScale(this.diagram.scale, input);
+	}
+
+	/**
+	 * use high scale if graph is zoomed to fit
+	 **/
+	shouldUseHighScale(): void {
 		if (this.isGraphZoomedToFit && this.diagram.scale < HIGH_SCALE) {
 			this.diagram.scale = HIGH_SCALE;
 			this.isGraphZoomedToFit = false;
 		}
-		this.setNodeTemplateByScale(this.diagram.scale, input);
+	}
+
+	/**
+	 * use medium scale if graph is zoomed to fit and scale is less than low scale
+	 **/
+	shouldUseMediumScale(): void {
+		if (this.isGraphZoomedToFit && this.diagram.scale <= LOW_SCALE) {
+			this.diagram.scale = MEDIUM_SCALE;
+			this.isGraphZoomedToFit = false;
+		}
 	}
 
 	/**
@@ -809,10 +833,7 @@ export class DiagramLayoutComponent implements OnChanges, AfterViewInit, OnDestr
 		this.diagram.commandHandler.decreaseZoom(0.8);
 		const input = new InputEvent();
 		input.control = true;
-		if (this.isGraphZoomedToFit && this.diagram.scale <= LOW_SCALE) {
-			this.diagram.scale = MEDIUM_SCALE;
-			this.isGraphZoomedToFit = false;
-		}
+		this.shouldUseMediumScale();
 		this.setNodeTemplateByScale(this.diagram.scale, input);
 	}
 
