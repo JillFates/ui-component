@@ -1,6 +1,6 @@
 import { DialogDropdownComponent } from './../component/dialog-dropdown/dialog-dropdown.component';
 // Angular
-import { ComponentFactoryResolver, Injectable, EventEmitter } from '@angular/core';
+import { ComponentFactoryResolver, Injectable } from '@angular/core';
 // Model
 import { DialogEventType, DialogModel, ModalSize } from '../model/dialog.model';
 // Component
