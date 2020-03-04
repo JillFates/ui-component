@@ -237,20 +237,35 @@ export class DiagramLayoutComponent implements OnChanges, AfterViewInit, OnDestr
 		if (!this.model) { return; }
 		const extras = this.data.extras;
 		this.diagram.model.nodeDataArray = [];
+
+		this.diagram.setProperties({
+			initialAutoScale: extras && extras.initialAutoScale ? extras.initialAutoScale : Spot.Center,
+			initialDocumentSpot: Spot.Center,
+			initialViewportSpot: Spot.Center,
+			hasHorizontalScrollbar: false,
+			hasVerticalScrollbar: false,
+			allowZoom: extras && extras.allowZoom ? extras.allowZoom : false,
+			autoScale: extras && extras.autoScale ? extras.autoScale : Diagram.UniformToFill,
+			layout: this.setLayout(),
+			nodeTemplate: this.setNodeTemplate(),
+			linkTemplate: this.setLinkTemplate()
+		});
+
 		this.diagram.commit(d => {
-			d.initialAutoScale = extras && extras.initialAutoScale ? extras.initialAutoScale : d.initialAutoScale;
-			d.initialDocumentSpot = Spot.Center;
-			d.initialViewportSpot = Spot.Center;
-			d.hasHorizontalScrollbar = false;
-			d.hasVerticalScrollbar = false;
-			d.allowZoom = extras && extras.allowZoom ? extras.allowZoom : d.allowZoom;
-			d.autoScale = extras && extras.autoScale ? extras.autoScale : d.autoScale;
-			d.layout = this.setLayout();
-			d.nodeTemplate = this.setNodeTemplate();
-			d.linkTemplate = this.setLinkTemplate();
+			// d.initialAutoScale = extras && extras.initialAutoScale ? extras.initialAutoScale : d.initialAutoScale;
+			// d.initialDocumentSpot = Spot.Center;
+			// d.initialViewportSpot = Spot.Center;
+			// d.hasHorizontalScrollbar = false;
+			// d.hasVerticalScrollbar = false;
+			// d.allowZoom = extras && extras.allowZoom ? extras.allowZoom : d.allowZoom;
+			// d.autoScale = extras && extras.autoScale ? extras.autoScale : d.autoScale;
+			// d.layout = this.setLayout();
+			// d.nodeTemplate = this.setNodeTemplate();
+			// d.linkTemplate = this.setLinkTemplate();
 			this.showCollapseBtn = (extras && extras.isExpandable) || !this.data.nodeTemplate.isTreeExpanded;
 			this.diagram.click = () => this.diagramClicked.emit();
 		});
+
 		this.diagram.model = this.model;
 		this.diagramAvailable = true;
 		this.overrideMouseWheel();
