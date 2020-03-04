@@ -238,41 +238,39 @@ export class DiagramLayoutComponent implements OnChanges, AfterViewInit, OnDestr
 		const extras = this.data.extras;
 		this.diagram.model.nodeDataArray = [];
 
-		this.diagram.setProperties({
-			initialAutoScale: extras && extras.initialAutoScale ? extras.initialAutoScale : Spot.Center,
-			initialDocumentSpot: Spot.Center,
-			initialViewportSpot: Spot.Center,
+		const defaultProperties = {
+			contentAlignment: Spot.Center,
 			hasHorizontalScrollbar: false,
 			hasVerticalScrollbar: false,
-			allowZoom: extras && extras.allowZoom ? extras.allowZoom : false,
-			autoScale: extras && extras.autoScale ? extras.autoScale : Diagram.UniformToFill,
+			initialDocumentSpot: Spot.Center,
+			initialViewportSpot: Spot.Center,
+			isExpandable: false,
 			layout: this.setLayout(),
-			nodeTemplate: this.setNodeTemplate(),
-			linkTemplate: this.setLinkTemplate()
-		});
+			linkTemplate: this.setLinkTemplate(),
+			nodeTemplate: this.setNodeTemplate()
+		};
+		const properties = {...defaultProperties, ...extras};
+		// {
+		// initialAutoScale: extras && extras.initialAutoScale ? extras.initialAutoScale : Spot.Center,
+		// allowZoom: extras && extras.allowZoom ? extras.allowZoom : false,
+		// autoScale: extras && extras.autoScale ? extras.autoScale : Diagram.UniformToFill,
+		// }
+		this.diagram.setProperties(properties);
+		console.log('Setting properties....');
 
-		this.diagram.commit(d => {
-			// d.initialAutoScale = extras && extras.initialAutoScale ? extras.initialAutoScale : d.initialAutoScale;
-			// d.initialDocumentSpot = Spot.Center;
-			// d.initialViewportSpot = Spot.Center;
-			// d.hasHorizontalScrollbar = false;
-			// d.hasVerticalScrollbar = false;
-			// d.allowZoom = extras && extras.allowZoom ? extras.allowZoom : d.allowZoom;
-			// d.autoScale = extras && extras.autoScale ? extras.autoScale : d.autoScale;
-			// d.layout = this.setLayout();
-			// d.nodeTemplate = this.setNodeTemplate();
-			// d.linkTemplate = this.setLinkTemplate();
-			this.showCollapseBtn = (extras && extras.isExpandable) || !this.data.nodeTemplate.isTreeExpanded;
-			this.diagram.click = () => this.diagramClicked.emit();
-		});
-
+		// this.diagram.commit(d => {
+		// 	this.showCollapseBtn = (extras && extras.isExpandable) || !this.data.nodeTemplate.isTreeExpanded;
+		// 	this.diagram.click = () => this.diagramClicked.emit();
+		// });
+		this.showCollapseBtn = (extras && extras.isExpandable) || !this.data.nodeTemplate.isTreeExpanded;
+		this.diagram.click = () => this.diagramClicked.emit();
 		this.diagram.model = this.model;
 		this.diagramAvailable = true;
 		this.overrideMouseWheel();
 		this.overviewTemplate();
 		this.diagramListeners();
 		this.overrideDoubleClick();
-		this.diagramExtras();
+		// this.diagramExtras();
 		this.diagram.zoomToFit();
 		if (this.diagram.initialAutoScale === Diagram.Uniform) {
 			this.isGraphZoomedToFit = true;
