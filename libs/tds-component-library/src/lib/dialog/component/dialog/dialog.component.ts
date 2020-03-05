@@ -125,6 +125,7 @@ export class DialogComponent implements OnInit, OnDestroy {
 	@HostListener('document:click', ['$event'])
 	public onClicker(event: any): void {
 		if (
+			event.target.tagName === 'SELECT' ||
 			event.target.tagName === 'CLR-ICON' ||
 			event.target.parentNode.parentNode.parentNode.tagName === 'KENDO-DROPDOWNLIST' ||
 			event.target.parentNode.parentNode.tagName === 'KENDO-DROPDOWNLIST' ||
