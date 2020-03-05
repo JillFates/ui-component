@@ -266,12 +266,11 @@ export class DiagramLayoutComponent implements OnChanges, OnInit, AfterViewInit,
 		// extraDiagramProperties overrides the default ones
 		const diagramProperties = {
 			...this.defaultDiagramProperties,
-			...layoutTemplates
-			...extraDiagramProperties,
+			...layoutTemplates,
+			...extraDiagramProperties
 		};
 
 		this.diagram.setProperties(diagramProperties);
-		console.log('Setting properties 25....');
 
 		this.diagram.commit(d => {
 			// on allow zoom enable the mouse wheel behavior
@@ -809,28 +808,28 @@ export class DiagramLayoutComponent implements OnChanges, OnInit, AfterViewInit,
 	 * Zoom in on the diagram
 	 **/
 	zoomIn(): void {
-		this.diagram.commandHandler.increaseZoom(1.2);
-		const input = new InputEvent();
-		input.control = true;
-		if (this.isGraphZoomedToFit && this.diagram.scale < HIGH_SCALE) {
-			this.diagram.scale = HIGH_SCALE;
-			this.isGraphZoomedToFit = false;
-		}
-		this.setNodeTemplateByScale(this.diagram.scale, input);
+			this.diagram.commandHandler.increaseZoom(1.2);
+			const input = new InputEvent();
+			input.control = true;
+			if (this.isGraphZoomedToFit && this.diagram.scale < HIGH_SCALE) {
+				this.diagram.scale = HIGH_SCALE;
+				this.isGraphZoomedToFit = false;
+			}
+			this.setNodeTemplateByScale(this.diagram.scale, input);
 	}
 
 	/**
 	 * Zoom out on the diagram
 	 **/
 	zoomOut(): void {
-		this.diagram.commandHandler.decreaseZoom(0.8);
-		const input = new InputEvent();
-		input.control = true;
-		if (this.isGraphZoomedToFit && this.diagram.scale <= LOW_SCALE) {
-			this.diagram.scale = MEDIUM_SCALE;
-			this.isGraphZoomedToFit = false;
-		}
-		this.setNodeTemplateByScale(this.diagram.scale, input);
+			this.diagram.commandHandler.decreaseZoom(0.8);
+			const input = new InputEvent();
+			input.control = true;
+			if (this.isGraphZoomedToFit && this.diagram.scale <= LOW_SCALE) {
+				this.diagram.scale = MEDIUM_SCALE;
+				this.isGraphZoomedToFit = false;
+			}
+			this.setNodeTemplateByScale(this.diagram.scale, input);
 	}
 
 	/**
