@@ -1,5 +1,4 @@
 import { PreventEscDirective } from './dialog/directive/prevent-esc.directive';
-import { DialogDropdownComponent } from './dialog/component/dialog-dropdown/dialog-dropdown.component';
 // Angular
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
@@ -69,7 +68,6 @@ import { GridContextMenuFixedPositionDirective } from './grid-context-menu-fixed
 		DynamicHostComponent,
 		DialogConfirmComponent,
 		DialogNotifyComponent,
-		DialogDropdownComponent,
 		// Directive
 		DynamicHostDirective,
 		DraggableDirective,
@@ -95,13 +93,12 @@ import { GridContextMenuFixedPositionDirective } from './grid-context-menu-fixed
 		DynamicHostComponent,
 		DialogConfirmComponent,
 		DialogNotifyComponent,
-		DialogDropdownComponent,
 		// Directive
 		DynamicHostDirective,
 		DraggableDirective,
 		PreventEscDirective,
 		GridContextMenuFixedPositionDirective,
 	],
-	entryComponents: [DialogConfirmComponent, DialogNotifyComponent, DialogDropdownComponent],
+	entryComponents: [DialogConfirmComponent, DialogNotifyComponent],
 })
 export class TdsComponentLibraryModule {}

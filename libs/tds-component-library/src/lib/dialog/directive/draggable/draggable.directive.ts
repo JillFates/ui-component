@@ -1,7 +1,7 @@
-import {Directive, Input, ElementRef, HostListener, OnInit} from '@angular/core';
+import { Directive, Input, ElementRef, HostListener, OnInit } from '@angular/core';
 
 @Directive({
-	selector: '[tdsDraggableDialog]'
+	selector: '[tdsDraggableDialog]',
 })
 export class DraggableDirective implements OnInit {
 	private topStart: number;
@@ -10,8 +10,7 @@ export class DraggableDirective implements OnInit {
 	private md: boolean;
 	private _handle: HTMLElement;
 
-	constructor(public element: ElementRef) {
-	}
+	constructor(public element: ElementRef) {}
 
 	/**
 	 * Attach the CSS classes
@@ -54,8 +53,8 @@ export class DraggableDirective implements OnInit {
 	@HostListener('document:mousemove', ['$event'])
 	onMouseMove(event: MouseEvent): void {
 		if (this.md && this._allowDrag) {
-			this.element.nativeElement.style.top = (event.clientY - this.topStart) + 'px';
-			this.element.nativeElement.style.left = (event.clientX - this.leftStart) + 'px';
+			this.element.nativeElement.style.top = event.clientY - this.topStart + 'px';
+			this.element.nativeElement.style.left = event.clientX - this.leftStart + 'px';
 		}
 	}
 
@@ -96,8 +95,8 @@ export class DraggableDirective implements OnInit {
 	@HostListener('document:touchmove', ['$event'])
 	onTouchMove(event: TouchEvent): void {
 		if (this.md && this._allowDrag) {
-			this.element.nativeElement.style.top = (event.changedTouches[0].clientY - this.topStart) + 'px';
-			this.element.nativeElement.style.left = (event.changedTouches[0].clientX - this.leftStart) + 'px';
+			this.element.nativeElement.style.top = event.changedTouches[0].clientY - this.topStart + 'px';
+			this.element.nativeElement.style.left = event.changedTouches[0].clientX - this.leftStart + 'px';
 		}
 		event.stopPropagation();
 	}
@@ -108,8 +107,10 @@ export class DraggableDirective implements OnInit {
 		if (this._allowDrag) {
 			this.element.nativeElement.className += ' cursor-draggable';
 		} else {
-			this.element.nativeElement.className = this.element.nativeElement.className
-				.replace(' cursor-draggable', '');
+			this.element.nativeElement.className = this.element.nativeElement.className.replace(
+				' cursor-draggable',
+				''
+			);
 		}
 	}
 
