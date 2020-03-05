@@ -1,12 +1,7 @@
-<div tdsDraggableDialog
-     [draggable]="modalConfigurationModel.draggable"
-     [draggableHandle]="dialogHeader"
-     [ngClass]="{
+<div tdsDraggableDialog [draggable]="modalConfigurationModel.draggable" [draggableHandle]="dialogHeader" [ngClass]="{
         'full-screen-dialog': fullScreen
-     }"
-    class="modal dynamic-host-component">
-    <div class="modal-dialog {{modalConfigurationModel.modalCustomClass}}" #dialogContainer
-         [ngClass]="{
+     }" class="modal dynamic-host-component">
+    <div class="modal-dialog {{modalConfigurationModel.modalCustomClass}}" #dialogContainer [ngClass]="{
             'modal-sm': modalConfigurationModel.modalSize === modalSize.SM,
             'modal-lg': modalConfigurationModel.modalSize === modalSize.LG,
             'modal-xl': modalConfigurationModel.modalSize === modalSize.XL,
@@ -15,48 +10,40 @@
             'resize-enabled': modalConfigurationModel.resizable,
             'resize-disabled': !modalConfigurationModel.resizable,
             'full-screen-dialog': fullScreen
-         }"
-         role="dialog" aria-hidden="true">
-        <div class="modal-content"
-             #dialogContent
-             [ngClass]="{
+         }" role="dialog" aria-hidden="true">
+        <div class="modal-content" #dialogContent [ngClass]="{
                 'full-screen-dialog': fullScreen
-             }"
-             mwlResizable
-             [enableGhostResize]="modalConfigurationModel.resizable"
-             [resizeEdges]="{ bottom: true, right: true, top: true, left: true }"
-             (resizeEnd)="onResizeEnd($event)"
-        >
-            <div class="modal-header" #dialogHeader [ngClass]="{  'modal-no-action-buttons': !showLeftActionButtonsPanel}">
+             }" mwlResizable [enableGhostResize]="modalConfigurationModel.resizable"
+            [resizeEdges]="{ bottom: true, right: true, top: true, left: true }" (resizeEnd)="onResizeEnd($event)">
+            <div class="modal-header" #dialogHeader
+                [ngClass]="{  'modal-no-action-buttons': !showLeftActionButtonsPanel}">
                 <button aria-label="Close" class="close" type="button">
                     <clr-icon aria-hidden="true" shape="close" (click)="onDismiss()"></clr-icon>
                 </button>
                 <ng-template [ngIf]="showFullScreen">
-                    <button aria-label="Minimize" type="button"
-                            class="btn btn-link minimize-btn"
-                            *ngIf="fullScreen"
-                            (click)="minimizeDialog($event)">
+                    <button aria-label="Minimize" type="button" class="btn btn-link minimize-btn" *ngIf="fullScreen"
+                        (click)="minimizeDialog($event)">
                         <fa-icon [icon]="faCompressArrowsAlt"></fa-icon>
                     </button>
-                    <button aria-label="Maximize" type="button"
-                            *ngIf="!fullScreen"
-                            class="btn btn-link maximize-btn"
-                            (click)="maximizeDialog($event)">
+                    <button aria-label="Maximize" type="button" *ngIf="!fullScreen" class="btn btn-link maximize-btn"
+                        (click)="maximizeDialog($event)">
                         <fa-icon [icon]="faExpandArrowsAlt"></fa-icon>
                     </button>
                 </ng-template>
-                <h3 class="modal-title" *ngIf="modalConfigurationModel.title">{{currentDialogComponentInstance.getTitle()}}</h3>
+                <h3 class="modal-title" *ngIf="modalConfigurationModel.title">
+                    {{currentDialogComponentInstance.getTitle()}}</h3>
             </div>
             <div class="modal-body" [ngClass]="{  'modal-no-action-buttons': !showLeftActionButtonsPanel}">
                 <ng-template tdsDynamicDialog></ng-template>
             </div>
-            <div class="modal-footer" *ngIf="showContextButtons " [ngClass]="{  'modal-no-action-buttons': !showLeftActionButtonsPanel}">
+            <div class="modal-footer" *ngIf="showContextButtons "
+                [ngClass]="{  'modal-no-action-buttons': !showLeftActionButtonsPanel}">
                 <ng-template ngFor let-contextButton [ngForOf]="currentDialogComponentInstance.buttons">
                     <tds-button
-                            *ngIf="((contextButton.show !== undefined)? contextButton.show() : true) && contextButton.type === dialogButtonType.CONTEXT"
-                            icon="{{contextButton.icon}}"
-                            [disabled]="contextButton.disabled !== undefined && contextButton.disabled()"
-                            (click)="contextButton.action()">
+                        *ngIf="((contextButton.show !== undefined)? contextButton.show() : true) && contextButton.type === dialogButtonType.CONTEXT"
+                        icon="{{contextButton.icon}}"
+                        [disabled]="contextButton.disabled !== undefined && contextButton.disabled()"
+                        (click)="contextButton.action()">
                         {{contextButton.text}}
                     </tds-button>
                 </ng-template>
@@ -64,12 +51,11 @@
             <div class="modal-sidenav" *ngIf="showActionButtons">
                 <ng-template ngFor let-actionButton [ngForOf]="currentDialogComponentInstance.buttons">
                     <tds-button
-                            *ngIf="((actionButton.show !== undefined)? actionButton.show() : true) && actionButton.type === dialogButtonType.ACTION"
-                            icon="{{actionButton.icon}}"
-                            [disabled]="(actionButton.disabled !== undefined && actionButton.disabled())"
-                            [flat]="true"
-                            (click)="actionButton.action()"
-                            [ngClass]="{'active-button': actionButton.active !== undefined && actionButton.active()}">
+                        *ngIf="((actionButton.show !== undefined)? actionButton.show() : true) && actionButton.type === dialogButtonType.ACTION"
+                        icon="{{actionButton.icon}}"
+                        [disabled]="(actionButton.disabled !== undefined && actionButton.disabled())" [flat]="true"
+                        (click)="actionButton.action()"
+                        [ngClass]="{'active-button': actionButton.active !== undefined && actionButton.active()}">
                     </tds-button>
                 </ng-template>
             </div>

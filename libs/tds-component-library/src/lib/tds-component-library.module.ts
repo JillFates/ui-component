@@ -1,3 +1,4 @@
+import { PreventEscDirective } from './dialog/directive/prevent-esc.directive';
 // Angular
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
@@ -24,7 +25,7 @@ import { GridRowDropdownComponent } from './grid-row-dropdown/grid-row-dropdown.
 import { GridComponent } from './grid/grid.component';
 import { DialogComponent } from './dialog/component/dialog/dialog.component';
 import { DialogConfirmComponent } from './dialog/component/dialog-confirm/dialog-confirm.component';
-import {DialogNotifyComponent} from './dialog/component/dialog-notify/dialog-notify.component';
+import { DialogNotifyComponent } from './dialog/component/dialog-notify/dialog-notify.component';
 import { GridFilterInputComponent } from './filter-input/grid-filter-input.component';
 import { GridClearAllFiltersButtonComponent } from './grid-clear-all-filters-button/grid-clear-all-filters-button.component';
 // Directive
@@ -70,6 +71,7 @@ import { GridContextMenuFixedPositionDirective } from './grid-context-menu-fixed
 		// Directive
 		DynamicHostDirective,
 		DraggableDirective,
+		PreventEscDirective,
 		GridContextMenuFixedPositionDirective,
 	],
 	exports: [
@@ -94,12 +96,9 @@ import { GridContextMenuFixedPositionDirective } from './grid-context-menu-fixed
 		// Directive
 		DynamicHostDirective,
 		DraggableDirective,
-		GridContextMenuFixedPositionDirective
+		PreventEscDirective,
+		GridContextMenuFixedPositionDirective,
 	],
-	entryComponents: [
-		DialogConfirmComponent,
-		DialogNotifyComponent,
-	]
+	entryComponents: [DialogConfirmComponent, DialogNotifyComponent],
 })
-export class TdsComponentLibraryModule {
-}
+export class TdsComponentLibraryModule {}
