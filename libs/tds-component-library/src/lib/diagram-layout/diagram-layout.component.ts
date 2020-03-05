@@ -4,7 +4,7 @@ import {
 	ElementRef,
 	EventEmitter, HostListener,
 	Input,
-	OnChanges, OnDestroy,
+	OnChanges, OnDestroy, OnInit,
 	Output,
 	Renderer2,
 	SimpleChanges,
@@ -31,7 +31,9 @@ import {
 	Tool,
 	GraphObject,
 	HTMLInfo,
-	Size, TreeLayout
+	Size,
+	ToolManager,
+	TreeLayout
 } from 'gojs';
 import {FA_ICONS} from '../icons-constant/fontawesome-icons';
 import {of, ReplaySubject} from 'rxjs';
@@ -59,7 +61,7 @@ const	WAIT_TIME = 1000;
 	templateUrl: './diagram-layout.component.html',
 	styleUrls: ['./diagram-layout.component.scss']
 })
-export class DiagramLayoutComponent implements OnChanges, AfterViewInit, OnDestroy {
+export class DiagramLayoutComponent implements OnChanges, OnInit, AfterViewInit, OnDestroy {
 	@Input() data: IDiagramData;
 	@Input() layout: Layout;
 	@Input() nodeTemplate: Node;
@@ -68,6 +70,8 @@ export class DiagramLayoutComponent implements OnChanges, AfterViewInit, OnDestr
 	@Input() mediumScaleTemplate: Node;
 	@Input() selectionTemplate: Adornment;
 	@Input() icons: IconModel;
+	@Input() isExpandable = false;
+	@Input() initialExpandLevel = 2;
 	@Input() currentUser: any;
 	@Input() contextMenuOptions: ITdsContextMenuOption;
 	@Input() hideOverview = false;
@@ -102,10 +106,24 @@ export class DiagramLayoutComponent implements OnChanges, AfterViewInit, OnDestr
 	expand: boolean;
 	showCollapseBtn = false;
 	isGraphZoomedToFit: boolean;
+	defaultDiagramProperties: any;
 
 	constructor(private renderer: Renderer2) {
 		Diagram.licenseKey = GOJS_LICENSE_KEY;
 		console.log('GoJS License Applied: ', Diagram.licenseKey.substring(0, 10));
+	}
+
+	/**
+	 * Set the default diagram properties
+	 */
+	ngOnInit(): void {
+		this.defaultDiagramProperties = {
+			contentAlignment: Spot.Center,
+			hasHorizontalScrollbar: false,
+			hasVerticalScrollbar: false,
+			initialDocumentSpot: Spot.Center,
+			initialViewportSpot: Spot.Center
+		};
 	}
 
 	/**
@@ -235,34 +253,34 @@ export class DiagramLayoutComponent implements OnChanges, AfterViewInit, OnDestr
 	 **/
 	generateDiagram(): void {
 		if (!this.model) { return; }
-		const extras = this.data.extras;
+		const extraDiagramProperties = this.data.extras;
 		this.diagram.model.nodeDataArray = [];
 
-		const defaultProperties = {
-			contentAlignment: Spot.Center,
-			hasHorizontalScrollbar: false,
-			hasVerticalScrollbar: false,
-			initialDocumentSpot: Spot.Center,
-			initialViewportSpot: Spot.Center,
-			isExpandable: false,
+		const layoutTemplates = {
 			layout: this.setLayout(),
 			linkTemplate: this.setLinkTemplate(),
 			nodeTemplate: this.setNodeTemplate()
 		};
-		const properties = {...defaultProperties, ...extras};
-		// {
-		// initialAutoScale: extras && extras.initialAutoScale ? extras.initialAutoScale : Spot.Center,
-		// allowZoom: extras && extras.allowZoom ? extras.allowZoom : false,
-		// autoScale: extras && extras.autoScale ? extras.autoScale : Diagram.UniformToFill,
-		// }
-		this.diagram.setProperties(properties);
-		console.log('Setting properties....');
 
-		// this.diagram.commit(d => {
-		// 	this.showCollapseBtn = (extras && extras.isExpandable) || !this.data.nodeTemplate.isTreeExpanded;
-		// 	this.diagram.click = () => this.diagramClicked.emit();
-		// });
-		this.showCollapseBtn = (extras && extras.isExpandable) || !this.data.nodeTemplate.isTreeExpanded;
+		// get the properties to be used by the diagram
+		// extraDiagramProperties overrides the default ones
+		const diagramProperties = {
+			...this.defaultDiagramProperties,
+			...layoutTemplates
+			...extraDiagramProperties,
+		};
+
+		this.diagram.setProperties(diagramProperties);
+		console.log('Setting properties 25....');
+
+		this.diagram.commit(d => {
+			// on allow zoom enable the mouse wheel behavior
+			if (extraDiagramProperties.allowZoom) {
+				d.toolManager.mouseWheelBehavior = ToolManager.WheelZoom;
+			}
+		});
+
+		this.showCollapseBtn = this.isExpandable || !this.data.nodeTemplate.isTreeExpanded;
 		this.diagram.click = () => this.diagramClicked.emit();
 		this.diagram.model = this.model;
 		this.diagramAvailable = true;
@@ -270,24 +288,10 @@ export class DiagramLayoutComponent implements OnChanges, AfterViewInit, OnDestr
 		this.overviewTemplate();
 		this.diagramListeners();
 		this.overrideDoubleClick();
-		// this.diagramExtras();
+
 		this.diagram.zoomToFit();
 		if (this.diagram.initialAutoScale === Diagram.Uniform) {
 			this.isGraphZoomedToFit = true;
-		}
-	}
-
-	/**
-	 * additional diagram configurations
-	 */
-	diagramExtras(): void {
-		const opts = this.data.extras && this.data.extras.diagramOpts;
-		if (opts) {
-			this.diagram.commit(d => Object.keys(opts)
-				.forEach(k => {
-					d[k] = opts[k];
-				})
-			);
 		}
 	}
 
@@ -325,9 +329,9 @@ export class DiagramLayoutComponent implements OnChanges, AfterViewInit, OnDestr
 	 */
 	diagramListeners(): void {
 		this.diagram.addDiagramListener(DiagramEvent.INITIAL_LAYOUT_COMPLETED, e => {
-			if (this.data && ((this.data.extras && this.data.extras.isExpandable) || (!e.diagram.nodeTemplate['isTreeExpanded']))
+			if (this.data && (this.isExpandable || (!e.diagram.nodeTemplate['isTreeExpanded']))
 				&& e.diagram.layout instanceof TreeLayout) {
-				e.diagram.findTreeRoots().each(r => r.expandTree(this.data.extras.initialExpandLevel || 2));
+				e.diagram.findTreeRoots().each(r => r.expandTree(this.initialExpandLevel));
 			}
 		});
 		this.diagram.addDiagramListener(DiagramEvent.ANIMATION_FINISHED, () => {
