@@ -11,7 +11,7 @@
             'resize-disabled': !modalConfigurationModel.resizable,
             'full-screen-dialog': fullScreen
          }" role="dialog" aria-hidden="true">
-        <div class="modal-content" tdsPreventEsc #dialogContent [ngClass]="{
+        <div class="modal-content" #dialogContent [ngClass]="{
                 'full-screen-dialog': fullScreen
              }" mwlResizable [enableGhostResize]="modalConfigurationModel.resizable"
             [resizeEdges]="{ bottom: true, right: true, top: true, left: true }" (resizeEnd)="onResizeEnd($event)">

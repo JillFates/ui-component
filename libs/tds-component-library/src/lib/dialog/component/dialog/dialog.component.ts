@@ -23,17 +23,17 @@ export class DialogComponent implements OnInit, OnDestroy {
 	// Contains a list of every available dialog open as an Stack
 	public dynamicDialogList: DynamicHostModel[] = <any>[];
 	public dropdownActivated = false;
-
+	private arrClicked: string[] = [];
 	dropdownSub: Subscription;
-
-	ngOnDestroy(): void {
-		if (this.dropdownSub) {
-			this.dropdownSub.unsubscribe();
-		}
-	}
 
 	constructor(private eventService: EventService, private dialogService: DialogService) {
 		this.registerDialog();
+	}
+
+	ngOnInit(): void {
+		this.dropdownSub = this.dialogService.activatedDropdown.subscribe(didActivate => {
+			this.dropdownActivated = didActivate;
+		});
 	}
 
 	/**
@@ -120,6 +120,26 @@ export class DialogComponent implements OnInit, OnDestroy {
 	}
 
 	/**
+	 * Capture click event
+	 */
+	@HostListener('document:click', ['$event'])
+	public onClicker(event: any): void {
+		if (
+			event.target.tagName === 'CLR-ICON' ||
+			event.target.parentNode.parentNode.parentNode.tagName === 'KENDO-DROPDOWNLIST' ||
+			event.target.parentNode.parentNode.tagName === 'KENDO-DROPDOWNLIST' ||
+			event.target.parentNode.parentNode.tagName === 'KENDO-DATEPICKER' ||
+			event.target.parentNode.parentNode.tagName === 'KENDO-TIMEPICKER'
+		) {
+			this.arrClicked.push(event.target.tagName);
+			this.dialogService.activatedDropdown.next(true);
+		} else {
+			this.arrClicked.pop();
+			this.dialogService.activatedDropdown.next(false);
+		}
+	}
+
+	/**
 	 * Capture when the Escape happens, only for the latest element created
 	 * @param event
 	 */
@@ -130,8 +150,10 @@ export class DialogComponent implements OnInit, OnDestroy {
 					return innerDynamicHostModel.dynamicHostComponent === this.dynamicHostList.last;
 				}
 			);
-			if (dynamicHostModel) {
-				if (!this.dropdownActivated) {
+			if (this.arrClicked.length !== 0) {
+				this.arrClicked.pop();
+			} else {
+				if (dynamicHostModel) {
 					const currentDialogComponentInstance = <Dialog>(
 						dynamicHostModel.dynamicHostComponent.currentDialogComponentInstance
 					);
@@ -153,9 +175,10 @@ export class DialogComponent implements OnInit, OnDestroy {
 		});
 	}
 
-	ngOnInit(): void {
-		this.dropdownSub = this.dialogService.activatedDropdown.subscribe(didActivate => {
-			this.dropdownActivated = didActivate;
-		});
+	ngOnDestroy(): void {
+		this.arrClicked = [];
+		if (this.dropdownSub) {
+			this.dropdownSub.unsubscribe();
+		}
 	}
 }

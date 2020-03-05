@@ -4,6 +4,7 @@ import { NgModule } from '@angular/core';
 import { SharedModule } from '../../shared/shared.module';
 import { ClarityModule } from '@clr/angular';
 import { DialogDropdownOverviewComponent } from './component/overview/dialog-dropdown-overview.component';
+
 @NgModule({
 	imports: [SharedModule, ClarityModule, DialogDropdownRoutingModule],
 	providers: [],

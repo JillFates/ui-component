@@ -1,7 +1,8 @@
 <tds-dialog></tds-dialog>
 <div class="button-overview-component">
-	<h2>Dialog Dropdown Component</h2>
-	<p>Based on the <a target="_blank" href="https://v2.clarity.design/modals">Clarity Modals</a> with extensible Action buttons and configurable options.</p>
+	<h2>Dialog Dropdown Escape Implementation</h2>
+	<p>Based on the <a target="_blank" href="https://v2.clarity.design/modals">Clarity Modals</a> with extensible Action
+		buttons and configurable options.</p>
 	<div class="clr-row">
 		<div class="clr-col-12">
 			<h3>Examples</h3>
@@ -18,18 +19,47 @@
 			<h3>Usage Examples</h3>
 		</div>
 		<div class="clr-col-12">
-			<tds-card
-					title="Typescript implementation"
-					code='
-this.dialogService.freezeEscape({
-	title: "Abandon Changes?",
-	content: "You have unsaved changes. Click Confirm to abandon your changes"
-}).subscribe((data: any) => {
-	console.log("Confirmation Action was: ", data);
-});
-'
-			>
+			<tds-card title="Typescript implementation" code="
+this.dialogService
+	.freezeEscape(
+		'Trying out?',
+		'Try dropping down, and then use the esc key. This dialog box will not dismiss. '
+	)
+	.subscribe((result: any) => {
+		console.log('Confirmation Action was: ', result);
+	});
+">
 				<p>freezeEscape is an specific method available from the DialogService</p>
+			</tds-card>
+		</div>
+	</div>
+
+	<div class="clr-row">
+		<div class="clr-col-12">
+			<h3>Extending this implementation</h3>
+		</div>
+		<div class="clr-col-12">
+			<tds-card title="Typescript implementation" code="
+			@HostListener(' document:click', ['$event']) 
+			public onClicker(event: any): void { 
+				if (
+					event.target.tagName==='CLR-ICON' ||
+					event.target.parentNode.parentNode.parentNode.tagName==='KENDO-DROPDOWNLIST' ||
+					event.target.parentNode.parentNode.tagName==='KENDO-DROPDOWNLIST' ||
+					event.target.parentNode.parentNode.tagName==='KENDO-DATEPICKER' ||
+					event.target.parentNode.parentNode.tagName==='KENDO-TIMEPICKER' 
+				) {
+					this.arrClicked.push(event.target.tagName); 
+					this.dialogService.activatedDropdown.next(true); 
+				} else {
+					this.arrClicked.pop(); 
+					this.dialogService.activatedDropdown.next(false); 
+				} 
+			} ">
+				<p>You might come to a point where you would like to implement for example a custom dropdown, that
+					prevents the dismissal of the dialog box, when the dropdown is active. All you need to do is to add
+					the listener to the target dropdown activator (i.e. it could be a button for example). And then find
+					parent node tag name that matches the target component. </p>
 			</tds-card>
 		</div>
 	</div>

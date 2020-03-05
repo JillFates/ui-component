@@ -7,7 +7,7 @@ import { DialogConfirmAction } from '../../model/dialog.model';
 	templateUrl: './dialog-dropdown.component.html',
 })
 export class DialogDropdownComponent extends Dialog {
-	public source: Array<string> = ['Albania', 'Andorra', 'Armenia', 'Austria', 'Azerbaijan'];
+	public listItems: Array<string> = ['Albania', 'Andorra', 'Armenia', 'Austria', 'Azerbaijan'];
 	public data: Array<string>;
 
 	/**
