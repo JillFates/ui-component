@@ -14,6 +14,7 @@ import {
 	faStream, faSyncAlt, faTabletAlt, faUndo, faUser, faWindowMaximize, faWindowMinimize
 } from '@fortawesome/free-solid-svg-icons';
 import {faAdn} from '@fortawesome/free-brands-svg-icons';
+import {faCheckSquare, faCircleNotch, faHourglassStart, faSquare, faThumbsUp} from '@fortawesome/pro-solid-svg-icons';
 
 @NgModule({
 	imports: [FontAwesomeModule],
@@ -64,7 +65,12 @@ export class TdsFontawesomeModule {
 			faTabletAlt,
 			faQuestion,
 			faAdn,
-			faBox
+			faBox,
+			faCircleNotch,
+			faThumbsUp,
+			faHourglassStart,
+			faCheckSquare,
+			faSquare
 		);
 	}
 }
