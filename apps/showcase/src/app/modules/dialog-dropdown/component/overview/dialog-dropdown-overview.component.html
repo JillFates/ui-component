@@ -20,14 +20,19 @@
 		</div>
 		<div class="clr-col-12">
 			<tds-card title="Typescript implementation" code="
-this.dialogService
-	.freezeEscape(
-		'Trying out?',
-		'Try dropping down, and then use the esc key. This dialog box will not dismiss. '
-	)
-	.subscribe((result: any) => {
-		console.log('Confirmation Action was: ', result);
-	});
+			this.dialogService
+			.open({
+				componentFactoryResolver: this.componentFactoryResolver,
+				component: DropdownEscapeComponent,
+				data: null,
+				modalConfiguration: {
+					title: 'Trying out?',
+					modalSize: ModalSize.SM,
+				},
+			})
+			.subscribe((data: any) => {
+				console.log('Dropdown Escape Dialog was closed successfully: ', data);
+			});			
 ">
 				<p>freezeEscape is an specific method available from the DialogService</p>
 			</tds-card>

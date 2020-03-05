@@ -1,4 +1,6 @@
-import { Component } from '@angular/core';
+import { DropdownEscapeComponent } from './../dropdown-escape/dropdown-escape.component';
+import { ModalSize } from './../../../../../../../../libs/tds-component-library/src/lib/dialog/model/dialog.model';
+import { Component, ComponentFactoryResolver } from '@angular/core';
 import { DialogService } from '../../../../../../../../libs/tds-component-library/src/lib/dialog/service/dialog.service';
 
 @Component({
@@ -6,7 +8,7 @@ import { DialogService } from '../../../../../../../../libs/tds-component-librar
 	templateUrl: './dialog-dropdown-overview.component.html',
 })
 export class DialogDropdownOverviewComponent {
-	constructor(private dialogService: DialogService) {
+	constructor(private dialogService: DialogService, private componentFactoryResolver: ComponentFactoryResolver) {
 		//
 	}
 
@@ -15,12 +17,17 @@ export class DialogDropdownOverviewComponent {
 	 */
 	public openDialogDropdown(): void {
 		this.dialogService
-			.freezeEscape(
-				'Trying out?',
-				'Try dropping down, and then use the esc key. This dialog box will not dismiss. '
-			)
-			.subscribe((result: any) => {
-				console.log('Confirmation Action was: ', result);
+			.open({
+				componentFactoryResolver: this.componentFactoryResolver,
+				component: DropdownEscapeComponent,
+				data: null,
+				modalConfiguration: {
+					title: 'Trying out?',
+					modalSize: ModalSize.SM,
+				},
+			})
+			.subscribe((data: any) => {
+				console.log('Dropdown Escape Dialog was closed successfully: ', data);
 			});
 	}
 }
