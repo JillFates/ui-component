@@ -120,23 +120,62 @@ export class DialogComponent implements OnInit, OnDestroy {
 	}
 
 	/**
+	 * Function that does a null check and undefined check
+	 */
+	private nullCheck(objectNode: any[]): boolean {
+		let truthy = true;
+		for (let i = 0; i < objectNode.length; ++i) {
+			if (!(objectNode[i] !== null || objectNode[i] !== undefined)) {
+				truthy = false;
+				break;
+			}
+		}
+		return truthy;
+	}
+
+	/**
+	 * Function that pushes to the string array of click events
+	 */
+	private pushToArray(tagnamed: string): void {
+		this.arrClicked.push(tagnamed);
+		this.dialogService.activatedDropdown.next(true);
+	}
+
+	/**
+	 * Function that pop the string array of click events
+	 */
+	private popFromArray(): void {
+		this.arrClicked.pop();
+		this.dialogService.activatedDropdown.next(false);
+	}
+
+	/**
 	 * Capture click event
 	 */
 	@HostListener('document:click', ['$event'])
 	public onClicker(event: any): void {
-		if (
-			event.target.tagName === 'SELECT' ||
-			event.target.tagName === 'CLR-ICON' ||
-			event.target.parentNode.parentNode.parentNode.tagName === 'KENDO-DROPDOWNLIST' ||
-			event.target.parentNode.parentNode.tagName === 'KENDO-DROPDOWNLIST' ||
-			event.target.parentNode.parentNode.tagName === 'KENDO-DATEPICKER' ||
-			event.target.parentNode.parentNode.tagName === 'KENDO-TIMEPICKER'
-		) {
-			this.arrClicked.push(event.target.tagName);
-			this.dialogService.activatedDropdown.next(true);
-		} else {
-			this.arrClicked.pop();
-			this.dialogService.activatedDropdown.next(false);
+		const targetNodes1 = [
+			event.target,
+			event.target.tagName,
+			event.target.parentNode,
+			event.target.parentNode.parentNode,
+			event.target.parentNode.parentNode.parentNode,
+			event.target.parentNode.parentNode.parentNode.tagName,
+		];
+
+		if (this.nullCheck(targetNodes1)) {
+			if (
+				event.target.tagName === 'SELECT' ||
+				event.target.tagName === 'CLR-ICON' ||
+				event.target.parentNode.parentNode.parentNode.tagName === 'KENDO-DROPDOWNLIST' ||
+				event.target.parentNode.parentNode.tagName === 'KENDO-DROPDOWNLIST' ||
+				event.target.parentNode.parentNode.tagName === 'KENDO-DATEPICKER' ||
+				event.target.parentNode.parentNode.tagName === 'KENDO-TIMEPICKER'
+			) {
+				this.pushToArray(event.target.tagName);
+			} else {
+				this.popFromArray();
+			}
 		}
 	}
 
