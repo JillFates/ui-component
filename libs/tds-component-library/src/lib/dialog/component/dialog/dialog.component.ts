@@ -10,7 +10,6 @@ import { DialogEventType } from '../../model/dialog.model';
 import { Dialog } from '../../model/dialog.interface';
 import { DynamicHostModel } from '../../model/dynamic-host.model';
 import { Subscription } from 'rxjs';
-import forEach from 'ramda/es/forEach';
 
 @Component({
 	selector: 'tds-dialog',
