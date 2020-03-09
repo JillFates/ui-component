@@ -24,6 +24,7 @@ export class ButtonComponent {
 	@Input() title: string;
 	@Input() id: string;
 	@Input() tabindex: string;
+	@Input() tooltipText = 'Test';
 
 	constructor() {
 		if (!this.id) {
