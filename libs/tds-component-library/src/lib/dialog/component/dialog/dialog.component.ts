@@ -154,27 +154,29 @@ export class DialogComponent implements OnInit, OnDestroy {
 	 */
 	@HostListener('document:click', ['$event'])
 	public onClicker(event: any): void {
-		const targetNodes1 = [
-			event.target,
-			event.target.tagName,
-			event.target.parentNode,
-			event.target.parentNode.parentNode,
-			event.target.parentNode.parentNode.parentNode,
-			event.target.parentNode.parentNode.parentNode.tagName,
-		];
+		let isDone = false;
+		if (event.target) {
+			if (event.target.tagName) {
+				if (event.target.tagName === 'SELECT' || event.target.tagName === 'CLR-ICON') {
+					this.pushToArray(event.target.tagName);
+					this.dropdownActivated = true;
+					isDone = true;
+				}
+			}
 
-		if (this.nullCheck(targetNodes1)) {
-			if (
-				event.target.tagName === 'SELECT' ||
-				event.target.tagName === 'CLR-ICON' ||
-				event.target.parentNode.parentNode.parentNode.tagName === 'KENDO-DROPDOWNLIST' ||
-				event.target.parentNode.parentNode.tagName === 'KENDO-DROPDOWNLIST' ||
-				event.target.parentNode.parentNode.tagName === 'KENDO-DATEPICKER' ||
-				event.target.parentNode.parentNode.tagName === 'KENDO-TIMEPICKER'
-			) {
-				this.pushToArray(event.target.tagName);
-			} else {
-				this.popFromArray();
+			if (isDone === false) {
+				if (event.target.parentNode) {
+					if (event.target.parentNode.parentNode) {
+						if (event.target.parentNode.parentNode.tagName) {
+							if (event.target.parentNode.parentNode.tagName === 'KENDO-DROPDOWNLIST') {
+								this.pushToArray(event.target.tagName);
+								this.dropdownActivated = true;
+							} else {
+								this.popFromArray();
+							}
+						}
+					}
+				}
 			}
 		}
 	}
@@ -190,15 +192,16 @@ export class DialogComponent implements OnInit, OnDestroy {
 					return innerDynamicHostModel.dynamicHostComponent === this.dynamicHostList.last;
 				}
 			);
-			if (this.arrClicked.length !== 0) {
-				this.arrClicked.pop();
-			} else {
+			if (this.dropdownActivated === false) {
 				if (dynamicHostModel) {
 					const currentDialogComponentInstance = <Dialog>(
 						dynamicHostModel.dynamicHostComponent.currentDialogComponentInstance
 					);
 					currentDialogComponentInstance.onDismiss();
 				}
+			} else {
+				this.arrClicked.pop();
+				this.dropdownActivated = false;
 			}
 		}
 	}
