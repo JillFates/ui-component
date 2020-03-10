@@ -98,9 +98,8 @@
     "unified-signatures": true,
     "variable-name": false,
     "whitespace": [
-      false,
+      true,
       "check-branch",
-      "check-decl",
       "check-operator",
       "check-separator",
       "check-type"
