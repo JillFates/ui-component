@@ -1,5 +1,5 @@
-import {ComponentFactoryResolver} from '@angular/core';
-import {Observer} from 'rxjs';
+import { ComponentFactoryResolver } from '@angular/core';
+import { Observer } from 'rxjs';
 
 export class ModalConfigurationModel {
 	public title?: string;
@@ -11,7 +11,7 @@ export class ModalConfigurationModel {
 	public fullScreen?: boolean;
 	public defaultFullScreen?: boolean;
 	// Helps to determinate default values
-	private _defaultShowBackground ? = true;
+	private _defaultShowBackground? = true;
 
 	constructor() {
 		this.showBackground = this._defaultShowBackground;
@@ -32,7 +32,6 @@ export class ModalConfigurationModel {
 	public getDefaultShowBackground?(): boolean {
 		return this._defaultShowBackground;
 	}
-
 }
 
 /**
@@ -52,12 +51,12 @@ export class DialogModel {
  */
 export enum DialogEventType {
 	OPEN = 'dialog-event-type-open',
-	CLOSE = 'dialog-event-type-close'
+	CLOSE = 'dialog-event-type-close',
 }
 
 export enum DialogExit {
 	ACCEPT = 'accept',
-	CLOSE = 'close'
+	CLOSE = 'close',
 }
 
 export enum ModalSize {
@@ -66,17 +65,17 @@ export enum ModalSize {
 	LG = 'lg',
 	XL = 'xl',
 	CONFIRM = 'confirm',
-	CUSTOM = 'custom'
+	CUSTOM = 'custom',
 }
 
 export enum DialogButtonType {
 	ACTION = 'action',
-	CONTEXT = 'context'
+	CONTEXT = 'context',
 }
 
 export enum DialogConfirmAction {
 	CONFIRM = 'confirm',
-	CANCEL = 'cancel'
+	CANCEL = 'cancel',
 }
 
 /**
@@ -86,6 +85,7 @@ export class DialogButtonModel {
 	public name?: string;
 	public text?: string;
 	public icon?: string;
+	public tooltipText?: string;
 	public type?: DialogButtonType;
 	public show?: Function;
 	public active?: Function;

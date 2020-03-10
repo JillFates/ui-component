@@ -2,7 +2,7 @@
 	[title]="title || ''" [id]="id" [tabIndex]="tabindex" [clrLoading]="btnState">
 	<a role="tooltip" aria-haspopup="true" class="tooltip tooltip-xs" style="text-decoration: none;">
 		<clr-icon *ngIf="icon" [ngClass]="iconClass" [attr.shape]="icon"></clr-icon>
-		<span class="tooltip-content">{{tooltipText}}</span>
+		<span class="tooltip-content" *ngIf="tooltipText">{{tooltipText}}</span>
 		<span class="button-label">
 			<ng-content></ng-content>
 		</span>

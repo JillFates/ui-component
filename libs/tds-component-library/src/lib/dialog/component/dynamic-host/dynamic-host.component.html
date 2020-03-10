@@ -54,7 +54,7 @@
                         *ngIf="((actionButton.show !== undefined)? actionButton.show() : true) && actionButton.type === dialogButtonType.ACTION"
                         icon="{{actionButton.icon}}"
                         [disabled]="(actionButton.disabled !== undefined && actionButton.disabled())" [flat]="true"
-                        (click)="actionButton.action()"
+                        (click)="actionButton.action()" [tooltipText]="actionButton.tooltipText"
                         [ngClass]="{'active-button': actionButton.active !== undefined && actionButton.active()}">
                     </tds-button>
                 </ng-template>
