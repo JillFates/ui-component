@@ -18,14 +18,14 @@ export class DialogTooltipComponent extends Dialog implements OnInit {
 	lastName: string;
 
 	/**
-	 * test
+	 * This will reset the form
 	 */
 	resetForm(): void {
 		this.exampleForm.reset();
 	}
 
 	/**
-	 * test
+	 * For submitting stub
 	 */
 	submit(): void {
 		// ...
@@ -45,6 +45,15 @@ export class DialogTooltipComponent extends Dialog implements OnInit {
 			action: this.onAccept.bind(this),
 		};
 
+		const trashButton: DialogButtonModel = {
+			name: 'delete',
+			icon: 'trash',
+			tooltipText: 'Trash',
+			show: () => !this.exampleForm.pristine,
+			type: DialogButtonType.ACTION,
+			action: this.onCancel.bind(this),
+		};
+
 		const cancelButton: DialogButtonModel = {
 			name: 'cancel',
 			icon: 'ban',
@@ -59,15 +68,6 @@ export class DialogTooltipComponent extends Dialog implements OnInit {
 			icon: 'close',
 			tooltipText: 'Close',
 			show: () => this.exampleForm.pristine,
-			type: DialogButtonType.ACTION,
-			action: this.onCancel.bind(this),
-		};
-
-		const trashButton: DialogButtonModel = {
-			name: 'delete',
-			icon: 'trash',
-			tooltipText: 'Trash',
-			show: () => !this.exampleForm.pristine,
 			type: DialogButtonType.ACTION,
 			action: this.onCancel.bind(this),
 		};
