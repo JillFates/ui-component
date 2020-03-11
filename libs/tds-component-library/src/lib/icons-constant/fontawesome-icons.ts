@@ -45,5 +45,6 @@ export const FA_ICONS = {
 	faLaptop: ['fas', 'laptop'],
 	faArchive: ['fas', 'archive'],
 	faAdn: ['fab', 'adn'],
-	faBox: ['fas', 'box']
+	faBox: ['fas', 'box'],
+	faFolder: ['fas', 'folder']
 };
