@@ -84,7 +84,7 @@ export class DynamicHostComponent implements OnInit {
 		const contextButtons = this.currentDialogComponentInstance.buttons.filter((button: DialogButtonModel) => {
 			return button.type === DialogButtonType.CONTEXT;
 		});
-		this.contextButtonsSize = actionButtons.length;
+		this.contextButtonsSize = contextButtons.length;
 
 		if (!actionButtons || actionButtons.length === 0) {
 			this.showLeftActionButtonsPanel = false;
