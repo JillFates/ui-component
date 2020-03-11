@@ -25,6 +25,8 @@ import {IDiagramLayoutHelper} from '../../../../../../../../libs/tds-component-l
 						<tds-lib-diagram-layout
 							[data]="data$ | async"
 							[hideExpand]="false"
+							[isExpandable]="true"
+							[initialExpandLevel]="3"
 							(expandActionDispatched)="expandActionDispatched()"></tds-lib-diagram-layout>
 					</div>
 				</tds-card>
@@ -81,12 +83,8 @@ export class DiagramLayoutOverviewComponent {
 				currentUserId: 1,
 				data: null,
 				extras: {
-					diagramOpts: {
-						initialAutoScale: Diagram.Uniform,
-						allowZoom: true
-					},
-					isExpandable: false,
-					initialExpandLevels: 3
+					initialAutoScale: Diagram.Uniform,
+					allowZoom: true
 				}
 			})
 		);

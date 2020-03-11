@@ -110,7 +110,6 @@ export class DiagramLayoutComponent implements OnChanges, OnInit, AfterViewInit,
 
 	constructor(private renderer: Renderer2) {
 		Diagram.licenseKey = GOJS_LICENSE_KEY;
-		console.log('GoJS License Applied: ', Diagram.licenseKey.substring(0, 10));
 	}
 
 	/**
@@ -575,10 +574,10 @@ export class DiagramLayoutComponent implements OnChanges, OnInit, AfterViewInit,
 				const node = d.nodes.filter(n => n.data.key === update.key || n.data.id === update.id).first();
 				node.data = update;
 				this.nodeUpdated.
-				emit({
-					data: d.model.nodeDataArray,
-					linksPath: this.extractLinks(d.links)
-				});
+					emit({
+						data: d.model.nodeDataArray,
+						linksPath: this.extractLinks(d.links)
+					});
 			});
 		}
 	}
@@ -815,7 +814,7 @@ export class DiagramLayoutComponent implements OnChanges, OnInit, AfterViewInit,
 	 * Zoom in on the diagram
 	 **/
 	zoomIn(): void {
-		this.diagram.commandHandler.increaseZoom(1.2);
+		this.diagram.commandHandler.increaseZoom(1);
 		const input = new InputEvent();
 		input.control = true;
 		this.shouldUseHighScale();
@@ -846,7 +845,7 @@ export class DiagramLayoutComponent implements OnChanges, OnInit, AfterViewInit,
 	 * Zoom out on the diagram
 	 **/
 	zoomOut(): void {
-		this.diagram.commandHandler.decreaseZoom(0.8);
+		this.diagram.commandHandler.decreaseZoom(0.2);
 		const input = new InputEvent();
 		input.control = true;
 		this.shouldUseMediumScale();

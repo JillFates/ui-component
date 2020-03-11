@@ -51,6 +51,7 @@
     "@fortawesome/free-solid-svg-icons": "5.12.1",
     "@fortawesome/pro-solid-svg-icons": "5.12.1",
     "@fortawesome/free-brands-svg-icons": "5.12.1",
+    "@fortawesome/free-regular-svg-icons": "5.12.1",
     "@nrwl/angular": "^8.2.0",
     "@progress/kendo-angular-buttons": "5.0.0",
     "@progress/kendo-angular-common": "1.1.0",
