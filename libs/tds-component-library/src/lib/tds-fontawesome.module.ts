@@ -1,20 +1,21 @@
 import {NgModule} from '@angular/core';
 import {FaIconLibrary, FontAwesomeModule} from '@fortawesome/angular-fontawesome';
 import {
-	faAdjust, faArrowsAltV, faBars, faBox, faBoxOpen, faBuilding,
+	faAdjust, faArchive, faArrowsAltV, faBan, faBars, faBox, faBoxOpen, faBuilding,
 	faCheck, faCircle,
 	faCog, faCogs, faCompress,
-	faCubes, faDatabase, faEdit, faExpand, faEye,
+	faCubes, faDatabase, faEdit, faExclamationTriangle, faExpand, faEye,
 	faForward, faHome, faLaptop, faLayerGroup, faList,
 	faListUl,
-	faMinus, faPause, faPlay, faPlus, faQuestion,
+	faMinus, faPause, faPlay, faPlus, faQuestion, faQuestionCircle,
 	faSearchMinus, faSearchPlus, faServer,
 	faSignal,
 	faSitemap, faSortAmountDown, faSpinner,
 	faStream, faSyncAlt, faTabletAlt, faUndo, faUser, faWindowMaximize, faWindowMinimize
 } from '@fortawesome/free-solid-svg-icons';
 import {faAdn} from '@fortawesome/free-brands-svg-icons';
-import {faCheckSquare, faCircleNotch, faHourglassStart, faSquare, faThumbsUp} from '@fortawesome/pro-solid-svg-icons';
+import {faCheckSquare, faCircleNotch, faFolder, faHourglassStart, faSquare, faThumbsUp} from '@fortawesome/pro-solid-svg-icons';
+import {faShareSquare} from '@fortawesome/free-regular-svg-icons';
 
 @NgModule({
 	imports: [FontAwesomeModule],
@@ -70,7 +71,13 @@ export class TdsFontawesomeModule {
 			faThumbsUp,
 			faHourglassStart,
 			faCheckSquare,
-			faSquare
+			faSquare,
+			faArchive,
+			faBan,
+			faExclamationTriangle,
+			faQuestionCircle,
+			faShareSquare,
+			faFolder
 		);
 	}
 }

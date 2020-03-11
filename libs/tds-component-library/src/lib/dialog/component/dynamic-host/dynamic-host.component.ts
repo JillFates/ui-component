@@ -38,6 +38,10 @@ export class DynamicHostComponent implements OnInit {
 	// Icons
 	public faExpandArrowsAlt = faExpandArrowsAlt;
 	public faCompressArrowsAlt = faCompressArrowsAlt;
+	// Action Buttons
+	public actionButtonsSize = 0;
+	// Context Buttons
+	public contextButtonsSize = 0;
 
 	@ViewChild(DynamicHostDirective, {static: true}) dynamicContent: DynamicHostDirective;
 	@ViewChild('dialogContainer', {static: true}) dialogContainer: ElementRef;
@@ -54,28 +58,41 @@ export class DynamicHostComponent implements OnInit {
 			} else {
 				// Set the Title
 				this.currentDialogComponentInstance.setTitle(this.modalConfigurationModel.title);
-
-				const actionButtons = this.currentDialogComponentInstance.buttons.filter((button: DialogButtonModel) => {
-					return button.type === DialogButtonType.ACTION;
-				});
-				const contextButtons = this.currentDialogComponentInstance.buttons.filter((button: DialogButtonModel) => {
-					return button.type === DialogButtonType.CONTEXT;
-				});
-
-				if (!actionButtons || actionButtons.length === 0) {
-					this.showLeftActionButtonsPanel = false;
-				} else if (actionButtons && actionButtons.length > 0) {
-					this.showLeftActionButtonsPanel = this.showActionButtons = true;
-				}
-
-				this.showContextButtons = (contextButtons && contextButtons.length > 0);
+				// Initial Buttons
+				this.publishButtons();
 
 				if (this.modalConfigurationModel.fullScreen || this.modalConfigurationModel.defaultFullScreen) {
 					this.showFullScreen = true;
 					this.fullScreen = this.modalConfigurationModel.defaultFullScreen;
 				}
+
+				// Listen to any change
+				setInterval( () => this.publishButtons(), 500);
 			}
 		});
+	}
+
+	/**
+	 * Verify if new actions are coming to the Instance, to show Hide Sections
+	 */
+	public publishButtons(): void {
+		const actionButtons = this.currentDialogComponentInstance.buttons.filter((button: DialogButtonModel) => {
+			return button.type === DialogButtonType.ACTION;
+		});
+		this.actionButtonsSize = actionButtons.length;
+
+		const contextButtons = this.currentDialogComponentInstance.buttons.filter((button: DialogButtonModel) => {
+			return button.type === DialogButtonType.CONTEXT;
+		});
+		this.contextButtonsSize = contextButtons.length;
+
+		if (!actionButtons || actionButtons.length === 0) {
+			this.showLeftActionButtonsPanel = false;
+		} else if (actionButtons && actionButtons.length > 0) {
+			this.showLeftActionButtonsPanel = this.showActionButtons = true;
+		}
+
+		this.showContextButtons = (contextButtons && contextButtons.length > 0);
 	}
 
 	/**

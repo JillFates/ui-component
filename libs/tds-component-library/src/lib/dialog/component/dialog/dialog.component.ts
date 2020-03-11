@@ -212,7 +212,12 @@ export class DialogComponent implements OnInit, OnDestroy {
 	private showHideBackgrounds(): void {
 		this.dynamicHostList.forEach((dynamicHostComponent: DynamicHostComponent, index) => {
 			dynamicHostComponent.modalConfigurationModel.showBackground = dynamicHostComponent.modalConfigurationModel.getDefaultShowBackground();
-			if (index < this.dynamicHostList.length - 1) {
+
+			const firstDynamicHostComponent: DynamicHostComponent = this.dynamicHostList.first;
+
+			if (firstDynamicHostComponent === dynamicHostComponent) {
+				dynamicHostComponent.modalConfigurationModel.showBackground = true;
+			} else {
 				dynamicHostComponent.modalConfigurationModel.showBackground = false;
 			}
 		});
