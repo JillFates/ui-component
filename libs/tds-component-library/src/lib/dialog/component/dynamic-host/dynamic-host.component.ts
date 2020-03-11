@@ -38,6 +38,10 @@ export class DynamicHostComponent implements OnInit {
 	// Icons
 	public faExpandArrowsAlt = faExpandArrowsAlt;
 	public faCompressArrowsAlt = faCompressArrowsAlt;
+	// Action Buttons
+	public actionButtonsSize = 0;
+	// Context Buttons
+	public contextButtonsSize = 0;
 
 	@ViewChild(DynamicHostDirective, {static: true}) dynamicContent: DynamicHostDirective;
 	@ViewChild('dialogContainer', {static: true}) dialogContainer: ElementRef;
@@ -75,9 +79,12 @@ export class DynamicHostComponent implements OnInit {
 		const actionButtons = this.currentDialogComponentInstance.buttons.filter((button: DialogButtonModel) => {
 			return button.type === DialogButtonType.ACTION;
 		});
+		this.actionButtonsSize = actionButtons.length;
+
 		const contextButtons = this.currentDialogComponentInstance.buttons.filter((button: DialogButtonModel) => {
 			return button.type === DialogButtonType.CONTEXT;
 		});
+		this.contextButtonsSize = actionButtons.length;
 
 		if (!actionButtons || actionButtons.length === 0) {
 			this.showLeftActionButtonsPanel = false;
