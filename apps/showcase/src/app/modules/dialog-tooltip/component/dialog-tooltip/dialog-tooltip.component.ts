@@ -4,19 +4,43 @@ import {
 } from './../../../../../../../../libs/tds-component-library/src/lib/dialog/model/dialog.model';
 import { OnInit, Component, Input } from '@angular/core';
 import { Dialog } from '../../../../../../../../libs/tds-component-library/src/lib/dialog/model/dialog.interface';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
 @Component({
 	selector: 'app-dialog-tooltip',
 	templateUrl: './dialog-tooltip.component.html',
 })
 export class DialogTooltipComponent extends Dialog implements OnInit {
 	@Input() data: any;
+	exampleForm: FormGroup;
+	model: string;
+	firstName: string;
+	midleName: string;
+	lastName: string;
+
+	/**
+	 * test
+	 */
+	resetForm(): void {
+		this.exampleForm.reset();
+	}
+
+	/**
+	 * test
+	 */
+	submit(): void {
+		// ...
+	}
 
 	ngOnInit(): void {
+		this.exampleForm = new FormGroup({
+			sample: new FormControl('', Validators.required),
+		});
+
 		const editButton: DialogButtonModel = {
 			name: 'save',
 			icon: 'floppy',
 			tooltipText: 'Save',
-			disabled: () => true,
+			disabled: () => this.exampleForm.pristine,
 			type: DialogButtonType.ACTION,
 			action: this.onAccept.bind(this),
 		};
@@ -26,6 +50,16 @@ export class DialogTooltipComponent extends Dialog implements OnInit {
 			icon: 'ban',
 			tooltipText: 'Cancel',
 			type: DialogButtonType.ACTION,
+			show: () => !this.exampleForm.pristine,
+			action: this.onCancel.bind(this),
+		};
+
+		const closeButton: DialogButtonModel = {
+			name: 'cancel',
+			icon: 'close',
+			tooltipText: 'Close',
+			show: () => this.exampleForm.pristine,
+			type: DialogButtonType.ACTION,
 			action: this.onCancel.bind(this),
 		};
 
@@ -33,7 +67,7 @@ export class DialogTooltipComponent extends Dialog implements OnInit {
 			name: 'delete',
 			icon: 'trash',
 			tooltipText: 'Trash',
-			show: () => true,
+			show: () => !this.exampleForm.pristine,
 			type: DialogButtonType.ACTION,
 			action: this.onCancel.bind(this),
 		};
@@ -41,6 +75,7 @@ export class DialogTooltipComponent extends Dialog implements OnInit {
 		this.buttons.push(editButton);
 		this.buttons.push(trashButton);
 		this.buttons.push(cancelButton);
+		this.buttons.push(closeButton);
 	}
 
 	/**

@@ -1,5 +1,44 @@
-<strong>Morpheus:</strong> Do you believe in fate, Neo? <br />
-<strong>Neo:</strong> No.<br />
-<strong>Morpheus:</strong> Why not?<br />
-<strong>Neo:</strong> I don’t like the idea that I’m not in control of my life.<br />
-<strong>Morpheus:</strong> I know exactly what you mean.<br />
+<!-- <form clrForm>
+    <clr-input-container>
+        <label>Field 1 label</label>
+        <input clrInput type="text" name="example" />
+    </clr-input-container>
+    <clr-input-container>
+        <label>Field 2 label</label>
+        <input clrInput type="text" [(ngModel)]="model" name="example" required />
+        <clr-control-helper>Helper text that shows while it is pristine and valid</clr-control-helper>
+        <clr-control-error>Error message that appears after focus is lost and control is invalid</clr-control-error>
+    </clr-input-container>
+</form> -->
+
+<!-- <form clrForm>
+    <span class="clr-sr-only">Tabbing through form inputs will trigger validation messages to be read aloud.</span>
+    <clr-input-container>
+        <label>First name</label>
+        <input clrInput type="text" [(ngModel)]="firstName" name="firstName" required />
+        <clr-control-error>We need your first name for legal compliance</clr-control-error>
+    </clr-input-container>
+    <clr-input-container>
+        <label>Middle name (Optional)</label>
+        <input clrInput type="text" [(ngModel)]="midleName" name="midleName" />
+    </clr-input-container>
+    <clr-input-container>
+        <label>Last name</label>
+        <input clrInput type="text" [(ngModel)]="lastName" name="lastName" required />
+        <clr-control-error>We need your last name for legal compliance</clr-control-error>
+    </clr-input-container>
+</form> -->
+
+
+<form clrForm [formGroup]="exampleForm">
+    <span class="clr-sr-only">Tabbing through form inputs will trigger validation messages to be read aloud.</span>
+    <clr-input-container>
+        <label>First name</label>
+        <input clrInput formControlName="sample" />
+        <clr-control-error>We need your first name for legal compliance</clr-control-error>
+    </clr-input-container>
+    <tds-button (click)="submit()">Submit</tds-button>
+    <tds-button (click)="resetForm()">Reset</tds-button>
+
+
+</form>

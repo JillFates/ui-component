@@ -1,3 +1,4 @@
+import { ReactiveFormsModule } from '@angular/forms';
 import { DialogTooltipComponent } from './../dialog-tooltip/component/dialog-tooltip/dialog-tooltip.component';
 // Angular
 import { NgModule } from '@angular/core';
@@ -19,7 +20,7 @@ import { ButtonContextDialogComponent } from './component/button-context-dialog/
 import { ReactiveButtonsDialogComponent } from './component/reactive-buttons-dialog/reactive-buttons-dialog.component';
 
 @NgModule({
-	imports: [SharedModule, ClarityModule, DialogRoutingModule],
+	imports: [SharedModule, ClarityModule, DialogRoutingModule, ReactiveFormsModule],
 	providers: [],
 	declarations: [
 		DialogOverviewComponent,
