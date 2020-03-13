@@ -72,10 +72,33 @@ export class DialogTooltipComponent extends Dialog implements OnInit {
 			action: this.onCancel.bind(this),
 		};
 
+		const submitButton: DialogButtonModel = {
+			name: 'submit',
+			icon: 'phone-handset',
+			text: 'Submit',
+			tooltipText: 'Close',
+			show: () => true,
+			type: DialogButtonType.CONTEXT,
+			action: this.submit.bind(this),
+		};
+
+		const resetButton: DialogButtonModel = {
+			name: 'reset',
+			icon: 'uninstall',
+			text: 'Reset',
+			tooltipText: 'Close',
+			show: () => true,
+			type: DialogButtonType.CONTEXT,
+			action: this.resetForm.bind(this),
+		};
+
 		this.buttons.push(editButton);
 		this.buttons.push(trashButton);
 		this.buttons.push(cancelButton);
 		this.buttons.push(closeButton);
+
+		this.buttons.push(submitButton);
+		this.buttons.push(resetButton);
 	}
 
 	/**

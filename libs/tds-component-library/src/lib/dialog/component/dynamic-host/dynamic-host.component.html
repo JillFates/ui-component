@@ -42,7 +42,7 @@
                         *ngIf="((contextButton.show !== undefined)? contextButton.show() : true) && contextButton.type === dialogButtonType.CONTEXT"
                         icon="{{contextButton.icon}}"
                         [disabled]="contextButton.disabled !== undefined && contextButton.disabled()"
-                        (click)="contextButton.action()">
+                        (click)="contextButton.action()" [tooltipText]="contextButton.tooltipText">
                         {{contextButton.text}}
                     </tds-button>
                 </ng-template>
