@@ -36,12 +36,10 @@
           },
           "configurations": {
             "production": {
-              "fileReplacements": [
-                {
-                  "replace": "apps/showcase/src/environments/environment.ts",
-                  "with": "apps/showcase/src/environments/environment.prod.ts"
-                }
-              ],
+              "fileReplacements": [{
+                "replace": "apps/showcase/src/environments/environment.ts",
+                "with": "apps/showcase/src/environments/environment.prod.ts"
+              }],
               "optimization": true,
               "outputHashing": "all",
               "sourceMap": false,
@@ -51,13 +49,11 @@
               "extractLicenses": true,
               "vendorChunk": false,
               "buildOptimizer": true,
-              "budgets": [
-                {
-                  "type": "initial",
-                  "maximumWarning": "2mb",
-                  "maximumError": "5mb"
-                }
-              ]
+              "budgets": [{
+                "type": "initial",
+                "maximumWarning": "2mb",
+                "maximumError": "5mb"
+              }]
             }
           }
         },
@@ -89,11 +85,15 @@
           }
         },
         "test": {
-          "builder": "@nrwl/jest:jest",
+          "builder": "@angular-devkit/build-angular:karma",
           "options": {
-            "jestConfig": "apps/showcase/jest.config.js",
-            "tsConfig": "apps/showcase/tsconfig.spec.json",
-            "setupFile": "apps/showcase/src/test-setup.ts"
+            "main": "test.ts",
+            "polyfills": "apps/showcase/src/polyfills.ts",
+            "tsConfig": "tsconfig.spec.json",
+            "karmaConfig": "karma.conf.js",
+            "assets": [],
+            "styles": [],
+            "scripts": []
           }
         }
       }
@@ -122,11 +122,20 @@
           }
         },
         "test": {
-          "builder": "@nrwl/jest:jest",
+          "builder": "@angular-devkit/build-angular:karma",
           "options": {
-            "jestConfig": "libs/tds-component-library/jest.config.js",
-            "tsConfig": "libs/tds-component-library/tsconfig.spec.json",
-            "setupFile": "libs/tds-component-library/src/test-setup.ts"
+            "main": "test.ts",
+            "polyfills": "apps/showcase/src/polyfills.ts",
+            "tsConfig": "tsconfig.spec.json",
+            "karmaConfig": "karma.conf.js",
+            "assets": [
+              "src/favicon.ico",
+              "src/assets"
+            ],
+            "styles": [
+              "src/styles.css"
+            ],
+            "scripts": []
           }
         }
       },

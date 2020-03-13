@@ -1,7 +1,8 @@
 <tds-dialog></tds-dialog>
 <div class="button-overview-component">
 	<h2>Dialog Component</h2>
-	<p>Based on the <a target="_blank" href="https://v2.clarity.design/modals">Clarity Modals</a> with extensible Action buttons and configurable options.</p>
+	<p>Based on the <a target="_blank" href="https://v2.clarity.design/modals">Clarity Modals</a> with extensible Action
+		buttons and configurable options.</p>
 	<div class="clr-row">
 		<div class="clr-col-12">
 			<h3>Examples</h3>
@@ -32,9 +33,38 @@
 		<div class="clr-col-12">
 			<tds-card title="Action and Context Button Dialogs">
 				<tds-button (click)="openActionButtonDialog()">Action Button Open</tds-button>
+				<tds-button (click)="openDialogWithTooltip()">Dialog with tooltip</tds-button>
 				<tds-button (click)="openContextButtonDialog()">Context Button Open</tds-button>
 				<tds-button (click)="openActionContextButtonDialog()">Action and Context Buttons Open</tds-button>
 			</tds-card>
+		</div>
+		<div class="clr-col-12">
+			<div class="clr-row">
+				<div class="clr-col-12">
+					<h3>Usage Examples</h3>
+				</div>
+				<div class="clr-col-12">
+					<tds-card title="1.- Dialog with Tooltip" code='<tds-dialog></tds-dialog>'>
+						<p>Here it shows that we are using show property to toggle between a touched and pristine form.
+							Plus don't forget to add the tooltipText property, that effectively labels the tooltip</p>
+					</tds-card>
+				</div>
+				<div class="clr-col-12">
+					<tds-card title="2.- Typescript implementation" code="
+
+					const trashButton: DialogButtonModel = {
+						name: 'delete',
+						icon: 'trash',
+						tooltipText: 'Trash',
+						show: () => !this.exampleForm.pristine,
+						type: DialogButtonType.ACTION,
+						action: this.onCancel.bind(this),
+					};					
+">
+						<p>All Dialog Button Model has the same structure</p>
+					</tds-card>
+				</div>
+			</div>
 		</div>
 		<div class="clr-col-12">
 			<tds-card title="Reactive Buttons">
@@ -61,17 +91,12 @@
 			<h3>Usage Examples</h3>
 		</div>
 		<div class="clr-col-12">
-			<tds-card
-				title="1.- Dynamic Layout Component"
-				code='<tds-dialog></tds-dialog>'
-			>
+			<tds-card title="1.- Dynamic Layout Component" code='<tds-dialog></tds-dialog>'>
 				<p>Copy and Paste the following code in your app into a root level template, like app.component.html</p>
 			</tds-card>
 		</div>
 		<div class="clr-col-12">
-			<tds-card
-					title="2.- Typescript implementation"
-					code='
+			<tds-card title="2.- Typescript implementation" code='
 this.dialogService.open({
 	componentFactoryResolver: this.componentFactoryResolver,
 	component: BasicDialogComponent,
@@ -83,8 +108,7 @@ this.dialogService.open({
 }).subscribe((data: any) => {
 	console.log("Basic Dialog was closed successfully: ", data);
 });
-'
-			>
+'>
 				<p>All Dialogs have the same basic structure</p>
 			</tds-card>
 		</div>
