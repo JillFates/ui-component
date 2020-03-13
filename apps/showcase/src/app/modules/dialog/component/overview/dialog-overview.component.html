@@ -39,6 +39,34 @@
 			</tds-card>
 		</div>
 		<div class="clr-col-12">
+			<div class="clr-row">
+				<div class="clr-col-12">
+					<h3>Usage Examples</h3>
+				</div>
+				<div class="clr-col-12">
+					<tds-card title="1.- Dialog with Tooltip" code='<tds-dialog></tds-dialog>'>
+						<p>Here it shows that we are using show property to toggle between a touched and pristine form.
+							Plus don't forget to add the tooltipText property, that effectively labels the tooltip</p>
+					</tds-card>
+				</div>
+				<div class="clr-col-12">
+					<tds-card title="2.- Typescript implementation" code="
+
+					const trashButton: DialogButtonModel = {
+						name: 'delete',
+						icon: 'trash',
+						tooltipText: 'Trash',
+						show: () => !this.exampleForm.pristine,
+						type: DialogButtonType.ACTION,
+						action: this.onCancel.bind(this),
+					};					
+">
+						<p>All Dialog Button Model has the same structure</p>
+					</tds-card>
+				</div>
+			</div>
+		</div>
+		<div class="clr-col-12">
 			<tds-card title="Reactive Buttons">
 				<tds-button (click)="openReactiveActionButtonDialog()">Open</tds-button>
 			</tds-card>

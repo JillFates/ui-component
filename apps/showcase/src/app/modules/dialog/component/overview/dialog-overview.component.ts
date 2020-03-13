@@ -1,6 +1,5 @@
 import { DialogTooltipComponent } from './../../../dialog-tooltip/component/dialog-tooltip/dialog-tooltip.component';
 // Angular
-import { Component, ComponentFactoryResolver } from '@angular/core';
 // Service
 import { DialogService } from '../../../../../../../../libs/tds-component-library/src/lib/dialog/service/dialog.service';
 // Component
@@ -10,6 +9,8 @@ import { NoBackgroundDialogComponent } from '../no-background-dialog/no-backgrou
 import { ButtonActionDialogComponent } from '../button-action-dialog/button-action-dialog.component';
 import { ButtonContextDialogComponent } from '../button-context-dialog/button-context-dialog.component';
 import { ButtonActionContextDialogComponent } from '../button-action-context-dialog/button-action-context-dialog.component';
+import { Component, ComponentFactoryResolver } from '@angular/core';
+
 // Model
 import { ModalSize } from '../../../../../../../../libs/tds-component-library/src/lib/dialog/model/dialog.model';
 import { ReactiveButtonsDialogComponent } from '../reactive-buttons-dialog/reactive-buttons-dialog.component';
