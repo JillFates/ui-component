@@ -1,3 +1,4 @@
+import { FindInputDirective } from './dialog/directive/find-input.directive';
 import { PreventEscDirective } from './dialog/directive/prevent-esc.directive';
 // Angular
 import { NgModule } from '@angular/core';
@@ -72,6 +73,7 @@ import { GridContextMenuFixedPositionDirective } from './grid-context-menu-fixed
 		DynamicHostDirective,
 		DraggableDirective,
 		PreventEscDirective,
+		FindInputDirective,
 		GridContextMenuFixedPositionDirective,
 	],
 	exports: [
@@ -97,6 +99,7 @@ import { GridContextMenuFixedPositionDirective } from './grid-context-menu-fixed
 		DynamicHostDirective,
 		DraggableDirective,
 		PreventEscDirective,
+		FindInputDirective,
 		GridContextMenuFixedPositionDirective,
 	],
 	entryComponents: [DialogConfirmComponent, DialogNotifyComponent],

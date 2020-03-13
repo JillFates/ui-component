@@ -33,7 +33,8 @@ export class DialogTooltipComponent extends Dialog implements OnInit {
 
 	ngOnInit(): void {
 		this.exampleForm = new FormGroup({
-			sample: new FormControl('', Validators.required),
+			sample: new FormControl('Bruce', Validators.required),
+			sample2: new FormControl('Wayne', Validators.required),
 		});
 
 		const editButton: DialogButtonModel = {

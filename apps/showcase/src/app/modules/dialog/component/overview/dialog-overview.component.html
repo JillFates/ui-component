@@ -1,8 +1,10 @@
 <tds-dialog></tds-dialog>
 <div class="button-overview-component">
 	<h2>Dialog Component</h2>
-	<p>Based on the <a target="_blank" href="https://v2.clarity.design/modals">Clarity Modals</a> with extensible Action
-		buttons and configurable options.</p>
+	<p>
+		Based on the <a target="_blank" href="https://v2.clarity.design/modals">Clarity Modals</a> with extensible
+		Action buttons and configurable options.
+	</p>
 	<div class="clr-row">
 		<div class="clr-col-12">
 			<h3>Examples</h3>
@@ -63,12 +65,14 @@
 			<h3>Usage Examples</h3>
 		</div>
 		<div class="clr-col-12">
-			<tds-card title="1.- Dynamic Layout Component" code='<tds-dialog></tds-dialog>'>
+			<tds-card title="1.- Dynamic Layout Component" code="<tds-dialog></tds-dialog>">
 				<p>Copy and Paste the following code in your app into a root level template, like app.component.html</p>
 			</tds-card>
 		</div>
 		<div class="clr-col-12">
-			<tds-card title="2.- Typescript implementation" code='
+			<tds-card
+				title="2.- Typescript implementation"
+				code='
 this.dialogService.open({
 	componentFactoryResolver: this.componentFactoryResolver,
 	component: BasicDialogComponent,
@@ -80,7 +84,8 @@ this.dialogService.open({
 }).subscribe((data: any) => {
 	console.log("Basic Dialog was closed successfully: ", data);
 });
-'>
+'
+			>
 				<p>All Dialogs have the same basic structure</p>
 			</tds-card>
 		</div>

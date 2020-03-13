@@ -1,6 +1,6 @@
 import { DialogService } from './../../service/dialog.service';
 // Angular
-import { Component, HostListener, QueryList, ViewChildren, ViewEncapsulation, OnInit, OnDestroy } from '@angular/core';
+import { Component, HostListener, QueryList, ViewChildren, ViewEncapsulation, OnInit, OnDestroy, Renderer2 } from '@angular/core';
 // Service
 import { EventService } from '../../../service/event-service/event.service';
 // Component
@@ -26,7 +26,7 @@ export class DialogComponent implements OnInit, OnDestroy {
 	private arrClicked: string[] = [];
 	dropdownSub: Subscription;
 
-	constructor(private eventService: EventService, private dialogService: DialogService) {
+	constructor(private eventService: EventService, private dialogService: DialogService, private renderer: Renderer2) {
 		this.registerDialog();
 	}
 
@@ -114,8 +114,21 @@ export class DialogComponent implements OnInit, OnDestroy {
 			setTimeout(() => {
 				dynamicHostModel.instantiated = true;
 			});
+
+			this.setupFocus(currentViewContainerRef);
 		} catch (e) {
 			console.error("Dialog can't be instantiated/created", e);
+		}
+
+	}
+
+	/**
+	 * This method will help to setup the focus to the first input, placing the cursor indicator
+	 * **/
+	private setupFocus(currentViewContainerRef: any): void {
+		if (currentViewContainerRef && (currentViewContainerRef.element.nativeElement.nextSibling.querySelector('input'))) {
+			this.renderer.setAttribute(currentViewContainerRef.element.nativeElement.nextSibling.querySelector('input'), 'tabindex', '0');
+			setTimeout(() => currentViewContainerRef.element.nativeElement.nextSibling.querySelector('input').focus(), 900);
 		}
 	}
 
