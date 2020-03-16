@@ -66,7 +66,7 @@ export abstract class Dialog {
 	}
 
 	/**
-	 * Generic dismiss method
+	 * Generic double click method
 	 */
 	public onDoubleClick(event: MouseEvent): void {
 		// silence is gold
