@@ -64,4 +64,11 @@ export abstract class Dialog {
 	public getTitle(): string {
 		return this.title;
 	}
+
+	/**
+	 * Generic dismiss method
+	 */
+	public onDoubleClick(event: MouseEvent): void {
+		// silence is gold
+	}
 }

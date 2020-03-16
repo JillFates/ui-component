@@ -1,4 +1,5 @@
 import { PreventEscDirective } from './dialog/directive/prevent-esc.directive';
+import { DoubleClickDirective} from './dialog/directive/double-click.directive';
 // Angular
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
@@ -72,6 +73,7 @@ import { GridContextMenuFixedPositionDirective } from './grid-context-menu-fixed
 		DynamicHostDirective,
 		DraggableDirective,
 		PreventEscDirective,
+		DoubleClickDirective,
 		GridContextMenuFixedPositionDirective,
 	],
 	exports: [
@@ -97,6 +99,7 @@ import { GridContextMenuFixedPositionDirective } from './grid-context-menu-fixed
 		DynamicHostDirective,
 		DraggableDirective,
 		PreventEscDirective,
+		DoubleClickDirective,
 		GridContextMenuFixedPositionDirective,
 	],
 	entryComponents: [DialogConfirmComponent, DialogNotifyComponent],

@@ -12,6 +12,9 @@ export class ModalConfigurationModel {
 	public defaultFullScreen?: boolean;
 	// Helps to determinate default values
 	private _defaultShowBackground ? = true;
+	// Function te be executed when user does a double click over the dialog
+	// Can be used by the view to do actions like change from show to edit, or custom actions
+	public onDoubleClick?: Function;
 
 	constructor() {
 		this.showBackground = this._defaultShowBackground;

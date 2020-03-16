@@ -1,4 +1,4 @@
-<div tdsDraggableDialog [draggable]="modalConfigurationModel.draggable" [draggableHandle]="dialogHeader" [ngClass]="{
+<div tdsDraggableDialog tdsDoubleClick (doubleClick)="onDoubleClick($event)"  [draggable]="modalConfigurationModel.draggable" [draggableHandle]="dialogHeader" [ngClass]="{
         'full-screen-dialog': fullScreen
      }" class="modal dynamic-host-component">
     <div class="modal-dialog {{modalConfigurationModel.modalCustomClass}}" #dialogContainer [ngClass]="{

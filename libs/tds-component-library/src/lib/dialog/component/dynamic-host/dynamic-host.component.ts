@@ -132,4 +132,16 @@ export class DynamicHostComponent implements OnInit {
 			this.currentDialogComponentInstance.onDismiss();
 		}
 	}
+
+	/**
+	 * On double click in the view notify to the instance
+	 * @param event MouseEvent info where the double click was made
+	 */
+	public onDoubleClick(event: MouseEvent): void {
+		if (this.currentDialogComponentInstance) {
+			if (this.currentDialogComponentInstance.onDoubleClick) {
+				this.currentDialogComponentInstance.onDoubleClick(event);
+			}
+		}
+	}
 }
