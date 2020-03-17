@@ -135,12 +135,14 @@ export class DialogComponent implements OnInit, AfterViewInit, OnDestroy {
 					});
 				});
 			}
+
 			setTimeout(() => {
 				dynamicHostModel.dynamicHostComponent.publishDialog();
 				dynamicHostModel.instantiated = true;
+
+				this.setupFocus(currentViewContainerRef);
 			});
 
-			this.setupFocus(currentViewContainerRef);
 		} catch (e) {
 			console.error("Dialog can't be instantiated/created", e);
 		}
@@ -155,20 +157,6 @@ export class DialogComponent implements OnInit, AfterViewInit, OnDestroy {
 			this.renderer.setAttribute(currentViewContainerRef.element.nativeElement.nextSibling.querySelector('input'), 'tabindex', '0');
 			setTimeout(() => currentViewContainerRef.element.nativeElement.nextSibling.querySelector('input').focus(), 900);
 		}
-	}
-
-	/**
-	 * Function that does a null check and undefined check
-	 */
-	private nullCheck(objectNode: any[]): boolean {
-		let truthy = true;
-		for (let i = 0; i < objectNode.length; ++i) {
-			if (!(objectNode[i] !== null || objectNode[i] !== undefined)) {
-				truthy = false;
-				break;
-			}
-		}
-		return truthy;
 	}
 
 	/**
