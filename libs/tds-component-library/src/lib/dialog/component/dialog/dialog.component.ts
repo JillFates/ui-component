@@ -1,4 +1,4 @@
-import {DialogService} from './../../service/dialog.service';
+import { DialogService } from './../../service/dialog.service';
 // Angular
 import {
 	AfterViewInit,
@@ -8,18 +8,19 @@ import {
 	OnInit,
 	QueryList,
 	ViewChildren,
-	ViewEncapsulation
+	ViewEncapsulation,
+	Renderer2
 } from '@angular/core';
 // Service
-import {EventService} from '../../../service/event-service/event.service';
+import { EventService } from '../../../service/event-service/event.service';
 // Component
-import {DynamicHostComponent} from '../dynamic-host/dynamic-host.component';
+import { DynamicHostComponent } from '../dynamic-host/dynamic-host.component';
 // Model
-import {DialogEventType} from '../../model/dialog.model';
-import {Dialog} from '../../model/dialog.interface';
-import {DynamicHostModel} from '../../model/dynamic-host.model';
+import { DialogEventType } from '../../model/dialog.model';
+import { Dialog } from '../../model/dialog.interface';
+import { DynamicHostModel } from '../../model/dynamic-host.model';
 // Other
-import {Subscription} from 'rxjs';
+import { Subscription } from 'rxjs';
 
 @Component({
 	selector: 'tds-dialog',
@@ -38,7 +39,7 @@ export class DialogComponent implements OnInit, AfterViewInit, OnDestroy {
 	// QueryList does not provides a proper way to get new elements
 	private newDialog = false;
 
-	constructor(private eventService: EventService, private dialogService: DialogService) {
+	constructor(private eventService: EventService, private dialogService: DialogService, private renderer: Renderer2) {
 		this.registerDialog();
 	}
 
@@ -51,7 +52,7 @@ export class DialogComponent implements OnInit, AfterViewInit, OnDestroy {
 	ngAfterViewInit(): void {
 		// Wait to be registered
 		this.dynamicHostList.changes.subscribe((dynamicHostComponent: any) => {
-			setTimeout( () => {
+			setTimeout(() => {
 				// We get the lasted change added
 				if (this.newDialog && dynamicHostComponent && !dynamicHostComponent.last.currentDialogComponentInstance) {
 					this.newDialog = false;
@@ -138,8 +139,21 @@ export class DialogComponent implements OnInit, AfterViewInit, OnDestroy {
 				dynamicHostModel.dynamicHostComponent.publishDialog();
 				dynamicHostModel.instantiated = true;
 			});
+
+			this.setupFocus(currentViewContainerRef);
 		} catch (e) {
 			console.error("Dialog can't be instantiated/created", e);
+		}
+
+	}
+
+	/**
+	 * This method will help to setup the focus to the first input, placing the cursor indicator
+	 * **/
+	private setupFocus(currentViewContainerRef: any): void {
+		if (currentViewContainerRef && (currentViewContainerRef.element.nativeElement.nextSibling.querySelector('input'))) {
+			this.renderer.setAttribute(currentViewContainerRef.element.nativeElement.nextSibling.querySelector('input'), 'tabindex', '0');
+			setTimeout(() => currentViewContainerRef.element.nativeElement.nextSibling.querySelector('input').focus(), 900);
 		}
 	}
 

@@ -1,8 +1,15 @@
 <form clrForm [formGroup]="exampleForm">
-    <span class="clr-sr-only">Tabbing through form inputs will trigger validation messages to be read aloud.</span>
-    <clr-input-container>
-        <label>First name</label>
-        <input clrInput formControlName="sample" />
-        <clr-control-error>We need your first name for legal compliance</clr-control-error>
-    </clr-input-container>
+	<span class="clr-sr-only">Tabbing through form inputs will trigger validation messages to be read aloud.</span>
+	<clr-input-container>
+		<label>First name</label>
+		<input id='inputSearch' clrInput formControlName="sample" name="sample" type="text" contenteditable="true" />
+		<clr-control-error>We need your first name for legal compliance</clr-control-error>
+	</clr-input-container>
+	<clr-input-container>
+		<label>Last name</label>
+		<input clrInput formControlName="sample2" name="sample2" type="text" contenteditable="true" />
+		<clr-control-error>We need your last name for legal compliance</clr-control-error>
+	</clr-input-container>
+	<tds-button (click)="submit()">Submit</tds-button>
+	<tds-button (click)="resetForm()">Reset</tds-button>
 </form>
