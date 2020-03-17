@@ -1,5 +1,3 @@
-import { FindInputDirective } from './dialog/directive/find-input.directive';
-import { PreventEscDirective } from './dialog/directive/prevent-esc.directive';
 // Angular
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
@@ -36,6 +34,9 @@ import { DraggableDirective } from './dialog/directive/draggable/draggable.direc
 import { GridShowHideFiltersButtonComponent } from './grid-show-hide-filters-button/grid-show-hide-filters-button.component';
 import { GridSelectedItemsCounterComponent } from './grid-selected-items-counter/grid-selected-items-counter.component';
 import { GridContextMenuFixedPositionDirective } from './grid-context-menu-fixed-position/grid-context-menu-fixed-position.directive';
+import { FindInputDirective } from './dialog/directive/find-input.directive';
+import { PreventEscDirective } from './dialog/directive/prevent-esc.directive';
+import { DoubleClickDirective} from './dialog/directive/double-click.directive';
 
 @NgModule({
 	imports: [
@@ -73,6 +74,7 @@ import { GridContextMenuFixedPositionDirective } from './grid-context-menu-fixed
 		DynamicHostDirective,
 		DraggableDirective,
 		PreventEscDirective,
+		DoubleClickDirective,
 		FindInputDirective,
 		GridContextMenuFixedPositionDirective,
 	],
@@ -100,6 +102,7 @@ import { GridContextMenuFixedPositionDirective } from './grid-context-menu-fixed
 		DraggableDirective,
 		PreventEscDirective,
 		FindInputDirective,
+		DoubleClickDirective,
 		GridContextMenuFixedPositionDirective,
 	],
 	entryComponents: [DialogConfirmComponent, DialogNotifyComponent],

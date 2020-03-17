@@ -133,4 +133,17 @@ export class DynamicHostComponent {
 			this.currentDialogComponentInstance.onDismiss();
 		}
 	}
+
+	/**
+	 * On double click in the view notify to the instance
+	 * Can be used by the view to execute custom actions like change from show to edit, etc...
+	 * @param event MouseEvent info where the double click was made
+	 */
+	public onDoubleClick(event: MouseEvent): void {
+		if (this.currentDialogComponentInstance) {
+			if (this.currentDialogComponentInstance.onDoubleClick) {
+				this.currentDialogComponentInstance.onDoubleClick(event);
+			}
+		}
+	}
 }
