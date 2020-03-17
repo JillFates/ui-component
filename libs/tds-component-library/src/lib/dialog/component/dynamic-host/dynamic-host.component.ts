@@ -23,7 +23,7 @@ import {Dialog} from '../../model/dialog.interface';
 	encapsulation: ViewEncapsulation.None,
 	templateUrl: './dynamic-host.component.html',
 })
-export class DynamicHostComponent implements OnInit {
+export class DynamicHostComponent {
 	public modalConfigurationModel = new ModalConfigurationModel();
 	public currentDialogComponentInstance: Dialog;
 	public modalSize = ModalSize;
@@ -50,26 +50,27 @@ export class DynamicHostComponent implements OnInit {
 	constructor(private renderer: Renderer2) {
 	}
 
-	ngOnInit(): void {
-		setTimeout(() => {
-			if (!this.currentDialogComponentInstance) {
-				// if instance is empty, does not show anything
-				this.showActionButtons = this.showContextButtons = this.showLeftActionButtonsPanel = false;
-			} else {
-				// Set the Title
-				this.currentDialogComponentInstance.setTitle(this.modalConfigurationModel.title);
-				// Initial Buttons
-				this.publishButtons();
+	/**
+	 * Enables all Dialogs actions
+	 */
+	public publishDialog(): void  {
+		if (!this.currentDialogComponentInstance) {
+			// if instance is empty, does not show anything
+			this.showActionButtons = this.showContextButtons = this.showLeftActionButtonsPanel = false;
+		} else {
+			// Set the Title
+			this.currentDialogComponentInstance.setTitle(this.modalConfigurationModel.title);
+			// Initial Buttons
+			this.publishButtons();
 
-				if (this.modalConfigurationModel.fullScreen || this.modalConfigurationModel.defaultFullScreen) {
-					this.showFullScreen = true;
-					this.fullScreen = this.modalConfigurationModel.defaultFullScreen;
-				}
-
-				// Listen to any change
-				setInterval( () => this.publishButtons(), 500);
+			if (this.modalConfigurationModel.fullScreen || this.modalConfigurationModel.defaultFullScreen) {
+				this.showFullScreen = true;
+				this.fullScreen = this.modalConfigurationModel.defaultFullScreen;
 			}
-		});
+
+			// Listen to any change
+			setInterval( () => this.publishButtons(), 500);
+		}
 	}
 
 	/**

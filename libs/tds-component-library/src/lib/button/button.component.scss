@@ -95,3 +95,74 @@
 		@include outlineHover($color-warning);
 	}
 }
+
+
+.special-text {
+	position: relative;
+	cursor: pointer;
+}
+
+/* Show the tooltip on hover */
+.special-text:hover .special-text__tooltip {
+	visibility: visible;
+	opacity: 1;
+}
+
+.special-text__tooltip {
+	font-size: 14px;
+	position: absolute;
+	width: auto;
+	left: 32%;
+	bottom: 100%;
+	margin-bottom: 15px;
+	padding: 10px;
+	box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.5);
+	border: 5px solid #000000;
+	border-radius: 3px;
+	/* Hide the tooltip by default */
+	visibility: hidden;
+	opacity: 0;
+	/* Prettify */
+	text-align: left;
+	-webkit-transition-property: opacity;
+	-moz-transition-property: opacity;
+	transition-property: opacity;
+	-webkit-transition-duration: 0.5s;
+	-moz-transition-duration: 0.5s;
+	transition-duration: 0.5s;
+	-webkit-transition-timing-function: linear;
+	-moz-transition-timing-function: linear;
+	transition-timing-function: linear;
+	-webkit-transition-delay: initial;
+	-moz-transition-delay: initial;
+	transition-delay: initial;
+	
+	background-color: white;
+	color: black;
+}
+
+/* The bordered part of the triangle */
+.special-text__tooltip::before,
+.special-text__tooltip::after {
+	content: "";
+	position: absolute;
+	border-left: 10px solid #000000;
+	border-right: 10px solid transparent;
+	border-top: 10px solid #000000;
+	border-bottom: 10px solid transparent;
+	top: 100%;
+	left: 0%;
+	margin-left: -5px;
+}
+
+.special-text__tooltip::before {
+	border-top: 10px solid #000000;
+	margin-top: 5px;
+}
+
+/* The white fill of the triangle */
+.special-text__tooltip::after {
+	border-top: 10px solid #000000;
+	margin-top: 0px;
+	z-index: 1;
+}

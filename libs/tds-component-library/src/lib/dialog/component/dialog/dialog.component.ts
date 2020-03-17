@@ -1,6 +1,16 @@
 import { DialogService } from './../../service/dialog.service';
 // Angular
-import { Component, HostListener, QueryList, ViewChildren, ViewEncapsulation, OnInit, OnDestroy, Renderer2 } from '@angular/core';
+import {
+	AfterViewInit,
+	Component,
+	HostListener,
+	OnDestroy,
+	OnInit,
+	QueryList,
+	ViewChildren,
+	ViewEncapsulation,
+	Renderer2
+} from '@angular/core';
 // Service
 import { EventService } from '../../../service/event-service/event.service';
 // Component
@@ -9,6 +19,7 @@ import { DynamicHostComponent } from '../dynamic-host/dynamic-host.component';
 import { DialogEventType } from '../../model/dialog.model';
 import { Dialog } from '../../model/dialog.interface';
 import { DynamicHostModel } from '../../model/dynamic-host.model';
+// Other
 import { Subscription } from 'rxjs';
 
 @Component({
@@ -17,14 +28,16 @@ import { Subscription } from 'rxjs';
 	encapsulation: ViewEncapsulation.None,
 	templateUrl: './dialog.component.html',
 })
-export class DialogComponent implements OnInit, OnDestroy {
+export class DialogComponent implements OnInit, AfterViewInit, OnDestroy {
 	@ViewChildren(DynamicHostComponent) dynamicHostList!: QueryList<DynamicHostComponent>;
 
 	// Contains a list of every available dialog open as an Stack
 	public dynamicDialogList: DynamicHostModel[] = <any>[];
 	public dropdownActivated = false;
 	private arrClicked: string[] = [];
-	dropdownSub: Subscription;
+	public dropdownSub: Subscription;
+	// QueryList does not provides a proper way to get new elements
+	private newDialog = false;
 
 	constructor(private eventService: EventService, private dialogService: DialogService, private renderer: Renderer2) {
 		this.registerDialog();
@@ -36,26 +49,37 @@ export class DialogComponent implements OnInit, OnDestroy {
 		});
 	}
 
+	ngAfterViewInit(): void {
+		// Wait to be registered
+		this.dynamicHostList.changes.subscribe((dynamicHostComponent: any) => {
+			setTimeout(() => {
+				// We get the lasted change added
+				if (this.newDialog && dynamicHostComponent && !dynamicHostComponent.last.currentDialogComponentInstance) {
+					this.newDialog = false;
+					const dynamicHostModel = this.dynamicDialogList[this.dynamicDialogList.length - 1];
+					// Save to the List which host component is attached
+					dynamicHostModel.dynamicHostComponent = this.dynamicHostList.last;
+					this.createComponent(dynamicHostModel);
+				}
+			});
+		});
+	}
+
 	/**
 	 * Register the event, so it can be listen to on open events or clear current instance
 	 */
 	public registerDialog(): void {
+
 		this.eventService.on(DialogEventType.OPEN, (dialogModel: any) => {
+			this.newDialog = true;
 			// We initialize the Model with the incoming Model event
 			const dynamicHostModel: DynamicHostModel = {
 				dialogModel: dialogModel.event,
-				instantiated: false,
+				instantiated: false
 			};
 
 			// We add a new Empty element to the dynamicDialogList
 			this.dynamicDialogList.push(dynamicHostModel);
-			// Wait a millisecond to be registered
-			setTimeout(() => {
-				// We get the lasted change added
-				// Save to the List which host component is attached
-				dynamicHostModel.dynamicHostComponent = this.dynamicHostList.last;
-				this.createComponent(dynamicHostModel);
-			});
 		});
 	}
 
@@ -112,6 +136,7 @@ export class DialogComponent implements OnInit, OnDestroy {
 				});
 			}
 			setTimeout(() => {
+				dynamicHostModel.dynamicHostComponent.publishDialog();
 				dynamicHostModel.instantiated = true;
 			});
 
