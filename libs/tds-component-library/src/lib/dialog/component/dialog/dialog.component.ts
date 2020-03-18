@@ -220,10 +220,9 @@ export class DialogComponent implements OnInit, AfterViewInit, OnDestroy {
 						pushIsDone();
 					}
 				}
-				else
-					if (event.target.tagName === 'CLR-ICON') {
-						pushIsDone();
-					}
+				else if (event.target.tagName === 'CLR-ICON') {
+					pushIsDone();
+				}
 			}
 
 			if (isDone === false) {
