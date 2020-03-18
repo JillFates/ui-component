@@ -95,7 +95,8 @@
       }
 
       .active-button {
-        .btn.btn-link {
+        .btn.btn-link,
+        .btn.btn-link a {
           color: white !important;
           border-radius: 0px;
           background: $color-active-dark-1;
