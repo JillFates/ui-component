@@ -23,7 +23,7 @@ import { Dialog } from '../../model/dialog.interface';
 	encapsulation: ViewEncapsulation.None,
 	templateUrl: './dynamic-host.component.html',
 })
-export class DynamicHostComponent implements OnInit {
+export class DynamicHostComponent {
 	public modalConfigurationModel = new ModalConfigurationModel();
 	public currentDialogComponentInstance: Dialog;
 	public modalSize = ModalSize;
@@ -48,14 +48,6 @@ export class DynamicHostComponent implements OnInit {
 	@ViewChild('dialogContent', { static: true }) dialogContent: ElementRef;
 
 	constructor(private renderer: Renderer2) { }
-
-	/**
-	* ngOnInit
-	*/
-	ngOnInit(): void {
-		alert('dynamic');
-		// setTimeout(() => this.dialogContent.nativeElement.getElementsByTagName('input')[0].focus(), 1000);
-	}
 
 	/**
 	 * Enables all Dialogs actions

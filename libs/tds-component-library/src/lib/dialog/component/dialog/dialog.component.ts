@@ -9,7 +9,7 @@ import {
 	QueryList,
 	ViewChildren,
 	ViewEncapsulation,
-	Renderer2
+	Renderer2,
 } from '@angular/core';
 // Service
 import { EventService } from '../../../service/event-service/event.service';
@@ -54,7 +54,11 @@ export class DialogComponent implements OnInit, AfterViewInit, OnDestroy {
 		this.dynamicHostList.changes.subscribe((dynamicHostComponent: any) => {
 			setTimeout(() => {
 				// We get the lasted change added
-				if (this.newDialog && dynamicHostComponent && !dynamicHostComponent.last.currentDialogComponentInstance) {
+				if (
+					this.newDialog &&
+					dynamicHostComponent &&
+					!dynamicHostComponent.last.currentDialogComponentInstance
+				) {
 					this.newDialog = false;
 					const dynamicHostModel = this.dynamicDialogList[this.dynamicDialogList.length - 1];
 					// Save to the List which host component is attached
@@ -69,13 +73,12 @@ export class DialogComponent implements OnInit, AfterViewInit, OnDestroy {
 	 * Register the event, so it can be listen to on open events or clear current instance
 	 */
 	public registerDialog(): void {
-
 		this.eventService.on(DialogEventType.OPEN, (dialogModel: any) => {
 			this.newDialog = true;
 			// We initialize the Model with the incoming Model event
 			const dynamicHostModel: DynamicHostModel = {
 				dialogModel: dialogModel.event,
-				instantiated: false
+				instantiated: false,
 			};
 
 			// We add a new Empty element to the dynamicDialogList
@@ -144,29 +147,29 @@ export class DialogComponent implements OnInit, AfterViewInit, OnDestroy {
 		} catch (e) {
 			console.error("Dialog can't be instantiated/created", e);
 		}
-
 	}
 
 	/**
 	 * This method will help to setup the focus to the first input, placing the cursor indicator
 	 * **/
 	private setupFocus(currentViewContainerRef: any): void {
-		// if (currentViewContainerRef && (currentViewContainerRef.element.nativeElement.nextSibling.querySelector('input'))) {
-		// 	this.renderer.setAttribute(currentViewContainerRef.element.nativeElement.nextSibling.querySelector('input'), 'tabindex', '0');
-		// 	setTimeout(() => currentViewContainerRef.element.nativeElement.nextSibling.querySelector('input').focus(), 900);
-		// }
-
-		alert('focus');
 		setTimeout(() => {
-			currentViewContainerRef.element.nativeElement.nextSibling.getElementsByTagName('input')[0].focus();
-			this.dropdownActivated = false;
+			if (currentViewContainerRef.element.nativeElement.nextSibling) {
+				if (currentViewContainerRef.element.nativeElement.nextSibling.getElementsByTagName('input')) {
+					if (currentViewContainerRef.element.nativeElement.nextSibling.getElementsByTagName('input').length > 0) {
+						if (currentViewContainerRef.element.nativeElement.nextSibling.getElementsByTagName('input')[0]) {
+							this.renderer.setAttribute(
+								currentViewContainerRef.element.nativeElement.nextSibling.getElementsByTagName('input')[0],
+								'tabindex',
+								'0'
+							);
+							currentViewContainerRef.element.nativeElement.nextSibling.getElementsByTagName('input')[0].focus();
+							this.dropdownActivated = false;
+						}
+					}
+				}
+			}
 		}, 1000);
-
-		// if (currentViewContainerRef && (currentViewContainerRef.element.nativeElement.getElementsByTagName('input'))) {
-		// 	this.renderer.setAttribute(currentViewContainerRef.element.nativeElement.getElementsByTagName('input')[0], 'tabindex', '0');
-		// 	setTimeout(() => currentViewContainerRef.element.nativeElement.getElementsByTagName('input')[0].focus(), 1000);
-		// }
-
 	}
 
 	/**
@@ -215,12 +218,11 @@ export class DialogComponent implements OnInit, AfterViewInit, OnDestroy {
 		if (event.target) {
 			if (event.target.tagName) {
 				// reason for this is because somehow I realized that in Windows escaping the select has to be deliberate, in Mac, it's not. - K
-				if ((navigator.platform !== 'MacIntel')) {
-					if ((event.target.tagName === 'SELECT')) {
+				if (navigator.platform !== 'MacIntel') {
+					if (event.target.tagName === 'SELECT') {
 						pushIsDone();
 					}
-				}
-				else if (event.target.tagName === 'CLR-ICON') {
+				} else if (event.target.tagName === 'CLR-ICON') {
 					pushIsDone();
 				}
 			}
@@ -247,9 +249,8 @@ export class DialogComponent implements OnInit, AfterViewInit, OnDestroy {
 	 * @param event
 	 */
 	@HostListener('document:keyup.escape', ['$event']) onKeydownHandler(event: KeyboardEvent): void {
-
 		if (event.key === 'Escape' || event.code === 'Escape') {
-			alert('escape pressed:' + 'this.dropdownActivated:' + this.dropdownActivated);
+			alert('scape pressed:' + 'this.dropdownActivated:' + this.dropdownActivated);
 
 			const dynamicHostModel: DynamicHostModel = this.dynamicDialogList.find(
 				(innerDynamicHostModel: DynamicHostModel) => {
