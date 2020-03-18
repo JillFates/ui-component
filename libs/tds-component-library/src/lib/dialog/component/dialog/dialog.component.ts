@@ -151,10 +151,22 @@ export class DialogComponent implements OnInit, AfterViewInit, OnDestroy {
 	 * This method will help to setup the focus to the first input, placing the cursor indicator
 	 * **/
 	private setupFocus(currentViewContainerRef: any): void {
-		if (currentViewContainerRef && (currentViewContainerRef.element.nativeElement.nextSibling.querySelector('input'))) {
-			this.renderer.setAttribute(currentViewContainerRef.element.nativeElement.nextSibling.querySelector('input'), 'tabindex', '0');
-			setTimeout(() => currentViewContainerRef.element.nativeElement.nextSibling.querySelector('input').focus(), 900);
-		}
+		// if (currentViewContainerRef && (currentViewContainerRef.element.nativeElement.nextSibling.querySelector('input'))) {
+		// 	this.renderer.setAttribute(currentViewContainerRef.element.nativeElement.nextSibling.querySelector('input'), 'tabindex', '0');
+		// 	setTimeout(() => currentViewContainerRef.element.nativeElement.nextSibling.querySelector('input').focus(), 900);
+		// }
+
+		alert('focus');
+		setTimeout(() => {
+			currentViewContainerRef.element.nativeElement.nextSibling.getElementsByTagName('input')[0].focus();
+			this.dropdownActivated = false;
+		}, 1000);
+
+		// if (currentViewContainerRef && (currentViewContainerRef.element.nativeElement.getElementsByTagName('input'))) {
+		// 	this.renderer.setAttribute(currentViewContainerRef.element.nativeElement.getElementsByTagName('input')[0], 'tabindex', '0');
+		// 	setTimeout(() => currentViewContainerRef.element.nativeElement.getElementsByTagName('input')[0].focus(), 1000);
+		// }
+
 	}
 
 	/**
@@ -193,13 +205,25 @@ export class DialogComponent implements OnInit, AfterViewInit, OnDestroy {
 	@HostListener('document:click', ['$event'])
 	public onClicker(event: any): void {
 		let isDone = false;
+
+		const pushIsDone = () => {
+			this.pushToArray(event.target.tagName);
+			this.dropdownActivated = true;
+			isDone = true;
+		};
+
 		if (event.target) {
 			if (event.target.tagName) {
-				if (event.target.tagName === 'SELECT' || event.target.tagName === 'CLR-ICON') {
-					this.pushToArray(event.target.tagName);
-					this.dropdownActivated = true;
-					isDone = true;
+				// reason for this is because somehow I realized that in Windows escaping the select has to be deliberate, in Mac, it's not. - K
+				if ((navigator.platform !== 'MacIntel')) {
+					if ((event.target.tagName === 'SELECT')) {
+						pushIsDone();
+					}
 				}
+				else
+					if (event.target.tagName === 'CLR-ICON') {
+						pushIsDone();
+					}
 			}
 
 			if (isDone === false) {
@@ -224,7 +248,10 @@ export class DialogComponent implements OnInit, AfterViewInit, OnDestroy {
 	 * @param event
 	 */
 	@HostListener('document:keyup.escape', ['$event']) onKeydownHandler(event: KeyboardEvent): void {
+
 		if (event.key === 'Escape' || event.code === 'Escape') {
+			alert('escape pressed:' + 'this.dropdownActivated:' + this.dropdownActivated);
+
 			const dynamicHostModel: DynamicHostModel = this.dynamicDialogList.find(
 				(innerDynamicHostModel: DynamicHostModel) => {
 					return innerDynamicHostModel.dynamicHostComponent === this.dynamicHostList.last;
