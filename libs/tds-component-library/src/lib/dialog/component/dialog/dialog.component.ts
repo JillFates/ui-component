@@ -250,7 +250,6 @@ export class DialogComponent implements OnInit, AfterViewInit, OnDestroy {
 	 */
 	@HostListener('document:keyup.escape', ['$event']) onKeydownHandler(event: KeyboardEvent): void {
 		if (event.key === 'Escape' || event.code === 'Escape') {
-			alert('scape pressed:' + 'this.dropdownActivated:' + this.dropdownActivated);
 
 			const dynamicHostModel: DynamicHostModel = this.dynamicDialogList.find(
 				(innerDynamicHostModel: DynamicHostModel) => {
