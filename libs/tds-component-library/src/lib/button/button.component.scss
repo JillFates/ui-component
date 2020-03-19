@@ -121,7 +121,7 @@
 	margin-bottom: 15px;
 	padding: 10px;
 	box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.5);
-	border: 5px solid #000000;
+	border: 1px solid gray;
 	border-radius: 3px;
 	/* Hide the tooltip by default */
 	visibility: hidden;
@@ -142,7 +142,9 @@
 	transition-delay: initial;
 	
 	background-color: white;
-	color: black;
+	color: black;	
+	border-bottom-left-radius: 0rem;
+	text-transform: capitalize;
 }
 
 /* The bordered part of the triangle */
@@ -150,23 +152,23 @@
 .special-text__tooltip::after {
 	content: "";
 	position: absolute;
-	border-left: 10px solid #000000;
-	border-right: 10px solid transparent;
-	border-top: 10px solid #000000;
-	border-bottom: 10px solid transparent;
-	top: 100%;
+	border-left: 5px solid gray;
+	border-right: 5px solid transparent;
+	border-top: 5px solid gray;
+	border-bottom: 5px solid transparent;
+	top: 105%;
 	left: 0%;
-	margin-left: -5px;
+	margin-left: -1px;
 }
 
 .special-text__tooltip::before {
-	border-top: 10px solid #000000;
-	margin-top: 5px;
+	border-top: 5px solid gray;
+	margin-top: -1px;
 }
 
 /* The white fill of the triangle */
 .special-text__tooltip::after {
-	border-top: 10px solid #000000;
-	margin-top: 0px;
+	border-top: 5px solid gray;
+	margin-top: -1px;
 	z-index: 1;
 }
