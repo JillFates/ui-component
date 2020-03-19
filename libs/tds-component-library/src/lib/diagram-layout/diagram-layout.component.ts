@@ -80,6 +80,7 @@ export class DiagramLayoutComponent implements OnChanges, OnInit, AfterViewInit,
 	@Output() nodeUpdated: EventEmitter<any> = new EventEmitter<any>();
 	@Output() nodeClicked: EventEmitter<any> = new EventEmitter<any>();
 	@Output() backToFullGraph: EventEmitter<void> = new EventEmitter<void>();
+	@Output() nodeMoveDiagramAnimationFinished: EventEmitter<void> = new EventEmitter<void>();
 	@Output() diagramAnimationFinished: EventEmitter<void> = new EventEmitter<void>();
 	@Output() ctxMenuActionDispatched: EventEmitter<any> = new EventEmitter<any>();
 	@Output() expandActionDispatched: EventEmitter<void> = new EventEmitter<void>();
@@ -343,7 +344,7 @@ export class DiagramLayoutComponent implements OnChanges, OnInit, AfterViewInit,
 
 			if (this.nodeMove) {
 				this.nodeMove = false;
-				this.diagramAnimationFinished.emit();
+				this.nodeMoveDiagramAnimationFinished.emit();
 				this.showFullGraphBtn = true;
 			}
 
@@ -361,6 +362,7 @@ export class DiagramLayoutComponent implements OnChanges, OnInit, AfterViewInit,
 			if (root) {
 				this.diagram.commit(d => d.centerRect(root.actualBounds));
 			}
+			this.diagramAnimationFinished.emit();
 		});
 		if (!this.largeArrayRemaining) {
 			if (this.diagram.linkTemplate.routing !== Link.AvoidsNodes) { this.setLinkTemplate(); }
