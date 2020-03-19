@@ -11,5 +11,6 @@ export const enum DiagramEvent {
 }
 
 export const enum DiagramEventAction {
-	ANIMATION_FINISHED = 'diagram:AnimationFinished'
+	ANIMATION_FINISHED = 'diagram:AnimationFinished',
+	NODE_MOVE_ANIMATION_FINISHED = 'diagram:NodeMoveAnimationFinished'
 }
