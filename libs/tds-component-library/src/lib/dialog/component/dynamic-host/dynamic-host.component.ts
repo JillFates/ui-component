@@ -11,11 +11,11 @@ import {
 	ViewEncapsulation
 } from '@angular/core';
 // Model
-import {DialogButtonModel, DialogButtonType, ModalConfigurationModel, ModalSize} from '../../model/dialog.model';
-import {faExpandArrowsAlt, faCompressArrowsAlt} from '@fortawesome/free-solid-svg-icons';
+import { DialogButtonModel, DialogButtonType, ModalConfigurationModel, ModalSize } from '../../model/dialog.model';
+import { faExpandArrowsAlt, faCompressArrowsAlt } from '@fortawesome/free-solid-svg-icons';
 // Directive
-import {DynamicHostDirective} from '../../directive/dynamic-host.directive';
-import {Dialog} from '../../model/dialog.interface';
+import { DynamicHostDirective } from '../../directive/dynamic-host.directive';
+import { Dialog } from '../../model/dialog.interface';
 
 @Component({
 	selector: 'tds-dynamic-host',
@@ -43,17 +43,16 @@ export class DynamicHostComponent {
 	// Context Buttons
 	public contextButtonsSize = 0;
 
-	@ViewChild(DynamicHostDirective, {static: true}) dynamicContent: DynamicHostDirective;
-	@ViewChild('dialogContainer', {static: true}) dialogContainer: ElementRef;
-	@ViewChild('dialogContent', {static: true}) dialogContent: ElementRef;
+	@ViewChild(DynamicHostDirective, { static: true }) dynamicContent: DynamicHostDirective;
+	@ViewChild('dialogContainer', { static: true }) dialogContainer: ElementRef;
+	@ViewChild('dialogContent', { static: true }) dialogContent: ElementRef;
 
-	constructor(private renderer: Renderer2) {
-	}
+	constructor(private renderer: Renderer2) { }
 
 	/**
 	 * Enables all Dialogs actions
 	 */
-	public publishDialog(): void  {
+	public publishDialog(): void {
 		if (!this.currentDialogComponentInstance) {
 			// if instance is empty, does not show anything
 			this.showActionButtons = this.showContextButtons = this.showLeftActionButtonsPanel = false;
@@ -69,7 +68,7 @@ export class DynamicHostComponent {
 			}
 
 			// Listen to any change
-			setInterval( () => this.publishButtons(), 500);
+			setInterval(() => this.publishButtons(), 500);
 		}
 	}
 
