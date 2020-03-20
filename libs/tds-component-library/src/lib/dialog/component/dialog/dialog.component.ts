@@ -1,6 +1,6 @@
 import { DialogService } from './../../service/dialog.service';
 // Angular
-import { Component, HostListener, QueryList, ViewChildren, ViewEncapsulation, OnInit, OnDestroy } from '@angular/core';
+import { Component, HostListener, QueryList, ViewChildren, ViewEncapsulation, OnInit, OnDestroy, Renderer2 } from '@angular/core';
 // Service
 import { EventService } from '../../../service/event-service/event.service';
 // Component
@@ -24,9 +24,13 @@ export class DialogComponent implements OnInit, OnDestroy {
 	public dynamicDialogList: DynamicHostModel[] = <any>[];
 	public dropdownActivated = false;
 	private arrClicked: string[] = [];
-	dropdownSub: Subscription;
+	private lastElementClicked = null;
+	private dialogEscape = false;
+	public dropdownSub: Subscription;
+	// QueryList does not provides a proper way to get new elements
+	private newDialog = false;
 
-	constructor(private eventService: EventService, private dialogService: DialogService) {
+	constructor(private eventService: EventService, private dialogService: DialogService, private renderer: Renderer2) {
 		this.registerDialog();
 	}
 
@@ -100,15 +104,34 @@ export class DialogComponent implements OnInit, OnDestroy {
 
 			// Emits on Success
 			if (currentDialogComponentInstance.successEvent) {
+				this.dialogService.activatedDropdown.subscribe(res => {
+					console.log('res:' + res);
+					this.dropdownActivated = res;
+				});
 				currentDialogComponentInstance.successEvent.subscribe(result => {
-					dynamicHostModel.dialogModel.observable.next(result);
-					dynamicHostModel.dialogModel.observable.complete();
-					// Last element of the array only
-					this.dynamicDialogList.pop();
-					setTimeout(() => {
-						// After close a Dialog, we show any other background
-						this.showHideBackgrounds();
-					});
+
+					if (this.dropdownActivated) {
+						this.renderer.setAttribute(
+							this.lastElementClicked,
+							'tabindex',
+							'0'
+						);
+						this.lastElementClicked.focus();
+						this.dropdownActivated = false;
+						return;
+					} else {
+						if (this.dropdownActivated && this.dialogEscape) {
+							dynamicHostModel.dialogModel.observable.next(result);
+							dynamicHostModel.dialogModel.observable.complete();
+							alert('completed');
+							// Last element of the array only
+							this.dynamicDialogList.pop();
+							setTimeout(() => {
+								// After close a Dialog, we show any other background
+								this.showHideBackgrounds();
+							});
+						}
+					}
 				});
 			}
 			setTimeout(() => {
@@ -145,8 +168,10 @@ export class DialogComponent implements OnInit, OnDestroy {
 	 * Function that pop the string array of click events
 	 */
 	private popFromArray(): void {
-		this.arrClicked.pop();
-		this.dialogService.activatedDropdown.next(false);
+		if (this.arrClicked.length > 0) {
+			this.arrClicked.pop();
+			this.dialogService.activatedDropdown.next(false);
+		}
 	}
 
 	/**
@@ -154,30 +179,59 @@ export class DialogComponent implements OnInit, OnDestroy {
 	 */
 	@HostListener('document:click', ['$event'])
 	public onClicker(event: any): void {
+		console.log('click');
 		let isDone = false;
+		this.dropdownActivated = false;
+		this.popFromArray();
+		const pushIsDone = (currentElement) => {
+			this.pushToArray(event.target.tagName);
+			this.dropdownActivated = true;
+			isDone = true;
+			this.lastElementClicked = currentElement;
+		};
+
 		if (event.target) {
 			if (event.target.tagName) {
-				if (event.target.tagName === 'SELECT' || event.target.tagName === 'CLR-ICON') {
-					this.pushToArray(event.target.tagName);
-					this.dropdownActivated = true;
-					isDone = true;
-				}
-			}
-
-			if (isDone === false) {
-				if (event.target.parentNode) {
+				// alert(event.target.parentNode.parentNode.parentNode.tagName);
+				// reason for this is because somehow I realized that in Windows escaping the select has to be deliberate, in Mac, it's not. - K
+				if (navigator.platform !== 'MacIntel') {
+					if (event.target.tagName === 'SELECT') {
+						pushIsDone(event.target);
+					}
+				} else if (event.target.tagName === 'CLR-ICON') {
+					pushIsDone(event.target);
+				} else if (event.target.parentNode) {
 					if (event.target.parentNode.parentNode) {
-						if (event.target.parentNode.parentNode.tagName) {
-							if (event.target.parentNode.parentNode.tagName === 'KENDO-DROPDOWNLIST') {
-								this.pushToArray(event.target.tagName);
-								this.dropdownActivated = true;
-							} else {
-								this.popFromArray();
+						if (event.target.parentNode.parentNode.tagName === 'KENDO-DROPDOWNLIST') {
+							// console.log(event.target.parentNode.getAttribute('aria-expanded'));
+							console.log('here 1');
+							console.log(event.target.parentNode.getAttribute('aria-expanded') === 'true');
+
+							pushIsDone(event.target.parentNode.parentNode);
+						} else if (event.target.parentNode.parentNode.parentNode) {
+							if (event.target.parentNode.parentNode.parentNode.tagName === 'KENDO-DROPDOWNLIST') {
+								console.log('kendo 2');
+								pushIsDone(event.target.parentNode.parentNode.parentNode);
 							}
 						}
 					}
 				}
 			}
+
+			// if (isDone === false) {
+			// 	if (event.target.parentNode) {
+			// 		if (event.target.parentNode.parentNode) {
+			// 			if (event.target.parentNode.parentNode.tagName) {
+			// 				if (event.target.parentNode.parentNode.tagName === 'KENDO-DROPDOWNLIST') {
+			// 					this.pushToArray(event.target.tagName);
+			// 					this.dropdownActivated = true;
+			// 				} else {
+			// 					this.popFromArray();
+			// 				}
+			// 			}
+			// 		}
+			// 	}
+			// }
 		}
 	}
 
@@ -185,24 +239,72 @@ export class DialogComponent implements OnInit, OnDestroy {
 	 * Capture when the Escape happens, only for the latest element created
 	 * @param event
 	 */
-	@HostListener('document:keyup.escape', ['$event']) onKeydownHandler(event: KeyboardEvent): void {
+	@HostListener('document:keydown.escape', ['$event']) onKeydownHandler(event: KeyboardEvent): void {
 		if (event.key === 'Escape' || event.code === 'Escape') {
-			const dynamicHostModel: DynamicHostModel = this.dynamicDialogList.find(
-				(innerDynamicHostModel: DynamicHostModel) => {
-					return innerDynamicHostModel.dynamicHostComponent === this.dynamicHostList.last;
-				}
-			);
-			if (this.dropdownActivated === false) {
+			this.dialogEscape = true;
+			alert('this.dropdownActivated:' + this.dropdownActivated);
+			if (this.dropdownActivated) {
+				this.renderer.setAttribute(
+					this.lastElementClicked,
+					'tabindex',
+					'0'
+				);
+				this.lastElementClicked.focus();
+				this.dropdownActivated = false;
+				return;
+			} else { // dropdown not active
+				const dynamicHostModel: DynamicHostModel = this.dynamicDialogList.find(
+					(innerDynamicHostModel: DynamicHostModel) => {
+						return innerDynamicHostModel.dynamicHostComponent === this.dynamicHostList.last;
+					}
+				);
 				if (dynamicHostModel) {
 					const currentDialogComponentInstance = <Dialog>(
 						dynamicHostModel.dynamicHostComponent.currentDialogComponentInstance
 					);
 					currentDialogComponentInstance.onDismiss();
 				}
-			} else {
-				this.arrClicked.pop();
-				this.dropdownActivated = false;
 			}
+
+			alert('still here');
+
+			// if (this.lastElementClicked) {
+			// 	console.log('this.lastElementClicked:', this.lastElementClicked);
+			// 	if (this.lastElementClicked.firstElementChild.getAttribute('aria-expanded') === 'true') {
+			// 		// this.dropdownActivated = false;
+			// 		alert('DONT close dialog ');
+			// 		return;
+			// 	} else {
+			// 		alert('CLOSE dialog');
+			// 	}
+			// }
+
+			// if (this.dropdownActivated) {
+			// 	if (this.lastElementClicked) {
+			// 		// console.log('this.lastElementClicked:', this.lastElementClicked);
+			// 		if (this.lastElementClicked.firstElementChild.hasAttribute('aria-activedescendant')) {
+			// 			// this.dropdownActivated = false;
+			// 			return;
+			// 		}
+			// 	}
+			// }
+
+			// const dynamicHostModel: DynamicHostModel = this.dynamicDialogList.find(
+			// 	(innerDynamicHostModel: DynamicHostModel) => {
+			// 		return innerDynamicHostModel.dynamicHostComponent === this.dynamicHostList.last;
+			// 	}
+			// );
+			// if (this.dropdownActivated === false) {
+			// 	if (dynamicHostModel) {
+			// 		const currentDialogComponentInstance = <Dialog>(
+			// 			dynamicHostModel.dynamicHostComponent.currentDialogComponentInstance
+			// 		);
+			// 		currentDialogComponentInstance.onDismiss();
+			// 	}
+			// } else {
+			// 	this.arrClicked.pop();
+			// 	this.dropdownActivated = false;
+			// }
 		}
 	}
 
