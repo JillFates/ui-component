@@ -1,4 +1,4 @@
-<div tdsDraggableDialog [draggable]="modalConfigurationModel.draggable" [draggableHandle]="dialogHeader" [ngClass]="{
+<div tdsDraggableDialog tdsDoubleClick (doubleClick)="onDoubleClick($event)"  [draggable]="modalConfigurationModel.draggable" [draggableHandle]="dialogHeader" [ngClass]="{
         'full-screen-dialog': fullScreen
      }" class="modal dynamic-host-component">
     <div class="modal-dialog {{modalConfigurationModel.modalCustomClass}}" #dialogContainer [ngClass]="{
@@ -30,10 +30,9 @@
                         <fa-icon [icon]="faExpandArrowsAlt"></fa-icon>
                     </button>
                 </ng-template>
-                <h3 class="modal-title" *ngIf="modalConfigurationModel.title">
-                    {{currentDialogComponentInstance.getTitle()}}</h3>
+                <h3 class="modal-title" *ngIf="modalConfigurationModel.title"  [innerHTML]="currentDialogComponentInstance.getTitle()"></h3>
             </div>
-            <div class="modal-body" [ngClass]="{  'modal-no-action-buttons': !showLeftActionButtonsPanel}">
+            <div class="modal-body" [ngClass]="{  'modal-no-action-buttons': !showLeftActionButtonsPanel, 'modal-no-context-buttons': contextButtonsSize <= 0}">
                 <ng-template tdsDynamicDialog></ng-template>
             </div>
             <div class="modal-footer" *ngIf="showContextButtons "
@@ -43,7 +42,7 @@
                         *ngIf="((contextButton.show !== undefined)? contextButton.show() : true) && contextButton.type === dialogButtonType.CONTEXT"
                         icon="{{contextButton.icon}}"
                         [disabled]="contextButton.disabled !== undefined && contextButton.disabled()"
-                        (click)="contextButton.action()">
+                        (click)="contextButton.action()" [tooltipText]="contextButton.tooltipText">
                         {{contextButton.text}}
                     </tds-button>
                 </ng-template>
@@ -54,7 +53,7 @@
                         *ngIf="((actionButton.show !== undefined)? actionButton.show() : true) && actionButton.type === dialogButtonType.ACTION"
                         icon="{{actionButton.icon}}"
                         [disabled]="(actionButton.disabled !== undefined && actionButton.disabled())" [flat]="true"
-                        (click)="actionButton.action()"
+                        (click)="actionButton.action()" [tooltipText]="actionButton.tooltipText"
                         [ngClass]="{'active-button': actionButton.active !== undefined && actionButton.active()}">
                     </tds-button>
                 </ng-template>

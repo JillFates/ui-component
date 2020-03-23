@@ -11,11 +11,11 @@ import {
 	ViewEncapsulation
 } from '@angular/core';
 // Model
-import {DialogButtonModel, DialogButtonType, ModalConfigurationModel, ModalSize} from '../../model/dialog.model';
-import {faExpandArrowsAlt, faCompressArrowsAlt} from '@fortawesome/free-solid-svg-icons';
+import { DialogButtonModel, DialogButtonType, ModalConfigurationModel, ModalSize } from '../../model/dialog.model';
+import { faExpandArrowsAlt, faCompressArrowsAlt } from '@fortawesome/free-solid-svg-icons';
 // Directive
-import {DynamicHostDirective} from '../../directive/dynamic-host.directive';
-import {Dialog} from '../../model/dialog.interface';
+import { DynamicHostDirective } from '../../directive/dynamic-host.directive';
+import { Dialog } from '../../model/dialog.interface';
 
 @Component({
 	selector: 'tds-dynamic-host',
@@ -23,7 +23,7 @@ import {Dialog} from '../../model/dialog.interface';
 	encapsulation: ViewEncapsulation.None,
 	templateUrl: './dynamic-host.component.html',
 })
-export class DynamicHostComponent implements OnInit {
+export class DynamicHostComponent {
 	public modalConfigurationModel = new ModalConfigurationModel();
 	public currentDialogComponentInstance: Dialog;
 	public modalSize = ModalSize;
@@ -38,44 +38,61 @@ export class DynamicHostComponent implements OnInit {
 	// Icons
 	public faExpandArrowsAlt = faExpandArrowsAlt;
 	public faCompressArrowsAlt = faCompressArrowsAlt;
+	// Action Buttons
+	public actionButtonsSize = 0;
+	// Context Buttons
+	public contextButtonsSize = 0;
 
-	@ViewChild(DynamicHostDirective, {static: true}) dynamicContent: DynamicHostDirective;
-	@ViewChild('dialogContainer', {static: true}) dialogContainer: ElementRef;
-	@ViewChild('dialogContent', {static: true}) dialogContent: ElementRef;
+	@ViewChild(DynamicHostDirective, { static: true }) dynamicContent: DynamicHostDirective;
+	@ViewChild('dialogContainer', { static: true }) dialogContainer: ElementRef;
+	@ViewChild('dialogContent', { static: true }) dialogContent: ElementRef;
 
-	constructor(private renderer: Renderer2) {
+	constructor(private renderer: Renderer2) { }
+
+	/**
+	 * Enables all Dialogs actions
+	 */
+	public publishDialog(): void {
+		if (!this.currentDialogComponentInstance) {
+			// if instance is empty, does not show anything
+			this.showActionButtons = this.showContextButtons = this.showLeftActionButtonsPanel = false;
+		} else {
+			// Set the Title
+			this.currentDialogComponentInstance.setTitle(this.modalConfigurationModel.title);
+			// Initial Buttons
+			this.publishButtons();
+
+			if (this.modalConfigurationModel.fullScreen || this.modalConfigurationModel.defaultFullScreen) {
+				this.showFullScreen = true;
+				this.fullScreen = this.modalConfigurationModel.defaultFullScreen;
+			}
+
+			// Listen to any change
+			setInterval(() => this.publishButtons(), 500);
+		}
 	}
 
-	ngOnInit(): void {
-		setTimeout(() => {
-			if (!this.currentDialogComponentInstance) {
-				// if instance is empty, does not show anything
-				this.showActionButtons = this.showContextButtons = this.showLeftActionButtonsPanel = false;
-			} else {
-				// Set the Title
-				this.currentDialogComponentInstance.setTitle(this.modalConfigurationModel.title);
-
-				const actionButtons = this.currentDialogComponentInstance.buttons.filter((button: DialogButtonModel) => {
-					return button.type === DialogButtonType.ACTION;
-				});
-				const contextButtons = this.currentDialogComponentInstance.buttons.filter((button: DialogButtonModel) => {
-					return button.type === DialogButtonType.CONTEXT;
-				});
-
-				if (!actionButtons || actionButtons.length === 0) {
-					this.showLeftActionButtonsPanel = false;
-				} else if (actionButtons && actionButtons.length > 0) {
-					this.showLeftActionButtonsPanel = this.showActionButtons = true;
-				}
-
-				this.showContextButtons = (contextButtons && contextButtons.length > 0);
-
-				if (this.modalConfigurationModel.fullScreen || this.modalConfigurationModel.defaultFullScreen) {
-					this.showFullScreen = true;
-					this.fullScreen = this.modalConfigurationModel.defaultFullScreen;
-				}
-			}
+	/**
+	 * Verify if new actions are coming to the Instance, to show Hide Sections
+	 */
+	public publishButtons(): void {
+		const actionButtons = this.currentDialogComponentInstance.buttons.filter((button: DialogButtonModel) => {
+			return button.type === DialogButtonType.ACTION;
 		});
+		this.actionButtonsSize = actionButtons.length;
+
+		const contextButtons = this.currentDialogComponentInstance.buttons.filter((button: DialogButtonModel) => {
+			return button.type === DialogButtonType.CONTEXT;
+		});
+		this.contextButtonsSize = contextButtons.length;
+
+		if (!actionButtons || actionButtons.length === 0) {
+			this.showLeftActionButtonsPanel = false;
+		} else if (actionButtons && actionButtons.length > 0) {
+			this.showLeftActionButtonsPanel = this.showActionButtons = true;
+		}
+
+		this.showContextButtons = (contextButtons && contextButtons.length > 0);
 	}
 
 	/**
@@ -113,6 +130,19 @@ export class DynamicHostComponent implements OnInit {
 	public onDismiss(): void {
 		if (this.currentDialogComponentInstance) {
 			this.currentDialogComponentInstance.onDismiss();
+		}
+	}
+
+	/**
+	 * On double click in the view notify to the instance
+	 * Can be used by the view to execute custom actions like change from show to edit, etc...
+	 * @param event MouseEvent info where the double click was made
+	 */
+	public onDoubleClick(event: MouseEvent): void {
+		if (this.currentDialogComponentInstance) {
+			if (this.currentDialogComponentInstance.onDoubleClick) {
+				this.currentDialogComponentInstance.onDoubleClick(event);
+			}
 		}
 	}
 }

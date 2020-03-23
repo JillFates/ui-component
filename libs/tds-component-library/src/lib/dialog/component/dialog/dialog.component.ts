@@ -9,6 +9,7 @@ import { DynamicHostComponent } from '../dynamic-host/dynamic-host.component';
 import { DialogEventType } from '../../model/dialog.model';
 import { Dialog } from '../../model/dialog.interface';
 import { DynamicHostModel } from '../../model/dynamic-host.model';
+// Other
 import { Subscription } from 'rxjs';
 
 @Component({
@@ -17,7 +18,7 @@ import { Subscription } from 'rxjs';
 	encapsulation: ViewEncapsulation.None,
 	templateUrl: './dialog.component.html',
 })
-export class DialogComponent implements OnInit, OnDestroy {
+export class DialogComponent implements OnInit, AfterViewInit, OnDestroy {
 	@ViewChildren(DynamicHostComponent) dynamicHostList!: QueryList<DynamicHostComponent>;
 
 	// Contains a list of every available dialog open as an Stack
@@ -41,10 +42,34 @@ export class DialogComponent implements OnInit, OnDestroy {
 	}
 
 	/**
+	 * documentation needed here
+	 * **/
+	ngAfterViewInit(): void {
+		// Wait to be registered
+		this.dynamicHostList.changes.subscribe((dynamicHostComponent: any) => {
+			setTimeout(() => {
+				// We get the lasted change added
+				if (
+					this.newDialog &&
+					dynamicHostComponent &&
+					!dynamicHostComponent.last.currentDialogComponentInstance
+				) {
+					this.newDialog = false;
+					const dynamicHostModel = this.dynamicDialogList[this.dynamicDialogList.length - 1];
+					// Save to the List which host component is attached
+					dynamicHostModel.dynamicHostComponent = this.dynamicHostList.last;
+					this.createComponent(dynamicHostModel);
+				}
+			});
+		});
+	}
+
+	/**
 	 * Register the event, so it can be listen to on open events or clear current instance
 	 */
 	public registerDialog(): void {
 		this.eventService.on(DialogEventType.OPEN, (dialogModel: any) => {
+			this.newDialog = true;
 			// We initialize the Model with the incoming Model event
 			const dynamicHostModel: DynamicHostModel = {
 				dialogModel: dialogModel.event,
@@ -53,13 +78,6 @@ export class DialogComponent implements OnInit, OnDestroy {
 
 			// We add a new Empty element to the dynamicDialogList
 			this.dynamicDialogList.push(dynamicHostModel);
-			// Wait a millisecond to be registered
-			setTimeout(() => {
-				// We get the lasted change added
-				// Save to the List which host component is attached
-				dynamicHostModel.dynamicHostComponent = this.dynamicHostList.last;
-				this.createComponent(dynamicHostModel);
-			});
 		});
 	}
 
@@ -135,26 +153,40 @@ export class DialogComponent implements OnInit, OnDestroy {
 					}
 				});
 			}
+
 			setTimeout(() => {
+				dynamicHostModel.dynamicHostComponent.publishDialog();
 				dynamicHostModel.instantiated = true;
+
+				this.setupFocus(currentViewContainerRef);
 			});
+
 		} catch (e) {
 			console.error("Dialog can't be instantiated/created", e);
 		}
 	}
 
 	/**
-	 * Function that does a null check and undefined check
-	 */
-	private nullCheck(objectNode: any[]): boolean {
-		let truthy = true;
-		for (let i = 0; i < objectNode.length; ++i) {
-			if (!(objectNode[i] !== null || objectNode[i] !== undefined)) {
-				truthy = false;
-				break;
+	 * This method will help to setup the focus to the first input, placing the cursor indicator
+	 * **/
+	private setupFocus(currentViewContainerRef: any): void {
+		setTimeout(() => {
+			if (currentViewContainerRef.element.nativeElement.nextSibling) {
+				if (currentViewContainerRef.element.nativeElement.nextSibling.getElementsByTagName('input')) {
+					if (currentViewContainerRef.element.nativeElement.nextSibling.getElementsByTagName('input').length > 0) {
+						if (currentViewContainerRef.element.nativeElement.nextSibling.getElementsByTagName('input')[0]) {
+							this.renderer.setAttribute(
+								currentViewContainerRef.element.nativeElement.nextSibling.getElementsByTagName('input')[0],
+								'tabindex',
+								'0'
+							);
+							currentViewContainerRef.element.nativeElement.nextSibling.getElementsByTagName('input')[0].focus();
+							this.dropdownActivated = false;
+						}
+					}
+				}
 			}
-		}
-		return truthy;
+		}, 1000);
 	}
 
 	/**
@@ -294,7 +326,12 @@ export class DialogComponent implements OnInit, OnDestroy {
 	private showHideBackgrounds(): void {
 		this.dynamicHostList.forEach((dynamicHostComponent: DynamicHostComponent, index) => {
 			dynamicHostComponent.modalConfigurationModel.showBackground = dynamicHostComponent.modalConfigurationModel.getDefaultShowBackground();
-			if (index < this.dynamicHostList.length - 1) {
+
+			const firstDynamicHostComponent: DynamicHostComponent = this.dynamicHostList.first;
+
+			if (firstDynamicHostComponent === dynamicHostComponent) {
+				dynamicHostComponent.modalConfigurationModel.showBackground = true;
+			} else {
 				dynamicHostComponent.modalConfigurationModel.showBackground = false;
 			}
 		});

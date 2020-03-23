@@ -81,7 +81,8 @@
       border: solid 1px $color-head;
       border-width: 0 1px 0 0;
 
-      .btn.btn-link {
+      .btn.btn-link,
+      .btn.btn-link a{
         color: $color-black !important;
         height: 40px !important;
         width: 40px;
@@ -94,7 +95,8 @@
       }
 
       .active-button {
-        .btn.btn-link {
+        .btn.btn-link,
+        .btn.btn-link a {
           color: white !important;
           border-radius: 0px;
           background: $color-active-dark-1;

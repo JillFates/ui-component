@@ -11,13 +11,20 @@
       true,
       "check-space"
     ],
-    "completed-docs": [true, "functions", "methods"],
+    "completed-docs": [
+      true,
+      "functions",
+      "methods"
+    ],
     "deprecation": {
       "severity": "warn"
     },
     "curly": true,
     "forin": true,
-    "import-blacklist": [true, "rxjs/Rx"],
+    "import-blacklist": [
+      true,
+      "rxjs/Rx"
+    ],
     "indent": [
       true,
       "tabs",
@@ -42,15 +49,28 @@
     ],
     "no-arg": true,
     "no-bitwise": true,
-    "no-consecutive-blank-lines": [true, 1],
-    "no-console": [true, "debug", "info", "time", "timeEnd", "trace"],
+    "no-consecutive-blank-lines": [
+      true,
+      1
+    ],
+    "no-console": [
+      true,
+      "debug",
+      "info",
+      "time",
+      "timeEnd",
+      "trace"
+    ],
     "no-construct": true,
     "no-debugger": true,
     "no-duplicate-super": true,
     "no-empty": true,
     "no-empty-interface": true,
     "no-eval": true,
-    "no-inferrable-types": [true, "ignore-params"],
+    "no-inferrable-types": [
+      true,
+      "ignore-params"
+    ],
     "no-misused-new": true,
     "no-non-null-assertion": true,
     "no-shadowed-variable": true,
@@ -65,7 +85,6 @@
       true,
       "check-open-brace",
       "check-catch",
-      "check-else",
       "check-whitespace"
     ],
     "quotemark": [
@@ -79,8 +98,12 @@
       true,
       "always"
     ],
-    "triple-equals": [true, "allow-null-check"],
-    "typedef": [true,
+    "triple-equals": [
+      true,
+      "allow-null-check"
+    ],
+    "typedef": [
+      true,
       "call-signature",
       "parameter",
       "property-declaration"
@@ -100,7 +123,6 @@
     "whitespace": [
       true,
       "check-branch",
-      "check-decl",
       "check-operator",
       "check-separator",
       "check-type"
@@ -109,14 +131,34 @@
       true,
       {
         "allow": [],
-        "depConstraints": [{
-          "sourceTag": "*",
-          "onlyDependOnLibsWithTags": ["*"]
-        }]
+        "depConstraints": [
+          {
+            "sourceTag": "*",
+            "onlyDependOnLibsWithTags": [
+              "*"
+            ]
+          }
+        ]
       }
     ],
-    "directive-selector": [true, "attribute", ["cv", "app"], "camelCase"],
-    "component-selector": [true, "element", ["cv", "app"], "kebab-case"],
+    "directive-selector": [
+      true,
+      "attribute",
+      [
+        "cv",
+        "app"
+      ],
+      "camelCase"
+    ],
+    "component-selector": [
+      true,
+      "element",
+      [
+        "cv",
+        "app"
+      ],
+      "kebab-case"
+    ],
     "no-conflicting-lifecycle": true,
     "no-input-rename": true,
     "no-inputs-metadata-property": true,
