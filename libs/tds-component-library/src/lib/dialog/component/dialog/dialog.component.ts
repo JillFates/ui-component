@@ -104,13 +104,13 @@ export class DialogComponent implements OnInit, OnDestroy {
 
 			// Emits on Success
 			if (currentDialogComponentInstance.successEvent) {
-				this.dialogService.activatedDropdown.subscribe(res => {
-					console.log('res:' + res);
-					this.dropdownActivated = res;
-				});
+				
 				currentDialogComponentInstance.successEvent.subscribe(result => {
-
-					if (this.dropdownActivated) {
+					this.dropdownSub = this.dialogService.activatedDropdown.subscribe(res => {
+						console.log('res:' + res);
+						this.dropdownActivated = res;
+					});
+					if (this.dropdownActivated === true) {
 						this.renderer.setAttribute(
 							this.lastElementClicked,
 							'tabindex',
@@ -118,12 +118,13 @@ export class DialogComponent implements OnInit, OnDestroy {
 						);
 						this.lastElementClicked.focus();
 						this.dropdownActivated = false;
+						this.dialogService.activatedDropdown.next(false);
 						return;
 					} else {
-						if (this.dropdownActivated && this.dialogEscape) {
+						if (this.dropdownActivated === false) {
 							dynamicHostModel.dialogModel.observable.next(result);
 							dynamicHostModel.dialogModel.observable.complete();
-							alert('completed');
+							console.log('completed');
 							// Last element of the array only
 							this.dynamicDialogList.pop();
 							setTimeout(() => {
@@ -179,10 +180,12 @@ export class DialogComponent implements OnInit, OnDestroy {
 	 */
 	@HostListener('document:click', ['$event'])
 	public onClicker(event: any): void {
-		console.log('click');
 		let isDone = false;
+		let dropdownInterval = null;
 		this.dropdownActivated = false;
+
 		this.popFromArray();
+
 		const pushIsDone = (currentElement) => {
 			this.pushToArray(event.target.tagName);
 			this.dropdownActivated = true;
@@ -190,9 +193,23 @@ export class DialogComponent implements OnInit, OnDestroy {
 			this.lastElementClicked = currentElement;
 		};
 
+		const startDropdownInterval = () => {
+			const trackDropdown = () => {
+				console.log('start interval');
+				this.dialogService.activatedDropdown.next(true);
+				if (event.target.parentNode.getAttribute('aria-expanded') === 'false') {
+					clearInterval(dropdownInterval);
+					console.log('interval cleared');
+					setTimeout(() => {
+						this.popFromArray();
+					}, 1900);
+				}
+			};
+			dropdownInterval = setInterval(trackDropdown.bind(this), 400);
+		};
+
 		if (event.target) {
-			if (event.target.tagName) {
-				// alert(event.target.parentNode.parentNode.parentNode.tagName);
+			if (event.target.tagName) {				
 				// reason for this is because somehow I realized that in Windows escaping the select has to be deliberate, in Mac, it's not. - K
 				if (navigator.platform !== 'MacIntel') {
 					if (event.target.tagName === 'SELECT') {
@@ -202,11 +219,11 @@ export class DialogComponent implements OnInit, OnDestroy {
 					pushIsDone(event.target);
 				} else if (event.target.parentNode) {
 					if (event.target.parentNode.parentNode) {
-						if (event.target.parentNode.parentNode.tagName === 'KENDO-DROPDOWNLIST') {
-							// console.log(event.target.parentNode.getAttribute('aria-expanded'));
+						if (event.target.parentNode.parentNode.tagName === 'KENDO-DROPDOWNLIST') {							
 							console.log('here 1');
-							console.log(event.target.parentNode.getAttribute('aria-expanded') === 'true');
-
+							if (event.target.parentNode.getAttribute('aria-expanded') === 'true') { 
+								startDropdownInterval();
+							}							
 							pushIsDone(event.target.parentNode.parentNode);
 						} else if (event.target.parentNode.parentNode.parentNode) {
 							if (event.target.parentNode.parentNode.parentNode.tagName === 'KENDO-DROPDOWNLIST') {
@@ -242,8 +259,10 @@ export class DialogComponent implements OnInit, OnDestroy {
 	@HostListener('document:keydown.escape', ['$event']) onKeydownHandler(event: KeyboardEvent): void {
 		if (event.key === 'Escape' || event.code === 'Escape') {
 			this.dialogEscape = true;
-			alert('this.dropdownActivated:' + this.dropdownActivated);
-			if (this.dropdownActivated) {
+			this.dropdownSub = this.dialogService.activatedDropdown.subscribe(res => { 
+				this.dropdownActivated = res;
+			});
+			if (this.dropdownActivated === true) {
 				this.renderer.setAttribute(
 					this.lastElementClicked,
 					'tabindex',
@@ -252,7 +271,7 @@ export class DialogComponent implements OnInit, OnDestroy {
 				this.lastElementClicked.focus();
 				this.dropdownActivated = false;
 				return;
-			} else { // dropdown not active
+			} else { 
 				const dynamicHostModel: DynamicHostModel = this.dynamicDialogList.find(
 					(innerDynamicHostModel: DynamicHostModel) => {
 						return innerDynamicHostModel.dynamicHostComponent === this.dynamicHostList.last;
@@ -266,45 +285,6 @@ export class DialogComponent implements OnInit, OnDestroy {
 				}
 			}
 
-			alert('still here');
-
-			// if (this.lastElementClicked) {
-			// 	console.log('this.lastElementClicked:', this.lastElementClicked);
-			// 	if (this.lastElementClicked.firstElementChild.getAttribute('aria-expanded') === 'true') {
-			// 		// this.dropdownActivated = false;
-			// 		alert('DONT close dialog ');
-			// 		return;
-			// 	} else {
-			// 		alert('CLOSE dialog');
-			// 	}
-			// }
-
-			// if (this.dropdownActivated) {
-			// 	if (this.lastElementClicked) {
-			// 		// console.log('this.lastElementClicked:', this.lastElementClicked);
-			// 		if (this.lastElementClicked.firstElementChild.hasAttribute('aria-activedescendant')) {
-			// 			// this.dropdownActivated = false;
-			// 			return;
-			// 		}
-			// 	}
-			// }
-
-			// const dynamicHostModel: DynamicHostModel = this.dynamicDialogList.find(
-			// 	(innerDynamicHostModel: DynamicHostModel) => {
-			// 		return innerDynamicHostModel.dynamicHostComponent === this.dynamicHostList.last;
-			// 	}
-			// );
-			// if (this.dropdownActivated === false) {
-			// 	if (dynamicHostModel) {
-			// 		const currentDialogComponentInstance = <Dialog>(
-			// 			dynamicHostModel.dynamicHostComponent.currentDialogComponentInstance
-			// 		);
-			// 		currentDialogComponentInstance.onDismiss();
-			// 	}
-			// } else {
-			// 	this.arrClicked.pop();
-			// 	this.dropdownActivated = false;
-			// }
 		}
 	}
 
