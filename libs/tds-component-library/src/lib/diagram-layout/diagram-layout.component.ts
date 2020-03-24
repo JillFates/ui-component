@@ -336,6 +336,12 @@ export class DiagramLayoutComponent implements OnChanges, OnInit, AfterViewInit,
 	 * Diagram listeners to be used for custom functionality
 	 */
 	diagramListeners(): void {
+		this.diagram.addDiagramListener(DiagramEvent.INITIAL_ANIMATION_STARTING, () => {
+			this.initialAnimationStarting.emit();
+		});
+		this.diagram.addDiagramListener(DiagramEvent.LAYOUT_COMPLETED, () => {
+			this.layoutCompleted.emit();
+		});
 		this.diagram.addDiagramListener(DiagramEvent.INITIAL_LAYOUT_COMPLETED, e => {
 			if (this.data && (this.isExpandable || (!e.diagram.nodeTemplate['isTreeExpanded']))
 				&& e.diagram.layout instanceof TreeLayout) {
