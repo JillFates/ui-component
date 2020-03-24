@@ -85,6 +85,8 @@ export class DiagramLayoutComponent implements OnChanges, OnInit, AfterViewInit,
 	@Output() ctxMenuActionDispatched: EventEmitter<any> = new EventEmitter<any>();
 	@Output() expandActionDispatched: EventEmitter<void> = new EventEmitter<void>();
 	@Output() diagramClicked: EventEmitter<void> = new EventEmitter<void>();
+	@Output() initialAnimationStarting: EventEmitter<void> = new EventEmitter<void>();
+	@Output() layoutCompleted: EventEmitter<void> = new EventEmitter<void>();
 	@ViewChild('diagramContainer', {static: false}) diagramContainer: ElementRef;
 	@ViewChild('tdsCtxMenu', {static: false}) tdsCtxMenu: TdsContextMenuComponent;
 	@ViewChild('overviewContainer', {static: false}) overviewContainer: ElementRef;
@@ -255,6 +257,7 @@ export class DiagramLayoutComponent implements OnChanges, OnInit, AfterViewInit,
 		if (!this.model) { return; }
 		const extraDiagramProperties = this.data.extras;
 		this.diagram.model.nodeDataArray = [];
+		this.diagramListeners();
 
 		const layoutTemplates = {
 			layout: this.setLayout(),
@@ -285,7 +288,6 @@ export class DiagramLayoutComponent implements OnChanges, OnInit, AfterViewInit,
 		this.diagramAvailable = true;
 		this.overrideMouseWheel();
 		this.overviewTemplate();
-		this.diagramListeners();
 		this.overrideDoubleClick();
 
 		this.diagram.zoomToFit();
@@ -334,6 +336,12 @@ export class DiagramLayoutComponent implements OnChanges, OnInit, AfterViewInit,
 	 * Diagram listeners to be used for custom functionality
 	 */
 	diagramListeners(): void {
+		this.diagram.addDiagramListener(DiagramEvent.INITIAL_ANIMATION_STARTING, () => {
+			this.initialAnimationStarting.emit();
+		});
+		this.diagram.addDiagramListener(DiagramEvent.LAYOUT_COMPLETED, () => {
+			this.layoutCompleted.emit();
+		});
 		this.diagram.addDiagramListener(DiagramEvent.INITIAL_LAYOUT_COMPLETED, e => {
 			if (this.data && (this.isExpandable || (!e.diagram.nodeTemplate['isTreeExpanded']))
 				&& e.diagram.layout instanceof TreeLayout) {
