@@ -1,6 +1,16 @@
 import { DialogService } from './../../service/dialog.service';
 // Angular
-import { Component, HostListener, QueryList, ViewChildren, ViewEncapsulation, OnInit, OnDestroy, Renderer2 } from '@angular/core';
+import {
+	Component,
+	HostListener,
+	QueryList,
+	ViewChildren,
+	ViewEncapsulation,
+	OnInit,
+	OnDestroy,
+	AfterViewInit,
+	Renderer2
+} from '@angular/core';
 // Service
 import { EventService } from '../../../service/event-service/event.service';
 // Component
@@ -124,9 +134,9 @@ export class DialogComponent implements OnInit, AfterViewInit, OnDestroy {
 			if (currentDialogComponentInstance.successEvent) {
 				
 				currentDialogComponentInstance.successEvent.subscribe(result => {
-					this.dropdownSub = this.dialogService.activatedDropdown.subscribe(res => {
-						console.log('res:' + res);
+					this.dropdownSub = this.dialogService.activatedDropdown.subscribe(res => {						
 						this.dropdownActivated = res;
+						this.dropdownSub.unsubscribe();
 					});
 					if (this.dropdownActivated === true) {
 						this.renderer.setAttribute(
@@ -214,6 +224,8 @@ export class DialogComponent implements OnInit, AfterViewInit, OnDestroy {
 	public onClicker(event: any): void {
 		let isDone = false;
 		let dropdownInterval = null;
+		let ki_calendarDropdownInterval = null;
+		let searchBarInterval = null;
 		this.dropdownActivated = false;
 
 		this.popFromArray();
@@ -226,21 +238,61 @@ export class DialogComponent implements OnInit, AfterViewInit, OnDestroy {
 		};
 
 		const startDropdownInterval = () => {
-			const trackDropdown = () => {
-				console.log('start interval');
+			const trackDropdown = () => {				
 				this.dialogService.activatedDropdown.next(true);
 				if (event.target.parentNode.getAttribute('aria-expanded') === 'false') {
-					clearInterval(dropdownInterval);
-					console.log('interval cleared');
+					clearInterval(dropdownInterval);					
 					setTimeout(() => {
 						this.popFromArray();
-					}, 1900);
+					}, 1000);
 				}
 			};
 			dropdownInterval = setInterval(trackDropdown.bind(this), 400);
 		};
 
+		const startKICalendarDropdownInterval = () => {
+			const trackDropdown = () => {
+				this.dialogService.activatedDropdown.next(true);
+				if (document.getElementsByTagName('kendo-popup').length === 0) { 
+					clearInterval(ki_calendarDropdownInterval);
+					setTimeout(() => {
+						this.popFromArray();
+					}, 1000);
+				}
+			};
+			ki_calendarDropdownInterval = setInterval(trackDropdown.bind(this), 400);
+		};
+
+		const startSearchBarInterval = () => {
+			const trackDropdown = () => {
+				this.dialogService.activatedDropdown.next(true);
+				if (event.target.parentNode.parentNode.firstChild.getAttribute('ng-reflect-popup-open') === 'false') {
+					clearInterval(searchBarInterval);
+					setTimeout(() => {
+						this.popFromArray();
+					}, 1000);
+				}
+			};
+			searchBarInterval = setInterval(trackDropdown.bind(this), 400);
+		};
+
 		if (event.target) {
+
+			if (event.target.parentNode) {
+				if (event.target.parentNode.previousElementSibling) {
+					if (event.target.parentNode.previousElementSibling.tagName) {
+						if (event.target.parentNode.previousElementSibling.tagName === 'KENDO-DATEINPUT') {
+							if (document.getElementsByTagName('kendo-popup')) {
+								if (document.getElementsByTagName('kendo-popup').length > 0) {
+									startKICalendarDropdownInterval();
+									pushIsDone(event.target);
+								}
+							}	
+						}		
+					}
+				}
+			} 
+			
 			if (event.target.tagName) {				
 				// reason for this is because somehow I realized that in Windows escaping the select has to be deliberate, in Mac, it's not. - K
 				if (navigator.platform !== 'MacIntel') {
@@ -252,35 +304,32 @@ export class DialogComponent implements OnInit, AfterViewInit, OnDestroy {
 				} else if (event.target.parentNode) {
 					if (event.target.parentNode.parentNode) {
 						if (event.target.parentNode.parentNode.tagName === 'KENDO-DROPDOWNLIST') {							
-							console.log('here 1');
 							if (event.target.parentNode.getAttribute('aria-expanded') === 'true') { 
 								startDropdownInterval();
 							}							
 							pushIsDone(event.target.parentNode.parentNode);
 						} else if (event.target.parentNode.parentNode.parentNode) {
 							if (event.target.parentNode.parentNode.parentNode.tagName === 'KENDO-DROPDOWNLIST') {
-								console.log('kendo 2');
 								pushIsDone(event.target.parentNode.parentNode.parentNode);
+							}
+						}
+
+						if (event.target.parentNode.parentNode.firstChild) {
+							if (event.target.parentNode.parentNode.firstChild.tagName) {
+								if (event.target.parentNode.parentNode.firstChild.tagName === 'KENDO-SEARCHBAR') {									
+									if (event.target.parentNode.parentNode.firstChild.getAttribute('ng-reflect-popup-open')) {
+										if (event.target.parentNode.parentNode.firstChild.getAttribute('ng-reflect-popup-open') === 'true') {
+											startSearchBarInterval();
+											pushIsDone(event.target.parentNode.parentNode.firstChild);
+										}
+									}
+								}
 							}
 						}
 					}
 				}
 			}
 
-			// if (isDone === false) {
-			// 	if (event.target.parentNode) {
-			// 		if (event.target.parentNode.parentNode) {
-			// 			if (event.target.parentNode.parentNode.tagName) {
-			// 				if (event.target.parentNode.parentNode.tagName === 'KENDO-DROPDOWNLIST') {
-			// 					this.pushToArray(event.target.tagName);
-			// 					this.dropdownActivated = true;
-			// 				} else {
-			// 					this.popFromArray();
-			// 				}
-			// 			}
-			// 		}
-			// 	}
-			// }
 		}
 	}
 
