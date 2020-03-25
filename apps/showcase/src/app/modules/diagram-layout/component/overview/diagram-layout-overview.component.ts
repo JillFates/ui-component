@@ -27,7 +27,9 @@ import {IDiagramLayoutHelper} from '../../../../../../../../libs/tds-component-l
 							[hideExpand]="false"
 							[isExpandable]="true"
 							[initialExpandLevel]="3"
-							(expandActionDispatched)="expandActionDispatched()"></tds-lib-diagram-layout>
+							(expandActionDispatched)="expandActionDispatched()"
+							(initialAnimationStarting)="diagramInit()"
+							(diagramAnimationFinished)="diagramFinish()"></tds-lib-diagram-layout>
 					</div>
 				</tds-card>
 			</div>
@@ -88,6 +90,20 @@ export class DiagramLayoutOverviewComponent {
 				}
 			})
 		);
+	}
+
+	/**
+	 * diagram animation is starting
+	 */
+	diagramInit(): void {
+		console.log('gif init');
+	}
+
+	/**
+	 * diagram animation has finished
+	 */
+	diagramFinish(): void {
+		console.log('gif completed');
 	}
 
 	/**
