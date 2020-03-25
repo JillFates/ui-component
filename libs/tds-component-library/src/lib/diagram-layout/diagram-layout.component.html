@@ -18,6 +18,8 @@
 						role="tooltip"
 						aria-haspopup="true"
 						[style.textAlign]="'center'"
+						(mouseleave)="hideBtnTooltip($event)"
+						(mouseenter)="showBtnTooltip($event)"
 						*ngIf="false">
 					<fa-icon [icon]="faIcons.faCog" size="lg"></fa-icon>
 					<span class="tooltip-content">Configuration</span>
@@ -26,6 +28,8 @@
 						class="btn tooltip tooltip-md tooltip-top-left graph-control-btn"
 						*ngIf="showCollapseBtn"
 						(click)="expand = !expand; expandAll()"
+						(mouseleave)="hideBtnTooltip($event)"
+						(mouseenter)="showBtnTooltip($event)"
 						role="tooltip"
 						aria-haspopup="true"
 						[style.textAlign]="'center'">
@@ -35,6 +39,8 @@
 				<button
 						class="btn tooltip tooltip-xs tooltip-top-left graph-control-btn"
 						(click)="zoomIn()"
+						(mouseleave)="hideBtnTooltip($event)"
+						(mouseenter)="showBtnTooltip($event)"
 						role="tooltip"
 						aria-haspopup="true"
 						[style.textAlign]="'center'">
@@ -44,6 +50,8 @@
 				<button
 						class="btn tooltip tooltip-xs tooltip-top-left graph-control-btn"
 						(click)="zoomOut()"
+						(mouseleave)="hideBtnTooltip($event)"
+						(mouseenter)="showBtnTooltip($event)"
 						role="tooltip"
 						aria-haspopup="true"
 						[style.textAlign]="'center'">

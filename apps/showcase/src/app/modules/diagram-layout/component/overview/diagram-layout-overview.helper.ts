@@ -5,7 +5,7 @@ import {IDiagramLayoutHelper} from '../../../../../../../../libs/tds-component-l
 
 export class DiagramLayoutOverviewHelper implements IDiagramLayoutHelper {
 
-	constructor() {
+	constructor(private params?: any) {
 		// Constructor
 	}
 
@@ -443,7 +443,7 @@ export class DiagramLayoutOverviewHelper implements IDiagramLayoutHelper {
 
 		node.add(panel);
 
-		if (opts.isExpandable) {
+		if (this.params.isExpandable) {
 			node.isTreeExpanded = false;
 			const expandButton = GraphObject.make('TreeExpanderButton');
 			node.add(expandButton);
