@@ -324,6 +324,14 @@ export class DiagramLayoutOverviewHelper implements IDiagramLayoutHelper {
 					to: 'q'
 				},
 				{
+					from: 'q',
+					to: 'r'
+				},
+				{
+					from: 'r',
+					to: 'b'
+				},
+				{
 					from: 'c',
 					to: 'r'
 				},
@@ -457,8 +465,9 @@ export class DiagramLayoutOverviewHelper implements IDiagramLayoutHelper {
 	 **/
 	linkTemplate(): Link {
 		const linkTemplate = new Link();
-		linkTemplate.routing = Link.AvoidsNodes;
-		linkTemplate.corner = 2;
+		linkTemplate.routing = Link.Orthogonal;
+		linkTemplate.curve = Link.None;
+		linkTemplate.corner = 40;
 
 		const linkShape = new Shape();
 		linkShape.strokeWidth = 2;
@@ -479,8 +488,9 @@ export class DiagramLayoutOverviewHelper implements IDiagramLayoutHelper {
 	 **/
 	layout(): Layout {
 		const treeLayout = new TreeLayout();
-		treeLayout.angle = 90;
-		treeLayout.layerSpacing = 35;
+		treeLayout.angle = 0;
+		treeLayout.layerSpacing = 100;
+		treeLayout.nodeSpacing = 100;
 		return treeLayout;
 	}
 
