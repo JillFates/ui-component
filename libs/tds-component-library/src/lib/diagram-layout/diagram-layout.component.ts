@@ -824,7 +824,7 @@ export class DiagramLayoutComponent implements OnChanges, OnInit, AfterViewInit,
 	 * Zoom in on the diagram
 	 **/
 	zoomIn(): void {
-		this.diagram.commandHandler.increaseZoom(1);
+		this.diagram.commandHandler.increaseZoom(1.1);
 		const input = new InputEvent();
 		input.control = true;
 		this.shouldUseHighScale();
@@ -855,7 +855,7 @@ export class DiagramLayoutComponent implements OnChanges, OnInit, AfterViewInit,
 	 * Zoom out on the diagram
 	 **/
 	zoomOut(): void {
-		this.diagram.commandHandler.decreaseZoom(0.2);
+		this.diagram.commandHandler.decreaseZoom(0.9);
 		const input = new InputEvent();
 		input.control = true;
 		this.shouldUseMediumScale();
@@ -914,6 +914,41 @@ export class DiagramLayoutComponent implements OnChanges, OnInit, AfterViewInit,
 	 **/
 	clearHighlights(): void {
 		this.diagram.commit(d => d.clearSelection());
+	}
+
+	/**
+	 * hide btn tooltip since native behaviour is not working properly
+	 * when clicking on a button
+	 */
+	hideBtnTooltip(el: any): void {
+		if (el) {
+			let tooltip;
+			for (const e of el.target.children) {
+				if (e.classList.contains('tooltip-content')) {
+					tooltip = e;
+				}
+			}
+			if (tooltip) {
+				this.renderer.setStyle(tooltip, 'display', 'none');
+			}
+		}
+	}
+
+	/**
+	 * show btn tooltip
+	 */
+	showBtnTooltip(el: any): void {
+		if (el) {
+			let tooltip;
+			for (const e of el.target.children) {
+				if (e.classList.contains('tooltip-content')) {
+					tooltip = e;
+				}
+			}
+			if (tooltip) {
+				this.renderer.setStyle(tooltip, 'display', 'block');
+			}
+		}
 	}
 
 	/**

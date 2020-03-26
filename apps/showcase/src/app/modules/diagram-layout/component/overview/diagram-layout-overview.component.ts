@@ -25,7 +25,7 @@ import {IDiagramLayoutHelper} from '../../../../../../../../libs/tds-component-l
 						<tds-lib-diagram-layout
 							[data]="data$ | async"
 							[hideExpand]="false"
-							[isExpandable]="true"
+							[isExpandable]="hasExpandableNodes"
 							[initialExpandLevel]="3"
 							(expandActionDispatched)="expandActionDispatched()"
 							(initialAnimationStarting)="diagramInit()"
@@ -71,8 +71,10 @@ export class DiagramLayoutOverviewComponent {
 	data$: ReplaySubject<any> = new ReplaySubject<any>(1);
 	ctxOpts:  ITdsContextMenuOption;
 	diagramHelper: IDiagramLayoutHelper;
+	hasExpandableNodes: boolean;
 
 	constructor() {
+		this.hasExpandableNodes = true;
 		this.setData();
 	}
 
@@ -80,7 +82,7 @@ export class DiagramLayoutOverviewComponent {
 	 * Sets the example data to be passed down to the diagram layout component
 	 **/
 	setData(): void {
-		this.diagramHelper = new DiagramLayoutOverviewHelper();
+		this.diagramHelper = new DiagramLayoutOverviewHelper({isExpandable: this.hasExpandableNodes});
 		this.data$.next(this.diagramHelper.diagramData({
 				currentUserId: 1,
 				data: null,
