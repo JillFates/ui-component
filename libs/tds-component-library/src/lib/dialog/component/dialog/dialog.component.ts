@@ -167,7 +167,7 @@ export class DialogComponent implements OnInit, AfterViewInit, OnDestroy {
 			setTimeout(() => {
 				dynamicHostModel.dynamicHostComponent.publishDialog();
 				dynamicHostModel.instantiated = true;
-
+								
 				this.setupFocus(currentViewContainerRef);
 			});
 
@@ -180,22 +180,56 @@ export class DialogComponent implements OnInit, AfterViewInit, OnDestroy {
 	 * This method will help to setup the focus to the first input, placing the cursor indicator
 	 * **/
 	private setupFocus(currentViewContainerRef: any): void {
-		setTimeout(() => {
-			if (currentViewContainerRef.element.nativeElement.nextSibling) {
-				if (currentViewContainerRef.element.nativeElement.nextSibling.getElementsByTagName('input')) {
-					if (currentViewContainerRef.element.nativeElement.nextSibling.getElementsByTagName('input').length > 0) {
-						if (currentViewContainerRef.element.nativeElement.nextSibling.getElementsByTagName('input')[0]) {
-							this.renderer.setAttribute(
-								currentViewContainerRef.element.nativeElement.nextSibling.getElementsByTagName('input')[0],
-								'tabindex',
-								'0'
-							);
-							currentViewContainerRef.element.nativeElement.nextSibling.getElementsByTagName('input')[0].focus();
-							this.dropdownActivated = false;
+		setTimeout(() => {			
+			let isFocused = false;
+			if (document.getElementsByTagName('tds-dialog').length > 0) {
+				if (document.getElementsByTagName('tds-dialog')[0].getElementsByClassName('modal-body').length > 0) {
+					if (document.getElementsByTagName('tds-dialog')[0]
+						.getElementsByClassName('modal-body')[0]
+						.getElementsByClassName('tab-content').length > 0) {
+						if (document.getElementsByTagName('tds-dialog')[0]
+							.getElementsByClassName('modal-body')[0]
+							.getElementsByClassName('tab-content')[0]
+							.getElementsByClassName('is-displayed').length > 0) {
+							if (document.getElementsByTagName('tds-dialog')[0]
+								.getElementsByClassName('modal-body')[0]
+								.getElementsByClassName('tab-content')[0]
+								.getElementsByClassName('is-displayed')[0]
+								.getElementsByClassName('clr-input').length > 0) {
+								const found = currentViewContainerRef.element.nativeElement.nextSibling.firstElementChild.children[1].children;
+								for (let i = 0; i < found.length; ++i) {
+									if (found[i].getAttribute('ng-reflect-ng-class') === 'is-displayed active') {
+										this.renderer.setAttribute(
+											found[i].getElementsByClassName('clr-input')[0],
+											'tabindex',
+											'0'
+										);
+										found[i].getElementsByClassName('clr-input')[0].focus();
+										isFocused = true;
+									}
+								}
+								
+							}
 						}
 					}
 				}
-			}
+			} 
+				if (currentViewContainerRef.element.nativeElement.nextSibling && !isFocused) {
+					if (currentViewContainerRef.element.nativeElement.nextSibling.getElementsByTagName('input')) {
+						if (currentViewContainerRef.element.nativeElement.nextSibling.getElementsByTagName('input').length > 0) {
+							if (currentViewContainerRef.element.nativeElement.nextSibling.getElementsByTagName('input')[0]) {
+								this.renderer.setAttribute(
+									currentViewContainerRef.element.nativeElement.nextSibling.getElementsByTagName('input')[0],
+									'tabindex',
+									'0'
+								);
+								currentViewContainerRef.element.nativeElement.nextSibling.getElementsByTagName('input')[0].focus();
+								this.dropdownActivated = false;
+							}
+						}
+					}
+				}	
+
 		}, 1000);
 	}
 
