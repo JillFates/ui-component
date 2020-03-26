@@ -310,7 +310,7 @@ export class DiagramLayoutComponent implements OnChanges, OnInit, AfterViewInit,
 			} else {
 				this.shouldUseMediumScale();
 			}
-			this.setNodeTemplateByScale(newScale, this.diagram.lastInput);
+			this.setNodeTemplateByScale(newScale);
 		};
 	}
 
@@ -455,8 +455,6 @@ export class DiagramLayoutComponent implements OnChanges, OnInit, AfterViewInit,
 
 		const placeholder = new Placeholder();
 
-		// placeholder.background = 'transparent';
-		// placeholder.visible = true;
 		selAdornmentTemplate.add(selAdornmentShape);
 		selAdornmentTemplate.add(placeholder);
 
@@ -605,10 +603,8 @@ export class DiagramLayoutComponent implements OnChanges, OnInit, AfterViewInit,
 	/**
 	 * update node templates depending on the actual scale
 	 * @param {number} scale > actual zooming scale
-	 * @param {InputEvent} inputEvent > triggered event object
 	 **/
-	setNodeTemplateByScale(scale?: number, inputEvent?: InputEvent): void {
-		if (inputEvent.control) {
+	setNodeTemplateByScale(scale?: number): void {
 			if (scale >= HIGH_SCALE
 				&& this.actualNodeTemplate !== NodeTemplateEnum.HIGH_SCALE) {
 				this.actualNodeTemplate = NodeTemplateEnum.HIGH_SCALE;
@@ -624,7 +620,6 @@ export class DiagramLayoutComponent implements OnChanges, OnInit, AfterViewInit,
 				this.actualNodeTemplate = NodeTemplateEnum.LOW_SCALE;
 				this.lowScaleNodeTemplate();
 			}
-		}
 	}
 
 	/**
@@ -825,10 +820,8 @@ export class DiagramLayoutComponent implements OnChanges, OnInit, AfterViewInit,
 	 **/
 	zoomIn(): void {
 		this.diagram.commandHandler.increaseZoom(1.1);
-		const input = new InputEvent();
-		input.control = true;
 		this.shouldUseHighScale();
-		this.setNodeTemplateByScale(this.diagram.scale, input);
+		this.setNodeTemplateByScale(this.diagram.scale);
 	}
 
 	/**
@@ -856,10 +849,8 @@ export class DiagramLayoutComponent implements OnChanges, OnInit, AfterViewInit,
 	 **/
 	zoomOut(): void {
 		this.diagram.commandHandler.decreaseZoom(0.9);
-		const input = new InputEvent();
-		input.control = true;
 		this.shouldUseMediumScale();
-		this.setNodeTemplateByScale(this.diagram.scale, input);
+		this.setNodeTemplateByScale(this.diagram.scale);
 	}
 
 	/**
