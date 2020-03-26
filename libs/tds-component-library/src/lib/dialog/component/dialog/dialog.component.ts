@@ -1,15 +1,15 @@
 import { DialogService } from './../../service/dialog.service';
 // Angular
 import {
-	AfterViewInit,
 	Component,
 	HostListener,
-	OnDestroy,
-	OnInit,
 	QueryList,
 	ViewChildren,
 	ViewEncapsulation,
-	Renderer2,
+	OnInit,
+	OnDestroy,
+	AfterViewInit,
+	Renderer2
 } from '@angular/core';
 // Service
 import { EventService } from '../../../service/event-service/event.service';
@@ -35,6 +35,8 @@ export class DialogComponent implements OnInit, AfterViewInit, OnDestroy {
 	public dynamicDialogList: DynamicHostModel[] = <any>[];
 	public dropdownActivated = false;
 	private arrClicked: string[] = [];
+	private lastElementClicked = null;
+	private dialogEscape = false;
 	public dropdownSub: Subscription;
 	// QueryList does not provides a proper way to get new elements
 	private newDialog = false;
@@ -49,6 +51,9 @@ export class DialogComponent implements OnInit, AfterViewInit, OnDestroy {
 		});
 	}
 
+	/**
+	 * documentation needed here
+	 * **/
 	ngAfterViewInit(): void {
 		// Wait to be registered
 		this.dynamicHostList.changes.subscribe((dynamicHostComponent: any) => {
@@ -127,15 +132,35 @@ export class DialogComponent implements OnInit, AfterViewInit, OnDestroy {
 
 			// Emits on Success
 			if (currentDialogComponentInstance.successEvent) {
+				
 				currentDialogComponentInstance.successEvent.subscribe(result => {
-					dynamicHostModel.dialogModel.observable.next(result);
-					dynamicHostModel.dialogModel.observable.complete();
-					// Last element of the array only
-					this.dynamicDialogList.pop();
-					setTimeout(() => {
-						// After close a Dialog, we show any other background
-						this.showHideBackgrounds();
+					this.dropdownSub = this.dialogService.activatedDropdown.subscribe(res => {						
+						this.dropdownActivated = res;
+						this.dropdownSub.unsubscribe();
 					});
+					if (this.dropdownActivated === true) {
+						this.renderer.setAttribute(
+							this.lastElementClicked,
+							'tabindex',
+							'0'
+						);
+						this.lastElementClicked.focus();
+						this.dropdownActivated = false;
+						this.dialogService.activatedDropdown.next(false);
+						return;
+					} else {
+						if (this.dropdownActivated === false) {
+							dynamicHostModel.dialogModel.observable.next(result);
+							dynamicHostModel.dialogModel.observable.complete();
+							console.log('completed');
+							// Last element of the array only
+							this.dynamicDialogList.pop();
+							setTimeout(() => {
+								// After close a Dialog, we show any other background
+								this.showHideBackgrounds();
+							});
+						}
+					}
 				});
 			}
 
@@ -186,8 +211,10 @@ export class DialogComponent implements OnInit, AfterViewInit, OnDestroy {
 	 * Function that pop the string array of click events
 	 */
 	private popFromArray(): void {
-		this.arrClicked.pop();
-		this.dialogService.activatedDropdown.next(false);
+		if (this.arrClicked.length > 0) {
+			this.arrClicked.pop();
+			this.dialogService.activatedDropdown.next(false);
+		}
 	}
 
 	/**
@@ -196,39 +223,113 @@ export class DialogComponent implements OnInit, AfterViewInit, OnDestroy {
 	@HostListener('document:click', ['$event'])
 	public onClicker(event: any): void {
 		let isDone = false;
+		let dropdownInterval = null;
+		let ki_calendarDropdownInterval = null;
+		let searchBarInterval = null;
+		this.dropdownActivated = false;
 
-		const pushIsDone = () => {
+		this.popFromArray();
+
+		const pushIsDone = (currentElement) => {
 			this.pushToArray(event.target.tagName);
 			this.dropdownActivated = true;
 			isDone = true;
+			this.lastElementClicked = currentElement;
+		};
+
+		const startDropdownInterval = () => {
+			const trackDropdown = () => {				
+				this.dialogService.activatedDropdown.next(true);
+				if (event.target.parentNode.getAttribute('aria-expanded') === 'false') {
+					clearInterval(dropdownInterval);					
+					setTimeout(() => {
+						this.popFromArray();
+					}, 1000);
+				}
+			};
+			dropdownInterval = setInterval(trackDropdown.bind(this), 400);
+		};
+
+		const startKICalendarDropdownInterval = () => {
+			const trackDropdown = () => {
+				this.dialogService.activatedDropdown.next(true);
+				if (document.getElementsByTagName('kendo-popup').length === 0) { 
+					clearInterval(ki_calendarDropdownInterval);
+					setTimeout(() => {
+						this.popFromArray();
+					}, 1000);
+				}
+			};
+			ki_calendarDropdownInterval = setInterval(trackDropdown.bind(this), 400);
+		};
+
+		const startSearchBarInterval = () => {
+			const trackDropdown = () => {
+				this.dialogService.activatedDropdown.next(true);
+				if (event.target.parentNode.parentNode.firstChild.getAttribute('ng-reflect-popup-open') === 'false') {
+					clearInterval(searchBarInterval);
+					setTimeout(() => {
+						this.popFromArray();
+					}, 1000);
+				}
+			};
+			searchBarInterval = setInterval(trackDropdown.bind(this), 400);
 		};
 
 		if (event.target) {
-			if (event.target.tagName) {
+
+			if (event.target.parentNode) {
+				if (event.target.parentNode.previousElementSibling) {
+					if (event.target.parentNode.previousElementSibling.tagName) {
+						if (event.target.parentNode.previousElementSibling.tagName === 'KENDO-DATEINPUT') {
+							if (document.getElementsByTagName('kendo-popup')) {
+								if (document.getElementsByTagName('kendo-popup').length > 0) {
+									startKICalendarDropdownInterval();
+									pushIsDone(event.target);
+								}
+							}	
+						}		
+					}
+				}
+			} 
+			
+			if (event.target.tagName) {				
 				// reason for this is because somehow I realized that in Windows escaping the select has to be deliberate, in Mac, it's not. - K
 				if (navigator.platform !== 'MacIntel') {
 					if (event.target.tagName === 'SELECT') {
-						pushIsDone();
+						pushIsDone(event.target);
 					}
 				} else if (event.target.tagName === 'CLR-ICON') {
-					pushIsDone();
-				}
-			}
-
-			if (isDone === false) {
-				if (event.target.parentNode) {
+					pushIsDone(event.target);
+				} else if (event.target.parentNode) {
 					if (event.target.parentNode.parentNode) {
-						if (event.target.parentNode.parentNode.tagName) {
-							if (event.target.parentNode.parentNode.tagName === 'KENDO-DROPDOWNLIST') {
-								this.pushToArray(event.target.tagName);
-								this.dropdownActivated = true;
-							} else {
-								this.popFromArray();
+						if (event.target.parentNode.parentNode.tagName === 'KENDO-DROPDOWNLIST') {							
+							if (event.target.parentNode.getAttribute('aria-expanded') === 'true') { 
+								startDropdownInterval();
+							}							
+							pushIsDone(event.target.parentNode.parentNode);
+						} else if (event.target.parentNode.parentNode.parentNode) {
+							if (event.target.parentNode.parentNode.parentNode.tagName === 'KENDO-DROPDOWNLIST') {
+								pushIsDone(event.target.parentNode.parentNode.parentNode);
+							}
+						}
+
+						if (event.target.parentNode.parentNode.firstChild) {
+							if (event.target.parentNode.parentNode.firstChild.tagName) {
+								if (event.target.parentNode.parentNode.firstChild.tagName === 'KENDO-SEARCHBAR') {									
+									if (event.target.parentNode.parentNode.firstChild.getAttribute('ng-reflect-popup-open')) {
+										if (event.target.parentNode.parentNode.firstChild.getAttribute('ng-reflect-popup-open') === 'true') {
+											startSearchBarInterval();
+											pushIsDone(event.target.parentNode.parentNode.firstChild);
+										}
+									}
+								}
 							}
 						}
 					}
 				}
 			}
+
 		}
 	}
 
@@ -236,25 +337,35 @@ export class DialogComponent implements OnInit, AfterViewInit, OnDestroy {
 	 * Capture when the Escape happens, only for the latest element created
 	 * @param event
 	 */
-	@HostListener('document:keyup.escape', ['$event']) onKeydownHandler(event: KeyboardEvent): void {
+	@HostListener('document:keydown.escape', ['$event']) onKeydownHandler(event: KeyboardEvent): void {
 		if (event.key === 'Escape' || event.code === 'Escape') {
-
-			const dynamicHostModel: DynamicHostModel = this.dynamicDialogList.find(
-				(innerDynamicHostModel: DynamicHostModel) => {
-					return innerDynamicHostModel.dynamicHostComponent === this.dynamicHostList.last;
-				}
-			);
-			if (this.dropdownActivated === false) {
+			this.dialogEscape = true;
+			this.dropdownSub = this.dialogService.activatedDropdown.subscribe(res => { 
+				this.dropdownActivated = res;
+			});
+			if (this.dropdownActivated === true) {
+				this.renderer.setAttribute(
+					this.lastElementClicked,
+					'tabindex',
+					'0'
+				);
+				this.lastElementClicked.focus();
+				this.dropdownActivated = false;
+				return;
+			} else { 
+				const dynamicHostModel: DynamicHostModel = this.dynamicDialogList.find(
+					(innerDynamicHostModel: DynamicHostModel) => {
+						return innerDynamicHostModel.dynamicHostComponent === this.dynamicHostList.last;
+					}
+				);
 				if (dynamicHostModel) {
 					const currentDialogComponentInstance = <Dialog>(
 						dynamicHostModel.dynamicHostComponent.currentDialogComponentInstance
 					);
 					currentDialogComponentInstance.onDismiss();
 				}
-			} else {
-				this.arrClicked.pop();
-				this.dropdownActivated = false;
 			}
+
 		}
 	}
 

@@ -1,8 +1,8 @@
 /**
  * Define the possible data that a Dialog component can expose
  */
-import {DialogExit, DialogButtonModel, ModalConfigurationModel} from './dialog.model';
-import {EventEmitter} from '@angular/core';
+import { DialogExit, DialogButtonModel, ModalConfigurationModel } from './dialog.model';
+import { EventEmitter } from '@angular/core';
 
 export abstract class Dialog {
 	// Dialog specific data
