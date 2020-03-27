@@ -3,15 +3,7 @@
 @import "../../../node_modules/@clr/ui/clr-ui.min.css";
 
 // Reference to the Kendo SCSS
-@import '../../../node_modules/@progress/kendo-theme-default/scss/grid';
-@import '../../../node_modules/@progress/kendo-theme-default/scss/tabstrip';
-@import '../../../node_modules/@progress/kendo-theme-default/scss/dropdownlist';
-@import '../../../node_modules/@progress/kendo-theme-default/scss/multiselect';
-@import '../../../node_modules/@progress/kendo-theme-default/scss/combobox';
-@import '../../../node_modules/@progress/kendo-theme-default/scss/popup';
-@import '../../../node_modules/@progress/kendo-theme-default/scss/calendar';
-@import "../../../node_modules/@progress/kendo-theme-default/scss/switch";
-@import "../../../node_modules/@progress/kendo-theme-default/scss/editor";
+@import './scss/module/kendo/index';
 
 // Library imports
 @import './scss/variables';
