@@ -27,6 +27,7 @@
               "apps/showcase/src/assets"
             ],
             "styles": [
+              "./node_modules/roboto-fontface/css/roboto/roboto-fontface.css",
               "apps/showcase/src/styles.scss"
             ],
             "scripts": [
