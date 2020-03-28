@@ -62,6 +62,7 @@ const	WAIT_TIME = 1000;
 	styleUrls: ['./diagram-layout.component.scss']
 })
 export class DiagramLayoutComponent implements OnChanges, OnInit, AfterViewInit, OnDestroy {
+	@Input() onZoomApplyTemplates = true;
 	@Input() data: IDiagramData;
 	@Input() layout: Layout;
 	@Input() nodeTemplate: Node;
@@ -816,15 +817,6 @@ export class DiagramLayoutComponent implements OnChanges, OnInit, AfterViewInit,
 	}
 
 	/**
-	 * Zoom in on the diagram
-	 **/
-	zoomIn(): void {
-		this.diagram.commandHandler.increaseZoom(1.1);
-		this.shouldUseHighScale();
-		this.setNodeTemplateByScale(this.diagram.scale);
-	}
-
-	/**
 	 * use high scale if graph is zoomed to fit
 	 **/
 	shouldUseHighScale(): void {
@@ -845,12 +837,25 @@ export class DiagramLayoutComponent implements OnChanges, OnInit, AfterViewInit,
 	}
 
 	/**
+	 * Zoom in on the diagram
+	 **/
+	zoomIn(): void {
+		this.diagram.commandHandler.increaseZoom(1.1);
+		if (this.onZoomApplyTemplates) {
+			this.shouldUseHighScale();
+			this.setNodeTemplateByScale(this.diagram.scale);
+		}
+	}
+
+	/**
 	 * Zoom out on the diagram
 	 **/
 	zoomOut(): void {
 		this.diagram.commandHandler.decreaseZoom(0.9);
-		this.shouldUseMediumScale();
-		this.setNodeTemplateByScale(this.diagram.scale);
+		if (this.onZoomApplyTemplates) {
+			this.shouldUseMediumScale();
+			this.setNodeTemplateByScale(this.diagram.scale);
+		}
 	}
 
 	/**
