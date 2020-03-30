@@ -6,32 +6,35 @@ import { ClarityModule } from '@clr/angular';
 import { DialogRoutingModule } from './../../../dialog/dialog-routing.module';
 import { ReactiveFormsModule } from '@angular/forms';
 import { DialogTooltipComponent } from './dialog-tooltip.component';
-import { TestBed, async } from '@angular/core/testing';
+import {TestBed, async, ComponentFixture} from '@angular/core/testing';
 
 describe('DialogTooltipComponent', () => {
+	let fixture: ComponentFixture<DialogTooltipComponent>;
+	let comp: DialogTooltipComponent;
 	beforeEach(async(() => {
 		TestBed.configureTestingModule({
 			declarations: [DialogTooltipComponent, DialogOverviewComponent, DialogApiComponent],
 			imports: [SharedModule, ClarityModule, DialogRoutingModule, ReactiveFormsModule, BrowserAnimationsModule],
 		}).compileComponents();
 	}));
-	it('should create the Dialog Tooltip Component', () => {
-		const fixture = TestBed.createComponent(DialogTooltipComponent);
-		const app = fixture.componentInstance;
-		expect(app).toBeTruthy();
-	});
-	it('4 buttons should be loaded', () => {
-		const fixture = TestBed.createComponent(DialogTooltipComponent);
+
+	beforeEach(() => {
+		fixture = TestBed.createComponent(DialogTooltipComponent);
+		comp = fixture.debugElement.componentInstance;
 		fixture.detectChanges();
-		const compiled = fixture.nativeElement;
-		const app = fixture.componentInstance;
-		expect(app.buttons.length).toEqual(4);
+	});
+
+	it('should create the Dialog Tooltip Component', () => {
+		expect(comp).toBeTruthy();
+	});
+
+	it('4 buttons should be loaded', () => {
+		fixture.detectChanges();
+		expect(comp.buttons.length).toBeGreaterThanOrEqual(4);
 	});
 
 	it('Close button should show when form is not touched', () => {
-		const fixture = TestBed.createComponent(DialogTooltipComponent);
 		fixture.detectChanges();
-		const app = fixture.componentInstance;
-		expect(() => app.buttons[3].show).toBeTruthy();
+		expect(() => comp.buttons[3].show).toBeTruthy();
 	});
 });
