@@ -223,7 +223,7 @@ export class DialogComponent implements OnInit, AfterViewInit, OnDestroy {
 					}
 				}
 			} 
-			if (currentViewContainerRef.element.nativeElement.nextSibling && !isFocused) {										
+			if (currentViewContainerRef.element.nativeElement.nextSibling && !isFocused) {
 					if (currentViewContainerRef.element.nativeElement.nextSibling.getElementsByTagName('input')) {
 						if (currentViewContainerRef.element.nativeElement.nextSibling.getElementsByTagName('input').length > 0) {
 							if (currentViewContainerRef.element.nativeElement.nextSibling.getElementsByTagName('input')[0]) {
@@ -241,28 +241,7 @@ export class DialogComponent implements OnInit, AfterViewInit, OnDestroy {
 							}
 						}
 					}
-				
-				// if (currentViewContainerRef.element.nativeElement.nextSibling.getElementsByTagName('textarea') && !isFocused) {
-				// 	if (currentViewContainerRef.element.nativeElement.nextSibling.getElementsByTagName('textarea').length > 0) {
-				// 		if (currentViewContainerRef.element.nativeElement.nextSibling.getElementsByTagName('textarea')[0]) {
-				// 			this.renderer.setAttribute(
-				// 				currentViewContainerRef.element.nativeElement.nextSibling.getElementsByTagName('textarea')[0],
-				// 				'tabindex',
-				// 				'0'
-				// 			);
-				// 			currentViewContainerRef.element.nativeElement.nextSibling.getElementsByTagName('textarea')[0].focus();
-				// 			this.dropdownActivated = false;
-				// 			isFocused = true;
-				// 		}
-				// 	}					
-				// }
 			}
-			
-			// if ((document.getElementsByTagName('tds-dialog').length > 0) && (!isFocused)) {
-			// 	if (document.getElementsByTagName('tds-dialog')[0].getElementsByTagName('tds-dynamic-host').length > 0) {
-			// 		document.getElementsByTagName('tds-dialog')[0].getElementsByTagName('tds-dynamic-host').c
-			// 	}
-			// }
 
 			if (!isFocused) {
 				this.renderer.setAttribute(
@@ -274,7 +253,6 @@ export class DialogComponent implements OnInit, AfterViewInit, OnDestroy {
 				this.dropdownActivated = false;
 				isFocused = true;
 			}
-
 		}, 1000);
 	}
 
