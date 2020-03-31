@@ -164,6 +164,14 @@ export class DialogComponent implements OnInit, AfterViewInit, OnDestroy {
 				});
 			}
 
+			if (currentDialogComponentInstance.extraActionEvent) {
+				currentDialogComponentInstance.extraActionEvent.subscribe((eventType: any) => {
+					if (eventType.event === 'focus') {
+						this.setupFocus(currentViewContainerRef);
+					}
+				});
+			}
+
 			setTimeout(() => {
 				dynamicHostModel.dynamicHostComponent.publishDialog();
 				dynamicHostModel.instantiated = true;
