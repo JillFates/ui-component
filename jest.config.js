@@ -23,8 +23,8 @@ module.exports = {
     'default',
     ['./node_modules/jest-html-reporter',
     {
-      pageTitle: 'UI Component test suite result',
-      outputPath: 'test-report/index.html',
+      pageTitle: process.env.JEST_REPORTER_TITLE || 'UI Components test suite results',
+      outputPath: process.env.JEST_REPORTER_OUTPUT_PATH || 'test-report/index.html',
       includeFailureMsg: false
     }]
   ]
