@@ -10,6 +10,7 @@ export abstract class Dialog {
 	// Content is a very specific property that can be used to create custom Confirms
 	public content: any;
 	public successEvent = new EventEmitter<any>();
+	public extraActionEvent = new EventEmitter<any>();
 	// Contains action/context buttons
 	public buttons: DialogButtonModel[] = new Array();
 	// Title
@@ -33,6 +34,13 @@ export abstract class Dialog {
 	public onCancelClose(result: any = {}): void {
 		result.status = DialogExit.CLOSE;
 		this.successEvent.emit(result);
+	}
+
+	/**
+	 * To Emit the event when something needs to be exposed to the Dialog
+	 */
+	public onSetUpFocus(): void {
+		this.extraActionEvent.emit({event: 'focus'});
 	}
 
 	/**
