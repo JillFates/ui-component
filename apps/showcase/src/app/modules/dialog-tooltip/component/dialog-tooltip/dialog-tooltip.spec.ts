@@ -1,20 +1,17 @@
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { DialogApiComponent } from './../../../dialog/component/api/dialog-api.component';
-import { DialogOverviewComponent } from './../../../dialog/component/overview/dialog-overview.component';
 import { SharedModule } from './../../../../shared/shared.module';
 import { ClarityModule } from '@clr/angular';
-import { DialogRoutingModule } from './../../../dialog/dialog-routing.module';
 import { ReactiveFormsModule } from '@angular/forms';
 import { DialogTooltipComponent } from './dialog-tooltip.component';
 import {TestBed, async, ComponentFixture} from '@angular/core/testing';
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 
 describe('DialogTooltipComponent', () => {
 	let fixture: ComponentFixture<DialogTooltipComponent>;
 	let comp: DialogTooltipComponent;
 	beforeEach(async(() => {
 		TestBed.configureTestingModule({
-			declarations: [DialogTooltipComponent, DialogOverviewComponent, DialogApiComponent],
-			imports: [SharedModule, ClarityModule, DialogRoutingModule, ReactiveFormsModule, BrowserAnimationsModule],
+			declarations: [DialogTooltipComponent],
+			imports: [SharedModule, ClarityModule, ReactiveFormsModule, BrowserAnimationsModule],
 		}).compileComponents();
 	}));
 

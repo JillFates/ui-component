@@ -14,7 +14,7 @@
     "package": "npm run buildlib && npm run buildlibcss && npm run packlib",
     "publish": "npm publish dist/libs/tds-component-library/",
     "test": "jest",
-    "test:ci": "jest --onlyChanged",
+    "test:ci": "jest",
     "lint": "nx lint && ng lint",
     "e2e": "ng e2e",
     "affected:apps": "nx affected:apps",
