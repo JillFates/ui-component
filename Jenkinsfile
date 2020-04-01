@@ -49,7 +49,7 @@ podTemplate (
         // }
         //
         stage('Test') {
-            container('node') {
+            container('docker') {
                 sh "npm run test:ci"
             }
         }
