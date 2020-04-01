@@ -35,19 +35,16 @@ describe('Context Menu Tests', () => {
 		expect(testComponent.tdsCtxMenu.data.options.fields).toHaveLength(1);
 		expect(testComponent.tdsCtxMenu.data.options.fields[0]).toBeDefined();
 		expect(testComponent.tdsCtxMenu.data.options.fields[0]).toHaveProperty('label');
-		expect(testComponent.fai.icon).toBeDefined();
 	}));
 
 	@Component({
 		selector: 'tds-test-host-component',
 		template: `<tds-context-menu [data]="data$ | async" #tdsCtxMenu></tds-context-menu>
-			<fa-icon [icon]="['fas', 'fa-folder']" #fai></fa-icon>
 		`
 	})
 	class TestHostComponent {
 		private data$: ReplaySubject<ITdsContextMenuModel> = new ReplaySubject<ITdsContextMenuModel>();
 		@ViewChild('tdsCtxMenu', {static: false}) tdsCtxMenu: TdsContextMenuComponent;
-		@ViewChild('fai', {static: false}) fai: FaIconComponent;
 
 		constructor() {
 			// TestHostcomponent constructor...
