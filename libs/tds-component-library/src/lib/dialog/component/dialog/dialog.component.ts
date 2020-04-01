@@ -1,3 +1,4 @@
+import { EVENT_DIALOG } from './../../model/focus.model';
 import { DialogService } from './../../service/dialog.service';
 // Angular
 import {
@@ -166,7 +167,7 @@ export class DialogComponent implements OnInit, AfterViewInit, OnDestroy {
 
 			if (currentDialogComponentInstance.extraActionEvent) {
 				currentDialogComponentInstance.extraActionEvent.subscribe((eventType: any) => {
-					if (eventType.event === 'focus') {
+					if (eventType.event === EVENT_DIALOG.FOCUS) {
 						this.setupFocus(currentViewContainerRef);
 					}
 				});
@@ -191,7 +192,7 @@ export class DialogComponent implements OnInit, AfterViewInit, OnDestroy {
 		setTimeout(() => {			
 			let isFocused = false;
 			if (document.getElementsByTagName('tds-dialog').length > 0) {
-				if (document.getElementsByTagName('tds-dialog')[0].getElementsByClassName('modal-body').length > 0) {
+				if ((document.getElementsByTagName('tds-dialog')[0].getElementsByClassName('modal-body').length > 0)) {
 					if (document.getElementsByTagName('tds-dialog')[0]
 						.getElementsByClassName('modal-body')[0]
 						.getElementsByClassName('tab-content').length > 0) {
@@ -222,22 +223,36 @@ export class DialogComponent implements OnInit, AfterViewInit, OnDestroy {
 					}
 				}
 			} 
-				if (currentViewContainerRef.element.nativeElement.nextSibling && !isFocused) {
+			if (currentViewContainerRef.element.nativeElement.nextSibling && !isFocused) {
 					if (currentViewContainerRef.element.nativeElement.nextSibling.getElementsByTagName('input')) {
 						if (currentViewContainerRef.element.nativeElement.nextSibling.getElementsByTagName('input').length > 0) {
 							if (currentViewContainerRef.element.nativeElement.nextSibling.getElementsByTagName('input')[0]) {
-								this.renderer.setAttribute(
-									currentViewContainerRef.element.nativeElement.nextSibling.getElementsByTagName('input')[0],
-									'tabindex',
-									'0'
-								);
-								currentViewContainerRef.element.nativeElement.nextSibling.getElementsByTagName('input')[0].focus();
-								this.dropdownActivated = false;
+								if (currentViewContainerRef.element.nativeElement.nextSibling
+									.getElementsByTagName('input')[0].getAttribute('type') !== 'checkbox') {
+									this.renderer.setAttribute(
+										currentViewContainerRef.element.nativeElement.nextSibling.getElementsByTagName('input')[0],
+										'tabindex',
+										'0'
+									);
+									currentViewContainerRef.element.nativeElement.nextSibling.getElementsByTagName('input')[0].focus();
+									this.dropdownActivated = false;
+									isFocused = true;
+								}
 							}
 						}
 					}
-				}	
+			}
 
+			if (!isFocused) {
+				this.renderer.setAttribute(
+					currentViewContainerRef.element.nativeElement.nextSibling.getElementsByTagName('textarea')[0],
+					'tabindex',
+					'0'
+				);
+				currentViewContainerRef.element.nativeElement.nextSibling.getElementsByTagName('textarea')[0].focus();
+				this.dropdownActivated = false;
+				isFocused = true;
+			}
 		}, 1000);
 	}
 
