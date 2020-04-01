@@ -1,3 +1,4 @@
+import { EVENT_DIALOG } from './focus.model';
 /**
  * Define the possible data that a Dialog component can expose
  */
@@ -40,7 +41,7 @@ export abstract class Dialog {
 	 * To Emit the event when something needs to be exposed to the Dialog
 	 */
 	public onSetUpFocus(): void {
-		this.extraActionEvent.emit({event: 'focus'});
+		this.extraActionEvent.emit({event: EVENT_DIALOG.FOCUS});
 	}
 
 	/**
