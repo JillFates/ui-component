@@ -48,11 +48,11 @@ podTemplate (
         //     }
         // }
         //
-        // stage('Test') {
-        //     container('node') {
-        //         sh "npm run test"
-        //     }
-        // }
+        stage('Test') {
+            container('node') {
+                sh "npm run test:ci"
+            }
+        }
         //
         // stage('Lint') {
         //     container('node') {
