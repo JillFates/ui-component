@@ -140,11 +140,13 @@ export class DialogComponent implements OnInit, AfterViewInit, OnDestroy {
 						this.dropdownSub.unsubscribe();
 					});
 					if (this.dropdownActivated === true) {
-						this.renderer.setAttribute(
-							this.lastElementClicked,
-							'tabindex',
-							'0'
-						);
+						if (this.renderer) {
+							this.renderer.setAttribute(
+								this.lastElementClicked,
+								'tabindex',
+								'0'
+							);	
+						}
 						this.lastElementClicked.focus();
 						this.dropdownActivated = false;
 						this.dialogService.activatedDropdown.next(false);
@@ -208,11 +210,13 @@ export class DialogComponent implements OnInit, AfterViewInit, OnDestroy {
 								const found = currentViewContainerRef.element.nativeElement.nextSibling.firstElementChild.children[1].children;
 								for (let i = 0; i < found.length; ++i) {
 									if (found[i].getAttribute('ng-reflect-ng-class') === 'is-displayed active') {
-										this.renderer.setAttribute(
-											found[i].getElementsByClassName('clr-input')[0],
-											'tabindex',
-											'0'
-										);
+										if (this.renderer) {
+											this.renderer.setAttribute(
+												found[i].getElementsByClassName('clr-input')[0],
+												'tabindex',
+												'0'
+											);	
+										}
 										found[i].getElementsByClassName('clr-input')[0].focus();
 										isFocused = true;
 									}
@@ -229,11 +233,13 @@ export class DialogComponent implements OnInit, AfterViewInit, OnDestroy {
 							if (currentViewContainerRef.element.nativeElement.nextSibling.getElementsByTagName('input')[0]) {
 								if (currentViewContainerRef.element.nativeElement.nextSibling
 									.getElementsByTagName('input')[0].getAttribute('type') !== 'checkbox') {
-									this.renderer.setAttribute(
-										currentViewContainerRef.element.nativeElement.nextSibling.getElementsByTagName('input')[0],
-										'tabindex',
-										'0'
-									);
+									if (this.renderer) {
+										this.renderer.setAttribute(
+											currentViewContainerRef.element.nativeElement.nextSibling.getElementsByTagName('input')[0],
+											'tabindex',
+											'0'
+										);	
+									}
 									currentViewContainerRef.element.nativeElement.nextSibling.getElementsByTagName('input')[0].focus();
 									this.dropdownActivated = false;
 									isFocused = true;
@@ -244,11 +250,13 @@ export class DialogComponent implements OnInit, AfterViewInit, OnDestroy {
 			}
 
 			if (!isFocused) {
-				this.renderer.setAttribute(
-					currentViewContainerRef.element.nativeElement.nextSibling.getElementsByTagName('textarea')[0],
-					'tabindex',
-					'0'
-				);
+				if (this.renderer) {
+					this.renderer.setAttribute(
+						currentViewContainerRef.element.nativeElement.nextSibling.getElementsByTagName('textarea')[0],
+						'tabindex',
+						'0'
+					);	
+				}
 				currentViewContainerRef.element.nativeElement.nextSibling.getElementsByTagName('textarea')[0].focus();
 				this.dropdownActivated = false;
 				isFocused = true;
@@ -401,11 +409,13 @@ export class DialogComponent implements OnInit, AfterViewInit, OnDestroy {
 				this.dropdownActivated = res;
 			});
 			if (this.dropdownActivated === true) {
-				this.renderer.setAttribute(
-					this.lastElementClicked,
-					'tabindex',
-					'0'
-				);
+				if (this.renderer) {
+					this.renderer.setAttribute(
+						this.lastElementClicked,
+						'tabindex',
+						'0'
+					);	
+				}
 				this.lastElementClicked.focus();
 				this.dropdownActivated = false;
 				return;
