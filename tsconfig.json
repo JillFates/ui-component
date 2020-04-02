@@ -19,7 +19,8 @@
       "@classvaluation/cv-component-library": [
         "libs/cv-component-library/src/index.ts"
       ]
-    }
+    },
+    "types": ["jest"]
   },
   "exclude": ["node_modules", "tmp"]
 }
