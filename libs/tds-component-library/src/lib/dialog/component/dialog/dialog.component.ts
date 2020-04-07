@@ -376,6 +376,10 @@ export class DialogComponent implements OnInit, AfterViewInit, OnDestroy {
 						} else if (event.target.parentNode.parentNode.parentNode) {
 							if (event.target.parentNode.parentNode.parentNode.tagName === 'KENDO-DROPDOWNLIST') {
 								pushIsDone(event.target.parentNode.parentNode.parentNode);
+							} else if (event.target.parentNode.parentNode.parentNode.nextSibling) {
+								if (event.target.parentNode.parentNode.parentNode.nextSibling.tagName === 'KENDO-DROPDOWNLIST') {
+									pushIsDone(event.target.parentNode.parentNode.parentNode);
+								}
 							}
 						}
 
