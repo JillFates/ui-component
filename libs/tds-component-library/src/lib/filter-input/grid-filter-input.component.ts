@@ -122,10 +122,29 @@ export class GridFilterInputComponent implements AfterViewInit, OnDestroy, OnCha
 				return; // prevent search
 			}
 			clearTimeout(this.typingTimeout);
+			this.value = search;
 			this.typingTimeout = setTimeout(
 				() => this.onFilter(search),
 				SEARCH_QUITE_PERIOD
 			);
+		}
+	}
+
+	/**
+	 * On clipboard cut/paste/copy events trigger filtering as well.
+	 * @param $event
+	 */
+	onClipboardEvent($event: ClipboardEvent): void {
+		$event.preventDefault();
+		const clipboardData = $event.clipboardData;
+		if (clipboardData) {
+			const pastedText = clipboardData.getData('text');
+			if (clipboardData) {
+				if ($event.type === 'cut') {
+					clipboardData.setData('text/plain', this.value as string);
+				}
+				this.onPaste(pastedText);
+			}
 		}
 	}
 
