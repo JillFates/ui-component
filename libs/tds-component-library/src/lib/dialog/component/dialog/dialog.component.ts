@@ -503,7 +503,7 @@ export class DialogComponent implements OnInit, AfterViewInit, OnDestroy {
 
 	@HostListener('document:keyup.tab', ['$event']) onKeyupTabHandler(event: any): void {
 		// TODO rename ee
-		this.ee = null;
+		this.tabbedElementChildren = null;
 		// Check whether target is present on the form
 		const isElementInModal = (event.target.id !== '') ? document.querySelector('.modal-content ' + '#' + event.target.id) : null;
 		let nextElementIndex;
