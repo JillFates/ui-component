@@ -10,8 +10,8 @@
 				 (change)="onFilter($event.target.value)"
 				 [min]="0"
 				 [placeholder]="placeholder || 'Filter'"
-				 input-paste
-				 (onPaste)="onPaste($event)"/>
+				 (paste)="onClipboardEvent($event)"
+				 (cut)="onClipboardEvent($event)"/>
 
 	<!-- date -->
 	<kendo-datepicker *ngIf="filterType === 'date' || filterType === FilterType.date"
@@ -59,8 +59,8 @@
 				 [name]="name"
 				 [value]="value"
 				 [placeholder]="placeholder || 'Filter'"
-				 input-paste
-				 (onPaste)="onPaste($event)"/>
+				 (paste)="onClipboardEvent($event)"
+				 (cut)="onClipboardEvent($event)"/>
 
 	<!-- Tag filtering -->
 	<!-- TODO: Move the asset tag selector component to the library. -->
