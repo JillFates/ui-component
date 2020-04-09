@@ -43,7 +43,7 @@ export class DialogComponent implements OnInit, AfterViewInit, OnDestroy {
 	// QueryList does not provides a proper way to get new elements
 	private newDialog = false;
 	private lastElementTabbed: any;
-	private ee: any;
+	private tabbedElementChildren: any;
 	private zigzagFlow: boolean;
 
 	constructor(private eventService: EventService, private dialogService: DialogService, private renderer: Renderer2) {
@@ -502,7 +502,6 @@ export class DialogComponent implements OnInit, AfterViewInit, OnDestroy {
 	 */
 
 	@HostListener('document:keyup.tab', ['$event']) onKeyupTabHandler(event: any): void {
-		console.log(event);
 		// TODO rename ee
 		this.ee = null;
 		// Check whether target is present on the form
@@ -515,17 +514,14 @@ export class DialogComponent implements OnInit, AfterViewInit, OnDestroy {
 			if (nextElementIndex >= controlCount) {
 				nextElementIndex = 0;
 				this.lastElementTabbed = document.querySelector('.modal-content form [tabindex="0"]');
-			} else {
-				// TODO remove this logic
-				event.target.style.cssText = 'border: 1px solid blue';
 			}
 			const selector = '.modal-content form [tabindex="' + nextElementIndex + '"]';
 			const element = document.querySelector(selector);
 			const elementId = (element) ? document.querySelector(selector).id : null;
 			if (elementId) {
-				this.ee = document.getElementById(elementId).children[0];
-				if (this.ee) {
-					this.ee.focus();
+				this.tabbedElementChildren = document.getElementById(elementId).children[0];
+				if (this.tabbedElementChildren) {
+					this.tabbedElementChildren.focus();
 				} else {
 					document.getElementById(elementId).focus();
 				}
