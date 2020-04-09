@@ -209,7 +209,9 @@ export class DialogComponent implements OnInit, AfterViewInit, OnDestroy {
 								.getElementsByClassName('modal-body')[0]
 								.getElementsByClassName('tab-content')[0]
 								.getElementsByClassName('is-displayed')[0]
-								.getElementsByClassName('clr-input').length > 0) {
+								.getElementsByClassName('clr-input').length > 0
+							&& currentViewContainerRef.element.nativeElement.nextSibling.firstElementChild
+							&& currentViewContainerRef.element.nativeElement.nextSibling.firstElementChild.children[1]) {
 								const found = currentViewContainerRef.element.nativeElement.nextSibling.firstElementChild.children[1].children;
 								for (let i = 0; i < found.length; ++i) {
 									if (found[i].getAttribute('ng-reflect-ng-class') === 'is-displayed active') {
