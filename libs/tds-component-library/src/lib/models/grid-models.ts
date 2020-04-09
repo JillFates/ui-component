@@ -75,6 +75,11 @@ export interface GridSettings {
 	 * Denotes the message shown while loading data.
 	 */
 	loadingMessage?: string;
+
+	/**
+	 * Denotes the message shown when there is no records
+	 */
+	noRecordsMessage?: string;
 }
 
 export interface ColumnHeaderData {

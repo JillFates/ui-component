@@ -54,7 +54,7 @@ export class GridComponent implements OnInit {
 
 		// Initialize the loading message
 		this.gridModel.gridSettings.loadingMessage = this.gridModel.gridSettings.loadingMessage || 'Loading records...';
-
+		this.gridModel.gridSettings.noRecordsMessage = this.gridModel.gridSettings.noRecordsMessage || 'No records available';
 	}
 
 	/**
