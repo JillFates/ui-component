@@ -2,7 +2,9 @@
 // `ng build --prod` replaces `environment.ts` with `environment.prod.ts`.
 // The list of file replacements can be found in `angular.json`.
 export const environment: any = {
-	production: false
+	production: false,
+	JEST_REPORTER_TITLE: 'UI Components Env Test Suite results',
+	JEST_REPORTER_OUTPUT_PATH: 'test-report/index.html'
 };
 /*
  * For easier debugging in development mode, you can import the following file

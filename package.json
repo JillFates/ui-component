@@ -13,7 +13,8 @@
     "packlib": "cd dist/libs/tds-component-library && npm pack",
     "package": "npm run buildlib && npm run buildlibcss && npm run packlib",
     "publish": "npm publish dist/libs/tds-component-library/",
-    "test": "ng test",
+    "test": "jest",
+    "test:ci": "jest",
     "lint": "nx lint && ng lint",
     "e2e": "ng e2e",
     "affected:apps": "nx affected:apps",
@@ -80,6 +81,7 @@
     "zone.js": "^0.9.1"
   },
   "devDependencies": {
+    "@angular-builders/jest": "^9.0.0",
     "@angular-devkit/build-angular": "^0.800.0",
     "@angular-devkit/build-ng-packagr": "~0.800.0",
     "@angular/cli": "8.0.0",
@@ -94,7 +96,9 @@
     "codelyzer": "~5.0.1",
     "husky": "^3.0.3",
     "jest": "24.1.0",
-    "jest-preset-angular": "7.0.0",
+    "jest-html-reporter": "^3.0.0",
+    "jest-preset-angular": "8.0.0",
+    "jest-zone-patch": "0.0.10",
     "ng-packagr": "^5.1.0",
     "sass": "1.26.3",
     "ts-jest": "24.0.0",
@@ -107,5 +111,11 @@
     "hooks": {
       "pre-commit": "npm run lint"
     }
+  },
+  "jest": {
+    "preset": "jest-preset-angular",
+    "setupFilesAfterEnv": [
+      "<rootDir>/setupJest.ts"
+    ]
   }
 }

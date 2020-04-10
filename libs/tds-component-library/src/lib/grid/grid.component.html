@@ -16,6 +16,7 @@
 	[ngClass]="{ 'hide-filter': !showFilters, 'clickable-rows': (gridModel.gridSettings.selectableSettings && gridModel.gridSettings.selectableSettings.enabled)}"
 	class="page-height {{class || ''}}"
 >
+	<ng-template kendoGridNoRecordsTemplate>{{gridModel.gridSettings.noRecordsMessage}}</ng-template>
 	<ng-template kendoGridToolbarTemplate [position]="'top'">
 		<div class="clr-row">
 			<div class="clr-col-12">

@@ -1,4 +1,4 @@
-import {Binding, Diagram, GraphObject, Layout, Link, Margin, Node, Panel, Shape, TextBlock, TreeLayout} from 'gojs';
+import {Binding, Diagram, GraphObject, Layout, Link, Margin, Node, Panel, Shape, Spot, TextBlock, TreeLayout} from 'gojs';
 import {IconModel, IDiagramData} from '../../../../../../../../libs/tds-component-library/src/lib/diagram-layout/model/diagram-data.model';
 import {ITdsContextMenuOption} from '../../../../../../../../libs/tds-component-library/src/lib/context-menu/model/tds-context-menu.model';
 import {IDiagramLayoutHelper} from '../../../../../../../../libs/tds-component-library/src/lib/diagram-layout/model/diagram-layout.helper';
@@ -17,11 +17,14 @@ export class DiagramLayoutOverviewHelper implements IDiagramLayoutHelper {
 			currentUserId: params.currentUserId,
 			ctxMenuOptions: this.contextMenuOptions(),
 			nodeTemplate: this.nodeTemplate({ isExpandable: params.extras && params.extras.isExpandable }),
+			mediumScaleTemplate: this.mediumScaleNodeTemplate(),
+			lowScaleTemplate: this.lowScaleNodeTemplate(),
 			linkTemplate: this.linkTemplate(),
 			layout: this.layout(),
 			rootNode: 'a',
 			extras: !!params.extras && params.extras || this.extras(),
-			events: params && params.events || this.diagramEvents()
+			events: params && params.events || this.diagramEvents(),
+			isRefreshTriggered: params.isRefreshTriggered
 		};
 	}
 
@@ -465,9 +468,11 @@ export class DiagramLayoutOverviewHelper implements IDiagramLayoutHelper {
 	 **/
 	linkTemplate(): Link {
 		const linkTemplate = new Link();
-		linkTemplate.routing = Link.Orthogonal;
-		linkTemplate.curve = Link.None;
-		linkTemplate.corner = 40;
+		linkTemplate.routing = Link.Normal;
+		linkTemplate.curve = Link.Bezier;
+		linkTemplate.corner = 200;
+		linkTemplate.fromEndSegmentLength = 30;
+		linkTemplate.toEndSegmentLength = 30;
 
 		const linkShape = new Shape();
 		linkShape.strokeWidth = 2;
@@ -498,14 +503,80 @@ export class DiagramLayoutOverviewHelper implements IDiagramLayoutHelper {
 	 * Low scale node template
 	 **/
 	lowScaleNodeTemplate(): Node {
-		return null;
+		const node = new Node(Panel.Horizontal);
+		node.margin = new Margin(1, 1, 1, 1);
+
+		const panel = new Panel(Panel.Auto);
+		panel.background = '#fff';
+		panel.padding = new Margin(0, 0, 0, 0);
+
+		const nodeShape = new Shape();
+		nodeShape.figure = 'RoundedRectangle';
+		nodeShape.strokeWidth = 2;
+		nodeShape.stroke = '#ddd';
+		nodeShape.fill = 'white';
+
+		const panelBody = new Panel(Panel.Horizontal);
+		panel.padding = new Margin(0, 0, 0, 0);
+		panel.margin = new Margin(0, 0, 0, 0);
+		const textBlock = new TextBlock();
+		textBlock.stroke = '#333';
+		textBlock.background = 'lightgreen';
+		textBlock.bind(new Binding('text', 'name'));
+		panelBody.add(textBlock);
+
+		panel.add(nodeShape);
+		panel.add(panelBody);
+
+		node.add(panel);
+
+		if (this.params.isExpandable) {
+			node.isTreeExpanded = false;
+			const expandButton = GraphObject.make('TreeExpanderButton');
+			node.add(expandButton);
+		}
+
+		return node;
 	}
 
 	/**
 	 * medium scale node template
 	 **/
 	mediumScaleNodeTemplate(): Node {
-		return null;
+		const node = new Node(Panel.Horizontal);
+		node.margin = new Margin(1, 1, 1, 1);
+
+		const panel = new Panel(Panel.Auto);
+		panel.background = '#fff';
+		panel.padding = new Margin(0, 0, 0, 0);
+
+		const nodeShape = new Shape();
+		nodeShape.figure = 'RoundedRectangle';
+		nodeShape.strokeWidth = 2;
+		nodeShape.stroke = '#ddd';
+		nodeShape.fill = 'white';
+
+		const panelBody = new Panel(Panel.Horizontal);
+		panel.padding = new Margin(0, 0, 0, 0);
+		panel.margin = new Margin(0, 0, 0, 0);
+		const textBlock = new TextBlock();
+		textBlock.stroke = '#333';
+		textBlock.background = 'lightblue';
+		textBlock.bind(new Binding('text', 'name'));
+		panelBody.add(textBlock);
+
+		panel.add(nodeShape);
+		panel.add(panelBody);
+
+		node.add(panel);
+
+		if (this.params.isExpandable) {
+			node.isTreeExpanded = false;
+			const expandButton = GraphObject.make('TreeExpanderButton');
+			node.add(expandButton);
+		}
+
+		return node;
 	}
 
 	/**

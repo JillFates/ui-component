@@ -7,6 +7,11 @@ metadata:
     docker-compose: true
 spec:
   containers:
+    - name: node
+      image: tm-registry.transitionmanager.net/tds-ci/tm-node:latest
+      command:
+      - cat
+      tty: true
     - name: docker
       image: tm-registry.transitionmanager.net/tds-ci/tm-docker-compose:latest
       command:
@@ -42,18 +47,18 @@ podTemplate (
             }
         }
 
-        // stage('Build for Test') {
-        //     container('node') {
-        //         sh "npm i"
-        //     }
-        // }
-        //
-        // stage('Test') {
-        //     container('node') {
-        //         sh "npm run test"
-        //     }
-        // }
-        //
+        stage('Build for Test') {
+            container('node') {
+                sh "npm i"
+            }
+        }
+
+        stage('Test') {
+            container('node') {
+                sh "npm run test:ci"
+            }
+        }
+
         // stage('Lint') {
         //     container('node') {
         //         sh "npm run lint"

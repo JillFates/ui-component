@@ -1,3 +1,4 @@
+import { EVENT_DIALOG } from './../../model/focus.model';
 import { DialogService } from './../../service/dialog.service';
 // Angular
 import {
@@ -65,10 +66,12 @@ export class DialogComponent implements OnInit, AfterViewInit, OnDestroy {
 					!dynamicHostComponent.last.currentDialogComponentInstance
 				) {
 					this.newDialog = false;
-					const dynamicHostModel = this.dynamicDialogList[this.dynamicDialogList.length - 1];
-					// Save to the List which host component is attached
-					dynamicHostModel.dynamicHostComponent = this.dynamicHostList.last;
-					this.createComponent(dynamicHostModel);
+					if (this.dynamicDialogList) {
+						const dynamicHostModel = this.dynamicDialogList[this.dynamicDialogList.length - 1];
+						// Save to the List which host component is attached
+						dynamicHostModel.dynamicHostComponent = this.dynamicHostList.last;
+						this.createComponent(dynamicHostModel);
+					}
 				}
 			});
 		});
@@ -139,20 +142,23 @@ export class DialogComponent implements OnInit, AfterViewInit, OnDestroy {
 						this.dropdownSub.unsubscribe();
 					});
 					if (this.dropdownActivated === true) {
-						this.renderer.setAttribute(
-							this.lastElementClicked,
-							'tabindex',
-							'0'
-						);
-						this.lastElementClicked.focus();
-						this.dropdownActivated = false;
-						this.dialogService.activatedDropdown.next(false);
-						return;
+						if (this.lastElementClicked) {
+							if (this.renderer) {
+								this.renderer.setAttribute(
+									this.lastElementClicked,
+									'tabindex',
+									'0'
+								);	
+							}
+							this.lastElementClicked.focus();
+							this.dropdownActivated = false;
+							this.dialogService.activatedDropdown.next(false);
+							return;	
+						}
 					} else {
 						if (this.dropdownActivated === false) {
 							dynamicHostModel.dialogModel.observable.next(result);
-							dynamicHostModel.dialogModel.observable.complete();
-							console.log('completed');
+							dynamicHostModel.dialogModel.observable.complete();							
 							// Last element of the array only
 							this.dynamicDialogList.pop();
 							setTimeout(() => {
@@ -160,6 +166,14 @@ export class DialogComponent implements OnInit, AfterViewInit, OnDestroy {
 								this.showHideBackgrounds();
 							});
 						}
+					}
+				});
+			}
+
+			if (currentDialogComponentInstance.extraActionEvent) {
+				currentDialogComponentInstance.extraActionEvent.subscribe((eventType: any) => {
+					if (eventType.event === EVENT_DIALOG.FOCUS) {
+						this.setupFocus(currentViewContainerRef);
 					}
 				});
 			}
@@ -183,7 +197,7 @@ export class DialogComponent implements OnInit, AfterViewInit, OnDestroy {
 		setTimeout(() => {			
 			let isFocused = false;
 			if (document.getElementsByTagName('tds-dialog').length > 0) {
-				if (document.getElementsByTagName('tds-dialog')[0].getElementsByClassName('modal-body').length > 0) {
+				if ((document.getElementsByTagName('tds-dialog')[0].getElementsByClassName('modal-body').length > 0)) {
 					if (document.getElementsByTagName('tds-dialog')[0]
 						.getElementsByClassName('modal-body')[0]
 						.getElementsByClassName('tab-content').length > 0) {
@@ -195,17 +209,23 @@ export class DialogComponent implements OnInit, AfterViewInit, OnDestroy {
 								.getElementsByClassName('modal-body')[0]
 								.getElementsByClassName('tab-content')[0]
 								.getElementsByClassName('is-displayed')[0]
-								.getElementsByClassName('clr-input').length > 0) {
+								.getElementsByClassName('clr-input').length > 0
+							&& currentViewContainerRef.element.nativeElement.nextSibling.firstElementChild
+							&& currentViewContainerRef.element.nativeElement.nextSibling.firstElementChild.children[1]) {
 								const found = currentViewContainerRef.element.nativeElement.nextSibling.firstElementChild.children[1].children;
 								for (let i = 0; i < found.length; ++i) {
 									if (found[i].getAttribute('ng-reflect-ng-class') === 'is-displayed active') {
-										this.renderer.setAttribute(
-											found[i].getElementsByClassName('clr-input')[0],
-											'tabindex',
-											'0'
-										);
-										found[i].getElementsByClassName('clr-input')[0].focus();
-										isFocused = true;
+										if (found[i].getElementsByClassName('clr-input')[0]) {
+											if (this.renderer) {
+												this.renderer.setAttribute(
+													found[i].getElementsByClassName('clr-input')[0],
+													'tabindex',
+													'0'
+												);	
+											}
+											found[i].getElementsByClassName('clr-input')[0].focus();
+											isFocused = true;	
+										}
 									}
 								}
 								
@@ -214,22 +234,44 @@ export class DialogComponent implements OnInit, AfterViewInit, OnDestroy {
 					}
 				}
 			} 
-				if (currentViewContainerRef.element.nativeElement.nextSibling && !isFocused) {
+			if (currentViewContainerRef.element.nativeElement.nextSibling && !isFocused) {
 					if (currentViewContainerRef.element.nativeElement.nextSibling.getElementsByTagName('input')) {
 						if (currentViewContainerRef.element.nativeElement.nextSibling.getElementsByTagName('input').length > 0) {
 							if (currentViewContainerRef.element.nativeElement.nextSibling.getElementsByTagName('input')[0]) {
-								this.renderer.setAttribute(
-									currentViewContainerRef.element.nativeElement.nextSibling.getElementsByTagName('input')[0],
-									'tabindex',
-									'0'
-								);
-								currentViewContainerRef.element.nativeElement.nextSibling.getElementsByTagName('input')[0].focus();
-								this.dropdownActivated = false;
+								if (currentViewContainerRef.element.nativeElement.nextSibling
+									.getElementsByTagName('input')[0].getAttribute('type') !== 'checkbox') {
+									if (currentViewContainerRef.element.nativeElement.nextSibling.getElementsByTagName('input')[0]) {
+										if (this.renderer) {
+											this.renderer.setAttribute(
+												currentViewContainerRef.element.nativeElement.nextSibling.getElementsByTagName('input')[0],
+												'tabindex',
+												'0'
+											);	
+										}
+										currentViewContainerRef.element.nativeElement.nextSibling.getElementsByTagName('input')[0].focus();
+										this.dropdownActivated = false;
+										isFocused = true;	
+									}
+								}
 							}
 						}
 					}
-				}	
+			}
 
+			if (!isFocused) {
+				if (currentViewContainerRef.element.nativeElement.nextSibling.getElementsByTagName('textarea')[0]) {
+					if (this.renderer) {
+						this.renderer.setAttribute(
+							currentViewContainerRef.element.nativeElement.nextSibling.getElementsByTagName('textarea')[0],
+							'tabindex',
+							'0'
+						);	
+					}
+					currentViewContainerRef.element.nativeElement.nextSibling.getElementsByTagName('textarea')[0].focus();
+					this.dropdownActivated = false;
+					isFocused = true;	
+				}
+			}
 		}, 1000);
 	}
 
@@ -245,9 +287,11 @@ export class DialogComponent implements OnInit, AfterViewInit, OnDestroy {
 	 * Function that pop the string array of click events
 	 */
 	private popFromArray(): void {
-		if (this.arrClicked.length > 0) {
-			this.arrClicked.pop();
-			this.dialogService.activatedDropdown.next(false);
+		if (this.arrClicked) {
+			if (this.arrClicked.length > 0) {
+				this.arrClicked.pop();
+				this.dialogService.activatedDropdown.next(false);
+			}	
 		}
 	}
 
@@ -287,11 +331,13 @@ export class DialogComponent implements OnInit, AfterViewInit, OnDestroy {
 		const startKICalendarDropdownInterval = () => {
 			const trackDropdown = () => {
 				this.dialogService.activatedDropdown.next(true);
-				if (document.getElementsByTagName('kendo-popup').length === 0) { 
-					clearInterval(ki_calendarDropdownInterval);
-					setTimeout(() => {
-						this.popFromArray();
-					}, 1000);
+				if (document.getElementsByTagName('kendo-popup')) {
+					if (document.getElementsByTagName('kendo-popup').length === 0) { 
+						clearInterval(ki_calendarDropdownInterval);
+						setTimeout(() => {
+							this.popFromArray();
+						}, 1000);
+					}	
 				}
 			};
 			ki_calendarDropdownInterval = setInterval(trackDropdown.bind(this), 400);
@@ -312,49 +358,50 @@ export class DialogComponent implements OnInit, AfterViewInit, OnDestroy {
 
 		if (event.target) {
 
-			if (event.target.parentNode) {
-				if (event.target.parentNode.previousElementSibling) {
-					if (event.target.parentNode.previousElementSibling.tagName) {
-						if (event.target.parentNode.previousElementSibling.tagName === 'KENDO-DATEINPUT') {
-							if (document.getElementsByTagName('kendo-popup')) {
-								if (document.getElementsByTagName('kendo-popup').length > 0) {
-									startKICalendarDropdownInterval();
-									pushIsDone(event.target);
+			if (navigator.platform === 'MacIntel') {
+				if (event.target.parentNode) {
+					if (event.target.parentNode.previousElementSibling) {
+						if (event.target.parentNode.previousElementSibling.tagName) {
+							if (event.target.parentNode.previousElementSibling.tagName === 'KENDO-DATEINPUT') {
+								if (document.getElementsByTagName('kendo-popup')) {
+									if (document.getElementsByTagName('kendo-popup').length > 0) {
+										startKICalendarDropdownInterval();
+										pushIsDone(event.target);
+									}
 								}
-							}	
-						}		
-					}
-				}
-			} 
-			
-			if (event.target.tagName) {				
-				// reason for this is because somehow I realized that in Windows escaping the select has to be deliberate, in Mac, it's not. - K
-				if (navigator.platform !== 'MacIntel') {
-					if (event.target.tagName === 'SELECT') {
-						pushIsDone(event.target);
-					}
-				} else if (event.target.tagName === 'CLR-ICON') {
-					pushIsDone(event.target);
-				} else if (event.target.parentNode) {
-					if (event.target.parentNode.parentNode) {
-						if (event.target.parentNode.parentNode.tagName === 'KENDO-DROPDOWNLIST') {							
-							if (event.target.parentNode.getAttribute('aria-expanded') === 'true') { 
-								startDropdownInterval();
-							}							
-							pushIsDone(event.target.parentNode.parentNode);
-						} else if (event.target.parentNode.parentNode.parentNode) {
-							if (event.target.parentNode.parentNode.parentNode.tagName === 'KENDO-DROPDOWNLIST') {
-								pushIsDone(event.target.parentNode.parentNode.parentNode);
-							}
+							}		
 						}
+					}
+				} 
+			
+				if (event.target.tagName) {									
+					if (event.target.tagName === 'CLR-ICON') {
+						pushIsDone(event.target);
+					} else if (event.target.parentNode) {
+						if (event.target.parentNode.parentNode) {
+							if (event.target.parentNode.parentNode.tagName === 'KENDO-DROPDOWNLIST') {							
+								if (event.target.parentNode.getAttribute('aria-expanded') === 'true') { 
+									startDropdownInterval();
+								}							
+								pushIsDone(event.target.parentNode.parentNode);
+							} else if (event.target.parentNode.parentNode.parentNode) {
+								if (event.target.parentNode.parentNode.parentNode.tagName === 'KENDO-DROPDOWNLIST') {
+									pushIsDone(event.target.parentNode.parentNode.parentNode);
+								} else if (event.target.parentNode.parentNode.parentNode.nextSibling) {
+									if (event.target.parentNode.parentNode.parentNode.nextSibling.tagName === 'KENDO-DROPDOWNLIST') {
+										pushIsDone(event.target.parentNode.parentNode.parentNode);
+									}
+								}
+							}
 
-						if (event.target.parentNode.parentNode.firstChild) {
-							if (event.target.parentNode.parentNode.firstChild.tagName) {
-								if (event.target.parentNode.parentNode.firstChild.tagName === 'KENDO-SEARCHBAR') {									
-									if (event.target.parentNode.parentNode.firstChild.getAttribute('ng-reflect-popup-open')) {
-										if (event.target.parentNode.parentNode.firstChild.getAttribute('ng-reflect-popup-open') === 'true') {
-											startSearchBarInterval();
-											pushIsDone(event.target.parentNode.parentNode.firstChild);
+							if (event.target.parentNode.parentNode.firstChild) {
+								if (event.target.parentNode.parentNode.firstChild.tagName) {
+									if (event.target.parentNode.parentNode.firstChild.tagName === 'KENDO-SEARCHBAR') {									
+										if (event.target.parentNode.parentNode.firstChild.getAttribute('ng-reflect-popup-open')) {
+											if (event.target.parentNode.parentNode.firstChild.getAttribute('ng-reflect-popup-open') === 'true') {
+												startSearchBarInterval();
+												pushIsDone(event.target.parentNode.parentNode.firstChild);
+											}
 										}
 									}
 								}
@@ -362,8 +409,15 @@ export class DialogComponent implements OnInit, AfterViewInit, OnDestroy {
 						}
 					}
 				}
+			} else {
+				if (document.getElementsByTagName('kendo-popup')) {
+					if (document.getElementsByTagName('kendo-popup').length > 0) {
+						startKICalendarDropdownInterval();
+						pushIsDone(event.target);
+					}
+				}	
 			}
-
+			
 		}
 	}
 
@@ -378,14 +432,18 @@ export class DialogComponent implements OnInit, AfterViewInit, OnDestroy {
 				this.dropdownActivated = res;
 			});
 			if (this.dropdownActivated === true) {
-				this.renderer.setAttribute(
-					this.lastElementClicked,
-					'tabindex',
-					'0'
-				);
-				this.lastElementClicked.focus();
-				this.dropdownActivated = false;
-				return;
+				if (this.lastElementClicked) {
+					if (this.renderer) {
+						this.renderer.setAttribute(
+							this.lastElementClicked,
+							'tabindex',
+							'0'
+						);	
+					}
+					this.lastElementClicked.focus();
+					this.dropdownActivated = false;
+					return;	
+				}
 			} else { 
 				const dynamicHostModel: DynamicHostModel = this.dynamicDialogList.find(
 					(innerDynamicHostModel: DynamicHostModel) => {

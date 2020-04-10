@@ -71,6 +71,15 @@ export interface GridSettings {
 	 *Denotes the minimum width of a column in the grid.
 	 */
 	columnMinWidth?: number;
+	/**
+	 * Denotes the message shown while loading data.
+	 */
+	loadingMessage?: string;
+
+	/**
+	 * Denotes the message shown when there is no records
+	 */
+	noRecordsMessage?: string;
 }
 
 export interface ColumnHeaderData {

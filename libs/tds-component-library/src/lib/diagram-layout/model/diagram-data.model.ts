@@ -1,4 +1,4 @@
-import {Node, Link, Layout, EnumValue, DiagramEventName} from 'gojs';
+import {Node, Link, Layout, DiagramEventName} from 'gojs';
 
 export interface IDiagramData {
 	nodeDataArray?: any;
@@ -13,6 +13,7 @@ export interface IDiagramData {
 	rootNode?: number | string;
 	extras?: any;
 	events?: IDiagramEvent[];
+	isRefreshTriggered?: boolean;
 }
 
 export interface ILinkData {

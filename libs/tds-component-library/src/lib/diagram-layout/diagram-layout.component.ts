@@ -62,6 +62,7 @@ const	WAIT_TIME = 1000;
 	styleUrls: ['./diagram-layout.component.scss']
 })
 export class DiagramLayoutComponent implements OnChanges, OnInit, AfterViewInit, OnDestroy {
+	@Input() onZoomApplyTemplates = true;
 	@Input() data: IDiagramData;
 	@Input() layout: Layout;
 	@Input() nodeTemplate: Node;
@@ -289,10 +290,16 @@ export class DiagramLayoutComponent implements OnChanges, OnInit, AfterViewInit,
 		this.overrideMouseWheel();
 		this.overviewTemplate();
 		this.overrideDoubleClick();
+		if (this.data.isRefreshTriggered) {
+			this.setNodeTemplateByScale(this.diagram.scale);
+		}
 
-		this.diagram.zoomToFit();
-		if (this.diagram.initialAutoScale === Diagram.Uniform) {
+		if (this.diagram.initialAutoScale === Diagram.Uniform && !this.data.isRefreshTriggered) {
+			this.diagram.zoomToFit();
 			this.isGraphZoomedToFit = true;
+		}
+		if (this.diagram.scale !== extraDiagramProperties.scale) {
+			this.diagram.scale = extraDiagramProperties.scale;
 		}
 	}
 
@@ -605,21 +612,16 @@ export class DiagramLayoutComponent implements OnChanges, OnInit, AfterViewInit,
 	 * @param {number} scale > actual zooming scale
 	 **/
 	setNodeTemplateByScale(scale?: number): void {
-			if (scale >= HIGH_SCALE
-				&& this.actualNodeTemplate !== NodeTemplateEnum.HIGH_SCALE) {
-				this.actualNodeTemplate = NodeTemplateEnum.HIGH_SCALE;
-				this.highScaleNodeTemplate();
-			}
-			if (scale < HIGH_SCALE && scale > LOW_SCALE
-				&& this.actualNodeTemplate !== NodeTemplateEnum.MEDIUM_SCALE) {
-				this.actualNodeTemplate = NodeTemplateEnum.MEDIUM_SCALE;
-				this.mediumScaleNodeTemplate();
-			}
-			if (scale <= LOW_SCALE
-				&& this.actualNodeTemplate !== NodeTemplateEnum.LOW_SCALE) {
-				this.actualNodeTemplate = NodeTemplateEnum.LOW_SCALE;
-				this.lowScaleNodeTemplate();
-			}
+		if (scale >= HIGH_SCALE) {
+			this.actualNodeTemplate = NodeTemplateEnum.HIGH_SCALE;
+			this.highScaleNodeTemplate();
+		} else if (scale < HIGH_SCALE && scale > LOW_SCALE) {
+			this.actualNodeTemplate = NodeTemplateEnum.MEDIUM_SCALE;
+			this.mediumScaleNodeTemplate();
+		} else if (scale <= LOW_SCALE) {
+			this.actualNodeTemplate = NodeTemplateEnum.LOW_SCALE;
+			this.lowScaleNodeTemplate();
+		}
 	}
 
 	/**
@@ -820,8 +822,21 @@ export class DiagramLayoutComponent implements OnChanges, OnInit, AfterViewInit,
 	 **/
 	zoomIn(): void {
 		this.diagram.commandHandler.increaseZoom(1.1);
-		this.shouldUseHighScale();
-		this.setNodeTemplateByScale(this.diagram.scale);
+		if (this.onZoomApplyTemplates) {
+			this.shouldUseHighScale();
+			this.setNodeTemplateByScale(this.diagram.scale);
+		}
+	}
+
+	/**
+	 * Zoom out on the diagram
+	 **/
+	zoomOut(): void {
+		this.diagram.commandHandler.decreaseZoom(0.9);
+		if (this.onZoomApplyTemplates) {
+			this.shouldUseMediumScale();
+			this.setNodeTemplateByScale(this.diagram.scale);
+		}
 	}
 
 	/**
@@ -830,6 +845,8 @@ export class DiagramLayoutComponent implements OnChanges, OnInit, AfterViewInit,
 	shouldUseHighScale(): void {
 		if (this.isGraphZoomedToFit && this.diagram.scale < HIGH_SCALE) {
 			this.diagram.scale = HIGH_SCALE;
+			this.isGraphZoomedToFit = false;
+		} else {
 			this.isGraphZoomedToFit = false;
 		}
 	}
@@ -841,16 +858,9 @@ export class DiagramLayoutComponent implements OnChanges, OnInit, AfterViewInit,
 		if (this.isGraphZoomedToFit && this.diagram.scale <= LOW_SCALE) {
 			this.diagram.scale = MEDIUM_SCALE;
 			this.isGraphZoomedToFit = false;
+		} else {
+			this.isGraphZoomedToFit = false;
 		}
-	}
-
-	/**
-	 * Zoom out on the diagram
-	 **/
-	zoomOut(): void {
-		this.diagram.commandHandler.decreaseZoom(0.9);
-		this.shouldUseMediumScale();
-		this.setNodeTemplateByScale(this.diagram.scale);
 	}
 
 	/**
