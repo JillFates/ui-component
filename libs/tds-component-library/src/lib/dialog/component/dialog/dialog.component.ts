@@ -524,7 +524,7 @@ export class DialogComponent implements OnInit, AfterViewInit, OnDestroy {
 		// TODO rename ee
 		this.tabbedElementChildren = null;
 		// Check whether target is present on the form
-		const isElementInModal = (event.target.id !== '') ? document.querySelector('.modal-content ' + '#' + event.target.id) : null;
+		const isElementInModal = document.querySelector('.modal-content').contains(event.target);
 		let nextElementIndex;
 		const controlCount = Array.from(document.querySelectorAll('.modal-content .form-control, .form-control tds-button')).length;
 		if (!isElementInModal) {
@@ -548,7 +548,11 @@ export class DialogComponent implements OnInit, AfterViewInit, OnDestroy {
 				// Get the reference of the first element on the form; cast to any so the focus function call is not reported as an tslint error
 				const defaultTabIndex = (this.zigzagFlow) ? '[tabindex="1"]' : '[tabindex="0"]';
 				const firstElement = document.querySelector(`.modal-content form ${defaultTabIndex}`) as any;
-				firstElement.focus();
+				if (firstElement) {
+					firstElement.focus();
+				} else {
+					console.log('There is no element with index 0 on the form');
+				}
 			}
 		} else {
 			// When dealing with a Kendo UI dropdown control the focus must go to its child so
