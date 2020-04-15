@@ -144,3 +144,8 @@ kendo-datepicker {
 		}
 	}
 }
+
+.k-widget ::selection {
+	background: #3399FF;
+	color: #ffffff;
+}
