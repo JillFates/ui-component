@@ -52,6 +52,7 @@ export class GridComponent implements OnInit {
 		// Next, we pass the grid data to the data-grid-helper.
 		this.gridHelper = new DataGridHelper(gridData, this.gridModel.gridSettings);
 
+		this.gridHelper.state.take = this.gridModel.gridSettings.pageSize || 25;
 		// Initialize the loading message
 		this.gridModel.gridSettings.loadingMessage = this.gridModel.gridSettings.loadingMessage || 'Loading records...';
 		// Initialize the no records available message

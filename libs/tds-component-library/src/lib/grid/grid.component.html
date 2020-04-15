@@ -7,7 +7,7 @@
 	[sort]="gridHelper.state.sort"
 	[sortable]="gridModel.gridSettings.sortSettings !== undefined"
 	[pageable]="gridModel.gridSettings.pageable"
-	[pageSize]="gridModel.gridSettings.pageSize || 25"
+	[pageSize]="gridHelper.state.take"
 	[skip]="gridHelper.state.skip"
 	[resizable]="gridModel.gridSettings.resizable"
 	(sortChange)="gridHelper.sortChange($event)"
