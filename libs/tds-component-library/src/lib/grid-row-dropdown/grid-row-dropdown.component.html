@@ -13,6 +13,7 @@
 					*ngIf="action.show"
 					[disabled]="action.disabled"
 					(click)="action.disabled || action.onClick(dataItem)"
+					[title]="action.name"
 				>
 					{{ action.name }}
 				</a>
