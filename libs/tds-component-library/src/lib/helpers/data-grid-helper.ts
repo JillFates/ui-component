@@ -29,12 +29,12 @@ export class DataGridHelper {
 			logic: 'and',
 		},
 		skip: 0,
-		take: 26,
+		take: 25,
 	};
 	public selectedRows = [];
 	public bulkItems: any = {};
 	public selectAllCheckboxes = false;
-	public defaultPageOptions = [26, 27, 28];
+	public defaultPageOptions = [25, 50, 100];
 	DefaultBooleanFilterData = 'All';
 	private selectableSettings: SelectableSettings;
 	private checkboxSelectionConfig: any;
