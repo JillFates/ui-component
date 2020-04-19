@@ -44,7 +44,8 @@ export class DialogComponent implements OnInit, AfterViewInit, OnDestroy {
 	private newDialog = false;
 	private lastElementTabbed: any;
 	private tabbedElementChildren: any;
-	private zigzagFlow: boolean;
+	private hFlow: boolean;
+	private vFlow: boolean;
 
 	constructor(private eventService: EventService, private dialogService: DialogService, private renderer: Renderer2) {
 		this.registerDialog();
@@ -192,8 +193,9 @@ export class DialogComponent implements OnInit, AfterViewInit, OnDestroy {
 			// Assign tab indexes to dialog controls
 			setTimeout(() => {
 				const rowElement = document.querySelector('.modal-body div > form .clr-row');
-				this.zigzagFlow = document.querySelector('.zigzag-flow') !== null;
-				if (this.zigzagFlow) {
+				this.hFlow = document.querySelector('[tabflow="horizontal"]') !== null;
+				this.vFlow = document.querySelector('[tabflow="vertical"]') !== null;
+				if (this.hFlow) {
 					if (rowElement) {
 						const columns = document.querySelectorAll('.modal-body div > form .clr-row > [class^="clr-col"]');
 						const indexMatrix = Array(columns.length);
@@ -521,46 +523,48 @@ export class DialogComponent implements OnInit, AfterViewInit, OnDestroy {
 	 */
 
 	@HostListener('document:keyup.tab', ['$event']) onKeyupTabHandler(event: any): void {
-		// TODO rename ee
-		this.tabbedElementChildren = null;
-		// Check whether target is present on the form
-		const isElementInModal = document.querySelector('.modal-content').contains(event.target);
-		let nextElementIndex;
-		const controlCount = Array.from(document.querySelectorAll('.modal-content .form-control, .form-control tds-button')).length;
-		if (!isElementInModal) {
-			event.preventDefault();
-			nextElementIndex = (this.lastElementTabbed) ? parseInt(this.lastElementTabbed.getAttribute('tabindex'), 10) + 1 : 1;
-			if (nextElementIndex >= controlCount) {
-				nextElementIndex = 0;
-				this.lastElementTabbed = document.querySelector('.modal-content form [tabindex="0"]');
-			}
-			const selector = '.modal-content form [tabindex="' + nextElementIndex + '"]';
-			const element = document.querySelector(selector);
-			const elementId = (element) ? document.querySelector(selector).id : null;
-			if (elementId) {
-				this.tabbedElementChildren = document.getElementById(elementId).children[0];
-				if (this.tabbedElementChildren) {
-					this.tabbedElementChildren.focus();
+		// Added attribute check to prevent applying this behavior to all the modals
+		if (this.hFlow || this.vFlow) {
+			this.tabbedElementChildren = null;
+			// Check whether target is present on the form
+			const isElementInModal = document.querySelector('.modal-content').contains(event.target);
+			let nextElementIndex;
+			const controlCount = Array.from(document.querySelectorAll('.modal-content .form-control, .form-control tds-button')).length;
+			if (!isElementInModal) {
+				event.preventDefault();
+				nextElementIndex = (this.lastElementTabbed) ? parseInt(this.lastElementTabbed.getAttribute('tabindex'), 10) + 1 : 1;
+				if (nextElementIndex >= controlCount) {
+					nextElementIndex = 0;
+					this.lastElementTabbed = document.querySelector('.modal-content form [tabindex="0"]');
+				}
+				const selector = '.modal-content form [tabindex="' + nextElementIndex + '"]';
+				const element = document.querySelector(selector);
+				const elementId = (element) ? document.querySelector(selector).id : null;
+				if (elementId) {
+					this.tabbedElementChildren = document.getElementById(elementId).children[0];
+					if (this.tabbedElementChildren) {
+						this.tabbedElementChildren.focus();
+					} else {
+						document.getElementById(elementId).focus();
+					}
 				} else {
-					document.getElementById(elementId).focus();
+					// Get the reference of the first element on the form; cast to any so the focus function call is not reported as an tslint error
+					const defaultTabIndex = (this.hFlow) ? '[tabindex="1"]' : '[tabindex="0"]';
+					const firstElement = document.querySelector(`.modal-content form ${defaultTabIndex}`) as any;
+					if (firstElement) {
+						firstElement.focus();
+					} else {
+						console.log('There is no element with index 0 on the form');
+					}
 				}
 			} else {
-				// Get the reference of the first element on the form; cast to any so the focus function call is not reported as an tslint error
-				const defaultTabIndex = (this.zigzagFlow) ? '[tabindex="1"]' : '[tabindex="0"]';
-				const firstElement = document.querySelector(`.modal-content form ${defaultTabIndex}`) as any;
-				if (firstElement) {
-					firstElement.focus();
-				} else {
-					console.log('There is no element with index 0 on the form');
+				// When dealing with a Kendo UI dropdown control the focus must go to its child so
+				// the list opens when interacting with it via keyboard
+				if (event.target.tagName === 'KENDO-DROPDOWNLIST') {
+					event.target.children[0].focus();
 				}
+				this.lastElementTabbed = event.target;
 			}
-		} else {
-			// When dealing with a Kendo UI dropdown control the focus must go to its child so
-			// the list opens when interacting with it via keyboard
-			if (event.target.tagName === 'KENDO-DROPDOWNLIST') {
-				event.target.children[0].focus();
-			}
-			this.lastElementTabbed = event.target;
 		}
 	}
 
@@ -570,8 +574,10 @@ export class DialogComponent implements OnInit, AfterViewInit, OnDestroy {
 	 */
 
 	@HostListener('document:keydown.tab', ['$event']) onKeydownTabHandler(event: any): void {
-		if (event.target['tagName'] === 'SPAN') {
-			event.target['offsetParent'].focus();
+		if (this.hFlow || this.vFlow) {
+			if (event.target['tagName'] === 'SPAN') {
+				event.target['offsetParent'].focus();
+			}
 		}
 	}
 
