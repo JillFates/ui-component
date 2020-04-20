@@ -1,4 +1,4 @@
-<button [type]="type || 'button'" class="tds-button btn" [ngClass]="buttonClass()" [disabled]="disabled"
+<button [type]="type || 'button'" class="tds-button btn" [ngClass]="classNames" [disabled]="disabled"
 	[title]="title || ''" [id]="id" [tabIndex]="tabindex" [clrLoading]="btnState">
 	<a role="tooltip" aria-haspopup="true" class="special-text" style="text-decoration: none;">
 		<clr-icon *ngIf="icon" [ngClass]="iconClass" [attr.shape]="icon"></clr-icon>

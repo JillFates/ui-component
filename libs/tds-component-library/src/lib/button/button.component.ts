@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import {Component, Input, OnChanges, SimpleChanges} from '@angular/core';
 import { ClrLoadingState } from '@clr/angular';
 import { generateRandomID } from '../utils/utils';
 
@@ -7,10 +7,10 @@ import { generateRandomID } from '../utils/utils';
 	styleUrls: ['./button.component.scss'],
 	templateUrl: './button.component.html',
 })
-export class ButtonComponent {
+export class ButtonComponent implements OnChanges {
 	private _state: string;
 	public btnState: ClrLoadingState = ClrLoadingState.DEFAULT;
-	public buttonText: string;
+	public classNames = [];
 
 	@Input() type: string;
 	@Input() icon: string;
@@ -45,34 +45,30 @@ export class ButtonComponent {
 		}
 	}
 
-	/**
-	 * Get button classes
-	 * @return Array
-	 */
-	public buttonClass(): Array<string> {
-		const classnames = [];
+	ngOnChanges(changes: SimpleChanges): void {
+		const classNames = [];
 		if (this.theme) {
-			classnames.push(`btn-${this.theme}`);
+			classNames.push(`btn-${this.theme}`);
 		}
 		if (this.outline) {
-			classnames.push(`btn-outline`);
+			classNames.push(`btn-outline`);
 		}
 		if (this.flat) {
-			classnames.push(`btn-link`);
+			classNames.push(`btn-link`);
 		}
 		if (this.small) {
-			classnames.push(`btn-sm`);
+			classNames.push(`btn-sm`);
 		}
 		if (this.inverse) {
-			classnames.push(`btn-inverse`);
+			classNames.push(`btn-inverse`);
 		}
 		if (this.icon) {
-			classnames.push(`has-icon`);
+			classNames.push(`has-icon`);
 		}
 		if (this._state) {
-			classnames.push(`state-${this._state.toLowerCase()}`);
+			classNames.push(`state-${this._state.toLowerCase()}`);
 		}
 
-		return classnames;
+		this.classNames = classNames;
 	}
 }
