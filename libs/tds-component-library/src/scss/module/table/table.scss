@@ -210,8 +210,8 @@ kendo-grid {
     }
   }
   .clr-checkbox-wrapper input[type=checkbox]+label::after {
-    // left: 3px; Removed this since on TM it looks ok without it.
-    // top: 3px; Removed this since on TM it looks ok without it.
+    left: 3px;
+    top: 3px;
   }
 
   // general style fixes
