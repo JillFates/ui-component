@@ -51,7 +51,7 @@
 			</tds-grid-clear-all-filters-button>
 		</ng-template>
 		<ng-template *ngIf="gridModel.gridRowActions" kendoGridCellTemplate let-dataItem let-rowIndex="rowIndex">
-			<div class="action-button btn-link k-grid-ignore-click">
+			<div class="action-button btn-link k-grid-ignore-click align-ellipses-center">
 				<tds-grid-row-dropdown
 					[gridRowActions]="gridModel.gridRowActions"
 					[dataItem]="dataItem"
