@@ -197,8 +197,7 @@ export class DialogComponent implements OnInit, AfterViewInit, OnDestroy {
 								.getElementsByClassName('is-displayed')[0]
 								.getElementsByClassName('clr-input').length > 0) {
 								const found = currentViewContainerRef.element.nativeElement.nextSibling.firstElementChild.children[1].children;
-								for (let i = 0; i < found.length; ++i) {
-									console.log('found: ', found[i]);
+								for (let i = 0; i < found.length; ++i) {									
 									if (found[i].getAttribute('ng-reflect-ng-class') === 'is-displayed active') {
 										this.renderer.setAttribute(
 											found[i].getElementsByClassName('clr-input')[0],
@@ -227,7 +226,9 @@ export class DialogComponent implements OnInit, AfterViewInit, OnDestroy {
 										'0'
 									);
 									currentViewContainerRef.element.nativeElement.nextSibling.getElementsByTagName('input')[0].focus();
-									currentViewContainerRef.element.nativeElement.nextSibling.getElementById('simpleApiActionName').focus();
+									if (currentViewContainerRef.element.nativeElement.nextSibling.getElementById('simpleApiActionName')) {
+										currentViewContainerRef.element.nativeElement.nextSibling.getElementById('simpleApiActionName').focus();	
+									}									
 									this.dropdownActivated = false;
 									isFocused = true;									
 								}
