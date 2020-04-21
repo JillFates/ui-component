@@ -163,22 +163,13 @@ export class DialogComponent implements OnInit, AfterViewInit, OnDestroy {
 						}
 					}
 				});
-			}
-
-			if (currentDialogComponentInstance.extraActionEvent) {
-				currentDialogComponentInstance.extraActionEvent.subscribe((eventType: any) => {
-					if (eventType.event === EVENT_DIALOG.FOCUS) {
-						this.setupFocus(currentViewContainerRef);
-					}
-				});
-			}
+			}			
 
 			setTimeout(() => {
 				dynamicHostModel.dynamicHostComponent.publishDialog();
-				dynamicHostModel.instantiated = true;
-								
+				dynamicHostModel.instantiated = true;									
 				this.setupFocus(currentViewContainerRef);
-			});
+			}, 1000);
 
 		} catch (e) {
 			console.error("Dialog can't be instantiated/created", e);
@@ -207,14 +198,16 @@ export class DialogComponent implements OnInit, AfterViewInit, OnDestroy {
 								.getElementsByClassName('clr-input').length > 0) {
 								const found = currentViewContainerRef.element.nativeElement.nextSibling.firstElementChild.children[1].children;
 								for (let i = 0; i < found.length; ++i) {
+									console.log('found: ', found[i]);
 									if (found[i].getAttribute('ng-reflect-ng-class') === 'is-displayed active') {
 										this.renderer.setAttribute(
 											found[i].getElementsByClassName('clr-input')[0],
 											'tabindex',
 											'0'
 										);
-										found[i].getElementsByClassName('clr-input')[0].focus();
+										found[i].getElementsByClassName('clr-input')[0].focus();										
 										isFocused = true;
+										alert('focus 1');
 									}
 								}
 								
@@ -235,8 +228,10 @@ export class DialogComponent implements OnInit, AfterViewInit, OnDestroy {
 										'0'
 									);
 									currentViewContainerRef.element.nativeElement.nextSibling.getElementsByTagName('input')[0].focus();
+									currentViewContainerRef.element.nativeElement.nextSibling.getElementById('simpleApiActionName').focus();
 									this.dropdownActivated = false;
 									isFocused = true;
+									alert('focus 2');
 								}
 							}
 						}
@@ -252,7 +247,9 @@ export class DialogComponent implements OnInit, AfterViewInit, OnDestroy {
 				currentViewContainerRef.element.nativeElement.nextSibling.getElementsByTagName('textarea')[0].focus();
 				this.dropdownActivated = false;
 				isFocused = true;
+				alert('focus 3');
 			}
+
 		}, 1000);
 	}
 
