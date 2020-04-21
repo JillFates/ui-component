@@ -152,8 +152,7 @@ export class DialogComponent implements OnInit, AfterViewInit, OnDestroy {
 					} else {
 						if (this.dropdownActivated === false) {
 							dynamicHostModel.dialogModel.observable.next(result);
-							dynamicHostModel.dialogModel.observable.complete();
-							console.log('completed');
+							dynamicHostModel.dialogModel.observable.complete();							
 							// Last element of the array only
 							this.dynamicDialogList.pop();
 							setTimeout(() => {
