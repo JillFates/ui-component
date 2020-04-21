@@ -226,7 +226,9 @@ export class DialogComponent implements OnInit, AfterViewInit, OnDestroy {
 										'0'
 									);
 									currentViewContainerRef.element.nativeElement.nextSibling.getElementsByTagName('input')[0].focus();
-									if (currentViewContainerRef.element.nativeElement.nextSibling.getElementById('simpleApiActionName')) {
+									if (Object.prototype.toString.call(
+										currentViewContainerRef.element.nativeElement.nextSibling.getElementById) === '[object Function]'
+									) {
 										currentViewContainerRef.element.nativeElement.nextSibling.getElementById('simpleApiActionName').focus();	
 									}									
 									this.dropdownActivated = false;
