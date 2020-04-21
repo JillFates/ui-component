@@ -249,6 +249,11 @@ export class DialogComponent implements OnInit, AfterViewInit, OnDestroy {
 											);	
 										}
 										currentViewContainerRef.element.nativeElement.nextSibling.getElementsByTagName('input')[0].focus();
+										if (Object.prototype.toString.call(
+											currentViewContainerRef.element.nativeElement.nextSibling.getElementById) === '[object Function]'
+										) {
+											currentViewContainerRef.element.nativeElement.nextSibling.getElementById('simpleApiActionName').focus();
+										}
 										this.dropdownActivated = false;
 										isFocused = true;	
 									}
@@ -272,7 +277,7 @@ export class DialogComponent implements OnInit, AfterViewInit, OnDestroy {
 					isFocused = true;	
 				}
 			}
-		}, 1000);
+		});
 	}
 
 	/**
