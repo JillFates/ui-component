@@ -42,6 +42,8 @@ export class DynamicHostComponent {
 	public actionButtonsSize = 0;
 	// Context Buttons
 	public contextButtonsSize = 0;
+	// Buttons
+	private dialogButtonsSize = 0;
 
 	@ViewChild(DynamicHostDirective, { static: true }) dynamicContent: DynamicHostDirective;
 	@ViewChild('dialogContainer', { static: true }) dialogContainer: ElementRef;
@@ -68,7 +70,7 @@ export class DynamicHostComponent {
 			}
 
 			// Listen to any change
-			setInterval(() => this.publishButtons(), 500);
+			setInterval(() => this.publishButtons(), 1000);
 		}
 	}
 
@@ -76,23 +78,29 @@ export class DynamicHostComponent {
 	 * Verify if new actions are coming to the Instance, to show Hide Sections
 	 */
 	public publishButtons(): void {
-		const actionButtons = this.currentDialogComponentInstance.buttons.filter((button: DialogButtonModel) => {
-			return button.type === DialogButtonType.ACTION;
-		});
-		this.actionButtonsSize = actionButtons.length;
+		// Verify first if there were any new changes before to do any extra action
+		if (this.currentDialogComponentInstance.buttons.length !== this.dialogButtonsSize) {
 
-		const contextButtons = this.currentDialogComponentInstance.buttons.filter((button: DialogButtonModel) => {
-			return button.type === DialogButtonType.CONTEXT;
-		});
-		this.contextButtonsSize = contextButtons.length;
+			this.dialogButtonsSize = this.currentDialogComponentInstance.buttons.length;
 
-		if (!actionButtons || actionButtons.length === 0) {
-			this.showLeftActionButtonsPanel = false;
-		} else if (actionButtons && actionButtons.length > 0) {
-			this.showLeftActionButtonsPanel = this.showActionButtons = true;
+			const actionButtons = this.currentDialogComponentInstance.buttons.filter((button: DialogButtonModel) => {
+				return button.type === DialogButtonType.ACTION;
+			});
+			this.actionButtonsSize = actionButtons.length;
+
+			const contextButtons = this.currentDialogComponentInstance.buttons.filter((button: DialogButtonModel) => {
+				return button.type === DialogButtonType.CONTEXT;
+			});
+			this.contextButtonsSize = contextButtons.length;
+
+			if (!actionButtons || actionButtons.length === 0) {
+				this.showLeftActionButtonsPanel = false;
+			} else if (actionButtons && actionButtons.length > 0) {
+				this.showLeftActionButtonsPanel = this.showActionButtons = true;
+			}
+
+			this.showContextButtons = (contextButtons && contextButtons.length > 0);
 		}
-
-		this.showContextButtons = (contextButtons && contextButtons.length > 0);
 	}
 
 	/**

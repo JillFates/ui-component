@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import {Component, ViewChild} from '@angular/core';
 import {
 	ITdsContextMenuOption
 } from '../../../../../../../../libs/tds-component-library/src/lib/context-menu/model/tds-context-menu.model';
@@ -6,6 +6,7 @@ import {ReplaySubject} from 'rxjs';
 import {DiagramLayoutOverviewHelper} from './diagram-layout-overview.helper';
 import {Diagram} from 'gojs';
 import {IDiagramLayoutHelper} from '../../../../../../../../libs/tds-component-library/src/lib/diagram-layout/model/diagram-layout.helper';
+import {DiagramLayoutComponent} from '../../../../../../../../libs/tds-component-library/src/lib/diagram-layout/diagram-layout.component';
 
 @Component({
 	selector: 'app-diagram-layout-overview',
@@ -20,6 +21,8 @@ import {IDiagramLayoutHelper} from '../../../../../../../../libs/tds-component-l
 				<p>Diagram created with the GoJS Api</p>
 			</div>
 			<div class="clr-col-12">
+					<button (click)="refreshDiagram()" class="btn">Refresh Diagram</button>
+<!--					<button (click)="changeScale()" class="btn">changeScale</button>-->
 				<tds-card>
 					<div class="diagram-card-container">
 						<tds-lib-diagram-layout
@@ -29,7 +32,9 @@ import {IDiagramLayoutHelper} from '../../../../../../../../libs/tds-component-l
 							[initialExpandLevel]="3"
 							(expandActionDispatched)="expandActionDispatched()"
 							(initialAnimationStarting)="diagramInit()"
-							(diagramAnimationFinished)="diagramFinish()"></tds-lib-diagram-layout>
+							(diagramAnimationFinished)="diagramFinish()"
+							#graph
+						></tds-lib-diagram-layout>
 					</div>
 				</tds-card>
 			</div>
@@ -68,10 +73,13 @@ import {IDiagramLayoutHelper} from '../../../../../../../../libs/tds-component-l
 	styleUrls: ['./diagram-layout-overview.component.scss'],
 })
 export class DiagramLayoutOverviewComponent {
+	@ViewChild('graph', {static: false}) graph: DiagramLayoutComponent;
+	refreshTrig = false;
 	data$: ReplaySubject<any> = new ReplaySubject<any>(1);
 	ctxOpts:  ITdsContextMenuOption;
 	diagramHelper: IDiagramLayoutHelper;
 	hasExpandableNodes: boolean;
+	lastDiagramScale: any;
 
 	constructor() {
 		this.hasExpandableNodes = true;
@@ -88,8 +96,11 @@ export class DiagramLayoutOverviewComponent {
 				data: null,
 				extras: {
 					initialAutoScale: Diagram.Uniform,
-					allowZoom: true
-				}
+					allowZoom: true,
+					scale: this.lastDiagramScale,
+					initialScale: this.lastDiagramScale
+				},
+				isRefreshTriggered: this.refreshTrig
 			})
 		);
 	}
@@ -113,5 +124,22 @@ export class DiagramLayoutOverviewComponent {
 	 */
 	expandActionDispatched(): void {
 		console.log('expandActionDispatched');
+	}
+
+	/**
+	 * refreshDiagram
+	 */
+	refreshDiagram(): void {
+		this.refreshTrig = true;
+		this.lastDiagramScale = this.graph.diagram.scale;
+		this.graph.diagram.clear();
+		this.setData();
+	}
+
+	/**
+	 * change scale
+	 */
+	changeScale(): void {
+		this.graph.diagram.scale = this.graph.diagram.scale - 0.2;
 	}
 }

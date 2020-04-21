@@ -1,3 +1,5 @@
+@import "variables";
+
 kendo-popup {
 	.k-column-list {
 		background-color: #f6f6f6;
@@ -143,4 +145,10 @@ kendo-datepicker {
 			}
 		}
 	}
+}
+
+// Highlighted for most of the Kendo selections like dropdowns
+.k-widget ::selection {
+	background: $color-selection-light;
+	color: #ffffff;
 }

@@ -7,7 +7,7 @@
 	[sort]="gridHelper.state.sort"
 	[sortable]="gridModel.gridSettings.sortSettings !== undefined"
 	[pageable]="gridModel.gridSettings.pageable"
-	[pageSize]="gridModel.gridSettings.pageSize || 25"
+	[pageSize]="gridHelper.state.take"
 	[skip]="gridHelper.state.skip"
 	[resizable]="gridModel.gridSettings.resizable"
 	(sortChange)="gridHelper.sortChange($event)"
@@ -16,7 +16,7 @@
 	[ngClass]="{ 'hide-filter': !showFilters, 'clickable-rows': (gridModel.gridSettings.selectableSettings && gridModel.gridSettings.selectableSettings.enabled)}"
 	class="page-height {{class || ''}}"
 >
-	<ng-template kendoGridNoRecordsTemplate>{{gridModel.gridSettings.loadingMessage}}</ng-template>
+	<ng-template kendoGridNoRecordsTemplate>{{gridModel.gridSettings.noRecordsMessage}}</ng-template>
 	<ng-template kendoGridToolbarTemplate [position]="'top'">
 		<div class="clr-row">
 			<div class="clr-col-12">
@@ -51,7 +51,7 @@
 			</tds-grid-clear-all-filters-button>
 		</ng-template>
 		<ng-template *ngIf="gridModel.gridRowActions" kendoGridCellTemplate let-dataItem let-rowIndex="rowIndex">
-			<div class="action-button btn-link k-grid-ignore-click">
+			<div class="action-button btn-link k-grid-ignore-click align-ellipses-center">
 				<tds-grid-row-dropdown
 					[gridRowActions]="gridModel.gridRowActions"
 					[dataItem]="dataItem"

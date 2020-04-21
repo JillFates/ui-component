@@ -206,8 +206,7 @@ export class DialogComponent implements OnInit, AfterViewInit, OnDestroy {
 											'0'
 										);
 										found[i].getElementsByClassName('clr-input')[0].focus();										
-										isFocused = true;
-										alert('focus 1');
+										isFocused = true;									
 									}
 								}
 								
@@ -230,8 +229,7 @@ export class DialogComponent implements OnInit, AfterViewInit, OnDestroy {
 									currentViewContainerRef.element.nativeElement.nextSibling.getElementsByTagName('input')[0].focus();
 									currentViewContainerRef.element.nativeElement.nextSibling.getElementById('simpleApiActionName').focus();
 									this.dropdownActivated = false;
-									isFocused = true;
-									alert('focus 2');
+									isFocused = true;									
 								}
 							}
 						}
@@ -246,8 +244,7 @@ export class DialogComponent implements OnInit, AfterViewInit, OnDestroy {
 				);
 				currentViewContainerRef.element.nativeElement.nextSibling.getElementsByTagName('textarea')[0].focus();
 				this.dropdownActivated = false;
-				isFocused = true;
-				alert('focus 3');
+				isFocused = true;				
 			}
 
 		}, 1000);

@@ -1,3 +1,5 @@
+@import "variables";
+
 .dropdown {
 	tds-button.dropdown-toggle:not(.btn) {
 		padding: 0;
@@ -56,4 +58,9 @@ clr-spinner.static {
 // Dialogs
 .modal-backdrop {
 	opacity: .3;
+}
+
+a:visited {
+	color: $color-active-dark5;
+	text-decoration: none;
 }
