@@ -1,6 +1,10 @@
 {
 	"name": "tds-component-library",
+<<<<<<< HEAD
 	"version": "0.1.48",
+=======
+	"version": "0.1.47",
+>>>>>>> 844379e98037bb2b3645518a38f55d2d873c2796
 	"scripts": {
 		"postbuild": "npm run buildtheme",
 		"buildtheme": "scss-bundle -e \"./src/_theme.scss\" -d \"../../dist/libs/tds-component-library/themes.scss\""
