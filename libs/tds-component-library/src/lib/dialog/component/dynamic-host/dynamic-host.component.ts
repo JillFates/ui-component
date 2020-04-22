@@ -137,7 +137,7 @@ export class DynamicHostComponent {
 	 */
 	public onDismiss(): void {
 		if (this.currentDialogComponentInstance) {
-			this.currentDialogComponentInstance.onDismiss();
+			this.currentDialogComponentInstance.onCancelClose();
 		}
 	}
 

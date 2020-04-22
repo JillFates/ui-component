@@ -150,7 +150,7 @@ export class DialogComponent implements OnInit, AfterViewInit, OnDestroy {
 									'0'
 								);	
 							}
-							this.lastElementClicked.focus();
+							// this.lastElementClicked.focus();
 							this.dropdownActivated = false;
 							this.dialogService.activatedDropdown.next(false);
 							return;	
@@ -440,7 +440,7 @@ export class DialogComponent implements OnInit, AfterViewInit, OnDestroy {
 							'0'
 						);	
 					}
-					this.lastElementClicked.focus();
+					// this.lastElementClicked.focus();
 					this.dropdownActivated = false;
 					return;	
 				}
