@@ -439,7 +439,6 @@ export class DialogComponent implements OnInit, AfterViewInit, OnDestroy {
 							'0'
 						);	
 					}
-					// this.lastElementClicked.focus();
 					this.dropdownActivated = false;
 					return;	
 				}
