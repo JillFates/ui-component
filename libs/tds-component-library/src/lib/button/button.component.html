@@ -1,13 +1,9 @@
 <button [type]="type || 'button'" class="tds-button btn" [ngClass]="classNames" [disabled]="disabled"
-	[title]="title || ''" [id]="id" [tabIndex]="tabindex" [clrLoading]="btnState">
-	<a role="tooltip" aria-haspopup="true" class="special-text" style="text-decoration: none;">
-		<clr-icon *ngIf="icon" [ngClass]="iconClass" [attr.shape]="icon"></clr-icon>
-		<span class="button-label">
-			<ng-content></ng-content>
-		</span>
+	[title]="title || ''" [id]="id" [tabIndex]="tabindex" [clrLoading]="btnState" (click)="onActivate()">
+		<clr-icon *ngIf="icon" [ngClass]="iconClass" [attr.shape]="icon" style="margin-top:3px;"></clr-icon>
+		<ng-content></ng-content>
 
 		<span class="special-text__tooltip" *ngIf="tooltipText">
 			{{tooltipText}}
 		</span>
-	</a>
 </button>
