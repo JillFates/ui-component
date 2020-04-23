@@ -18,7 +18,7 @@
             <div class="modal-header" #dialogHeader
                 [ngClass]="{  'modal-no-action-buttons': !showLeftActionButtonsPanel}">
                 <button aria-label="Close" class="close" type="button" (click)="onDismiss()">
-                    <clr-icon aria-hidden="true" shape="close" (click)="onDismiss()"></clr-icon>
+                    <clr-icon aria-hidden="true" shape="close"></clr-icon>
                 </button>
                 <ng-template [ngIf]="showFullScreen">
                     <button aria-label="Minimize" type="button" class="btn btn-link minimize-btn" *ngIf="fullScreen"
