@@ -1,3 +1,4 @@
+import { DialogService } from './../../service/dialog.service';
 /**
  * Place holder to use dynamically inject dialog component on runtime
  */
@@ -5,7 +6,6 @@
 import {
 	Component,
 	ElementRef,
-	OnInit,
 	Renderer2,
 	ViewChild,
 	ViewEncapsulation
@@ -152,5 +152,12 @@ export class DynamicHostComponent {
 				this.currentDialogComponentInstance.onDoubleClick(event);
 			}
 		}
+	}
+
+	/**
+	 * activates action
+	 * **/
+	public activateAction(theActionFunction: any): void {		
+		theActionFunction();
 	}
 }

@@ -1,4 +1,5 @@
-import {Component, Input, OnChanges, SimpleChanges} from '@angular/core';
+import { DialogService } from './../dialog/service/dialog.service';
+import { Component, Input, OnChanges, SimpleChanges, Output, EventEmitter, OnInit } from '@angular/core';
 import { ClrLoadingState } from '@clr/angular';
 import { generateRandomID } from '../utils/utils';
 
@@ -24,9 +25,10 @@ export class ButtonComponent implements OnChanges {
 	@Input() title: string;
 	@Input() id: string;
 	@Input() tabindex: string;
-	@Input() tooltipText: string;
+	@Input() tooltipText: string;	
+	@Output('actionSelected') actionSelected = new EventEmitter<any>();	
 
-	constructor() {
+	constructor(private dialogService: DialogService) {
 		if (!this.id) {
 			this.id = generateRandomID(8);
 		}
@@ -71,4 +73,12 @@ export class ButtonComponent implements OnChanges {
 
 		this.classNames = classNames;
 	}
+
+	/**
+	 * button activated
+	 * **/
+	onActivate(): void {		
+		this.actionSelected.emit();
+	}
+
 }
