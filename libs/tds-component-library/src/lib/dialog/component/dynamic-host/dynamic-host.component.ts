@@ -1,4 +1,3 @@
-import { DialogService } from './../../service/dialog.service';
 /**
  * Place holder to use dynamically inject dialog component on runtime
  */
