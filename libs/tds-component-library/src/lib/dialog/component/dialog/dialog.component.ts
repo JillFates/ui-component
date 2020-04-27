@@ -1,5 +1,3 @@
-import { EVENT_DIALOG } from './../../model/focus.model';
-import { DialogService } from './../../service/dialog.service';
 // Angular
 import {
 	Component,
@@ -10,7 +8,9 @@ import {
 	OnInit,
 	OnDestroy,
 	AfterViewInit,
-	Renderer2, ViewChild
+	Renderer2, 
+	ViewChild,
+	ElementRef
 } from '@angular/core';
 // Service
 import { EventService } from '../../../service/event-service/event.service';
@@ -22,7 +22,8 @@ import { Dialog } from '../../model/dialog.interface';
 import { DynamicHostModel } from '../../model/dynamic-host.model';
 // Other
 import { Subscription } from 'rxjs';
-
+import { EVENT_DIALOG } from './../../model/focus.model';
+import { DialogService } from './../../service/dialog.service';
 @Component({
 	selector: 'tds-dialog',
 	styleUrls: ['./dialog.component.scss'],
@@ -177,7 +178,7 @@ export class DialogComponent implements OnInit, AfterViewInit, OnDestroy {
 			if (currentDialogComponentInstance.extraActionEvent) {
 				currentDialogComponentInstance.extraActionEvent.subscribe((eventType: any) => {
 					if (eventType.event === EVENT_DIALOG.FOCUS) {
-						this.setupFocus(currentViewContainerRef);
+						this.setupFocus(currentViewContainerRef, eventType.element);
 					}
 				});
 			}
@@ -185,8 +186,6 @@ export class DialogComponent implements OnInit, AfterViewInit, OnDestroy {
 			setTimeout(() => {
 				dynamicHostModel.dynamicHostComponent.publishDialog();
 				dynamicHostModel.instantiated = true;
-								
-				this.setupFocus(currentViewContainerRef);
 			});
 
 			// Assign tab indexes to dialog controls
@@ -250,86 +249,8 @@ export class DialogComponent implements OnInit, AfterViewInit, OnDestroy {
 	/**
 	 * This method will help to setup the focus to the first input, placing the cursor indicator
 	 * **/
-	private setupFocus(currentViewContainerRef: any): void {
-		setTimeout(() => {			
-			let isFocused = false;
-			if (document.getElementsByTagName('tds-dialog').length > 0) {
-				if ((document.getElementsByTagName('tds-dialog')[0].getElementsByClassName('modal-body').length > 0)) {
-					if (document.getElementsByTagName('tds-dialog')[0]
-						.getElementsByClassName('modal-body')[0]
-						.getElementsByClassName('tab-content').length > 0) {
-						if (document.getElementsByTagName('tds-dialog')[0]
-							.getElementsByClassName('modal-body')[0]
-							.getElementsByClassName('tab-content')[0]
-							.getElementsByClassName('is-displayed').length > 0) {
-							if (document.getElementsByTagName('tds-dialog')[0]
-								.getElementsByClassName('modal-body')[0]
-								.getElementsByClassName('tab-content')[0]
-								.getElementsByClassName('is-displayed')[0]
-								.getElementsByClassName('clr-input').length > 0
-							&& currentViewContainerRef.element.nativeElement.nextSibling.firstElementChild
-							&& currentViewContainerRef.element.nativeElement.nextSibling.firstElementChild.children[1]) {
-								const found = currentViewContainerRef.element.nativeElement.nextSibling.firstElementChild.children[1].children;
-								for (let i = 0; i < found.length; ++i) {
-									if (found[i].getAttribute('ng-reflect-ng-class') === 'is-displayed active') {
-										if (found[i].getElementsByClassName('clr-input')[0]) {
-											if (this.renderer) {
-												this.renderer.setAttribute(
-													found[i].getElementsByClassName('clr-input')[0],
-													'tabindex',
-													'0'
-												);	
-											}
-											found[i].getElementsByClassName('clr-input')[0].focus();
-											isFocused = true;	
-										}
-									}
-								}
-								
-							}
-						}
-					}
-				}
-			} 
-			if (currentViewContainerRef.element.nativeElement.nextSibling && !isFocused) {
-					if (currentViewContainerRef.element.nativeElement.nextSibling.getElementsByTagName('input')) {
-						if (currentViewContainerRef.element.nativeElement.nextSibling.getElementsByTagName('input').length > 0) {
-							if (currentViewContainerRef.element.nativeElement.nextSibling.getElementsByTagName('input')[0]) {
-								if (currentViewContainerRef.element.nativeElement.nextSibling
-									.getElementsByTagName('input')[0].getAttribute('type') !== 'checkbox') {
-									if (currentViewContainerRef.element.nativeElement.nextSibling.getElementsByTagName('input')[0]) {
-										if (this.renderer) {
-											this.renderer.setAttribute(
-												currentViewContainerRef.element.nativeElement.nextSibling.getElementsByTagName('input')[0],
-												'tabindex',
-												'0'
-											);	
-										}
-										currentViewContainerRef.element.nativeElement.nextSibling.getElementsByTagName('input')[0].focus();
-										this.dropdownActivated = false;
-										isFocused = true;	
-									}
-								}
-							}
-						}
-					}
-			}
-
-			if (!isFocused) {
-				if (currentViewContainerRef.element.nativeElement.nextSibling.getElementsByTagName('textarea')[0]) {
-					if (this.renderer) {
-						this.renderer.setAttribute(
-							currentViewContainerRef.element.nativeElement.nextSibling.getElementsByTagName('textarea')[0],
-							'tabindex',
-							'0'
-						);	
-					}
-					currentViewContainerRef.element.nativeElement.nextSibling.getElementsByTagName('textarea')[0].focus();
-					this.dropdownActivated = false;
-					isFocused = true;	
-				}
-			}
-		}, 1000);
+	private setupFocus(currentViewContainerRef: any, element: ElementRef): void {
+		element.nativeElement.focus();
 	}
 
 	/**
