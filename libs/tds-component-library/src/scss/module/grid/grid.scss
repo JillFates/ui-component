@@ -90,7 +90,7 @@ kendo-grid, .kendo-grid {
 				height: unset;
 				margin: 0;
 			}
-			&:not(.k-hierarchy-cell):not(:last-child)::after {
+			&:not(.k-hierarchy-cell)::after {
 				content: '';
 				position: absolute;
 				top: 12px;

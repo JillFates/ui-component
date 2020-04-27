@@ -10,7 +10,7 @@ import {
 	OnInit,
 	OnDestroy,
 	AfterViewInit,
-	Renderer2
+	Renderer2, ViewChild
 } from '@angular/core';
 // Service
 import { EventService } from '../../../service/event-service/event.service';
@@ -31,6 +31,7 @@ import { Subscription } from 'rxjs';
 })
 export class DialogComponent implements OnInit, AfterViewInit, OnDestroy {
 	@ViewChildren(DynamicHostComponent) dynamicHostList!: QueryList<DynamicHostComponent>;
+	@ViewChild('modal', {static: true}) modalElement: any;
 
 	// Contains a list of every available dialog open as an Stack
 	public dynamicDialogList: DynamicHostModel[] = <any>[];
@@ -41,6 +42,10 @@ export class DialogComponent implements OnInit, AfterViewInit, OnDestroy {
 	public dropdownSub: Subscription;
 	// QueryList does not provides a proper way to get new elements
 	private newDialog = false;
+	private lastElementTabbed: any;
+	private tabbedElementChildren: any;
+	private hFlow: boolean;
+	private vFlow: boolean;
 
 	constructor(private eventService: EventService, private dialogService: DialogService, private renderer: Renderer2) {
 		this.registerDialog();
@@ -150,7 +155,6 @@ export class DialogComponent implements OnInit, AfterViewInit, OnDestroy {
 									'0'
 								);	
 							}
-							this.lastElementClicked.focus();
 							this.dropdownActivated = false;
 							this.dialogService.activatedDropdown.next(false);
 							return;	
@@ -185,6 +189,59 @@ export class DialogComponent implements OnInit, AfterViewInit, OnDestroy {
 				this.setupFocus(currentViewContainerRef);
 			});
 
+			// Assign tab indexes to dialog controls
+			setTimeout(() => {
+				const rowElement = document.querySelector('.modal-body div > form .clr-row');
+				this.hFlow = document.querySelector('[tabflow="horizontal"]') !== null;
+				this.vFlow = document.querySelector('[tabflow="vertical"]') !== null;
+				if (this.hFlow) {
+					if (rowElement) {
+						const columns = document.querySelectorAll('.modal-body div > form .clr-row > [class^="clr-col"]');
+						const indexMatrix = Array(columns.length);
+						if (columns.length > 0) {
+							Array.from(columns).forEach((column: any, index: number) => {
+								const controlCount = Array.from(column.querySelectorAll('.modal-content .form-control, tds-button')).length;
+								indexMatrix[index] = (Array(controlCount).fill(1));
+							});
+							const formControlsTabIndexes = document.querySelectorAll('.modal-body div > form .clr-row > [class^="clr-col-"] [tabindex]');
+							Array.from(formControlsTabIndexes).forEach((element: any) => {
+								element.setAttribute('tabindex', -1);
+							});
+							let maxTabIndex = 0;
+							Array.from(columns).forEach((column: any, index: number) => {
+								const formControls = column.querySelectorAll('.modal-content .form-control, tds-button');
+								Array.from(formControls).forEach((element: any, controlIndex: number) => {
+									// Assign the corresponding tab index based on the position matrix
+									const tabIndex = (indexMatrix[index][controlIndex]) ? index + (columns.length * controlIndex) : -1;
+									maxTabIndex = (tabIndex > maxTabIndex) ? tabIndex : maxTabIndex;
+									element.setAttribute('tabindex', tabIndex);
+								});
+							});
+							// Set the index for the buttons. A timeout is used so the sidenav component is available when the operations are performed
+							setTimeout(() => {
+								const formButtons = document.querySelectorAll('.modal-content form tds-button');
+								const footerButtons = document.querySelectorAll('.modal-footer tds-button');
+								const sidebarButtons = document.querySelectorAll('.modal-sidenav tds-button');
+								Array.from(formButtons).forEach((element: any, buttonIndex: number) => {
+									element.children[0].setAttribute('tabindex', element.getAttribute('tabindex'));
+									element.setAttribute('tabindex', -1);
+								});
+								Array.from(footerButtons).forEach((element: any, buttonIndex: number) => {
+									maxTabIndex = maxTabIndex + (buttonIndex + 1);
+									element.children[0].setAttribute('tabindex', maxTabIndex);
+									element.setAttribute('tabindex', -1);
+								});
+								Array.from(sidebarButtons).forEach((element: any, buttonIndex: number) => {
+									maxTabIndex = maxTabIndex + (buttonIndex + 1);
+									const child = element.children[0];
+									child.setAttribute('tabindex', maxTabIndex);
+									element.setAttribute('tabindex', -1);
+								});
+							});
+						}
+					}
+				}
+			});
 		} catch (e) {
 			console.error("Dialog can't be instantiated/created", e);
 		}
@@ -433,7 +490,7 @@ export class DialogComponent implements OnInit, AfterViewInit, OnDestroy {
 	@HostListener('document:keydown.escape', ['$event']) onKeydownHandler(event: KeyboardEvent): void {
 		if (event.key === 'Escape' || event.code === 'Escape') {
 			this.dialogEscape = true;
-			this.dropdownSub = this.dialogService.activatedDropdown.subscribe(res => { 
+			this.dropdownSub = this.dialogService.activatedDropdown.subscribe(res => {
 				this.dropdownActivated = res;
 			});
 			if (this.dropdownActivated === true) {
@@ -443,11 +500,10 @@ export class DialogComponent implements OnInit, AfterViewInit, OnDestroy {
 							this.lastElementClicked,
 							'tabindex',
 							'0'
-						);	
+						);
 					}
-					this.lastElementClicked.focus();
 					this.dropdownActivated = false;
-					return;	
+					return;
 				}
 			} else { 
 				const dynamicHostModel: DynamicHostModel = this.dynamicDialogList.find(
@@ -463,6 +519,70 @@ export class DialogComponent implements OnInit, AfterViewInit, OnDestroy {
 				}
 			}
 
+		}
+	}
+
+	/**
+	 * Qsdfsdsdf
+	 * @param event
+	 */
+
+	@HostListener('document:keyup.tab', ['$event']) onKeyupTabHandler(event: any): void {
+		// Added attribute check to prevent applying this behavior to all the modals
+		if (this.hFlow || this.vFlow) {
+			this.tabbedElementChildren = null;
+			// Check whether target is present on the form
+			const isElementInModal = document.querySelector('.modal-content').contains(event.target);
+			let nextElementIndex;
+			const controlCount = Array.from(document.querySelectorAll('.modal-content .form-control, .form-control tds-button')).length;
+			if (!isElementInModal) {
+				event.preventDefault();
+				nextElementIndex = (this.lastElementTabbed) ? parseInt(this.lastElementTabbed.getAttribute('tabindex'), 10) + 1 : 1;
+				if (nextElementIndex >= controlCount) {
+					nextElementIndex = 0;
+					this.lastElementTabbed = document.querySelector('.modal-content form [tabindex="0"]');
+				}
+				const selector = '.modal-content form [tabindex="' + nextElementIndex + '"]';
+				const element = document.querySelector(selector);
+				const elementId = (element) ? document.querySelector(selector).id : null;
+				if (elementId) {
+					this.tabbedElementChildren = document.getElementById(elementId).children[0];
+					if (this.tabbedElementChildren) {
+						this.tabbedElementChildren.focus();
+					} else {
+						document.getElementById(elementId).focus();
+					}
+				} else {
+					// Get the reference of the first element on the form; cast to any so the focus function call is not reported as an tslint error
+					const defaultTabIndex = (this.hFlow) ? '[tabindex="1"]' : '[tabindex="0"]';
+					const firstElement = document.querySelector(`.modal-content form ${defaultTabIndex}`) as any;
+					if (firstElement) {
+						firstElement.focus();
+					} else {
+						console.log('There is no element with index 0 on the form');
+					}
+				}
+			} else {
+				// When dealing with a Kendo UI dropdown control the focus must go to its child so
+				// the list opens when interacting with it via keyboard
+				if (event.target.tagName === 'KENDO-DROPDOWNLIST') {
+					event.target.children[0].focus();
+				}
+				this.lastElementTabbed = event.target;
+			}
+		}
+	}
+
+	/**
+	 * Asdasd
+	 * @param event
+	 */
+
+	@HostListener('document:keydown.tab', ['$event']) onKeydownTabHandler(event: any): void {
+		if (this.hFlow || this.vFlow) {
+			if (event.target['tagName'] === 'SPAN') {
+				event.target['offsetParent'].focus();
+			}
 		}
 	}
 
