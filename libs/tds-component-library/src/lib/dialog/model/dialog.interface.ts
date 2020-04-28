@@ -3,7 +3,7 @@ import { EVENT_DIALOG } from './focus.model';
  * Define the possible data that a Dialog component can expose
  */
 import { DialogExit, DialogButtonModel, ModalConfigurationModel } from './dialog.model';
-import { EventEmitter } from '@angular/core';
+import { EventEmitter, ElementRef } from '@angular/core';
 
 export abstract class Dialog {
 	// Dialog specific data
@@ -40,8 +40,8 @@ export abstract class Dialog {
 	/**
 	 * To Emit the event when something needs to be exposed to the Dialog
 	 */
-	public onSetUpFocus(): void {
-		this.extraActionEvent.emit({event: EVENT_DIALOG.FOCUS});
+	public onSetUpFocus(element: ElementRef): void {
+		this.extraActionEvent.emit({event: EVENT_DIALOG.FOCUS, element: element});
 	}
 
 	/**
