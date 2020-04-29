@@ -255,6 +255,21 @@ kendo-grid {
     font-weight: bold;
     cursor: pointer;
   }
+
+  &.tds-table.scrollable-auto {
+    .k-grid-header {
+      background: $color-head;
+    }
+    .k-grid-content {
+      overflow-y: auto;
+      overflow-x: auto;
+    }
+    tr.k-grid-norecords {
+      td:first-child {
+        border-left-width: 1px;
+      }
+    }
+  }
 }
 
 // TODO: is this used or needed?
