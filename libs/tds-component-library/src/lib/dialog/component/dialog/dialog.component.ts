@@ -280,125 +280,125 @@ export class DialogComponent implements OnInit, AfterViewInit, OnDestroy {
 	 */
 	@HostListener('document:click', ['$event'])
 	public onClicker(event: any): void {
-		let isDone = false;
-		let dropdownInterval = null;
-		let ki_calendarDropdownInterval = null;
-		let searchBarInterval = null;
-		this.dropdownActivated = false;
-
-		this.popFromArray();
-
-		const pushIsDone = (currentElement) => {
-			this.pushToArray(event.target.tagName);
-			this.dropdownActivated = true;
-			isDone = true;
-			this.lastElementClicked = currentElement;
-		};
-
-		const startDropdownInterval = () => {
-			const trackDropdown = () => {				
-				this.dialogService.activatedDropdown.next(true);
-				if (event.target.parentNode.getAttribute('aria-expanded') === 'false') {
-					clearInterval(dropdownInterval);					
-					setTimeout(() => {
-						this.popFromArray();
-					}, 1000);
-				}
-			};
-			dropdownInterval = setInterval(trackDropdown.bind(this), 400);
-		};
-
-		const startKICalendarDropdownInterval = () => {
-			const trackDropdown = () => {
-				this.dialogService.activatedDropdown.next(true);
-				if (document.getElementsByTagName('kendo-popup')) {
-					if (document.getElementsByTagName('kendo-popup').length === 0) { 
-						clearInterval(ki_calendarDropdownInterval);
-						setTimeout(() => {
-							this.popFromArray();
-						}, 1000);
-					}	
-				}
-			};
-			ki_calendarDropdownInterval = setInterval(trackDropdown.bind(this), 400);
-		};
-
-		const startSearchBarInterval = () => {
-			const trackDropdown = () => {
-				this.dialogService.activatedDropdown.next(true);
-				if (event.target.parentNode.parentNode.firstChild.getAttribute('ng-reflect-popup-open') === 'false') {
-					clearInterval(searchBarInterval);
-					setTimeout(() => {
-						this.popFromArray();
-					}, 1000);
-				}
-			};
-			searchBarInterval = setInterval(trackDropdown.bind(this), 400);
-		};
-
-		if (event.target) {
-
-			if (navigator.platform === 'MacIntel') {
-				if (event.target.parentNode) {
-					if (event.target.parentNode.previousElementSibling) {
-						if (event.target.parentNode.previousElementSibling.tagName) {
-							if (event.target.parentNode.previousElementSibling.tagName === 'KENDO-DATEINPUT') {
-								if (document.getElementsByTagName('kendo-popup')) {
-									if (document.getElementsByTagName('kendo-popup').length > 0) {
-										startKICalendarDropdownInterval();
-										pushIsDone(event.target);
-									}
-								}
-							}		
-						}
-					}
-				} 
-			
-				if (event.target.tagName) {									
-					if (event.target.tagName === 'CLR-ICON') {
-						pushIsDone(event.target);
-					} else if (event.target.parentNode) {
-						if (event.target.parentNode.parentNode) {
-							if (event.target.parentNode.parentNode.tagName === 'KENDO-DROPDOWNLIST') {							
-								if (event.target.parentNode.getAttribute('aria-expanded') === 'true') { 
-									startDropdownInterval();
-								}							
-								pushIsDone(event.target.parentNode.parentNode);
-							} else if (event.target.parentNode.parentNode.parentNode) {
-								if (event.target.parentNode.parentNode.parentNode.tagName === 'KENDO-DROPDOWNLIST') {
-									pushIsDone(event.target.parentNode.parentNode.parentNode);
-								} else if (event.target.parentNode.parentNode.parentNode.nextSibling) {
-									if (event.target.parentNode.parentNode.parentNode.nextSibling.tagName === 'KENDO-DROPDOWNLIST') {
-										pushIsDone(event.target.parentNode.parentNode.parentNode);
-									}
-								}
-							}
-
-							if (event.target.parentNode.parentNode.firstChild) {
-								if (event.target.parentNode.parentNode.firstChild.tagName) {
-									if (event.target.parentNode.parentNode.firstChild.tagName === 'KENDO-SEARCHBAR') {									
-										if (event.target.parentNode.parentNode.firstChild.getAttribute('ng-reflect-popup-open')) {
-											if (event.target.parentNode.parentNode.firstChild.getAttribute('ng-reflect-popup-open') === 'true') {
-												startSearchBarInterval();
-												pushIsDone(event.target.parentNode.parentNode.firstChild);
-											}
-										}
-									}
-								}
-							}
-						}
-					}
-				}
-			} else {
-				if (document.getElementsByTagName('kendo-popup')) {
-					if (document.getElementsByTagName('kendo-popup').length > 0) {
-						startKICalendarDropdownInterval();
-						pushIsDone(event.target);
-					}
-				}	
-			}
-			
-		}
+		// let isDone = false;
+		// let dropdownInterval = null;
+		// let ki_calendarDropdownInterval = null;
+		// let searchBarInterval = null;
+		// this.dropdownActivated = false;
+		//
+		// this.popFromArray();
+		//
+		// const pushIsDone = (currentElement) => {
+		// 	this.pushToArray(event.target.tagName);
+		// 	this.dropdownActivated = true;
+		// 	isDone = true;
+		// 	this.lastElementClicked = currentElement;
+		// };
+		//
+		// const startDropdownInterval = () => {
+		// 	const trackDropdown = () => {
+		// 		this.dialogService.activatedDropdown.next(true);
+		// 		if (event.target.parentNode.getAttribute('aria-expanded') === 'false') {
+		// 			clearInterval(dropdownInterval);
+		// 			setTimeout(() => {
+		// 				this.popFromArray();
+		// 			}, 1000);
+		// 		}
+		// 	};
+		// 	dropdownInterval = setInterval(trackDropdown.bind(this), 400);
+		// };
+		//
+		// const startKICalendarDropdownInterval = () => {
+		// 	const trackDropdown = () => {
+		// 		this.dialogService.activatedDropdown.next(true);
+		// 		if (document.getElementsByTagName('kendo-popup')) {
+		// 			if (document.getElementsByTagName('kendo-popup').length === 0) {
+		// 				clearInterval(ki_calendarDropdownInterval);
+		// 				setTimeout(() => {
+		// 					this.popFromArray();
+		// 				}, 1000);
+		// 			}
+		// 		}
+		// 	};
+		// 	ki_calendarDropdownInterval = setInterval(trackDropdown.bind(this), 400);
+		// };
+		//
+		// const startSearchBarInterval = () => {
+		// 	const trackDropdown = () => {
+		// 		this.dialogService.activatedDropdown.next(true);
+		// 		if (event.target.parentNode.parentNode.firstChild.getAttribute('ng-reflect-popup-open') === 'false') {
+		// 			clearInterval(searchBarInterval);
+		// 			setTimeout(() => {
+		// 				this.popFromArray();
+		// 			}, 1000);
+		// 		}
+		// 	};
+		// 	searchBarInterval = setInterval(trackDropdown.bind(this), 400);
+		// };
+		//
+		// if (event.target) {
+		//
+		// 	if (navigator.platform === 'MacIntel') {
+		// 		if (event.target.parentNode) {
+		// 			if (event.target.parentNode.previousElementSibling) {
+		// 				if (event.target.parentNode.previousElementSibling.tagName) {
+		// 					if (event.target.parentNode.previousElementSibling.tagName === 'KENDO-DATEINPUT') {
+		// 						if (document.getElementsByTagName('kendo-popup')) {
+		// 							if (document.getElementsByTagName('kendo-popup').length > 0) {
+		// 								startKICalendarDropdownInterval();
+		// 								pushIsDone(event.target);
+		// 							}
+		// 						}
+		// 					}
+		// 				}
+		// 			}
+		// 		}
+		//
+		// 		if (event.target.tagName) {
+		// 			if (event.target.tagName === 'CLR-ICON') {
+		// 				pushIsDone(event.target);
+		// 			} else if (event.target.parentNode) {
+		// 				if (event.target.parentNode.parentNode) {
+		// 					if (event.target.parentNode.parentNode.tagName === 'KENDO-DROPDOWNLIST') {
+		// 						if (event.target.parentNode.getAttribute('aria-expanded') === 'true') {
+		// 							startDropdownInterval();
+		// 						}
+		// 						pushIsDone(event.target.parentNode.parentNode);
+		// 					} else if (event.target.parentNode.parentNode.parentNode) {
+		// 						if (event.target.parentNode.parentNode.parentNode.tagName === 'KENDO-DROPDOWNLIST') {
+		// 							pushIsDone(event.target.parentNode.parentNode.parentNode);
+		// 						} else if (event.target.parentNode.parentNode.parentNode.nextSibling) {
+		// 							if (event.target.parentNode.parentNode.parentNode.nextSibling.tagName === 'KENDO-DROPDOWNLIST') {
+		// 								pushIsDone(event.target.parentNode.parentNode.parentNode);
+		// 							}
+		// 						}
+		// 					}
+		//
+		// 					if (event.target.parentNode.parentNode.firstChild) {
+		// 						if (event.target.parentNode.parentNode.firstChild.tagName) {
+		// 							if (event.target.parentNode.parentNode.firstChild.tagName === 'KENDO-SEARCHBAR') {
+		// 								if (event.target.parentNode.parentNode.firstChild.getAttribute('ng-reflect-popup-open')) {
+		// 									if (event.target.parentNode.parentNode.firstChild.getAttribute('ng-reflect-popup-open') === 'true') {
+		// 										startSearchBarInterval();
+		// 										pushIsDone(event.target.parentNode.parentNode.firstChild);
+		// 									}
+		// 								}
+		// 							}
+		// 						}
+		// 					}
+		// 				}
+		// 			}
+		// 		}
+		// 	} else {
+		// 		if (document.getElementsByTagName('kendo-popup')) {
+		// 			if (document.getElementsByTagName('kendo-popup').length > 0) {
+		// 				startKICalendarDropdownInterval();
+		// 				pushIsDone(event.target);
+		// 			}
+		// 		}
+		// 	}
+		//
+		// }
 	}
 
 	/**
