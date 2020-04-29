@@ -283,6 +283,7 @@ export class DialogComponent implements OnInit, AfterViewInit, OnDestroy {
 		let isDone = false;
 		let dropdownInterval = null;
 		let ki_calendarDropdownInterval = null;
+		let clrDatePickerInterval = null;
 		let searchBarInterval = null;
 		this.dropdownActivated = false;
 		
@@ -321,6 +322,21 @@ export class DialogComponent implements OnInit, AfterViewInit, OnDestroy {
 				}
 			};
 			ki_calendarDropdownInterval = setInterval(trackDropdown.bind(this), 400);
+		};
+
+		const startClrDatePickerInterval = () => {
+			const trackDropdown = () => {
+				this.dialogService.activatedDropdown.next(true);
+				if (document.getElementsByTagName('clr-datepicker-view-manager')) {
+					if (document.getElementsByTagName('clr-datepicker-view-manager').length === 0) {
+						clearInterval(clrDatePickerInterval);
+						setTimeout(() => {
+							this.popFromArray();
+						}, 900);
+					}
+				}
+			};
+			clrDatePickerInterval = setInterval(trackDropdown.bind(this), 400);
 		};
 		
 		const startSearchBarInterval = () => {
@@ -393,6 +409,13 @@ export class DialogComponent implements OnInit, AfterViewInit, OnDestroy {
 				if (document.getElementsByTagName('kendo-popup')) {
 					if (document.getElementsByTagName('kendo-popup').length > 0) {
 						startKICalendarDropdownInterval();
+						pushIsDone(event.target);
+					}
+				}
+
+				if (document.getElementsByTagName('clr-datepicker-view-manager')) {
+					if (document.getElementsByTagName('clr-datepicker-view-manager').length > 0) {
+						startClrDatePickerInterval();
 						pushIsDone(event.target);
 					}
 				}
