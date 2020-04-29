@@ -88,6 +88,7 @@ export class DiagramLayoutComponent implements OnChanges, OnInit, AfterViewInit,
 	@Output() diagramClicked: EventEmitter<void> = new EventEmitter<void>();
 	@Output() initialAnimationStarting: EventEmitter<void> = new EventEmitter<void>();
 	@Output() layoutCompleted: EventEmitter<void> = new EventEmitter<void>();
+	@Output() nodeDoubleClick: EventEmitter<any> = new EventEmitter<any>();
 	@ViewChild('diagramContainer', {static: false}) diagramContainer: ElementRef;
 	@ViewChild('tdsCtxMenu', {static: false}) tdsCtxMenu: TdsContextMenuComponent;
 	@ViewChild('overviewContainer', {static: false}) overviewContainer: ElementRef;
@@ -477,12 +478,22 @@ export class DiagramLayoutComponent implements OnChanges, OnInit, AfterViewInit,
 			this.data.nodeTemplate.contextMenu = this.contextMenu();
 			this.data.nodeTemplate.click = (i, o) => this.onNodeClick(i, o);
 			this.data.nodeTemplate.mouseLeave = () => this.hideToolTip();
+			this.data.nodeTemplate.doubleClick = (i, o) => {
+				if ((o && o.part) && o.part.data) {
+					this.nodeDoubleClick.emit(o.part.data);
+				}
+			};
 			return this.data.nodeTemplate;
 		}
 		if (this.nodeTemplate) {
 			this.nodeTemplate.toolTip = this.createTooltip();
 			this.nodeTemplate.contextMenu = this.contextMenu();
 			this.nodeTemplate.mouseLeave = () => this.hideToolTip();
+			this.data.nodeTemplate.doubleClick = (i, o) => {
+				if ((o && o.part) && o.part.data) {
+					this.nodeDoubleClick.emit(o.part.data);
+				}
+			};
 			return this.nodeTemplate;
 		}
 
@@ -641,6 +652,11 @@ export class DiagramLayoutComponent implements OnChanges, OnInit, AfterViewInit,
 				this.data.mediumScaleTemplate.contextMenu = this.contextMenu();
 				this.data.mediumScaleTemplate.click = (i, o) => this.onNodeClick(i, o);
 				this.data.mediumScaleTemplate.mouseLeave = () => this.hideToolTip();
+				this.data.mediumScaleTemplate.doubleClick = (i, o) => {
+					if ((o && o.part) && o.part.data) {
+						this.nodeDoubleClick.emit(o.part.data);
+					}
+				};
 				d.nodeTemplate = this.data.mediumScaleTemplate;
 			});
 		}
@@ -650,6 +666,11 @@ export class DiagramLayoutComponent implements OnChanges, OnInit, AfterViewInit,
 				this.mediumScaleTemplate.contextMenu = this.contextMenu();
 				this.mediumScaleTemplate.click = (i, o) => this.onNodeClick(i, o);
 				this.mediumScaleTemplate.mouseLeave = () => this.hideToolTip();
+				this.mediumScaleTemplate.doubleClick = (i, o) => {
+					if ((o && o.part) && o.part.data) {
+						this.nodeDoubleClick.emit(o.part.data);
+					}
+				};
 				d.nodeTemplate = this.mediumScaleTemplate;
 			});
 		}
@@ -675,6 +696,11 @@ export class DiagramLayoutComponent implements OnChanges, OnInit, AfterViewInit,
 				this.data.lowScaleTemplate.contextMenu = this.contextMenu();
 				this.data.lowScaleTemplate.click = (i, o) => this.onNodeClick(i, o);
 				this.data.lowScaleTemplate.mouseLeave = () => this.hideToolTip();
+				this.data.lowScaleTemplate.doubleClick = (i, o) => {
+					if ((o && o.part) && o.part.data) {
+						this.nodeDoubleClick.emit(o.part.data);
+					}
+				};
 				d.nodeTemplate = this.data.lowScaleTemplate;
 			});
 		}
@@ -684,6 +710,11 @@ export class DiagramLayoutComponent implements OnChanges, OnInit, AfterViewInit,
 				this.lowScaleTemplate.contextMenu = this.contextMenu();
 				this.lowScaleTemplate.click = (i, o) => this.onNodeClick(i, o);
 				this.lowScaleTemplate.mouseLeave = () => this.hideToolTip();
+				this.lowScaleTemplate.doubleClick = (i, o) => {
+					if ((o && o.part) && o.part.data) {
+						this.nodeDoubleClick.emit(o.part.data);
+					}
+				};
 				d.nodeTemplate = this.lowScaleTemplate;
 			});
 		}
