@@ -353,23 +353,20 @@ export class DialogComponent implements OnInit, AfterViewInit, OnDestroy {
 		};
 		
 		if (event.target) {
-		
-			if (navigator.platform === 'MacIntel') {
-				if (event.target.parentNode) {
-					if (event.target.parentNode.previousElementSibling) {
-						if (event.target.parentNode.previousElementSibling.tagName) {
-							if (event.target.parentNode.previousElementSibling.tagName === 'KENDO-DATEINPUT') {
-								if (document.getElementsByTagName('kendo-popup')) {
-									if (document.getElementsByTagName('kendo-popup').length > 0) {
-										startKICalendarDropdownInterval();
-										pushIsDone(event.target);
-									}
-								}
-							}
-						}
-					}
+			if (document.getElementsByTagName('kendo-popup')) {
+				if (document.getElementsByTagName('kendo-popup').length > 0) {
+					startKICalendarDropdownInterval();
+					pushIsDone(event.target);
 				}
-		
+			}
+
+			if (document.getElementsByTagName('clr-datepicker-view-manager')) {
+				if (document.getElementsByTagName('clr-datepicker-view-manager').length > 0) {
+					startClrDatePickerInterval();
+					pushIsDone(event.target);
+				}
+			}
+	
 				if (event.target.tagName) {
 					if (event.target.tagName === 'CLR-ICON') {
 						pushIsDone(event.target);
@@ -405,22 +402,7 @@ export class DialogComponent implements OnInit, AfterViewInit, OnDestroy {
 						}
 					}
 				}
-			} else {
-				if (document.getElementsByTagName('kendo-popup')) {
-					if (document.getElementsByTagName('kendo-popup').length > 0) {
-						startKICalendarDropdownInterval();
-						pushIsDone(event.target);
-					}
-				}
-
-				if (document.getElementsByTagName('clr-datepicker-view-manager')) {
-					if (document.getElementsByTagName('clr-datepicker-view-manager').length > 0) {
-						startClrDatePickerInterval();
-						pushIsDone(event.target);
-					}
-				}
-			}
-		
+			
 		}
 
 		if (isDone === false) {
