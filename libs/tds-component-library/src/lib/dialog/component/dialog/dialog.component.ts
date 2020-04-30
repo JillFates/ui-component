@@ -143,7 +143,7 @@ export class DialogComponent implements OnInit, AfterViewInit, OnDestroy {
 			if (currentDialogComponentInstance.successEvent) {
 				
 				currentDialogComponentInstance.successEvent.subscribe(result => {
-					this.dropdownSub = this.dialogService.activatedDropdown.subscribe(res => {						
+					this.dropdownSub = this.dialogService.activatedDropdown.subscribe(res => {
 						this.dropdownActivated = res;
 						this.dropdownSub.unsubscribe();
 					});
@@ -276,71 +276,30 @@ export class DialogComponent implements OnInit, AfterViewInit, OnDestroy {
 	}
 
 	/**
-	 * Capture click event
+	 * Determines if the esc was made over a composite component opened, like the date picker
+	 * @param element
 	 */
-	@HostListener('document:click', ['$event'])
-	public onClicker(event: any): void {
-		let isDone = false;
-		let ki_calendarDropdownInterval = null;
-		let clrDatePickerInterval = null;
-		this.dropdownActivated = false;		
-		this.popFromArray();
-		
-		const pushIsDone = (currentElement) => {
-			this.pushToArray(event.target.tagName);
-			this.dropdownActivated = true;
-			isDone = true;
-			this.lastElementClicked = currentElement;
-		};
-				
-		const startKICalendarDropdownInterval = () => {
-			const trackDropdown = () => {
-				this.dialogService.activatedDropdown.next(true);
-				if (document.getElementsByTagName('kendo-popup')) {
-					if (document.getElementsByTagName('kendo-popup').length === 0) {
-						clearInterval(ki_calendarDropdownInterval);
-						setTimeout(() => {
-							this.popFromArray();
-						}, 900);
-					}
-				}
-			};
-			ki_calendarDropdownInterval = setInterval(trackDropdown.bind(this), 400);
-		};
+	isEscapeOverCompositeComponent(element: any): boolean {
+		// example with the datepicker
+		const bannedClasses = ['datepicker'];
+		const classList = element && element.classList;
 
-		const startClrDatePickerInterval = () => {
-			const trackDropdown = () => {
-				this.dialogService.activatedDropdown.next(true);
-				if (document.getElementsByTagName('clr-datepicker-view-manager')) {
-					if (document.getElementsByTagName('clr-datepicker-view-manager').length === 0) {
-						clearInterval(clrDatePickerInterval);
-						setTimeout(() => {
-							this.popFromArray();
-						}, 900);
-					}
-				}
-			};
-			clrDatePickerInterval = setInterval(trackDropdown.bind(this), 400);
-		};
-		
-		if (event.target) {
-			if (document.getElementsByTagName('kendo-popup')) {
-				if (document.getElementsByTagName('kendo-popup').length > 0) {
-					startKICalendarDropdownInterval();
-					pushIsDone(event.target);
+		if (element && classList) {
+			let belongsToBannedClass = false;
+			// check if one of the class list elements is equal to some banned class
+			for (const value of classList) {
+				if (bannedClasses.indexOf(value) !== -1) {
+					belongsToBannedClass = true;
 				}
 			}
-
-			if (document.getElementsByTagName('clr-datepicker-view-manager')) {
-				if (document.getElementsByTagName('clr-datepicker-view-manager').length > 0) {
-					startClrDatePickerInterval();
-					pushIsDone(event.target);
-				}
-			}			
-		}
-
-		if (isDone === false) {
-			this.dialogService.activatedDropdown.next(false);
+			if (belongsToBannedClass) {
+				return true;
+			} else {
+				// move to the above parent
+				return this.isEscapeOverCompositeComponent(element.parentNode);
+			}
+		} else {
+			return false;
 		}
 	}
 
@@ -350,6 +309,14 @@ export class DialogComponent implements OnInit, AfterViewInit, OnDestroy {
 	 */
 	@HostListener('document:keydown.escape', ['$event']) onKeydownHandler(event: KeyboardEvent): void {
 		if (event.key === 'Escape' || event.code === 'Escape') {
+			if (this.isEscapeOverCompositeComponent(document.activeElement) ) {
+				// don't close the escape was made over a calendar or list open
+				console.log('Click was over a COMPOSITE control opened');
+			} else {
+				// it is safe to close
+				console.log('Click was over a regular control');
+			}
+
 			this.dialogEscape = true;
 			this.dropdownSub = this.dialogService.activatedDropdown.subscribe(res => {
 				this.dropdownActivated = res;
