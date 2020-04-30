@@ -250,9 +250,9 @@ export class DialogComponent implements OnInit, AfterViewInit, OnDestroy {
 	 * This method will help to setup the focus to the first input, placing the cursor indicator
 	 * **/
 	private setupFocus(currentViewContainerRef: any, element: ElementRef): void {
-		if (element.nativeElement) {
-			element.nativeElement.focus();
-		}
+			if (element && element.nativeElement) {
+				element.nativeElement.focus();
+			}
 	}
 
 	/**
