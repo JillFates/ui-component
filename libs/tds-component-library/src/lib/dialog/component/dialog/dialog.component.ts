@@ -281,7 +281,7 @@ export class DialogComponent implements OnInit, AfterViewInit, OnDestroy {
 	 */
 	isEscapeOverCompositeComponent(element: any): boolean {
 		// example with the datepicker
-		const bannedClasses = ['datepicker'];
+		const bannedClasses = ['datepicker', 'k-dropdown'];
 		const classList = element && element.classList;
 
 		if (element && classList) {
@@ -312,28 +312,10 @@ export class DialogComponent implements OnInit, AfterViewInit, OnDestroy {
 			if (this.isEscapeOverCompositeComponent(document.activeElement) ) {
 				// don't close the escape was made over a calendar or list open
 				console.log('Click was over a COMPOSITE control opened');
+				return;
 			} else {
 				// it is safe to close
 				console.log('Click was over a regular control');
-			}
-
-			this.dialogEscape = true;
-			this.dropdownSub = this.dialogService.activatedDropdown.subscribe(res => {
-				this.dropdownActivated = res;
-			});
-			if (this.dropdownActivated === true) {
-				if (this.lastElementClicked) {
-					if (this.renderer) {
-						this.renderer.setAttribute(
-							this.lastElementClicked,
-							'tabindex',
-							'0'
-						);
-					}
-					this.dropdownActivated = false;
-					return;
-				}
-			} else { 
 				const dynamicHostModel: DynamicHostModel = this.dynamicDialogList.find(
 					(innerDynamicHostModel: DynamicHostModel) => {
 						return innerDynamicHostModel.dynamicHostComponent === this.dynamicHostList.last;
@@ -345,8 +327,8 @@ export class DialogComponent implements OnInit, AfterViewInit, OnDestroy {
 					);
 					currentDialogComponentInstance.onDismiss();
 				}
+				
 			}
-
 		}
 	}
 
