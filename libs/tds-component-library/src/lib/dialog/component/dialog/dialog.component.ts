@@ -280,125 +280,96 @@ export class DialogComponent implements OnInit, AfterViewInit, OnDestroy {
 	 */
 	@HostListener('document:click', ['$event'])
 	public onClicker(event: any): void {
-		// let isDone = false;
-		// let dropdownInterval = null;
-		// let ki_calendarDropdownInterval = null;
-		// let searchBarInterval = null;
-		// this.dropdownActivated = false;
-		//
-		// this.popFromArray();
-		//
-		// const pushIsDone = (currentElement) => {
-		// 	this.pushToArray(event.target.tagName);
-		// 	this.dropdownActivated = true;
-		// 	isDone = true;
-		// 	this.lastElementClicked = currentElement;
-		// };
-		//
-		// const startDropdownInterval = () => {
-		// 	const trackDropdown = () => {
-		// 		this.dialogService.activatedDropdown.next(true);
-		// 		if (event.target.parentNode.getAttribute('aria-expanded') === 'false') {
-		// 			clearInterval(dropdownInterval);
-		// 			setTimeout(() => {
-		// 				this.popFromArray();
-		// 			}, 1000);
-		// 		}
-		// 	};
-		// 	dropdownInterval = setInterval(trackDropdown.bind(this), 400);
-		// };
-		//
-		// const startKICalendarDropdownInterval = () => {
-		// 	const trackDropdown = () => {
-		// 		this.dialogService.activatedDropdown.next(true);
-		// 		if (document.getElementsByTagName('kendo-popup')) {
-		// 			if (document.getElementsByTagName('kendo-popup').length === 0) {
-		// 				clearInterval(ki_calendarDropdownInterval);
-		// 				setTimeout(() => {
-		// 					this.popFromArray();
-		// 				}, 1000);
-		// 			}
-		// 		}
-		// 	};
-		// 	ki_calendarDropdownInterval = setInterval(trackDropdown.bind(this), 400);
-		// };
-		//
-		// const startSearchBarInterval = () => {
-		// 	const trackDropdown = () => {
-		// 		this.dialogService.activatedDropdown.next(true);
-		// 		if (event.target.parentNode.parentNode.firstChild.getAttribute('ng-reflect-popup-open') === 'false') {
-		// 			clearInterval(searchBarInterval);
-		// 			setTimeout(() => {
-		// 				this.popFromArray();
-		// 			}, 1000);
-		// 		}
-		// 	};
-		// 	searchBarInterval = setInterval(trackDropdown.bind(this), 400);
-		// };
-		//
-		// if (event.target) {
-		//
-		// 	if (navigator.platform === 'MacIntel') {
-		// 		if (event.target.parentNode) {
-		// 			if (event.target.parentNode.previousElementSibling) {
-		// 				if (event.target.parentNode.previousElementSibling.tagName) {
-		// 					if (event.target.parentNode.previousElementSibling.tagName === 'KENDO-DATEINPUT') {
-		// 						if (document.getElementsByTagName('kendo-popup')) {
-		// 							if (document.getElementsByTagName('kendo-popup').length > 0) {
-		// 								startKICalendarDropdownInterval();
-		// 								pushIsDone(event.target);
-		// 							}
-		// 						}
-		// 					}
-		// 				}
-		// 			}
-		// 		}
-		//
-		// 		if (event.target.tagName) {
-		// 			if (event.target.tagName === 'CLR-ICON') {
-		// 				pushIsDone(event.target);
-		// 			} else if (event.target.parentNode) {
-		// 				if (event.target.parentNode.parentNode) {
-		// 					if (event.target.parentNode.parentNode.tagName === 'KENDO-DROPDOWNLIST') {
-		// 						if (event.target.parentNode.getAttribute('aria-expanded') === 'true') {
-		// 							startDropdownInterval();
-		// 						}
-		// 						pushIsDone(event.target.parentNode.parentNode);
-		// 					} else if (event.target.parentNode.parentNode.parentNode) {
-		// 						if (event.target.parentNode.parentNode.parentNode.tagName === 'KENDO-DROPDOWNLIST') {
-		// 							pushIsDone(event.target.parentNode.parentNode.parentNode);
-		// 						} else if (event.target.parentNode.parentNode.parentNode.nextSibling) {
-		// 							if (event.target.parentNode.parentNode.parentNode.nextSibling.tagName === 'KENDO-DROPDOWNLIST') {
-		// 								pushIsDone(event.target.parentNode.parentNode.parentNode);
-		// 							}
-		// 						}
-		// 					}
-		//
-		// 					if (event.target.parentNode.parentNode.firstChild) {
-		// 						if (event.target.parentNode.parentNode.firstChild.tagName) {
-		// 							if (event.target.parentNode.parentNode.firstChild.tagName === 'KENDO-SEARCHBAR') {
-		// 								if (event.target.parentNode.parentNode.firstChild.getAttribute('ng-reflect-popup-open')) {
-		// 									if (event.target.parentNode.parentNode.firstChild.getAttribute('ng-reflect-popup-open') === 'true') {
-		// 										startSearchBarInterval();
-		// 										pushIsDone(event.target.parentNode.parentNode.firstChild);
-		// 									}
-		// 								}
-		// 							}
-		// 						}
-		// 					}
-		// 				}
-		// 			}
-		// 		}
-		// 	} else {
-		// 		if (document.getElementsByTagName('kendo-popup')) {
-		// 			if (document.getElementsByTagName('kendo-popup').length > 0) {
-		// 				startKICalendarDropdownInterval();
-		// 				pushIsDone(event.target);
-		// 			}
-		// 		}
-		// 	}
-		//
-		// }
+		let isDone = false;
+		let ki_calendarDropdownInterval = null;
+		let clrDatePickerInterval = null;
+		this.dropdownActivated = false;		
+		this.popFromArray();
+		
+		const pushIsDone = (currentElement) => {
+			this.pushToArray(event.target.tagName);
+			this.dropdownActivated = true;
+			isDone = true;
+			this.lastElementClicked = currentElement;
+		};
+				
+		const startKICalendarDropdownInterval = () => {
+			const trackDropdown = () => {
+				this.dialogService.activatedDropdown.next(true);
+				if (document.getElementsByTagName('kendo-popup')) {
+					if (document.getElementsByTagName('kendo-popup').length === 0) {
+						clearInterval(ki_calendarDropdownInterval);
+						setTimeout(() => {
+							this.popFromArray();
+						}, 900);
+					}
+				}
+			};
+			ki_calendarDropdownInterval = setInterval(trackDropdown.bind(this), 400);
+		};
+
+		const startClrDatePickerInterval = () => {
+			const trackDropdown = () => {
+				this.dialogService.activatedDropdown.next(true);
+				if (document.getElementsByTagName('clr-datepicker-view-manager')) {
+					if (document.getElementsByTagName('clr-datepicker-view-manager').length === 0) {
+						clearInterval(clrDatePickerInterval);
+						setTimeout(() => {
+							this.popFromArray();
+						}, 900);
+					}
+				}
+			};
+			clrDatePickerInterval = setInterval(trackDropdown.bind(this), 400);
+		};
+		
+		if (event.target) {
+			if (document.getElementsByTagName('kendo-popup')) {
+				if (document.getElementsByTagName('kendo-popup').length > 0) {
+					startKICalendarDropdownInterval();
+					pushIsDone(event.target);
+				}
+			}
+
+			if (document.getElementsByTagName('clr-datepicker-view-manager')) {
+				if (document.getElementsByTagName('clr-datepicker-view-manager').length > 0) {
+					startClrDatePickerInterval();
+					pushIsDone(event.target);
+				}
+			}			
+		}
+
+		if (isDone === false) {
+			this.dialogService.activatedDropdown.next(false);
+		}
+	}
+
+	/**
+	 * Determines if the esc was made over a composite component opened, like the date picker
+	 * @param element
+	 */
+	isEscapeOverCompositeComponent(element: any): boolean {
+		// example with the datepicker
+		const bannedClasses = ['datepicker'];
+		const classList = element && element.classList;
+
+		if (element && classList) {
+			let belongsToBannedClass = false;
+			// check if one of the class list elements is equal to some banned class
+			for (const value of classList) {
+				if (bannedClasses.indexOf(value) !== -1) {
+					belongsToBannedClass = true;
+				}
+			}
+			if (belongsToBannedClass) {
+				return true;
+			} else {
+				// move to the above parent
+				return this.isEscapeOverCompositeComponent(element.parentNode);
+			}
+		} else {
+			return false;
+		}
 	}
 
 	/**
@@ -407,36 +378,41 @@ export class DialogComponent implements OnInit, AfterViewInit, OnDestroy {
 	 */
 	@HostListener('document:keydown.escape', ['$event']) onKeydownHandler(event: KeyboardEvent): void {
 		if (event.key === 'Escape' || event.code === 'Escape') {
-			this.dialogEscape = true;
-			this.dropdownSub = this.dialogService.activatedDropdown.subscribe(res => {
-				this.dropdownActivated = res;
-			});
-			if (this.dropdownActivated === true) {
-				if (this.lastElementClicked) {
-					if (this.renderer) {
-						this.renderer.setAttribute(
-							this.lastElementClicked,
-							'tabindex',
-							'0'
-						);
-					}
-					this.dropdownActivated = false;
-					return;
-				}
-			} else { 
-				const dynamicHostModel: DynamicHostModel = this.dynamicDialogList.find(
-					(innerDynamicHostModel: DynamicHostModel) => {
-						return innerDynamicHostModel.dynamicHostComponent === this.dynamicHostList.last;
-					}
-				);
-				if (dynamicHostModel) {
-					const currentDialogComponentInstance = <Dialog>(
-						dynamicHostModel.dynamicHostComponent.currentDialogComponentInstance
-					);
-					currentDialogComponentInstance.onDismiss();
-				}
+			if (this.isEscapeOverCompositeComponent(document.activeElement) ) {
+				// don't close the escape was made over a calendar
+				return;
 			}
-
+			else {
+				this.dialogEscape = true;
+				this.dropdownSub = this.dialogService.activatedDropdown.subscribe(res => {
+					this.dropdownActivated = res;
+				});
+				if (this.dropdownActivated === true) {
+					if (this.lastElementClicked) {
+						if (this.renderer) {
+							this.renderer.setAttribute(
+								this.lastElementClicked,
+								'tabindex',
+								'0'
+							);
+						}
+						this.dropdownActivated = false;
+						return;
+					}
+				} else { 
+					const dynamicHostModel: DynamicHostModel = this.dynamicDialogList.find(
+						(innerDynamicHostModel: DynamicHostModel) => {
+							return innerDynamicHostModel.dynamicHostComponent === this.dynamicHostList.last;
+						}
+					);
+					if (dynamicHostModel) {
+						const currentDialogComponentInstance = <Dialog>(
+							dynamicHostModel.dynamicHostComponent.currentDialogComponentInstance
+						);
+						currentDialogComponentInstance.onDismiss();
+					}
+				}	
+			}
 		}
 	}
 
