@@ -281,8 +281,7 @@ export class DialogComponent implements OnInit, AfterViewInit, OnDestroy {
 	@HostListener('document:click', ['$event'])
 	public onClicker(event: any): void {
 		let isDone = false;
-		let ki_calendarDropdownInterval = null;
-		let clrDatePickerInterval = null;
+		let kDropdownInterval = null;
 		this.dropdownActivated = false;		
 		this.popFromArray();
 		
@@ -292,48 +291,33 @@ export class DialogComponent implements OnInit, AfterViewInit, OnDestroy {
 			isDone = true;
 			this.lastElementClicked = currentElement;
 		};
-				
-		const startKICalendarDropdownInterval = () => {
+
+		const startDropdownInterval = (theTag) => { 
 			const trackDropdown = () => {
 				this.dialogService.activatedDropdown.next(true);
-				if (document.getElementsByTagName('kendo-popup')) {
-					if (document.getElementsByTagName('kendo-popup').length === 0) {
-						clearInterval(ki_calendarDropdownInterval);
+				if (document.getElementsByTagName(theTag)) {
+					if (document.getElementsByTagName(theTag).length === 0) {
+						clearInterval(kDropdownInterval);
 						setTimeout(() => {
 							this.popFromArray();
 						}, 900);
 					}
 				}
 			};
-			ki_calendarDropdownInterval = setInterval(trackDropdown.bind(this), 400);
+			kDropdownInterval = setInterval(trackDropdown.bind(this), 400);
 		};
 
-		const startClrDatePickerInterval = () => {
-			const trackDropdown = () => {
-				this.dialogService.activatedDropdown.next(true);
-				if (document.getElementsByTagName('clr-datepicker-view-manager')) {
-					if (document.getElementsByTagName('clr-datepicker-view-manager').length === 0) {
-						clearInterval(clrDatePickerInterval);
-						setTimeout(() => {
-							this.popFromArray();
-						}, 900);
-					}
-				}
-			};
-			clrDatePickerInterval = setInterval(trackDropdown.bind(this), 400);
-		};
-		
 		if (event.target) {
 			if (document.getElementsByTagName('kendo-popup')) {
 				if (document.getElementsByTagName('kendo-popup').length > 0) {
-					startKICalendarDropdownInterval();
+					startDropdownInterval('kendo-popup');
 					pushIsDone(event.target);
 				}
 			}
 
 			if (document.getElementsByTagName('clr-datepicker-view-manager')) {
 				if (document.getElementsByTagName('clr-datepicker-view-manager').length > 0) {
-					startClrDatePickerInterval();
+					startDropdownInterval('clr-datepicker-view-manager');
 					pushIsDone(event.target);
 				}
 			}			
