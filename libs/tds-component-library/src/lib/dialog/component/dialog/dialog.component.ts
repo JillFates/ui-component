@@ -320,39 +320,11 @@ export class DialogComponent implements OnInit, AfterViewInit, OnDestroy {
 					startDropdownInterval('clr-datepicker-view-manager');
 					pushIsDone(event.target);
 				}
-			}			
+			}
 		}
 
 		if (isDone === false) {
 			this.dialogService.activatedDropdown.next(false);
-		}
-	}
-
-	/**
-	 * Determines if the esc was made over a composite component opened, like the date picker
-	 * @param element
-	 */
-	isEscapeOverCompositeComponent(element: any): boolean {
-		// example with the datepicker
-		const bannedClasses = ['datepicker'];
-		const classList = element && element.classList;
-
-		if (element && classList) {
-			let belongsToBannedClass = false;
-			// check if one of the class list elements is equal to some banned class
-			for (const value of classList) {
-				if (bannedClasses.indexOf(value) !== -1) {
-					belongsToBannedClass = true;
-				}
-			}
-			if (belongsToBannedClass) {
-				return true;
-			} else {
-				// move to the above parent
-				return this.isEscapeOverCompositeComponent(element.parentNode);
-			}
-		} else {
-			return false;
 		}
 	}
 
@@ -362,11 +334,6 @@ export class DialogComponent implements OnInit, AfterViewInit, OnDestroy {
 	 */
 	@HostListener('document:keydown.escape', ['$event']) onKeydownHandler(event: KeyboardEvent): void {
 		if (event.key === 'Escape' || event.code === 'Escape') {
-			if (this.isEscapeOverCompositeComponent(document.activeElement) ) {
-				// don't close the escape was made over a calendar
-				return;
-			}
-			else {
 				this.dialogEscape = true;
 				this.dropdownSub = this.dialogService.activatedDropdown.subscribe(res => {
 					this.dropdownActivated = res;
@@ -396,7 +363,6 @@ export class DialogComponent implements OnInit, AfterViewInit, OnDestroy {
 						currentDialogComponentInstance.onDismiss();
 					}
 				}	
-			}
 		}
 	}
 
