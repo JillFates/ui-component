@@ -1,18 +1,20 @@
-<div class="clr-select-wrapper">
-    <select id="select-basic" class="clr-select">
-        <option value="1">One</option>
-        <option value="2">Two</option>
-        <option value="3">Three</option>
-    </select>
-</div>
-
-<form clrForm clrLayout="vertical">
-    <clr-date-container>
-        <input type="date" clrDate name="demo" />
-    </clr-date-container>
-</form>
-
-<div class="example-wrapper">
-    <p>T-shirt size:</p>
-    <kendo-dropdownlist [data]="listItems"> </kendo-dropdownlist>
+<div tdsPreventEsc>
+    <div class="clr-select-wrapper">
+        <select id="select-basic" class="clr-select">
+            <option value="1">One</option>
+            <option value="2">Two</option>
+            <option value="3">Three</option>
+        </select>
+    </div>
+    
+    <form clrForm clrLayout="vertical">
+        <clr-date-container>
+            <input type="date" clrDate name="demo" />
+        </clr-date-container>
+    </form>
+    
+    <div class="example-wrapper">
+        <p>T-shirt size:</p>
+        <kendo-dropdownlist [data]="listItems"> </kendo-dropdownlist>
+    </div>
 </div>

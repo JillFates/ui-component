@@ -38,8 +38,6 @@ export class DialogComponent implements OnInit, AfterViewInit, OnDestroy {
 	public dynamicDialogList: DynamicHostModel[] = <any>[];
 	public dropdownActivated = false;
 	private arrClicked: string[] = [];
-	private lastElementClicked = null;
-	private dialogEscape = false;
 	public dropdownSub: Subscription;
 	// QueryList does not provides a proper way to get new elements
 	private newDialog = false;
@@ -55,6 +53,7 @@ export class DialogComponent implements OnInit, AfterViewInit, OnDestroy {
 	ngOnInit(): void {
 		this.dropdownSub = this.dialogService.activatedDropdown.subscribe(didActivate => {
 			this.dropdownActivated = didActivate;
+			console.log('this.dropdownActivated: ', this.dropdownActivated);
 		});
 	}
 
@@ -143,15 +142,10 @@ export class DialogComponent implements OnInit, AfterViewInit, OnDestroy {
 			if (currentDialogComponentInstance.successEvent) {
 				
 				currentDialogComponentInstance.successEvent.subscribe(result => {
-					this.dropdownSub = this.dialogService.activatedDropdown.subscribe(res => {						
-						this.dropdownActivated = res;
-						this.dropdownSub.unsubscribe();
-					});
 					if (this.dropdownActivated === true) {
-						if (this.lastElementClicked) {
 							if (this.renderer) {
 								this.renderer.setAttribute(
-									this.lastElementClicked,
+									document.activeElement,
 									'tabindex',
 									'0'
 								);	
@@ -159,7 +153,6 @@ export class DialogComponent implements OnInit, AfterViewInit, OnDestroy {
 							this.dropdownActivated = false;
 							this.dialogService.activatedDropdown.next(false);
 							return;	
-						}
 					} else {
 						if (this.dropdownActivated === false) {
 							dynamicHostModel.dialogModel.observable.next(result);
@@ -278,112 +271,77 @@ export class DialogComponent implements OnInit, AfterViewInit, OnDestroy {
 	/**
 	 * Capture click event
 	 */
-	@HostListener('document:click', ['$event'])
-	public onClicker(event: any): void {
-		let isDone = false;
-		let kDropdownInterval = null;
-		this.dropdownActivated = false;		
-		this.popFromArray();
+	// @HostListener('document:click', ['$event'])
+	// public onClicker(event: any): void {
+	// 	let isDone = false;
+	// 	let kDropdownInterval = null;
+	// 	this.dropdownActivated = false;		
+	// 	this.popFromArray();
 		
-		const pushIsDone = (currentElement) => {
-			this.pushToArray(event.target.tagName);
-			this.dropdownActivated = true;
-			isDone = true;
-			this.lastElementClicked = currentElement;
-		};
+	// 	const pushIsDone = (currentElement) => {
+	// 		this.pushToArray(event.target.tagName);
+	// 		this.dropdownActivated = true;
+	// 		isDone = true;
+	// 		this.lastElementClicked = currentElement;
+	// 	};
 
-		const startDropdownInterval = (theTag) => { 
-			const trackDropdown = () => {
-				this.dialogService.activatedDropdown.next(true);
-				if (document.getElementsByTagName(theTag)) {
-					if (document.getElementsByTagName(theTag).length === 0) {
-						clearInterval(kDropdownInterval);
-						setTimeout(() => {
-							this.popFromArray();
-						}, 900);
-					}
-				}
-			};
-			kDropdownInterval = setInterval(trackDropdown.bind(this), 400);
-		};
+	// 	const startDropdownInterval = (theTag) => { 
+	// 		const trackDropdown = () => {
+	// 			this.dialogService.activatedDropdown.next(true);
+	// 			if (document.getElementsByTagName(theTag)) {
+	// 				if (document.getElementsByTagName(theTag).length === 0) {
+	// 					clearInterval(kDropdownInterval);
+	// 					setTimeout(() => {
+	// 						this.popFromArray();
+	// 					}, 900);
+	// 				}
+	// 			}
+	// 		};
+	// 		kDropdownInterval = setInterval(trackDropdown.bind(this), 400);
+	// 	};
 
-		if (event.target) {
-			if (document.getElementsByTagName('kendo-popup')) {
-				if (document.getElementsByTagName('kendo-popup').length > 0) {
-					startDropdownInterval('kendo-popup');
-					pushIsDone(event.target);
-				}
-			}
+	// 	if (event.target) {
+	// 		if (document.getElementsByTagName('kendo-popup')) {
+	// 			if (document.getElementsByTagName('kendo-popup').length > 0) {
+	// 				startDropdownInterval('kendo-popup');
+	// 				pushIsDone(event.target);
+	// 			}
+	// 		}
 
-			if (document.getElementsByTagName('clr-datepicker-view-manager')) {
-				if (document.getElementsByTagName('clr-datepicker-view-manager').length > 0) {
-					startDropdownInterval('clr-datepicker-view-manager');
-					pushIsDone(event.target);
-				}
-			}			
-		}
+	// 		if (document.getElementsByTagName('clr-datepicker-view-manager')) {
+	// 			if (document.getElementsByTagName('clr-datepicker-view-manager').length > 0) {
+	// 				startDropdownInterval('clr-datepicker-view-manager');
+	// 				pushIsDone(event.target);
+	// 			}
+	// 		}			
+	// 	}
 
-		if (isDone === false) {
-			this.dialogService.activatedDropdown.next(false);
-		}
-	}
-
-	/**
-	 * Determines if the esc was made over a composite component opened, like the date picker
-	 * @param element
-	 */
-	isEscapeOverCompositeComponent(element: any): boolean {
-		// example with the datepicker
-		const bannedClasses = ['datepicker'];
-		const classList = element && element.classList;
-
-		if (element && classList) {
-			let belongsToBannedClass = false;
-			// check if one of the class list elements is equal to some banned class
-			for (const value of classList) {
-				if (bannedClasses.indexOf(value) !== -1) {
-					belongsToBannedClass = true;
-				}
-			}
-			if (belongsToBannedClass) {
-				return true;
-			} else {
-				// move to the above parent
-				return this.isEscapeOverCompositeComponent(element.parentNode);
-			}
-		} else {
-			return false;
-		}
-	}
+	// 	if (isDone === false) {
+	// 		this.dialogService.activatedDropdown.next(false);
+	// 	}
+	// }
 
 	/**
-	 * Capture when the Escape happens, only for the latest element created
+	 * Capture when the Escape happens, only for the latest element created,
+	 * primary focus on closing the dialog box, only if the dropdown is not activated.
+	 * if dropdown is activated, then the dialog box will close. 
 	 * @param event
 	 */
 	@HostListener('document:keydown.escape', ['$event']) onKeydownHandler(event: KeyboardEvent): void {
 		if (event.key === 'Escape' || event.code === 'Escape') {
-			if (this.isEscapeOverCompositeComponent(document.activeElement) ) {
-				// don't close the escape was made over a calendar
-				return;
-			}
-			else {
-				this.dialogEscape = true;
-				this.dropdownSub = this.dialogService.activatedDropdown.subscribe(res => {
-					this.dropdownActivated = res;
-				});
 				if (this.dropdownActivated === true) {
-					if (this.lastElementClicked) {
 						if (this.renderer) {
 							this.renderer.setAttribute(
-								this.lastElementClicked,
+								document.activeElement.parentElement,
 								'tabindex',
 								'0'
 							);
-						}
+						}						
+						this.dialogService.activatedDropdown.next(false);
 						this.dropdownActivated = false;
+						console.log('activatedDropdown emitted FALSE.');
 						return;
-					}
-				} else { 
+				} else { // close this dialog, because there's no dropdown activated. 
 					const dynamicHostModel: DynamicHostModel = this.dynamicDialogList.find(
 						(innerDynamicHostModel: DynamicHostModel) => {
 							return innerDynamicHostModel.dynamicHostComponent === this.dynamicHostList.last;
@@ -396,7 +354,7 @@ export class DialogComponent implements OnInit, AfterViewInit, OnDestroy {
 						currentDialogComponentInstance.onDismiss();
 					}
 				}	
-			}
+			
 		}
 	}
 
