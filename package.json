@@ -76,7 +76,7 @@
     "ramda": "0.25.0",
     "roboto-fontface": "^0.10.0",
     "rxjs": "~6.4.0",
-    "scss-bundle": "^2.5.1",
+    "scss-bundle": "^3.1.2",
     "tslib": "^1.9.0",
     "zone.js": "^0.9.1"
   },
@@ -84,7 +84,7 @@
     "@angular-builders/jest": "^9.0.0",
     "@angular-devkit/build-angular": "^0.800.0",
     "@angular-devkit/build-ng-packagr": "~0.800.0",
-    "@angular/cli": "8.0.0",
+    "@angular/cli": "21.1.0",
     "@angular/compiler-cli": "^8.0.0",
     "@angular/language-service": "^8.0.0",
     "@nrwl/cypress": "8.2.0",
